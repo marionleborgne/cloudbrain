@@ -1,7 +1,5 @@
 ## CloudBrain
 
-![x](https://github.com/marionleborgne/cloudbrain/blob/master/screenshot.png)
-
 ## Install
 
 1. `sudo pip install -r requirements.txt` for the easy bits
