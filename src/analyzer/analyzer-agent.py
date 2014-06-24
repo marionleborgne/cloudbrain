@@ -22,7 +22,7 @@ class AnalyzerAgent():
         self.pidfile_timeout = 5
 
     def run(self):
-        logger.info('starting skyline analyzer')
+        logger.info('starting cloudbrain analyzer')
         Analyzer(getpid()).start()
 
         while 1:

@@ -139,7 +139,7 @@ class Analyzer(Thread):
             try:
                 self.redis_conn.ping()
             except:
-                logger.error('skyline can\'t connect to redis at socket path %s' % settings.REDIS_SOCKET_PATH)
+                logger.error('cloudbrain can\'t connect to redis at socket path %s' % settings.REDIS_SOCKET_PATH)
                 sleep(10)
                 self.redis_conn = StrictRedis(unix_socket_path = settings.REDIS_SOCKET_PATH)
                 continue
@@ -156,7 +156,7 @@ class Analyzer(Thread):
             pids = []
             for i in range(1, settings.ANALYZER_PROCESSES + 1):
                 if i > len(unique_metrics):
-                    logger.info('WARNING: skyline is set for more cores than needed.')
+                    logger.info('WARNING: cloudbrain is set for more cores than needed.')
                     break
 
                 p = Process(target=self.spin_process, args=(i, unique_metrics))
@@ -222,8 +222,8 @@ class Analyzer(Thread):
             logger.info('anomaly breakdown :: %s' % anomaly_breakdown)
 
             # Log to Graphite
-            self.send_graphite_metric('skyline.analyzer.run_time', '%.2f' % (time() - now))
-            self.send_graphite_metric('skyline.analyzer.total_analyzed', '%.2f' % (len(unique_metrics) - sum(exceptions.values())))
+            self.send_graphite_metric('cloudbrain.analyzer.run_time', '%.2f' % (time() - now))
+            self.send_graphite_metric('cloudbrain.analyzer.total_analyzed', '%.2f' % (len(unique_metrics) - sum(exceptions.values())))
 
             # Check canary metric
             raw_series = self.redis_conn.get(settings.FULL_NAMESPACE + settings.CANARY_METRIC)
@@ -235,8 +235,8 @@ class Analyzer(Thread):
                 projected = 24 * (time() - now) / time_human
 
                 logger.info('canary duration   :: %.2f' % time_human)
-                self.send_graphite_metric('skyline.analyzer.duration', '%.2f' % time_human)
-                self.send_graphite_metric('skyline.analyzer.projected', '%.2f' % projected)
+                self.send_graphite_metric('cloudbrain.analyzer.duration', '%.2f' % time_human)
+                self.send_graphite_metric('cloudbrain.analyzer.projected', '%.2f' % projected)
 
             # Reset counters
             self.anomalous_metrics[:] = []

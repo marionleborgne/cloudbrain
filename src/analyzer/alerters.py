@@ -36,7 +36,7 @@ def alert_smtp(alert, metric):
 
     for recipient in recipients:
         msg = MIMEMultipart('alternative')
-        msg['Subject'] = '[skyline alert] ' + metric[1]
+        msg['Subject'] = '[cloudbrain alert] ' + metric[1]
         msg['From'] = sender
         msg['To'] = recipient
         link = settings.GRAPH_URL % (metric[1])
@@ -60,7 +60,7 @@ def alert_hipchat(alert, metric):
     link = settings.GRAPH_URL % (metric[1])
 
     for room in rooms:
-        hipster.method('rooms/message', method='POST', parameters={'room_id': room, 'from': 'Skyline', 'color': settings.HIPCHAT_OPTS['color'], 'message': 'Anomaly: <a href="%s">%s</a> : %s' % (link, metric[1], metric[0])})
+        hipster.method('rooms/message', method='POST', parameters={'room_id': room, 'from': 'cloudbrain', 'color': settings.HIPCHAT_OPTS['color'], 'message': 'Anomaly: <a href="%s">%s</a> : %s' % (link, metric[1], metric[0])})
 
 
 def trigger_alert(alert, metric):

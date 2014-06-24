@@ -21,8 +21,8 @@ parser = OptionParser()
 parser.add_option("-t", "--trigger", dest="trigger", default=False,
                   help="Actually trigger the appropriate alerts (default is False)")
 
-parser.add_option("-m", "--metric", dest="metric", default='skyline.horizon.queue_size',
-                  help="Pass the metric to test (default is skyline.horizon.queue_size)")
+parser.add_option("-m", "--metric", dest="metric", default='cloudbrain.horizon.queue_size',
+                  help="Pass the metric to test (default is cloudbrain.horizon.queue_size)")
 
 (options, args) = parser.parse_args()
 
