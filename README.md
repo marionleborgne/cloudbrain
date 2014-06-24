@@ -1,6 +1,6 @@
 ## CloudBrain
 
-![x](https://raw.github.com/marionleborgne/cloudbrain/blob/master/screenshot.png)
+![x](https://github.com/marionleborgne/cloudbrain/blob/master/screenshot.png)
 
 ## Install
 
