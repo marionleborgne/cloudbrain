@@ -16,21 +16,14 @@ var handle_data = function(data) {
     $('#metrics_listings').empty();
 
     for (i in data) {
-        metric = data[i];
-        name = metric[1]
-        var src = GRAPH_URL.replace('%s', name);
-        console.log("metric url " + src)
+        name = data[i];
         // Add a space after the metric name to make each unique
-        to_append = "<div class='sub'><a target='_blank' href='" + src + "'><div class='name'>" + name + " </div></a>&nbsp;&nbsp;"
-        if (OCULUS_HOST != ''){
-          to_append += "<a class='oculus' target='_blank' href=" + OCULUS_HOST + "/search?p_slop=20&dtw_radius=5&search_type=FastDTW&query=" + name + "&page=&filters=><i class='icon-share-alt'></i></a>";
-        }
-        to_append += "<div class='count'>" + parseInt(metric[0]) + "</div>";
+        to_append = "<div class='sub'><div class='name'>" + name + " </div></a>&nbsp;&nbsp;"
         $('#metrics_listings').append(to_append);
     }
 
     if (initial) {
-        selected = data[0][1];
+        selected = data[0];
         initial = false;
     }
     
@@ -41,7 +34,7 @@ var handle_data = function(data) {
 // The callback to this function is handle_data()
 var pull_data = function() {
     $.ajax({
-        url: "/static/dump/anomalies-2.json",
+        url: "/static/dump/metrics.json",
         dataType: 'jsonp'
     });
 }
@@ -53,7 +46,7 @@ var handle_interaction = function() {
     anomalous_datapoint = parseInt($($('.selected').children('.count')).text())
  
     $.get("/api?metric=" + selected, function(d){
-        console.log("/api?metric=" + FULL_NAMESPACE + "" + selected);
+        console.log("selected : " + selected);
         big_data = JSON.parse(d)['results'];
         big_graph.updateOptions( { 'file': big_data } );
         offset = (new Date().getTime() / 1000) - 3600;

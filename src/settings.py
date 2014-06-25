@@ -56,6 +56,8 @@ Analyzer settings
 # It needs to be in a location accessible to the webapp.
 ANOMALY_DUMP = 'webapp/static/dump/anomalies.json'
 
+UNIQUE_METRICS = 'webapp/static/dump/metrics.json'
+
 # This is the number of processes that the cloudbrain analyzer will spawn.
 # Analysis is a very CPU-intensive procedure. You will see optimal results
 # if you set ANALYZER_PROCESSES to several less than the total number of

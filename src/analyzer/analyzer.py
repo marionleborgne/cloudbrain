@@ -147,6 +147,17 @@ class Analyzer(Thread):
             # Discover unique metrics
             unique_metrics = list(self.redis_conn.smembers(settings.FULL_NAMESPACE + 'unique_metrics'))
 
+            pretty_unique_metrics = [] # metric without the FULL_NAMESPACE
+            for metric in unique_metrics:
+                pretty_unique_metrics.append(metric.replace(settings.FULL_NAMESPACE,""))
+                
+
+            # Write unique metrics to static webapp directory
+            filename = path.abspath(path.join(path.dirname(__file__), '..', settings.UNIQUE_METRICS))
+            with open(filename, 'w') as fh:
+                # Make it JSONP with a handle_data() function
+                fh.write('handle_data(%s)' % pretty_unique_metrics)
+
             if len(unique_metrics) == 0:
                 logger.info('no metrics in redis. try adding some - see README')
                 sleep(10)
