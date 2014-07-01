@@ -35,44 +35,45 @@ f = open("metrics.json", 'r')
 
 metrics = json.loads(f.read())
 
-for metric in metrics:
+while True:
+    for metric in metrics:
 
-    if metrics[metric]["type"] == "NODE" and not metrics[metric]["requiresExtra"]:
+        if metrics[metric]["type"] == "NODE" and not metrics[metric]["requiresExtra"]:
 
-        nodes = ["N347-f"]
+            nodes = ["N347-f"]
 
-        for nodeId in nodes:
+            for nodeId in nodes:
 
-            payload = [{"aggregate": aggregate, "resourceId": nodeId, "metric": metric, "limit": limit, "timescale": timescale}]
-            print "payload : %s" % json.dumps(payload)
-            r = requests.post(ims_url, data=json.dumps(payload), headers=headers)
-            results = json.loads(r.content)
-            print  "==> Results for metric '%s' : %s" % (metric, str(results))
+                payload = [{"aggregate": aggregate, "resourceId": nodeId, "metric": metric, "limit": limit, "timescale": timescale}]
+                print "payload : %s" % json.dumps(payload)
+                r = requests.post(ims_url, data=json.dumps(payload), headers=headers)
+                results = json.loads(r.content)
+                print  "==> Results for metric '%s' : %s" % (metric, str(results))
 
-            for result in results:
-                if len(result) > 0:
-                    datapoints = result['points']
-                    metric = result['metric']
-                    for datapoint in datapoints:
-                        packet = msgpack.packb((metric, datapoint))
-                        sock.sendto(packet, ("localhost", settings.UDP_PORT))
+                for result in results:
+                    if len(result) > 0:
+                        datapoints = result['points']
+                        metric = result['metric']
+                        for datapoint in datapoints:
+                            packet = msgpack.packb((metric, datapoint))
+                            sock.sendto(packet, ("localhost", settings.UDP_PORT))
 
-                    print "Connecting to Redis..."
-                    r = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)
-                    time.sleep(5)
+                        print "Connecting to Redis..."
+                        r = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)
+                        time.sleep(5)
 
-                    try:
-                        x = r.smembers(settings.FULL_NAMESPACE + metric_set)
-                        if x is None:
-                            raise NoDataException
+                        try:
+                            x = r.smembers(settings.FULL_NAMESPACE + metric_set)
+                            if x is None:
+                                raise NoDataException
 
-                        x = r.get(settings.FULL_NAMESPACE + metric)
-                        if x is None:
-                            raise NoDataException
+                            x = r.get(settings.FULL_NAMESPACE + metric)
+                            if x is None:
+                                raise NoDataException
 
-                        print "Congratulations! The data made it in. The Horizon pipeline seems to be working."
+                            print "Congratulations! The data made it in. The Horizon pipeline seems to be working."
 
-                    except NoDataException:
-                        print "Woops, looks like the metrics didn't make it into Horizon. Try again?"
+                        except NoDataException:
+                            print "Woops, looks like the metrics didn't make it into Horizon. Try again?"
 
-
+    time.wait(30)
