@@ -56,19 +56,19 @@ Analyzer settings
 # It needs to be in a location accessible to the webapp.
 ANOMALY_DUMP = 'webapp/static/dump/anomalies.json'
 
-UNIQUE_METRICS = 'webapp/static/dump/metrics.json'
+UNIQUE_METRICS = 'webapp/static/dump/unique_metrics.json'
 
 # This is the number of processes that the cloudbrain analyzer will spawn.
 # Analysis is a very CPU-intensive procedure. You will see optimal results
 # if you set ANALYZER_PROCESSES to several less than the total number of
 # CPUs on your box. Be sure to leave some CPU room for the Horizon workers,
 # and for Redis.
-ANALYZER_PROCESSES = 1
+ANALYZER_PROCESSES = 5
 
 # This is the duration, in seconds, for a metric to become 'stale' and for
 # the analyzer to ignore it until new datapoints are added. 'Staleness' means
 # that a datapoint has not been added for STALE_PERIOD seconds.
-STALE_PERIOD = 60000
+STALE_PERIOD = 500
 
 # This is the minimum length of a timeseries, in datapoints, for the analyzer
 # to recognize it as a complete series.
@@ -79,7 +79,7 @@ MIN_TOLERABLE_LENGTH = 1
 # the amount of boring datapoints that will be allowed to accumulate before the
 # analyzer skips over the metric. If the metric becomes noisy again, the
 # analyzer will stop ignoring it.
-MAX_TOLERABLE_BOREDOM = 600
+MAX_TOLERABLE_BOREDOM = 100
 
 # By default, the analyzer skips a metric if it it has transmitted a single
 # number MAX_TOLERABLE_BOREDOM times. Change this setting if you wish the size
@@ -108,7 +108,7 @@ ALGORITHMS = [
 
 # This is the number of algorithms that must return True before a metric is
 # classified as anomalous.
-CONSENSUS = 2
+CONSENSUS = 5
 
 # This is to enable second order anomalies. This is an experimental feature, so
 # it's turned off by default.

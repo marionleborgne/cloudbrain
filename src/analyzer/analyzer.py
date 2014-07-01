@@ -15,6 +15,7 @@ import sys
 from os.path import dirname, abspath
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 import settings
+import json
 
 from alerters import trigger_alert
 from algorithms import run_selected_algorithm
@@ -156,7 +157,7 @@ class Analyzer(Thread):
             filename = path.abspath(path.join(path.dirname(__file__), '..', settings.UNIQUE_METRICS))
             with open(filename, 'w') as fh:
                 # Make it JSONP with a handle_data() function
-                fh.write('handle_data(%s)' % pretty_unique_metrics)
+                fh.write(json.dumps(pretty_unique_metrics))
 
             if len(unique_metrics) == 0:
                 logger.info('no metrics in redis. try adding some - see README')
@@ -216,13 +217,36 @@ class Analyzer(Thread):
                             except Exception as e:
                                 logger.error("couldn't send alert: %s" % e)
 
+
+
+            '''
             # Write anomalous_metrics to static webapp directory
             filename = path.abspath(path.join(path.dirname(__file__), '..', settings.ANOMALY_DUMP))
             with open(filename, 'w') as fh:
-                # Make it JSONP with a handle_data() function
-                anomalous_metrics = list(self.anomalous_metrics)
                 anomalous_metrics.sort(key=operator.itemgetter(1))
                 fh.write('handle_data(%s)' % anomalous_metrics)
+
+            '''
+
+            # read unique metrics
+            filename = path.abspath(path.join(path.dirname(__file__), '..', settings.UNIQUE_METRICS))
+            with open(filename, 'r') as f:
+                json_data = f.read()
+                unique_metrics = json.loads(json_data)
+
+
+                anomalous_metrics_names = [metric[1] for metric in self.anomalous_metrics]
+                for metric in unique_metrics:
+                    if not metric in anomalous_metrics_names:
+                        self.anomalous_metrics.append([0, str(metric)])
+
+                # Write anomalous_metrics to static webapp directory
+                filename = path.abspath(path.join(path.dirname(__file__), '..', settings.ANOMALY_DUMP))
+                with open(filename, 'w') as fh:
+                     # Make it JSONP with a handle_data() function
+                    anomalous_metrics = list(self.anomalous_metrics)
+                    anomalous_metrics.sort(key=operator.itemgetter(1))
+                    fh.write('handle_data(%s)' % repr(anomalous_metrics))
 
             # Log progress
             logger.info('seconds to run    :: %.2f' % (time() - now))

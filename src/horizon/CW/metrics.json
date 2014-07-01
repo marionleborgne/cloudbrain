@@ -1,0 +1,206 @@
+{
+    "CPU_Idle": {
+        "description": "Percentage_of_CPU_time_available",
+        "name": "CPU_Idle",
+        "requiresExtra": false,
+        "transformation": "metricBag.get(\"CPU_Idle\")",
+        "type": "NODE",
+        "unit": "%",
+        "maximumValueUnit": "Hz"
+    },
+    "CPU_Steal": {
+        "description": "Percentage_of_CPU_time_stolen_by_other_tasks",
+        "name": "CPU_Steal",
+        "requiresExtra": false,
+        "transformation": "metricBag.get(\"CPU_Steal\")",
+        "type": "NODE",
+        "unit": "%",
+        "maximumValueUnit": "Hz"
+    },
+    "CPU_Usage": {
+        "description": "Total_CPU_Usage",
+        "name": "CPU_Usage",
+        "requiresExtra": false,
+        "transformation": "metricBag.get(\"CPU_Usage\")",
+        "type": "NODE",
+        "unit": "%",
+        "maximumValueUnit": "Hz"
+    },
+    "CumulSent": {
+        "description": "Cumulative_Sent",
+        "name": "CumulSent",
+        "requiresExtra": false,
+        "transformation": "8.000000 * metricBag.get(\"CumulSent\")",
+        "type": "FLOW",
+        "unit": "bps"
+    },
+    "DecrRwndSignal": {
+    	"description": "Decrease_Receive_Window_Signal",
+        "name": "DecrRwndSignal",
+        "requiresExtra": false,
+        "transformation": "metricBag.get(\"DecrRwndSignal\") / metricBag.get(\"NbConnEffective\")",
+        "type": "FLOW",
+        "unit": ""
+    
+    },
+    "Disk_size": {
+        "description": "Disk_size",
+        "name": "Disk_size",
+        "requiresExtra": true,
+        "transformation": "metricBag.get(\"Disk_size\")",
+        "type": "NODE",
+        "unit": "B"
+    },
+    "Disk_used": {
+        "description": "Disk_size_used",
+        "name": "Disk_used",
+        "requiresExtra": true,
+        "transformation": "metricBag.get(\"Disk_used\")",
+        "type": "NODE",
+        "unit": "B"
+    },
+    "Mean_Response_Time": {
+        "description": "Mean_Response_Time",
+        "name": "Mean_Response_Time",
+        "requiresExtra": true,
+        "transformation": "metricBag.get(\"Mean_Response_Time\")",
+        "type": "NODE",
+        "unit": "ms"
+    },
+    "Memory_Used": {
+        "description": "Memory_Used",
+        "name": "Memory_Used",
+        "requiresExtra": false,
+        "transformation": "metricBag.get(\"Memory_Used\")",
+        "type": "NODE",
+        "unit": "B"
+    },
+    "NbConn": {
+        "description": "Number of connections",
+        "name": "NbConn",
+        "requiresExtra": false,
+        "transformation": "metricBag.get(\"NbConn\")",
+        "type": "FLOW",
+        "unit": ""
+    },
+    "NbConnEffective": {
+        "description": "Number active of connections",
+        "name": "NbConnEffective",
+        "requiresExtra": false,
+        "transformation": "metricBag.get(\"NbConnEffective\")",
+        "type": "FLOW",
+        "unit": ""
+    },
+    "NbRTO": {
+        "description": "Counted_RTO",
+        "name": "NbRTO",
+        "requiresExtra": false,
+        "transformation": "metricBag.get(\"NbRTO\")",
+        "type": "FLOW",
+        "unit": "/sec"
+    },
+    "Read_operations": {
+        "description": "Number_of_read_operations",
+        "name": "Read_operations",
+        "requiresExtra": true,
+        "transformation": "metricBag.get(\"Read_operations\")",
+        "type": "NODE",
+        "unit": "IOPS"
+    },
+    "Read_time": {
+        "description": "Average_time_spend_performing_reads",
+        "name": "Read_time",
+        "requiresExtra": true,
+        "transformation": "metricBag.get(\"Read_time\")",
+        "type": "NODE",
+        "unit": "ms"
+    },
+    "Retrans": {
+        "description": "Total_retransmits",
+        "name": "Retrans",
+        "requiresExtra": false,
+        "transformation": "metricBag.get(\"Retrans\")",
+        "type": "FLOW",
+        "unit": "pps"
+    },
+    "Rx_Bytes": {
+        "description": "Total_bytes_received",
+        "name": "Rx_Bytes",
+        "requiresExtra": true,
+        "transformation": "8.000000 * metricBag.get(\"Rx_Bytes\")",
+        "type": "NODE",
+        "unit": "bps"
+    },
+    "SRTT": {
+        "description": "Mean_Smoothed_RTT",
+        "name": "SRTT",
+        "requiresExtra": false,
+        "transformation": "metricBag.get(\"SRTT\") / metricBag.get(\"NbConnEffective\")",
+        "type": "FLOW",
+        "unit": "ms"
+    },
+    "TotalNet_Bytes": {
+        "description": "Total Bytes exchanged",
+        "name": "TotalNet_Bytes",
+        "requiresExtra": false,
+        "transformation": "metricBag.get(\"TotalNet_Bytes\")",
+        "type": "NODE",
+        "unit": "bps"
+    },
+    "Total_Memory": {
+        "description": "Total_Memory",
+        "name": "Total_Memory",
+        "requiresExtra": false,
+        "transformation": "metricBag.get(\"Total_Memory\")",
+        "type": "NODE",
+        "unit": "B"
+    },
+    "Tx_Bytes": {
+        "description": "Total_bytes_transmitted",
+        "name": "Tx_Bytes",
+        "requiresExtra": true,
+        "transformation": "8.000000 * metricBag.get(\"Tx_Bytes\")",
+        "type": "NODE",
+        "unit": "bps"
+    },
+    "Write_operations": {
+        "description": "Number_of_write_operations",
+        "name": "Write_operations",
+        "requiresExtra": true,
+        "transformation": "metricBag.get(\"Write_operations\")",
+        "type": "NODE",
+        "unit": "IOPS"
+    },
+    "lastmin": {
+        "description": "Last_Minute_Load",
+        "name": "lastmin",
+        "requiresExtra": false,
+        "transformation": "metricBag.get(\"lastmin\")",
+        "type": "NODE",
+        "unit": ""
+    },
+    "recvq": {
+        "description": "Receive_Queue_Size",
+        "name": "recvq",
+        "requiresExtra": false,
+        "transformation": "metricBag.get(\"recvq\")",
+        "type": "FLOW",
+        "unit": "B"
+    },
+    "requeues": {
+        "description": "Requeued_Packets",
+        "name": "requeues",
+        "requiresExtra": true,
+        "transformation": "metricBag.get(\"requeues\")",
+        "type": "NODE",
+        "unit": ""
+    },
+    "sendq": {
+        "description": "Send_Queue_Size",
+        "name": "sendq",
+        "requiresExtra": false,
+        "transformation": "metricBag.get(\"sendq\")",
+        "type": "FLOW",
+        "unit": "B"
+    }
+}
