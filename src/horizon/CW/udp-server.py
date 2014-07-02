@@ -40,7 +40,7 @@ while True:
 
         if metrics[metric]["type"] == "NODE" and not metrics[metric]["requiresExtra"]:
 
-            nodes = ["N347-f"]
+            nodes = ["N347-f"] # AlarmManager
 
             for nodeId in nodes:
 
@@ -76,4 +76,4 @@ while True:
                         except NoDataException:
                             print "Woops, looks like the metrics didn't make it into Horizon. Try again?"
 
-    time.wait(30)
+    time.sleep(30)
