@@ -116,8 +116,17 @@ def stddev_from_average(timeseries):
     mean = series.mean()
     stdDev = series.std()
     t = tail_avg(timeseries)
+    anomaly = abs(t - mean) > 3 * stdDev
+    if anomaly:
+        logger.info("==> anomaly detected")
+    else:
+        logger.info("==> anomaly not detected")
 
-    return abs(t - mean) > 3 * stdDev
+    logger.info("std %s" % stdDev)
+    logger.info("mean %s" % mean)
+    logger.info("tail avg %s" % t)
+
+    return anomaly
 
 
 def stddev_from_moving_average(timeseries):

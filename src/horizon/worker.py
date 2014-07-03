@@ -85,18 +85,26 @@ class Worker(Process):
                 chunk = self.q.get(True, 15)
                 now = time()
 
+                logger.info("chunk %s" % chunk)
+
                 for metric in chunk:
+
+                    logger.info("metric %s" % metric)
+
 
                     # Check if we should skip it
                     if self.in_skip_list(metric[0]):
+                        logger.info("in skip list %s" % self.in_skip_list())
                         continue
 
                     # Bad data coming in
                     if metric[1][0] < now - MAX_RESOLUTION:
+                        logger.info("bad metric %s" % metric[1][0])
                         continue
 
                     # Append to messagepack main namespace
                     key = ''.join((FULL_NAMESPACE, metric[0]))
+                    logger.info("key %s" % key)
                     pipe.append(key, packb(metric[1]))
                     pipe.sadd(full_uniques, key)
 
