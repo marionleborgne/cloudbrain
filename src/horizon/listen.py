@@ -182,6 +182,7 @@ class Listen(Process):
                     self.check_if_parent_is_alive()
                     data, addr = s.recvfrom(1024)
                     metric = unpackb(data)
+                    logger.info('received UDP packet on %s. metric: %s ' %(self.port, metric))
                     chunk.append(metric)
 
                     # Queue the chunk and empty the variable
