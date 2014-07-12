@@ -10,7 +10,9 @@ Loosely adapted from Etsy's Skyline.
 ![x](https://raw.github.com/marionleborgne/cloudbrain/master/architecture.png)
 
 
-## How to feed Cloudbrain with openBCI data
+## How to feed Cloudbrain with [OpenBCI](http://openbci.com) data
+
+![x](https://raw.github.com/marionleborgne/cloudbrain/master/openbci.png)
 
 1. `cd open_bci`
 2. run `udp_server.py` to send openBCI brain waves data via UDP.
