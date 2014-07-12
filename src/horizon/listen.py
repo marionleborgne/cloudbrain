@@ -76,7 +76,7 @@ class Listen(Process):
             self.ip = settings.HORIZON_IP
         except AttributeError:
             # Default for backwards compatibility
-            self.ip = "localhost"
+            self.ip = settings.HORIZON_IP
         self.port = port
         self.q = queue
         self.daemon = True

@@ -53,7 +53,7 @@ def seed():
 
         print (metric, datapoint)
         packet = msgpack.packb((metric, datapoint))
-        sock.sendto(packet, (socket.gethostname(), settings.UDP_PORT))
+        sock.sendto(packet, (settings.HORIZON_IP, settings.UDP_PORT))
 
     print "Connecting to Redis..."
     r = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)

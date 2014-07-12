@@ -170,14 +170,14 @@ Horizon settings
 WORKER_PROCESSES = 2
 
 # The IP address for Horizon to listen on.  Defaults to gethostname()
-# HORIZON_IP = '0.0.0.0'
+HORIZON_IP = '50.18.206.168'
 
 # This is the port that listens for Graphite pickles over TCP, sent by Graphite's
 # carbon-relay agent.
 PICKLE_PORT = 2024
 
 # This is the port that listens for Messagepack-encoded UDP packets.
-UDP_PORT = 8888
+UDP_PORT = 2025
 
 # This is how big a 'chunk' of metrics will be before they are added onto
 # the shared queue for processing into Redis. If you are noticing that Horizon
