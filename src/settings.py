@@ -231,7 +231,7 @@ Webapp settings
 """
 
 # The IP address for the webapp
-WEBAPP_IP = '127.0.0.1'
+WEBAPP_IP = '50.18.206.168'
 
 # The port for the webapp
 WEBAPP_PORT = 1500
