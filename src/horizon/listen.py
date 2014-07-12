@@ -76,7 +76,7 @@ class Listen(Process):
             self.ip = settings.HORIZON_IP
         except AttributeError:
             # Default for backwards compatibility
-            self.ip = settings.HORIZON_IP
+            self.ip = socket.gethostname("localhost")
         self.port = port
         self.q = queue
         self.daemon = True
@@ -179,7 +179,6 @@ class Listen(Process):
 
                 ANY = socket.gethostbyname('localhost')
                 s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM,socket.IPPROTO_UDP)
-                s.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEPORT,1)
                 s.bind((ANY,self.port))
                 s.setsockopt(socket.IPPROTO_IP,socket.IP_MULTICAST_TTL,255)
 
