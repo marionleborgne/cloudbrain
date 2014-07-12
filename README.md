@@ -6,12 +6,14 @@ Upload your brainwaves to the cloud. Detect patterns and anomalies :-)
 
 Loosely adapted from Etsy's Skyline. 
 
+## CloudBrain Architecture
+![x](https://raw.github.com/marionleborgne/cloudbrain/master/architecture.png)
+
 
 ## How to feed Cloudbrain with openBCI data
 
-1. Set up CloudBrain - see "Install" section below 
-2. Check out: https://github.com/jnaulty/Python_OpenBCI/tree/bci-cloud-pipeline
-3. Use udp_server.py to seend openBCI brain waves data via UDP. 
+1. `cd open_bci`
+2. run `udp_server.py` to send openBCI brain waves data via UDP.
 
 Note: Make sure that Horizon (the data pipeline) is listening on the same port as the one used by OpenBCI UDP Server :-)
 
