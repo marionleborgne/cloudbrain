@@ -22,7 +22,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 ims_url = "http://ims.us-east-1.cloudweaverdiscovery.com:8080/ims/tenants/T347/metrics"
 headers = {'content-type' : 'application/json'}
 
-print 'Loading data over UDP via Horizon...'
+print 'Loading data over UDP via pipeline...'
 metric_set = 'unique_metrics'
 
 #resourceId = "N347-f"
@@ -71,9 +71,9 @@ while True:
                             if x is None:
                                 raise NoDataException
 
-                            print "Congratulations! The data made it in. The Horizon pipeline seems to be working."
+                            print "Congratulations! The data made it in. The pipeline pipeline seems to be working."
 
                         except NoDataException:
-                            print "Woops, looks like the metrics didn't make it into Horizon. Try again?"
+                            print "Woops, looks like the metrics didn't make it into pipeline. Try again?"
 
     time.sleep(30)

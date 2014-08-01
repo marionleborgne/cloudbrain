@@ -45,6 +45,6 @@ if __name__ == "__main__":
 
     s = Sandbox()
 
-    metric = "horizon.test.udp"
+    metric = "pipeline.test.udp"
     timeserie = s.get_timeserie(metric)
     s.plot_timeserie(timeserie)

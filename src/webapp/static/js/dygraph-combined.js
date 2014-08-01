@@ -1987,7 +1987,7 @@ Dygraph.DEFAULT_ATTRS = {
         }
     }
 };
-Dygraph.HORIZONTAL = 1;
+Dygraph.pipelineTAL = 1;
 Dygraph.VERTICAL = 2;
 Dygraph.PLUGINS = [];
 Dygraph.addedAnnotationCSS = false;
@@ -2571,13 +2571,13 @@ Dygraph.prototype.createDragInterface_ = function () {
 };
 Dygraph.prototype.drawZoomRect_ = function (e, c, i, b, g, a, f, d) {
     var h = this.canvas_ctx_;
-    if (a == Dygraph.HORIZONTAL) {
+    if (a == Dygraph.pipelineTAL) {
         h.clearRect(Math.min(c, f), this.layout_.getPlotArea().y, Math.abs(c - f), this.layout_.getPlotArea().h)
     } else {
         if (a == Dygraph.VERTICAL) {
             h.clearRect(this.layout_.getPlotArea().x, Math.min(b, d), this.layout_.getPlotArea().w, Math.abs(b - d))
         }
-    } if (e == Dygraph.HORIZONTAL) {
+    } if (e == Dygraph.pipelineTAL) {
         if (i && c) {
             h.fillStyle = "rgba(128,128,128,0.33)";
             h.fillRect(Math.min(c, i), this.layout_.getPlotArea().y, Math.abs(i - c), this.layout_.getPlotArea().h)
@@ -5099,7 +5099,7 @@ Dygraph.Interaction.moveZoom = function (c, b, a) {
     a.dragEndY = b.dragGetY_(c, a);
     var e = Math.abs(a.dragStartX - a.dragEndX);
     var d = Math.abs(a.dragStartY - a.dragEndY);
-    a.dragDirection = (e < d / 2) ? Dygraph.VERTICAL : Dygraph.HORIZONTAL;
+    a.dragDirection = (e < d / 2) ? Dygraph.VERTICAL : Dygraph.pipelineTAL;
     b.drawZoomRect_(a.dragDirection, a.dragStartX, a.dragEndX, a.dragStartY, a.dragEndY, a.prevDragDirection, a.prevEndX, a.prevEndY);
     a.prevEndX = a.dragEndX;
     a.prevEndY = a.dragEndY;
@@ -5142,7 +5142,7 @@ Dygraph.Interaction.endZoom = function (c, i, e) {
         Dygraph.Interaction.treatMouseOpAsClick(i, c, e)
     }
     var b = i.getArea();
-    if (h >= 10 && e.dragDirection == Dygraph.HORIZONTAL) {
+    if (h >= 10 && e.dragDirection == Dygraph.pipelineTAL) {
         var f = Math.min(e.dragStartX, e.dragEndX),
             k = Math.max(e.dragStartX, e.dragEndX);
         f = Math.max(f, b.x);

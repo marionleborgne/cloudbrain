@@ -8,7 +8,7 @@ from msgpack import unpackb
 import logging
 import settings
 
-logger = logging.getLogger("HorizonLog")
+logger = logging.getLogger("pipelineLog")
 
 ##SafeUnpickler taken from Carbon: https://github.com/graphite-project/carbon/blob/master/lib/carbon/util.py
 try:
@@ -73,7 +73,7 @@ class Listen(Process):
     def __init__(self, port, queue, parent_pid, type="pickle"):
         super(Listen, self).__init__()
         try:
-            self.ip = settings.HORIZON_IP
+            self.ip = settings.pipeline_IP
         except AttributeError:
             # Default for backwards compatibility
             self.ip = "localhost"

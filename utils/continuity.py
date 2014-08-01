@@ -8,7 +8,7 @@ from os.path import dirname, abspath
 sys.path.insert(0, ''.join((dirname(dirname(abspath(__file__))), "/src")))
 import settings
 
-metric = 'horizon.test.udp'
+metric = 'pipeline.test.udp'
 
 
 def check_continuity(metric, mini = False):

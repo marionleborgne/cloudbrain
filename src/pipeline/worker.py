@@ -9,7 +9,7 @@ import logging
 import socket
 import settings
 
-logger = logging.getLogger("HorizonLog")
+logger = logging.getLogger("pipelineLog")
 
 
 class Worker(Process):
@@ -119,7 +119,7 @@ class Worker(Process):
                 # Log progress
                 if self.canary:
                     logger.info('queue size at %d' % self.q.qsize())
-                    self.send_graphite_metric('cloudbrain.horizon.queue_size', self.q.qsize())
+                    self.send_graphite_metric('cloudbrain.pipeline.queue_size', self.q.qsize())
 
             except Empty:
                 logger.info('worker queue is empty and timed out')
