@@ -6,7 +6,6 @@ Upload your brainwaves to the cloud. Detect patterns and anomalies :-)
 
 Loosely adapted from Skyline.
 
-## CloudBrain Architecture
 ![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/Cloubrain.png)
 
 
