@@ -1,38 +1,38 @@
 #!/bin/bash
 #
-# This is used to start/stop horizon
+# This is used to start/stop pipeline
 
 BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
 RETVAL=0
 
 start () {
-    rm $BASEDIR/src/horizon/*.pyc
-    /usr/bin/env python $BASEDIR/src/horizon/horizon-agent.py start
+    rm $BASEDIR/src/pipeline/*.pyc
+    /usr/bin/env python $BASEDIR/src/pipeline/pipeline-agent.py start
         RETVAL=$?
         if [[ $RETVAL -eq 0 ]]; then
-            echo "started horizon-agent"
+            echo "started pipeline-agent"
         else
-            echo "failed to start horizon-agent"
+            echo "failed to start pipeline-agent"
         fi
         return $RETVAL
 }
 
 stop () {
     # TODO: write a real kill script
-    ps aux | grep 'horizon-agent.py start' | grep -v grep | awk '{print $2 }' | xargs sudo kill -9
-    /usr/bin/env python $BASEDIR/src/horizon/horizon-agent.py stop
+    ps aux | grep 'pipeline-agent.py start' | grep -v grep | awk '{print $2 }' | xargs sudo kill -9
+    /usr/bin/env python $BASEDIR/src/pipeline/pipeline-agent.py stop
         RETVAL=$?
         if [[ $RETVAL -eq 0 ]]; then
-            echo "stopped horizon-agent"
+            echo "stopped pipeline-agent"
         else
-            echo "failed to stop horizon-agent"
+            echo "failed to stop pipeline-agent"
         fi
         return $RETVAL
 }
 
 run () {
-    echo "running horizon"
-    /usr/bin/env python $BASEDIR/src/horizon/horizon-agent.py run
+    echo "running pipeline"
+    /usr/bin/env python $BASEDIR/src/pipeline/pipeline-agent.py run
 }
 
 # See how we were called.

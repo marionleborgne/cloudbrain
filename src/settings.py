@@ -14,7 +14,7 @@ PID_PATH = '/var/run/cloudbrain'
 # Metrics will be prefixed with this value in Redis.
 FULL_NAMESPACE = 'metrics.'
 
-# The Horizon agent will make T'd writes to both the full namespace and the
+# The pipeline agent will make T'd writes to both the full namespace and the
 # mini namespace. Oculus gets its data from everything in the mini namespace.
 MINI_NAMESPACE = 'mini.'
 
@@ -31,7 +31,7 @@ FULL_DURATION = 86400
 MINI_DURATION = 3600
 
 # If you have a Graphite host set up, set this metric to get graphs on
-# cloudbrain and Horizon. Don't include http:// since this is used for carbon host as well.
+# cloudbrain and pipeline. Don't include http:// since this is used for carbon host as well.
 GRAPHITE_HOST = ''
 
 # The Graph url used to link to Graphite (Or another graphite dashboard)
@@ -61,7 +61,7 @@ UNIQUE_METRICS = 'webapp/static/dump/unique_metrics.json'
 # This is the number of processes that the cloudbrain analyzer will spawn.
 # Analysis is a very CPU-intensive procedure. You will see optimal results
 # if you set ANALYZER_PROCESSES to several less than the total number of
-# CPUs on your box. Be sure to leave some CPU room for the Horizon workers,
+# CPUs on your box. Be sure to leave some CPU room for the pipeline workers,
 # and for Redis.
 ANALYZER_PROCESSES = 5
 
@@ -163,24 +163,24 @@ PAGERDUTY_OPTS = {
 
 
 """
-Horizon settings
+pipeline settings
 """
-# This is the number of worker processes that will consume from the Horizon
+# This is the number of worker processes that will consume from the pipeline
 # queue.
 WORKER_PROCESSES = 2
 
-# The IP address for Horizon to listen on.  Defaults to gethostname()
-HORIZON_IP = '50.18.206.168'
+# The IP address for pipeline to listen on.  Defaults to gethostname()
+# pipeline_IP = '0.0.0.0'
 
 # This is the port that listens for Graphite pickles over TCP, sent by Graphite's
 # carbon-relay agent.
 PICKLE_PORT = 2024
 
 # This is the port that listens for Messagepack-encoded UDP packets.
-UDP_PORT = 2025
+UDP_PORT = 8888
 
 # This is how big a 'chunk' of metrics will be before they are added onto
-# the shared queue for processing into Redis. If you are noticing that Horizon
+# the shared queue for processing into Redis. If you are noticing that pipeline
 # is having trouble consuming metrics, try setting this value a higher.
 CHUNK_SIZE = 10
 
@@ -204,7 +204,7 @@ ROOMBA_PROCESSES = 1
 # FULL_DURATION + ROOMBA_GRACE_TIME
 ROOMBA_GRACE_TIME = 600
 
-# The Horizon agent will ignore incoming datapoints if their timestamp
+# The pipeline agent will ignore incoming datapoints if their timestamp
 # is older than MAX_RESOLUTION seconds ago.
 MAX_RESOLUTION = 1000
 
@@ -231,7 +231,7 @@ Webapp settings
 """
 
 # The IP address for the webapp
-WEBAPP_IP = '50.18.206.168'
+WEBAPP_IP = '127.0.0.1'
 
 # The port for the webapp
 WEBAPP_PORT = 1500

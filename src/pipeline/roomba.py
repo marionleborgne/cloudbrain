@@ -9,7 +9,7 @@ from time import time, sleep
 import logging
 import settings
 
-logger = logging.getLogger("HorizonLog")
+logger = logging.getLogger("pipelineLog")
 
 
 class Roomba(Thread):

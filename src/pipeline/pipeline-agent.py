@@ -17,16 +17,16 @@ from worker import Worker
 # TODO: http://stackoverflow.com/questions/6728236/exception-thrown-in-multiprocessing-pool-not-detected
 
 
-class Horizon():
+class pipeline():
     def __init__(self):
         self.stdin_path = '/dev/null'
-        self.stdout_path = settings.LOG_PATH + '/horizon.log'
-        self.stderr_path = settings.LOG_PATH + '/horizon.log'
-        self.pidfile_path = settings.PID_PATH + '/horizon.pid'
+        self.stdout_path = settings.LOG_PATH + '/pipeline.log'
+        self.stderr_path = settings.LOG_PATH + '/pipeline.log'
+        self.pidfile_path = settings.PID_PATH + '/pipeline.pid'
         self.pidfile_timeout = 5
 
     def run(self):
-        logger.info('starting horizon agent')
+        logger.info('starting pipeline agent')
         listen_queue = Queue(maxsize=settings.MAX_QUEUE_SIZE)
         pid = getpid()
 
@@ -62,7 +62,7 @@ class Horizon():
 
 if __name__ == "__main__":
     """
-    Start the Horizon agent.
+    Start the pipeline agent.
     """
     if not isdir(settings.PID_PATH):
         print 'pid directory does not exist at %s' % settings.PID_PATH
@@ -72,18 +72,18 @@ if __name__ == "__main__":
         print 'log directory does not exist at %s' % settings.LOG_PATH
         sys.exit(1)
 
-    horizon = Horizon()
+    pipeline = pipeline()
 
-    logger = logging.getLogger("HorizonLog")
+    logger = logging.getLogger("pipelineLog")
     logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter("%(asctime)s :: %(process)s :: %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
-    handler = logging.FileHandler(settings.LOG_PATH + '/horizon.log')
+    handler = logging.FileHandler(settings.LOG_PATH + '/pipeline.log')
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
     if len(sys.argv) > 1 and sys.argv[1] == 'run':
-        horizon.run()
+        pipeline.run()
     else:
-        daemon_runner = runner.DaemonRunner(horizon)
+        daemon_runner = runner.DaemonRunner(pipeline)
         daemon_runner.daemon_context.files_preserve = [handler.stream]
         daemon_runner.do_action()

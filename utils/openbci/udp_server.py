@@ -9,11 +9,12 @@ Requires:
 
 import argparse
 import cPickle as pickle
-import json
-import open_bci
 import socket
-import msgpack
 import time
+
+import msgpack
+
+from utils.openbci import open_bci
 
 
 parser = argparse.ArgumentParser(

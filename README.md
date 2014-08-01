@@ -4,18 +4,20 @@ Upload your brainwaves to the cloud. Detect patterns and anomalies :-)
 
 ![x](https://raw.github.com/marionleborgne/cloudbrain/master/screenshot.png)
 
-Loosely adapted from Etsy's Skyline. 
+Loosely adapted from Skyline.
 
 ## CloudBrain Architecture
-![x](https://raw.github.com/marionleborgne/cloudbrain/master/architecture.png)
+![x](https://raw.github.com/marionleborgne/cloudbrain/master/Cloudbrain.png)
 
 
-## How to feed Cloudbrain with openBCI data
+## How to feed Cloudbrain with [OpenBCI](http://openbci.com) data
 
-1. `cd open_bci`
+![x](https://raw.github.com/marionleborgne/cloudbrain/master/openbci.png)
+
+1. `cd utils/openbci`
 2. run `udp_server.py` to send openBCI brain waves data via UDP.
 
-Note: Make sure that Horizon (the data pipeline) is listening on the same port as the one used by OpenBCI UDP Server :-)
+Note: Make sure that pipeline (the data pipeline) is listening on the same port as the one used by OpenBCI UDP Server :-)
 
 ## Install
 
@@ -50,7 +52,7 @@ sudo mkdir /var/dump/
 
 * `cd cloudbrain/bin`
 * `sudo redis-server redis.conf`
-* `sudo ./horizon.d start`
+* `sudo ./pipeline.d start`
 * `sudo ./analyzer.d start`
 * `sudo ./webapp.d start`
 
@@ -72,7 +74,7 @@ got, run this:
 cd utils
 python seed_data.py
 ```
-This will ensure that the Horizon
+This will ensure that the pipeline
 service is properly set up and can receive data. 
 
 Once you get real data flowing through your system, the Analyzer will be able

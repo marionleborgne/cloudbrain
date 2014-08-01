@@ -27,8 +27,8 @@ class NoDataException(Exception):
 
 
 def seed():
-    print 'Loading data over UDP via Horizon...'
-    metric = 'horizon.test.udp'
+    print 'Loading data over UDP via pipeline...'
+    metric = 'pipeline.test.udp'
     metric_set = 'unique_metrics'
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -78,10 +78,10 @@ def seed():
             if x is None:
                 raise NoDataException
 
-        print "Congratulations! The data made it in. The Horizon pipeline seems to be working."
+        print "Congratulations! The data made it in. The pipeline pipeline seems to be working."
 
     except NoDataException:
-        print "Woops, looks like the metrics didn't make it into Horizon. Try again?"
+        print "Woops, looks like the metrics didn't make it into pipeline. Try again?"
 
 if __name__ == "__main__":
     seed()
