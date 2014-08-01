@@ -33,7 +33,7 @@ def seed():
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    nbPoints = 86400
+    nbPoints = 300
     end = int(time.time())
     start = int(end - nbPoints)
     anomaly_start_time = (end - 60)
@@ -53,7 +53,7 @@ def seed():
 
         print (metric, datapoint)
         packet = msgpack.packb((metric, datapoint))
-        sock.sendto(packet, (socket.gethostname(), settings.UDP_PORT))
+        sock.sendto(packet, ("localhost", settings.UDP_PORT))
 
     print "Connecting to Redis..."
     r = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)

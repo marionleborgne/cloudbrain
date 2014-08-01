@@ -76,7 +76,7 @@ class Listen(Process):
             self.ip = settings.pipeline_IP
         except AttributeError:
             # Default for backwards compatibility
-            self.ip = "localhost"
+            self.ip = socket.gethostname("localhost")
         self.port = port
         self.q = queue
         self.daemon = True
@@ -123,6 +123,7 @@ class Listen(Process):
         Listen for pickles over tcp
         """
         while 1:
+
             try:
                 # Set up the TCP listening socket
                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -172,9 +173,15 @@ class Listen(Process):
         Listen over udp for MessagePack strings
         """
         while 1:
+
+            logger.info('listening over udp on port %s' %  self.port)
             try:
-                s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-                s.bind((self.ip, self.port))
+
+                ANY = socket.gethostbyname('localhost')
+                s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM,socket.IPPROTO_UDP)
+                s.bind((ANY,self.port))
+                s.setsockopt(socket.IPPROTO_IP,socket.IP_MULTICAST_TTL,255)
+
                 logger.info('listening over udp for messagepack on %s' % self.port)
 
                 chunk = []
@@ -182,6 +189,7 @@ class Listen(Process):
                     self.check_if_parent_is_alive()
                     data, addr = s.recvfrom(1024)
                     metric = unpackb(data)
+                    logger.info('received UDP packet on %s. metric: %s ' %(self.port, metric))
                     chunk.append(metric)
 
                     # Queue the chunk and empty the variable

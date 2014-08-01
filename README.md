@@ -7,7 +7,7 @@ Upload your brainwaves to the cloud. Detect patterns and anomalies :-)
 Loosely adapted from Skyline.
 
 ## CloudBrain Architecture
-![x](https://raw.github.com/marionleborgne/cloudbrain/master/Cloudbrain.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/Cloubrain.png)
 
 
 ## How to feed Cloudbrain with [OpenBCI](http://openbci.com) data
