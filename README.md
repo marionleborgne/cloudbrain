@@ -2,6 +2,8 @@
 
 Upload your brainwaves to the cloud. Detect patterns and anomalies :-)
 
+Common brain waves patterns:
+
 ![x](http://www.activemindsglobal.com/wp-content/uploads/BrainwaveStates2.png)
 
 Adapted from Skyline.
