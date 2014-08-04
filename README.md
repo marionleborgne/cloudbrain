@@ -2,9 +2,7 @@
 
 Upload your brainwaves to the cloud. Detect patterns and anomalies :-)
 
-![x](https://raw.github.com/marionleborgne/cloudbrain/master/screenshot.png)
-
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/Cloubrain.png)
+![x](http://www.activemindsglobal.com/wp-content/uploads/BrainwaveStates2.png)
 
 Adapted from Skyline.
 
