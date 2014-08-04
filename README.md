@@ -6,6 +6,10 @@ Common brain waves patterns:
 
 ![x](http://www.activemindsglobal.com/wp-content/uploads/BrainwaveStates2.png)
 
+Anomalous spikes:
+
+![x](http://www.element14.com/community/servlet/JiveServlet/showImage/2-99598-190868/55bc41df1193bd562a6b4ea6b5db2bf9_large.jpg)
+
 Adapted from Skyline.
 
 ## How to feed Cloudbrain with [OpenBCI](http://openbci.com) data
