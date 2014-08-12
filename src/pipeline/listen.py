@@ -76,7 +76,7 @@ class Listen(Process):
             self.ip = settings.pipeline_IP
         except AttributeError:
             # Default for backwards compatibility
-            self.ip = socket.gethostname("localhost")
+            self.ip = socket.gethostname()
         self.port = port
         self.q = queue
         self.daemon = True
