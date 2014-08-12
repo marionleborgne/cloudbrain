@@ -16,7 +16,7 @@ Adapted from Skyline.
 
 ![x](https://raw.github.com/marionleborgne/cloudbrain/master/openbci.png)
 
-1. `cd utils/openbci`
+1. `cd utils`
 2. run `udp_server.py` to send openBCI brain waves data via UDP.
 
 Note: Make sure that pipeline (the data pipeline) is listening on the same port as the one used by OpenBCI UDP Server :-)

@@ -63,7 +63,7 @@ UNIQUE_METRICS = 'webapp/static/dump/unique_metrics.json'
 # if you set ANALYZER_PROCESSES to several less than the total number of
 # CPUs on your box. Be sure to leave some CPU room for the pipeline workers,
 # and for Redis.
-ANALYZER_PROCESSES = 5
+ANALYZER_PROCESSES = 1
 
 # This is the duration, in seconds, for a metric to become 'stale' and for
 # the analyzer to ignore it until new datapoints are added. 'Staleness' means
@@ -167,10 +167,10 @@ pipeline settings
 """
 # This is the number of worker processes that will consume from the pipeline
 # queue.
-WORKER_PROCESSES = 2
+WORKER_PROCESSES = 1
 
 # The IP address for pipeline to listen on.  Defaults to gethostname()
-# pipeline_IP = '0.0.0.0'
+pipeline_IP = '0.0.0.0'
 
 # This is the port that listens for Graphite pickles over TCP, sent by Graphite's
 # carbon-relay agent.

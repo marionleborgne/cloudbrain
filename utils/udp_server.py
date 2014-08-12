@@ -13,8 +13,11 @@ import socket
 import time
 
 import msgpack
+import sys
+from os.path import dirname, abspath
 
-from utils.openbci import open_bci
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
+import open_bci
 
 
 parser = argparse.ArgumentParser(
@@ -38,7 +41,7 @@ parser.add_argument(
 parser.add_argument(
     '--serial',
     help='The serial port to communicate with the OpenBCI board.',
-    default='/dev/tty.usbmodem1451')
+    default='/dev/tty.usbmodem1411')
 parser.add_argument(
     '--baud',
     help='The baud of the serial connection with the OpenBCI board.',
