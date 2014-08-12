@@ -131,7 +131,7 @@ class Listen(Process):
                 s.bind((self.ip, self.port))
                 s.setblocking(1)
                 s.listen(5)
-                logger.info('listening over tcp for pickles on %s' % self.port)
+                logger.info('listening over tcp for pickles on port %s and ip %s' %(self.port, self.ip))
 
                 (conn, address) = s.accept()
                 logger.info('connection from %s:%s' % (address[0], self.port))
@@ -177,12 +177,12 @@ class Listen(Process):
             logger.info('listening over udp on port %s' %  self.port)
             try:
 
-                ANY = socket.gethostbyname('localhost')
+                ANY = socket.gethostbyname(self.ip)
                 s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM,socket.IPPROTO_UDP)
                 s.bind((ANY,self.port))
                 s.setsockopt(socket.IPPROTO_IP,socket.IP_MULTICAST_TTL,255)
 
-                logger.info('listening over udp for messagepack on %s' % self.port)
+                logger.info('listening over udp for messagepack on port %s and ip %s' %(self.port, self.ip))
 
                 chunk = []
                 while 1:
