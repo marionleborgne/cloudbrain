@@ -28,7 +28,7 @@ class NoDataException(Exception):
 
 def seed():
     print 'Loading data over UDP via pipeline...'
-    metric = 'pipeline.test.ebrain.udp'
+    metric = 'test.channel-%s'
     metric_set = 'unique_metrics'
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -36,24 +36,20 @@ def seed():
     nbPoints = 300
     end = int(time.time())
     start = int(end - nbPoints)
-    anomaly_start_time = (end - 60)
-    anomaly_end_time = end
 
+    for k in xrange (7):
+        for i in xrange(start, end):
+            datapoint = []
+            datapoint.append(i)
 
-    for i in xrange(start, end):
-        datapoint = []
-        datapoint.append(i)
+            value = 100 + random.random() * 100
 
-        if ((i > anomaly_start_time) and (i < anomaly_end_time)):
-            value = int (900 + random.uniform(1,10))
-        else:
-            value =  int (200 + random.uniform(1,10))
+            datapoint.append(value)
 
-        datapoint.append(value)
-
-        print (metric, datapoint)
-        packet = msgpack.packb((metric, datapoint))
-        sock.sendto(packet, ('data.ebrain.io', settings.UDP_PORT))
+            metric_name = metric % k
+            print (metric_name, datapoint)
+            packet = msgpack.packb((metric_name, datapoint))
+            sock.sendto(packet, ('data.ebrain.io', settings.UDP_PORT))
 
 
 if __name__ == "__main__":

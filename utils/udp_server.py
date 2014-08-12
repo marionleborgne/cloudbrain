@@ -16,10 +16,6 @@ import msgpack
 import sys
 from os.path import dirname, abspath
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
-import open_bci
-
-
 parser = argparse.ArgumentParser(
     description='Run a UDP server streaming OpenBCI data.')
 parser.add_argument(
@@ -46,11 +42,19 @@ parser.add_argument(
     '--baud',
     help='The baud of the serial connection with the OpenBCI board.',
     default='115200')
+parser.add_argument(
+    '--user_name',
+    help='The name of the user sending data.',
+    default='unknown_user')
+parser.add_argument(
+    '--mock',
+    action='store_true',
+    help='Enable mock. Will send mock data without an openBCI board connected.')
 
 
 class UDPServer(object):
 
-  def __init__(self, ip, port, json):
+  def __init__(self, ip, port, json, user):
     self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     self.ip = ip
     self.port = port
@@ -58,34 +62,37 @@ class UDPServer(object):
     self.server = socket.socket(
         socket.AF_INET, # Internet
         socket.SOCK_DGRAM)
-
+    self.user = user
 
 
   def send_data(self, data):
     self.server.sendto(data, (self.ip, self.port))
 
   def handle_sample(self, sample):
+    print "sample: %s" %sample
     datapoint = sample.channels
     nb_channels = len(datapoint)
 
-    if True:
-      # Just send channel data.
-      timestamp = int (time.time())
-      for i in xrange(nb_channels):
-        metric = "channel-%d" %i
-        packet = msgpack.packb((metric, [timestamp, datapoint[i]]))
-        #self.send_data(packet)
-        self.sock.sendto(packet, ("localhost", 8888))
-        print "sent packet via UDP for metric %s" % metric
-
-    else:
-      # Pack up and send the whole OpenBCISample object.
-      self.send_data(pickle.dumps(sample))
+    # Just send channel data.
+    timestamp = int (time.time())
+    for i in xrange(nb_channels):
+      metric = "%s.channel-%d" %(self.user, i)
+      packet = msgpack.packb((metric, [timestamp, datapoint[i]]))
+      self.sock.sendto(packet, ("data.ebrain.io", 8888))
+      print "sent packet via UDP for metric %s" % metric
 
 
 args = parser.parse_args()
+
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
+if args.mock:
+  import mock_open_bci as open_bci
+  print "Mock enabled. Importing 'mock_open_bci' instead of 'open_bci'"
+else:
+  import open_bci
+
 obci = open_bci.OpenBCIBoard(args.serial, int(args.baud))
 if args.filter_data:
   obci.filter_data = True
-sock_server = UDPServer(args.host, int(args.port), args.json)
+sock_server = UDPServer(args.host, int(args.port), args.json, args.user_name)
 obci.start(sock_server.handle_sample)
