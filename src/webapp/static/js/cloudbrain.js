@@ -18,10 +18,10 @@ var handle_data = function(data) {
     for (i in data) {
         metric = data[i];
         name = metric[1];
-        //anomalous_point = metric[0]
+        anomalous_point = metric[0]
         // Add a space after the metric name to make each unique
         to_append = "<div class='sub'><div class='name'>" + name + " </div></a>&nbsp;&nbsp;";
-        to_append += "<div class='count'>" + parseInt(metric[0]) + "</div>";
+        //to_append += "<div class='count'>" + parseInt(anomalous_point) + "</div>";
         $('#metrics_listings').append(to_append);
     }
 
