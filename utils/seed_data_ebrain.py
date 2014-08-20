@@ -2,7 +2,7 @@
 
 import json
 import os
-
+import math
 import socket
 import sys
 import time
@@ -28,21 +28,21 @@ class NoDataException(Exception):
 
 def seed():
     print 'Loading data over UDP via pipeline...'
-    metric = 'test.channel-%s'
+    metric = 'marion.channel-%s'
     metric_set = 'unique_metrics'
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    nbPoints = 300
+    nbPoints = 3600
     end = int(time.time())
     start = int(end - nbPoints)
 
-    for k in xrange (7):
+    for k in xrange(7):
         for i in xrange(start, end):
             datapoint = []
             datapoint.append(i)
 
-            value = 100 + random.random() * 100
+            value = 50 + math.sin(i*0.1) + random.random()
 
             datapoint.append(value)
 
@@ -50,7 +50,8 @@ def seed():
             print (metric_name, datapoint)
             packet = msgpack.packb((metric_name, datapoint))
             sock.sendto(packet, ('data.ebrain.io', settings.UDP_PORT))
-
+        time.sleep(1)
+            
 
 if __name__ == "__main__":
     seed()
