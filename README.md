@@ -75,4 +75,4 @@ Once you get real data flowing through your system, the Analyzer will be able
 start analyzing for anomalies!
 
 ##Licence
-CloudBrain has been adapted from Skyline, a tool for server monitoring. The MIT licence is included [here](https://github.com/marionleborgne/cloudbrain/blob/master/LICENSE.md).
+CloudBrain has been adapted from Skyline, a monitoring tool for cloud infrastructures. The MIT licence is included [here](https://github.com/marionleborgne/cloudbrain/blob/master/LICENSE.md). 
