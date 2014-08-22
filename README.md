@@ -1,16 +1,9 @@
 ## CloudBrain
 
-Upload your brainwaves to the cloud. Detect patterns and anomalies :-)
+Real-time data analysis of brainwaves in the cloud. Detect patterns and map your mind states to actions.
 
-Common brain waves patterns:
+The [EEG](http://en.wikipedia.org/wiki/Electroencephalography) data (brainwaves) currently comes from the [OpenBCI](http://openbci.com) board - an affordable open-source EEG headset.  In reality, you can virtualy send any data to cloudbrain. For more info, see [Getting Data Into CloudBrain](http://ebrain.io/getting-data-into-cloudbrain). Currently, there is only one connector -  collecting data from OpenBCI. But since these connectors are vey easy to make, I am hopping to have more biosensors feeding CloudBrain with data soon. The breathing sensor [Spire](https://spire.io/) would be a good one.
 
-![x](http://www.activemindsglobal.com/wp-content/uploads/BrainwaveStates2.png)
-
-Anomalous spikes:
-
-![x](http://www.element14.com/community/servlet/JiveServlet/showImage/2-99598-190868/55bc41df1193bd562a6b4ea6b5db2bf9_large.jpg)
-
-Adapted from Skyline.
 
 ## How to feed Cloudbrain with [OpenBCI](http://openbci.com) data
 
