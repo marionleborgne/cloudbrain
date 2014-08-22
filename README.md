@@ -4,7 +4,6 @@ Real-time data analysis of brainwaves in the cloud. Detect patterns and map your
 
 The [EEG](http://en.wikipedia.org/wiki/Electroencephalography) data (brainwaves) currently comes from the [OpenBCI](http://openbci.com) board - an affordable open-source EEG headset.   In reality, you can virtualy send any data to cloudbrain.  For more info, see [Getting Data Into CloudBrain](http://ebrain.io/getting-data-into-cloudbrain).   Currently, there is only one connector type (the OpenBCI connector).  See `udp_server.py`.   But since these connectors are vey easy to make, I am hopping to have more biosensors feeding CloudBrain with data soon.  For example, the breathing sensor [Spire](https://spire.io/) would be a good one.
 
-
 ## How to feed Cloudbrain with [OpenBCI](http://openbci.com) data
 
 ![x](https://raw.github.com/marionleborgne/cloudbrain/master/openbci.png)
@@ -74,3 +73,6 @@ service is properly set up and can receive data.
 
 Once you get real data flowing through your system, the Analyzer will be able
 start analyzing for anomalies!
+
+##Licence
+CloudBrain has been adapted from Skyline, a tool for server monitoring. The MIT licence is included [here]().
