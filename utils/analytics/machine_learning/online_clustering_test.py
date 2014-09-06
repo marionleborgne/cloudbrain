@@ -43,7 +43,7 @@ def cluster(K_max):
     return clusters
 
 if __name__ == '__main__':
-    K_max = 2 # upper bound for the number clusters to detect
+    K_max = 4 # upper bound for the number clusters to detect
     clusters = cluster(K_max)
 
     for cluster in clusters:

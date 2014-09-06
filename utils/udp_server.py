@@ -35,14 +35,6 @@ parser.add_argument(
     help='The port to listen on.',
     default='8888')
 parser.add_argument(
-    '--serial',
-    help='The serial port to communicate with the OpenBCI board.',
-    default='/dev/tty.usbmodem1411')
-parser.add_argument(
-    '--baud',
-    help='The baud of the serial connection with the OpenBCI board.',
-    default='115200')
-parser.add_argument(
     '--user_name',
     help='The name of the user sending data.',
     default='unknown_user')
@@ -91,7 +83,7 @@ if args.mock:
 else:
   import open_bci
 
-obci = open_bci.OpenBCIBoard(args.serial, int(args.baud))
+obci = open_bci.OpenBCIBoard()
 if args.filter_data:
   obci.filter_data = True
 sock_server = UDPServer(args.host, int(args.port), args.json, args.user_name)
