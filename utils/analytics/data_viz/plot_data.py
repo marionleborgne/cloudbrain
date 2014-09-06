@@ -8,7 +8,7 @@ def getColumn(filename, column):
     return [result[column] for result in results]
 
 
-data_file = "data/jim_10filt.csv"
+data_file = "../data/jim_10filt.csv"
 
 time = getColumn(data_file,8)
 channel_0 = getColumn(data_file,0)

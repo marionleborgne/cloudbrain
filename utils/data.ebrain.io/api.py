@@ -20,8 +20,5 @@ def user_profile(label):
     testData.pop('_id', None)
     return json.dumps(testData)
 
-@app.route('/label_sample/<label>')
-
-
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)

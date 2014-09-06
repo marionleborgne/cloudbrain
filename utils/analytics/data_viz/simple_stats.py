@@ -3,8 +3,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-#df = pd.read_csv("data/motor_image1.csv", index_col = 'time')
-df = pd.read_csv("data/jim_10filt.csv", index_col = 'time', lineterminator = "\r\n")
+#df = pd.read_csv("../data/motor_image1.csv", index_col = 'time')
+df = pd.read_csv("../data/jim_10filt.csv", index_col = 'time')
 
 print df
 
