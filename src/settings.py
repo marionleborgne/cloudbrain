@@ -28,7 +28,7 @@ FULL_DURATION = 86400
 # This is the duration of the 'mini' namespace, if you are also using the
 # Oculus service. It is also the duration of data that is displayed in the
 # web app 'mini' view.
-MINI_DURATION = 3600
+MINI_DURATION = 5
 
 # If you have a Graphite host set up, set this metric to get graphs on
 # cloudbrain and pipeline. Don't include http:// since this is used for carbon host as well.
@@ -135,7 +135,7 @@ SMTP_OPTS = {
     # recipients is a dictionary mapping metric names
     # (exactly matching those listed in ALERTS) to an array of e-mail addresses
     "recipients": {
-        "cloudbrain": ["abe@etsy.com", "you@yourcompany.com"],
+        "cloudbrain": ["marion@ebrain.io", "you@yourcompany.com"],
     },
 }
 
