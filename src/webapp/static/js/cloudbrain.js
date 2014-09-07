@@ -54,7 +54,7 @@ var handle_interaction = function() {
         console.log("/api?metric=" + FULL_NAMESPACE + "" + selected);
         big_data = JSON.parse(d)['results'];
         big_graph.updateOptions( { 'file': big_data } );
-        offset = (new Date().getTime() / 1000) - 5;
+        offset = (new Date().getTime() / 1000) - 3600;
         mini_data = big_data.filter(function (value) {
           return value[0] > offset;
         });
