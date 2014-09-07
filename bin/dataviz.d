@@ -18,20 +18,19 @@ start () {
 
 stop () {
     # TODO: write a real kill script
-    ps aux | grep 'pipeline-agent.py start' | grep -v grep | awk '{print $2 }' | xargs sudo kill -9
-    /usr/bin/env python $BASEDIR/src/pipeline/pipeline-agent.py stop
+    ps aux | grep 'nodejs server.js' | grep -v grep | awk '{print $2 }' | xargs sudo kill -9
         RETVAL=$?
         if [[ $RETVAL -eq 0 ]]; then
-            echo "stopped pipeline-agent"
+            echo "stopped dataviz-agent"
         else
-            echo "failed to stop pipeline-agent"
+            echo "failed to stop dataviz-agent"
         fi
         return $RETVAL
 }
 
 run () {
-    echo "running pipeline"
-    /usr/bin/env python $BASEDIR/src/pipeline/pipeline-agent.py run
+    echo "running dataviz"
+    /usr/bin/env nodejs $BASEDIR/src/dataviz/server.js
 }
 
 # See how we were called.
