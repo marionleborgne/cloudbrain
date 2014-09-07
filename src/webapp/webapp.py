@@ -39,7 +39,7 @@ def app_settings():
 @app.route("/api", methods=['GET'])
 def data():
     metric = request.args.get('metric', None)
-    start = request.args.get('start', None)
+    #start = request.args.get('start', None)
     try:
         raw_series = REDIS_CONN.get(settings.FULL_NAMESPACE + metric)
         if not raw_series:
@@ -48,7 +48,7 @@ def data():
         else:
             unpacker = Unpacker(use_list = False)
             unpacker.feed(raw_series)
-            timeseries = [item[:2] for item in unpacker if (item[0] > start)]
+            timeseries = [item[:2] for item in unpacker]
             resp = "handle_data(%s)" % str(json.dumps({'results': timeseries}))
             return resp, 200
     except Exception as e:
