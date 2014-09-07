@@ -71,7 +71,7 @@ class UDPServer(object):
       metric = "%s.channel-%d" %(self.user, i)
       packet = msgpack.packb((metric, [timestamp, datapoint[i]]))
       self.sock.sendto(packet, ("data.ebrain.io", 8888))
-      print "sent packet via UDP for metric %s" % metric
+      
 
 
 args = parser.parse_args()
