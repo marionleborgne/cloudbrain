@@ -15,6 +15,7 @@ import settings
 REDIS_CONN = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)
 
 app = Flask(__name__)
+
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
 
@@ -47,7 +48,7 @@ def data():
             unpacker = Unpacker(use_list = False)
             unpacker.feed(raw_series)
             timeseries = [item[:2] for item in unpacker]
-            resp = json.dumps({'results': timeseries})
+            resp = "handle_data(%s)" % str(json.dumps({'results': timeseries}))
             return resp, 200
     except Exception as e:
         error = "Error: " + e

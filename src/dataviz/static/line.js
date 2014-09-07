@@ -44,8 +44,23 @@ function nrandn(n) {
     return out;
 }
 
-d = nrandn(1000);
-data = d;
+data = '';
+function handle_data(d) {
+    data = d;
+    console.log('handled!');
+    console.log(data);
+}
+
+// The callback to this function is handle_data()
+$.ajax({
+    url: 'http://data.ebrain.io:1500/api?metric=marion.channel-0',
+    dataType: 'jsonp',
+    jsonp: false,
+    jsonpCallback: "handle_data"
+});
+
+// d = nrandn(1000);
+// data = d;
 // data = d.map(function(x, idx) {
 //     return {time: idx, data: x};
 // });
@@ -78,7 +93,7 @@ var path = svg.append("path")
 
 var idx = 1000;
 
-tick();
+// tick();
 
 function tick() {
     

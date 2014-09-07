@@ -1,7 +1,7 @@
 {
-"name": "cloudbrain-viz",
-"dependencies": {
-"express": "*",
-"cors": "*"
-}
+    "name": "cloudbrain-viz",
+    "dependencies": {
+        "express": "*",
+        "cors": "*"
+    }
 }
