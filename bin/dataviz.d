@@ -6,7 +6,7 @@ BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
 RETVAL=0
 
 start () {
-    /usr/bin/env nodejs $BASEDIR/src/dataviz/server.js
+    /usr/bin/env nodejs $BASEDIR/src/dataviz/server.js &
         RETVAL=$?
         if [[ $RETVAL -eq 0 ]]; then
             echo "started dataviz-agent"

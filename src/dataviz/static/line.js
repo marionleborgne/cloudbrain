@@ -19,8 +19,8 @@ var yAxis = d3.svg.axis()
     .orient("left");
 
 var line = d3.svg.line()
-    .x(function(d, i) { return x(i); })
-    .y(function(d) { return y(d); });
+    .x(function(d) { return x(d[0]); })
+    .y(function(d) { return y(d[1]); });
 
 var svg = d3.select("#graph1").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -44,41 +44,58 @@ function nrandn(n) {
     return out;
 }
 
-d = nrandn(1000);
-data = d;
-// data = d.map(function(x, idx) {
-//     return {time: idx, data: x};
-// });
+data = '';
+function handle_data(d) {
+    data = d["results"];
+    console.log('handled!');
+    console.log(data);
 
-// console.log(data);
+    // d = nrandn(1000);
+    // data = d;
+    // data = d.map(function(x, idx) {
+    //     return {time: idx, data: x};
+    // });
 
-x.domain(d3.extent(data, function(d, i) { return i; }));
-y.domain(d3.extent(data));
-// y.range(d3.extent(data));
+    // console.log(data);
 
-// svg.append("g")
-//     .attr("class", "x axis")
-//     .attr("transform", "translate(0," + height + ")")
-//     .call(xAxis);
+    x.domain(d3.extent(data, function(d) { return d[0]; }));
+    y.domain(d3.extent(data, function(d) { return d[1]; }));
+    // y.range(d3.extent(data));
 
-svg.append("g")
-    .attr("class", "y axis")
-    .call(yAxis)
-    .append("text")
-    .attr("transform", "rotate(-90)")
-// .attr("y", 6)
-// .attr("dy", ".71em")
-    .style("text-anchor", "end")
-// .text("Price ($)");
+    // svg.append("g")
+    //     .attr("class", "x axis")
+    //     .attr("transform", "translate(0," + height + ")")
+    //     .call(xAxis);
 
-var path = svg.append("path")
-    .datum(data)
-    .attr("class", "line")
-    .attr("d", line);
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+    // .attr("y", 6)
+    // .attr("dy", ".71em")
+        .style("text-anchor", "end")
+    // .text("Price ($)");
+
+    var path = svg.append("path")
+        .datum(data)
+        .attr("class", "line")
+        .attr("d", line);
+}
+
+// The callback to this function is handle_data()
+$.ajax({
+    url: 'http://data.ebrain.io:1500/api?metric=marion.channel-0',
+    dataType: 'jsonp',
+    jsonp: false,
+    jsonpCallback: "handle_data"
+});
+
+
 
 var idx = 1000;
 
-tick();
+// tick();
 
 function tick() {
     
