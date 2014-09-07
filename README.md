@@ -46,11 +46,12 @@ sudo mkdir /var/dump/
 
 5. Download and install the latest Redis release
 
-6. install node, npm and express
-* `sudo apt-get install node npm`
-* `cd cloudbrain/src/dataviz`
-* `npm install express`
-
+6. install node, npm, and express
+```
+sudo apt-get install node npm
+cd cloudbrain/src/dataviz
+sudo npm install express
+```
 
 7. Start 'er up
 
