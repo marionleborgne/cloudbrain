@@ -46,17 +46,24 @@ sudo mkdir /var/dump/
 
 5. Download and install the latest Redis release
 
-6. Start 'er up
+6. install node, npm and express
+* `sudo apt-get install node npm`
+* `cd cloudbrain/src/dataviz`
+* `npm install express`
+
+
+7. Start 'er up
 
 * `cd cloudbrain/bin`
 * `sudo redis-server redis.conf`
 * `sudo ./pipeline.d start`
 * `sudo ./analyzer.d start`
 * `sudo ./webapp.d start`
+* `sudo ./dataviz.d start`
 
 By default, the webapp is served on port 1500.
 
-7. Check the log files to ensure things are running.
+9. Check the log files to ensure things are running.
 
 ### Gotchas
 
