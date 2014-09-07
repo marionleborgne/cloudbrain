@@ -66,12 +66,13 @@ class UDPServer(object):
     nb_channels = len(datapoint)
 
     # Just send channel data.
-    timestamp = int (time.time())
+    timestamp = int (time.time() * 1000)
     for i in xrange(nb_channels):
       metric = "%s.channel-%d" %(self.user, i)
       packet = msgpack.packb((metric, [timestamp, datapoint[i]]))
       self.sock.sendto(packet, ("data.ebrain.io", 8888))
-      
+
+
 
 
 args = parser.parse_args()
