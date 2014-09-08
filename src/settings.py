@@ -234,4 +234,4 @@ Webapp settings
 WEBAPP_IP = '0.0.0.0'
 
 # The port for the webapp
-WEBAPP_PORT = 80
+WEBAPP_PORT = 1500
