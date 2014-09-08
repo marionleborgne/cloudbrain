@@ -15,10 +15,12 @@ import sys
 from os.path import dirname, abspath
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 import settings
+import redis
 
 from alerters import trigger_alert
 from algorithms import run_selected_algorithm
 from algorithm_exceptions import *
+import json
 
 logger = logging.getLogger("AnalyzerLog")
 
@@ -246,6 +248,15 @@ class Analyzer(Thread):
                 logger.info('sleeping due to low run time...')
                 sleep(10)
 
+def test2():
+    REDIS_CONN = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)
+
+
+    unique_metrics = list(REDIS_CONN.smembers(settings.FULL_NAMESPACE + 'unique_metrics'))
+    resp = json.dumps({'results': unique_metrics})
+    return resp, 200
+
 if __name__ == '__main__':
-    a = Analyzer(getpid())
-    a.test()
+    #a = Analyzer(getpid())
+    #a.test()
+    test2()

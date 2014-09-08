@@ -8,6 +8,8 @@ from daemon import runner
 from os.path import dirname, abspath
 from os import path
 
+
+
 # add the shared settings file to namespace
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 import settings
@@ -25,14 +27,11 @@ def index():
 @app.route("/metrics")
 def metrics():
     try:
-        raw_unique_metrics = list(REDIS_CONN.smembers(settings.FULL_NAMESPACE + 'unique_metrics'))
-        if not raw_unique_metrics:
+        unique_metrics = list(REDIS_CONN.smembers(settings.FULL_NAMESPACE + 'unique_metrics'))
+        if not unique_metrics:
             resp = json.dumps({'results': 'Error: Could not retrieve list of unique metrics'})
             return resp, 404
         else:
-            unpacker = Unpacker(use_list = False)
-            unpacker.feed(raw_unique_metrics)
-            unique_metrics = [item[:2] for item in unpacker]
             resp = json.dumps({'results': unique_metrics})
             return resp, 200
     except Exception as e:
