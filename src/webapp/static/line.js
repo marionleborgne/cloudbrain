@@ -50,7 +50,7 @@ data = [];
 $.ajax({
     // url: 'https://jsonp.nodejitsu.com/?url=http://data.ebrain.io/api?metric=marion.channel-0', // for testing
     url: '/api?metric=marion.channel-0', // in production
-    dataType: 'jsonp',
+    dataType: 'json',
     success: handle_data
 });
 
