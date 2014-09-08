@@ -1,7 +1,0 @@
-{
-name: "cloudbrain-viz",
-"dependencies": {
-"express": "*",
-"cors": "*"
-}
-}
