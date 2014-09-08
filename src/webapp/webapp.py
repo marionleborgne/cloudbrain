@@ -25,7 +25,7 @@ def index():
 @app.route("/metrics")
 def metrics():
     try:
-        raw_unique_metrics = REDIS_CONN.get(settings.FULL_NAMESPACE + "unique_metrics")
+        raw_unique_metrics = list(REDIS_CONN.smembers(settings.FULL_NAMESPACE + 'unique_metrics'))
         if not raw_unique_metrics:
             resp = json.dumps({'results': 'Error: Could not retrieve list of unique metrics'})
             return resp, 404
