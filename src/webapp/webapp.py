@@ -56,6 +56,7 @@ def app_settings():
 def data():
     metric = request.args.get('metric', None)
     start = request.args.get('start', None)
+    end = request.args.get('end', None)
     try:
         raw_series = REDIS_CONN.get(settings.FULL_NAMESPACE + metric)
         if not raw_series:
@@ -65,12 +66,20 @@ def data():
             unpacker = Unpacker(use_list = False)
             unpacker.feed(raw_series)
             timeseries = []
-            
-            if start is not None:
+
+            if (start is None) and (end is not None):
+                for datapoint in unpacker:
+                    if datapoint[0] < int(end):
+                        timeseries.append(datapoint)
+            elif (start is not None) and (end is None):
                 for datapoint in unpacker:
                     if datapoint[0] > int(start):
                         timeseries.append(datapoint)
-            else:
+            elif (start is not None) and (end is not None):
+                for datapoint in unpacker:
+                    if (datapoint[0] > int(start)) and (datapoint[0] < int(end)):
+                        timeseries.append(datapoint)
+            elif (start is None) and (end is None):
                 timeseries = [datapoint for datapoint in unpacker]
 
             resp = json.dumps({'results': timeseries})
