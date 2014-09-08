@@ -110,8 +110,8 @@ function get_metric(metric) {
 
     
     $.ajax({
-        url: 'https://jsonp.nodejitsu.com/?url=http://data.ebrain.io/api?metric=' + metric, // for testing
-        // url: '/api?metric=' + metric, // in production
+        // url: 'https://jsonp.nodejitsu.com/?url=http://data.ebrain.io/api?metric=' + metric, // for testing
+        url: '/api?metric=' + metric, // in production
         dataType: 'json',
         success: handle_data
     });
