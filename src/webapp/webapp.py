@@ -65,10 +65,13 @@ def data():
             unpacker = Unpacker(use_list = False)
             unpacker.feed(raw_series)
             timeseries = []
-            for datapoint in unpacker:
-                if datapoint[0] > start:
-                    timeseries.append(datapoint)
-            
+            if start is not None:
+                for datapoint in unpacker:
+                    if datapoint[0] > start:
+                        timeseries.append(datapoint)
+            else:
+                timeseries = [datapoint for datapoint in unpacker]
+
             resp = json.dumps({'results': timeseries})
             return resp, 200
 
