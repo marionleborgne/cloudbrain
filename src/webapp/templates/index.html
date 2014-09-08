@@ -1,25 +1,27 @@
 <!--                                                                                                                                                                                    * Licensed under the Apache License, Version 2.0 (the "License");
-    * you may not use this file except in compliance with the License.
-    * You may obtain a copy of the License at
-    *
-    * http://www.apache.org/licenses/LICENSE-2.0
-    *
-    * Unless required by applicable law or agreed to in writing, software
-    * distributed under the License is distributed on an "AS IS" BASIS,
-    * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    * See the License for the specific language governing permissions and
-    * limitations under the License.
-    * -->
+                                                                                                                                                                                        * you may not use this file except in compliance with the License.
+                                                                                                                                                                                        * You may obtain a copy of the License at
+                                                                                                                                                                                        *
+                                                                                                                                                                                        * http://www.apache.org/licenses/LICENSE-2.0
+                                                                                                                                                                                        *
+                                                                                                                                                                                        * Unless required by applicable law or agreed to in writing, software
+                                                                                                                                                                                        * distributed under the License is distributed on an "AS IS" BASIS,
+                                                                                                                                                                                        * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+                                                                                                                                                                                        * See the License for the specific language governing permissions and
+                                                                                                                                                                                        * limitations under the License.
+                                                                                                                                                                                        * -->
 
 <html>
   <head>
-    <title>Interactive Line Graph</title>
+    <title>Cloudbrain</title>
 
-    <!--
-         using JQuery for element dimensions
-         This is a small aspect of this example so it can be removed fairly easily if needed.
-      -->
-    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    
     <!--<script src="sample_data.js"></script>-->
     <!-- <script src="line-graph.js"></script> -->
     <!-- <script src="index.js"></script> -->
@@ -28,6 +30,19 @@
   </head>
 
   <body>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        Samples <span class="caret"></span>
+      </button>
+      <ul id="samples-list" class="dropdown-menu" role="menu">
+        <!-- <li><a href="#"></a></li> -->
+        <!-- <li><a href="#">Another action</a></li> -->
+        <!-- <li><a href="#">Something else here</a></li> -->
+        <!-- <li class="divider"></li> -->
+        <!-- <li><a href="#">Separated link</a></li> -->
+      </ul>
+    </div>
+
     <div id="graph1" class="aGraph"></div>
     <!-- <div id="graph2" class="aGraph"></div> -->
     <!-- <div id="graph3" class="aGraph"></div> -->
@@ -39,7 +54,7 @@
 
 
 
-    <script src="http://d3js.org/d3.v2.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="/static/line.js"></script>
   </body>
 </html>
