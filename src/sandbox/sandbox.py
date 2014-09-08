@@ -13,10 +13,12 @@ import operator
 import socket
 import sys
 from os.path import dirname, abspath
+
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 import settings
 import redis
 
+sys.path.insert(0, dirname(dirname(abspath(__file__))) + "/analyzer")
 from alerters import trigger_alert
 from algorithms import run_selected_algorithm
 from algorithm_exceptions import *
@@ -248,15 +250,32 @@ class Analyzer(Thread):
                 logger.info('sleeping due to low run time...')
                 sleep(10)
 
+REDIS_CONN = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)
+
 def test2():
-    REDIS_CONN = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)
-
-
     unique_metrics = list(REDIS_CONN.smembers(settings.FULL_NAMESPACE + 'unique_metrics'))
     resp = json.dumps({'results': unique_metrics})
     return resp, 200
 
+def test3():
+    start = 0
+
+    raw_series = REDIS_CONN.get(settings.FULL_NAMESPACE + "pipeline.test.udp")
+    if not raw_series:
+        resp = json.dumps({'results': 'Error: No metric by that name'})
+        return resp, 404
+    else:
+        unpacker = Unpacker(use_list = False)
+        unpacker.feed(raw_series)
+        timeseries = []
+        for datapoint in unpacker:
+            if datapoint[0] > start:
+                timeseries.append(datapoint)
+
+        resp = json.dumps({'results': timeseries})
+        return resp, 200
+
 if __name__ == '__main__':
     #a = Analyzer(getpid())
     #a.test()
-    test2()
+    test3()
