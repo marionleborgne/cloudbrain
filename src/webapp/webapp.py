@@ -15,13 +15,31 @@ import settings
 REDIS_CONN = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)
 
 app = Flask(__name__)
-
 app.config['PROPAGATE_EXCEPTIONS'] = True
-
 
 @app.route("/")
 def index():
     return render_template('index.html'), 200
+
+
+@app.route("/metrics")
+def metrics():
+    try:
+        raw_unique_metrics = REDIS_CONN.get(settings.FULL_NAMESPACE + "unique_metrics")
+        if not raw_unique_metrics:
+            resp = json.dumps({'results': 'Error: Could not retrieve list of unique metrics'})
+            return resp, 404
+        else:
+            unpacker = Unpacker(use_list = False)
+            unpacker.feed(raw_unique_metrics)
+            unique_metrics = [item[:2] for item in unpacker]
+            resp = json.dumps({'results': unique_metrics})
+            return resp, 200
+    except Exception as e:
+        error = "Error: " + e
+        resp = json.dumps({'results': error})
+        return resp, 500
+
 
 @app.route("/app_settings")
 def app_settings():
