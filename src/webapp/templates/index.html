@@ -21,27 +21,24 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"> -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    
-    <!--<script src="sample_data.js"></script>-->
-    <!-- <script src="line-graph.js"></script> -->
-    <!-- <script src="index.js"></script> -->
-
     <link rel="stylesheet" href="/static/style.css" type="text/css" />
   </head>
 
   <body>
+    <div class="alert alert-info alert-dismissible" role="alert">
+    <!-- <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> -->
+Loading data...</div>
+
+    <span class="metric-select">
+    Select metric
     <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-        Samples <span class="caret"></span>
+      <button type="button" id="metric-button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+         <span class="caret"></span>
       </button>
       <ul id="samples-list" class="dropdown-menu" role="menu">
-        <!-- <li><a href="#"></a></li> -->
-        <!-- <li><a href="#">Another action</a></li> -->
-        <!-- <li><a href="#">Something else here</a></li> -->
-        <!-- <li class="divider"></li> -->
-        <!-- <li><a href="#">Separated link</a></li> -->
       </ul>
     </div>
+    </span>
 
     <div id="graph1" class="aGraph"></div>
     <!-- <div id="graph2" class="aGraph"></div> -->
@@ -51,7 +48,6 @@
     <!-- <div id="graph6" class="aGraph"></div> -->
     <!-- <div id="graph7" class="aGraph"></div> -->
     <!-- <div id="graph8" class="aGraph"></div> -->
-
 
 
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
