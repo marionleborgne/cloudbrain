@@ -67,7 +67,7 @@ def data():
             timeseries = []
             if start is not None:
                 for datapoint in unpacker:
-                    if datapoint[0] > start:
+                    if datapoint[0] > int(start):
                         timeseries.append(datapoint)
             else:
                 timeseries = [datapoint for datapoint in unpacker]
