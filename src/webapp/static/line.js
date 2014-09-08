@@ -44,54 +44,105 @@ function nrandn(n) {
     return out;
 }
 
-data = '';
+data = [];
+
+// The callback to this function is handle_data()
+$.ajax({
+    // url: 'https://jsonp.nodejitsu.com/?url=http://data.ebrain.io/api?metric=marion.channel-0', // for testing
+    url: '/api?metric=marion.channel-0', // in production
+    dataType: 'jsonp',
+    success: handle_data
+});
+
+// d = nrandn(1000);
+// data = nrandn(1000).map(function(x, idx) {
+//     return [idx, x];
+// });
+
+// x.domain(d3.extent(data, function(d) { return d[0]; }));
+// y.domain(d3.extent(data, function(d) { return d[1]; }));
+
+
+svg.append("g")
+    .attr("class", "y axis")
+    .call(yAxis)
+    .append("text")
+    .attr("transform", "rotate(-90)")
+// .attr("y", 6)
+// .attr("dy", ".71em")
+    .style("text-anchor", "end")
+// .text("Price ($)");
+
+var path = svg.append("path")
+// .datum(data)
+    .attr("class", "line")
+// .attr("d", line(data));
+
+
 function handle_data(d) {
     data = d["results"];
     console.log('handled!');
     console.log(data);
 
-    // d = nrandn(1000);
-    // data = d;
-    // data = d.map(function(x, idx) {
-    //     return {time: idx, data: x};
-    // });
+    plot_data(data);
+}
 
-    // console.log(data);
-
+function plot_data(data) {
     x.domain(d3.extent(data, function(d) { return d[0]; }));
     y.domain(d3.extent(data, function(d) { return d[1]; }));
     // y.range(d3.extent(data));
 
-    // svg.append("g")
-    //     .attr("class", "x axis")
-    //     .attr("transform", "translate(0," + height + ")")
-    //     .call(xAxis);
+    svg.selectAll("g.y.axis")
+        .call(yAxis);
 
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
-        .append("text")
-        .attr("transform", "rotate(-90)")
-    // .attr("y", 6)
-    // .attr("dy", ".71em")
-        .style("text-anchor", "end")
-    // .text("Price ($)");
+    svg.selectAll("g.x.axis")
+        .call(xAxis);
 
-    var path = svg.append("path")
-        .datum(data)
-        .attr("class", "line")
-        .attr("d", line);
+    path.attr("d", line(data))
+    
 }
 
-// The callback to this function is handle_data()
-$.ajax({
-    url: '/api?metric=marion.channel-0',
-    dataType: 'jsonp',
-    jsonp: false,
-    jsonpCallback: "handle_data"
-});
+// handle_data({"results":
+//              data
+//             })
 
+channels = ["marion.channel-0",
+            "marion.channel-1",
+            "marion.channel-2",
+            "marion.channel-3",
+            "marion.channel-4",
+            "marion.channel-5",
+            "marion.channel-6",
+            "marion.channel-7"
+           ]
 
+for(var i=0; i<channels.length; i++) {
+    c = channels[i];
+    
+    $("#samples-list").append(
+        $("<li>").append(
+            $("<a>")
+                .attr("class", "sample-button")
+                .data('metric', c)
+                .append(c)
+        ));
+}
+
+$(".sample-button").click(function(e) {
+    var t = $(e.target);
+    // console.log();
+    var metric = t.data("metric");
+
+    var n = parseInt(metric.split('-')[1]);
+
+    data = nrandn(1000).map(function(x, idx) {
+        console.log(x+n);
+        return [idx, x + n];
+    });
+
+    
+    plot_data(data);
+})
 
 var idx = 1000;
 
