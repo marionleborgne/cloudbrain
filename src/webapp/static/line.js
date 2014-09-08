@@ -54,14 +54,6 @@ $.ajax({
     success: handle_data
 });
 
-// d = nrandn(1000);
-// data = nrandn(1000).map(function(x, idx) {
-//     return [idx, x];
-// });
-
-// x.domain(d3.extent(data, function(d) { return d[0]; }));
-// y.domain(d3.extent(data, function(d) { return d[1]; }));
-
 
 svg.append("g")
     .attr("class", "y axis")
@@ -74,10 +66,7 @@ svg.append("g")
 // .text("Price ($)");
 
 var path = svg.append("path")
-// .datum(data)
     .attr("class", "line")
-// .attr("d", line(data));
-
 
 function handle_data(d) {
     data = d["results"];
@@ -90,7 +79,6 @@ function handle_data(d) {
 function plot_data(data) {
     x.domain(d3.extent(data, function(d) { return d[0]; }));
     y.domain(d3.extent(data, function(d) { return d[1]; }));
-    // y.range(d3.extent(data));
 
     svg.selectAll("g.y.axis")
         .call(yAxis);
@@ -102,9 +90,6 @@ function plot_data(data) {
     
 }
 
-// handle_data({"results":
-//              data
-//             })
 
 channels = ["marion.channel-0",
             "marion.channel-1",
@@ -135,13 +120,20 @@ $(".sample-button").click(function(e) {
 
     var n = parseInt(metric.split('-')[1]);
 
-    data = nrandn(1000).map(function(x, idx) {
-        console.log(x+n);
-        return [idx, x + n];
+    $.ajax({
+        // url: 'https://jsonp.nodejitsu.com/?url=http://data.ebrain.io/api?metric=marion.channel-0', // for testing
+        url: '/api?metric=' + metric, // in production
+        dataType: 'json',
+        success: handle_data
     });
 
+    // data = nrandn(1000).map(function(x, idx) {
+    //     console.log(x+n);
+    //     return [idx, x + n];
+    // });
+
     
-    plot_data(data);
+    // plot_data(data);
 })
 
 var idx = 1000;
@@ -167,8 +159,7 @@ function tick() {
     data.shift();
     // x.domain(d3.extent(data, function(d) { return d.time; }));
 
-    idx++;
-    
+        
     // svg.select("path").datum(data);
     console.log('updated?');
 }
