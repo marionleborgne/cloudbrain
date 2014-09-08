@@ -8,6 +8,8 @@ from daemon import runner
 from os.path import dirname, abspath
 from os import path
 
+
+
 # add the shared settings file to namespace
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 import settings
@@ -25,14 +27,11 @@ def index():
 @app.route("/metrics")
 def metrics():
     try:
-        raw_unique_metrics = list(REDIS_CONN.smembers(settings.FULL_NAMESPACE + 'unique_metrics'))
-        if not raw_unique_metrics:
+        unique_metrics = list(REDIS_CONN.smembers(settings.FULL_NAMESPACE + 'unique_metrics'))
+        if not unique_metrics:
             resp = json.dumps({'results': 'Error: Could not retrieve list of unique metrics'})
             return resp, 404
         else:
-            unpacker = Unpacker(use_list = False)
-            unpacker.feed(raw_unique_metrics)
-            unique_metrics = [item[:2] for item in unpacker]
             resp = json.dumps({'results': unique_metrics})
             return resp, 200
     except Exception as e:
@@ -56,6 +55,7 @@ def app_settings():
 @app.route("/api", methods=['GET'])
 def data():
     metric = request.args.get('metric', None)
+    start = request.args.get('start', None)
     try:
         raw_series = REDIS_CONN.get(settings.FULL_NAMESPACE + metric)
         if not raw_series:
@@ -64,9 +64,14 @@ def data():
         else:
             unpacker = Unpacker(use_list = False)
             unpacker.feed(raw_series)
-            timeseries = [item[:2] for item in unpacker]
+            timeseries = []
+            for datapoint in unpacker:
+                if datapoint[0] > start:
+                    timeseries.append(datapoint)
+            
             resp = json.dumps({'results': timeseries})
             return resp, 200
+
     except Exception as e:
         error = "Error: " + e
         resp = json.dumps({'results': error})
