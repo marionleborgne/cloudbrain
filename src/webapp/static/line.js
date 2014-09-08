@@ -1,6 +1,6 @@
-var margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+var margin = {top: 20, right: 20, bottom: 30, left: 50}, 
+    width = 1000 - margin.left - margin.right,
+    height = 200 - margin.top - margin.bottom;
 
 // var parseDate = d3.time.format("%d-%b-%y").parse;
 
@@ -46,14 +46,6 @@ function nrandn(n) {
 
 data = [];
 
-// The callback to this function is handle_data()
-$.ajax({
-    // url: 'https://jsonp.nodejitsu.com/?url=http://data.ebrain.io/api?metric=marion.channel-0', // for testing
-    url: '/api?metric=marion.channel-0', // in production
-    dataType: 'json',
-    success: handle_data
-});
-
 
 svg.append("g")
     .attr("class", "y axis")
@@ -87,7 +79,8 @@ function plot_data(data) {
         .call(xAxis);
 
     path.attr("d", line(data))
-    
+
+    $(".alert").hide();
 }
 
 
@@ -113,28 +106,46 @@ for(var i=0; i<channels.length; i++) {
         ));
 }
 
+function get_metric(metric) {
+
+    
+    $.ajax({
+        url: 'https://jsonp.nodejitsu.com/?url=http://data.ebrain.io/api?metric=' + metric, // for testing
+        // url: '/api?metric=' + metric, // in production
+        dataType: 'json',
+        success: handle_data
+    });
+    
+    $(".alert").show();
+    
+    $("#metric-button").html(metric + ' <span class="caret"></span>');
+
+    
+    // data = nrandn(1000).map(function(x, idx) {
+    //     return [idx, x ];
+    // });
+
+    // setTimeout(function() {
+    //     handle_data({"results":  data});
+    // }, 3000);
+}
+
 $(".sample-button").click(function(e) {
     var t = $(e.target);
     // console.log();
     var metric = t.data("metric");
 
-    var n = parseInt(metric.split('-')[1]);
-
-    $.ajax({
-        // url: 'https://jsonp.nodejitsu.com/?url=http://data.ebrain.io/api?metric=marion.channel-0', // for testing
-        url: '/api?metric=' + metric, // in production
-        dataType: 'json',
-        success: handle_data
-    });
-
-    // data = nrandn(1000).map(function(x, idx) {
-    //     console.log(x+n);
-    //     return [idx, x + n];
-    // });
-
+    get_metric(metric);
     
     // plot_data(data);
-})
+});
+
+
+$("[data-hide]").on("click", function(){
+    $(this).closest("." + $(this).attr("data-hide")).hide();
+});
+
+get_metric(channels[0]);
 
 var idx = 1000;
 
@@ -159,7 +170,7 @@ function tick() {
     data.shift();
     // x.domain(d3.extent(data, function(d) { return d.time; }));
 
-        
+    
     // svg.select("path").datum(data);
     console.log('updated?');
 }
