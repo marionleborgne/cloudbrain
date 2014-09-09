@@ -28,7 +28,7 @@ class NoDataException(Exception):
 
 def seed():
     print 'Loading data over UDP via pipeline...'
-    metric = 'pipeline.test.udp'
+    metric = 'marion.channel-0'
     metric_set = 'unique_metrics'
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

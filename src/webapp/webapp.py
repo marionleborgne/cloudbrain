@@ -32,7 +32,8 @@ def metrics():
             resp = json.dumps({'results': 'Error: Could not retrieve list of unique metrics'})
             return resp, 404
         else:
-            resp = json.dumps({'results': unique_metrics})
+            metrics = [metric.replace(settings.FULL_NAMESPACE, "") for metric in unique_metrics]
+            resp = json.dumps({'results': metrics})
             return resp, 200
     except Exception as e:
         error = "Error: " + e
@@ -70,17 +71,20 @@ def data():
             if (start is None) and (end is not None):
                 for datapoint in unpacker:
                     if datapoint[0] < int(end):
-                        timeseries.append(datapoint)
+                        point = {'x' : datapoint[0], 'y':datapoint[1]}
+                        timeseries.append(point)
             elif (start is not None) and (end is None):
                 for datapoint in unpacker:
                     if datapoint[0] > int(start):
-                        timeseries.append(datapoint)
+                        point = {'x' : datapoint[0], 'y':datapoint[1]}
+                        timeseries.append(point)
             elif (start is not None) and (end is not None):
                 for datapoint in unpacker:
                     if (datapoint[0] > int(start)) and (datapoint[0] < int(end)):
-                        timeseries.append(datapoint)
+                        point = {'x' : datapoint[0], 'y':datapoint[1]}
+                        timeseries.append(point)
             elif (start is None) and (end is None):
-                timeseries = [datapoint for datapoint in unpacker]
+                timeseries = [{'x' : datapoint[0], 'y':datapoint[1]} for datapoint in unpacker]
 
             resp = json.dumps({'results': timeseries})
             return resp, 200

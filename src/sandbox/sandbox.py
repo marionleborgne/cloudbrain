@@ -259,8 +259,11 @@ def test2():
 
 def test3():
     start = 0
+    end = 10
 
-    raw_series = REDIS_CONN.get(settings.FULL_NAMESPACE + "pipeline.test.udp")
+    metric = "marion.channel-0"
+
+    raw_series = REDIS_CONN.get(settings.FULL_NAMESPACE + metric)
     if not raw_series:
         resp = json.dumps({'results': 'Error: No metric by that name'})
         return resp, 404
@@ -268,12 +271,27 @@ def test3():
         unpacker = Unpacker(use_list = False)
         unpacker.feed(raw_series)
         timeseries = []
-        for datapoint in unpacker:
-            if datapoint[0] > start:
-                timeseries.append(datapoint)
+
+        point = {'x':datapoint[0],'y':datapoint[1]}
+
+        if (start is None) and (end is not None):
+            for datapoint in unpacker:
+                if datapoint[0] < int(end):
+                    timeseries.append(point)
+        elif (start is not None) and (end is None):
+            for datapoint in unpacker:
+                if datapoint[0] > int(start):
+                    timeseries.append(point)
+        elif (start is not None) and (end is not None):
+            for datapoint in unpacker:
+                if (datapoint[0] > int(start)) and (datapoint[0] < int(end)):
+                    timeseries.append(point)
+        elif (start is None) and (end is None):
+            timeseries = [{'x':datapoint[0],'y':datapoint[1]} for datapoint in unpacker]
 
         resp = json.dumps({'results': timeseries})
         return resp, 200
+
 
 if __name__ == '__main__':
     #a = Analyzer(getpid())
