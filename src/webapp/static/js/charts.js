@@ -1,3 +1,7 @@
+var metrics;
+var timeseries;
+
+
 nv.addGraph(function() {
   var chart = nv.models.lineWithFocusChart();
 
@@ -27,10 +31,6 @@ nv.addGraph(function() {
 /**************************************
  *  Cloudbrain data */
  
-var metrics;
-var timeseries;
-
-
 
 function get_datapoints() {
 
