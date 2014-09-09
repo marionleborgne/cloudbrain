@@ -46,7 +46,7 @@ function load_metrics(){
       async: false,
       dataType : 'JSON',
       success : function(data) {
-          metrics = data;
+          metrics = data['results'];
       }
     })
 
@@ -71,7 +71,7 @@ function load_timeseries(){
       dataType : 'JSON',
       async: false,
       success : function(data) {
-         timeseries.push(data);
+         timeseries.push(data['results']);
       }
     })
    
