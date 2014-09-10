@@ -33,12 +33,11 @@ def seed():
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    nbPoints = 1000
-    end = int(time.time())
-    start = int(end - nbPoints)
+    end = int(time.time() * 1000) # end in ms
+    start = int(end - 5 * 60 * 1000) # 5 last mn
 
     for k in xrange(7):
-        for i in xrange(start, end):
+        for i in xrange(start, end, 25):
             datapoint = []
             datapoint.append(i)
 

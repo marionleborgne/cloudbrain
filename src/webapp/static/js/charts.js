@@ -1,6 +1,8 @@
 var metrics;
 var timeseries;
 
+datapoints = get_datapoints()
+
 
 nv.addGraph(function() {
   var chart = nv.models.lineWithFocusChart();
@@ -13,8 +15,6 @@ nv.addGraph(function() {
 
   chart.y2Axis
       .tickFormat(d3.format(',.2f'));
-
-  datapoints = get_datapoints()
 
   d3.select('#chart svg')
       .datum(datapoints)
@@ -66,8 +66,10 @@ function load_timeseries(){
   nbMetrics = metrics.length;
   for (i=0;i< nbMetrics;  i++) {
     metric_name = metrics[i];
+    start = +new Date() - 5 * 60 * 1000 // we want the last 5 mn of data (start is in ms )
+    console.log('/api?metric=' + metric_name + "&start=" + start);
     $.ajax({
-      url : '/api?metric=' + metric_name,
+      url : '/api?metric=' + metric_name + "&start=" + start ,
       dataType : 'JSON',
       async: false,
       success : function(data) {
