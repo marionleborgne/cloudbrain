@@ -20,19 +20,25 @@
         <div id="navbar">
             <div class='container'>
                 <a href='/' id="logo" class='brand' href='/'>
-                    cloudbrain 
+                    <img src="/static/images/brain-white.png" alt="cloudbrain" style="width:25px;height:25px">&nbsp cloudbrain 
                 </a>
             </div>
         </div>
 
-        <style>
-            #chart svg {
-            height: 400px;
-            }
-        </style>
+        <!--div class="alert alert-info alert-dismissible" role="alert">
+            <button type="button" class="close" data-hide="alert"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>Loading data...</div-->
 
-        <div id="chart">
-        <svg></svg>
+         <div class='container'>
+            <br>
+            <button type="button" class="btn btn-success">Connect OpenBCI</button>
+            <button type="button" class="btn btn-warning">Disconnect OpenBCI</button>
+            <button type="button" class="btn btn-info">Load Mock Data</button>
+            <button type="button" class="btn btn-danger">Reset Database</button>
+           
+        </div>
+
+         <div id="chart">
+            <svg></svg>
         </div>
 
     </body>

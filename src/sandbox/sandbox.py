@@ -13,6 +13,9 @@ import operator
 import socket
 import sys
 from os.path import dirname, abspath
+import time
+import math
+import msgpack
 
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 import settings
@@ -292,8 +295,48 @@ def test3():
         resp = json.dumps({'results': timeseries})
         return resp, 200
 
+def stream_mock_data():
+    try:
+        metric = 'channel-%s'
+        metric_set = 'unique_metrics'
+
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+        nbPoints = 3600
+        end = int(time.time())
+        start = int(end - nbPoints)
+
+        for k in xrange(7):
+            for i in xrange(start, end):
+                datapoint = []
+                datapoint.append(i)
+
+                value = 50 + math.sin(i*k * 0.001)
+
+                datapoint.append(value)
+
+                metric_name = metric % k
+                print (metric_name, datapoint)
+                packet = msgpack.packb((metric_name, datapoint))
+                sock.sendto(packet, ('localhost', settings.UDP_PORT))
+
+        r = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)
+        time.sleep(5)
+
+        resp = json.dumps({'results' : 'Congratulation! Mock data successfully streamed in.'})
+        return resp, 200
+
+
+    except Exception as e:
+        error = "Error: " + e
+        resp = json.dumps({'results': error})
+        return resp, 500
+
+
+
 
 if __name__ == '__main__':
     #a = Analyzer(getpid())
     #a.test()
-    test3()
+    resp = stream_mock_data()
+    print resp
