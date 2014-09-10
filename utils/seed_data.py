@@ -12,6 +12,7 @@ from os.path import dirname, join, realpath
 import redis
 import msgpack
 import random
+import math
 
 # Get the current working directory of this file.
 # http://stackoverflow.com/a/4060259/120999
@@ -28,32 +29,29 @@ class NoDataException(Exception):
 
 def seed():
     print 'Loading data over UDP via pipeline...'
-    metric = 'pipeline.test.udp'
+    metric = 'channel-%s'
     metric_set = 'unique_metrics'
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    nbPoints = 300
+    nbPoints = 3600
     end = int(time.time())
     start = int(end - nbPoints)
-    anomaly_start_time = (end - 60)
-    anomaly_end_time = end
 
+    for k in xrange(7):
+        for i in xrange(start, end):
+            datapoint = []
+            datapoint.append(i)
 
-    for i in xrange(start, end):
-        datapoint = []
-        datapoint.append(i)
+            value = 50 + math.sin(i*k * 0.001)
 
-        if ((i > anomaly_start_time) and (i < anomaly_end_time)):
-            value = int (900 + random.uniform(1,10))
-        else:
-            value =  int (200 + random.uniform(1,10))
+            datapoint.append(value)
 
-        datapoint.append(value)
-
-        print (metric, datapoint)
-        packet = msgpack.packb((metric, datapoint))
-        sock.sendto(packet, ("localhost", settings.UDP_PORT))
+            metric_name = metric % k
+            print (metric_name, datapoint)
+            packet = msgpack.packb((metric_name, datapoint))
+            sock.sendto(packet, ('localhost', settings.UDP_PORT))
+        time.sleep(1)
 
     print "Connecting to Redis..."
     r = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)
