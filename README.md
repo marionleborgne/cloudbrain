@@ -46,7 +46,7 @@ sudo mkdir /var/dump/
 
 5. Download and install the latest Redis release
 
-6. Start 'er up
+7. Start 'er up
 
 * `cd cloudbrain/bin`
 * `sudo redis-server redis.conf`
@@ -56,7 +56,7 @@ sudo mkdir /var/dump/
 
 By default, the webapp is served on port 1500.
 
-7. Check the log files to ensure things are running.
+9. Check the log files to ensure things are running.
 
 ### Gotchas
 

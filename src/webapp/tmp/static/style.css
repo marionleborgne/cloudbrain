@@ -1,0 +1,42 @@
+
+body {
+    font: 14px sans-serif;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 100%;
+    margin-top: 10px;
+
+
+}
+
+.alert {
+    max-width: 300px;
+    padding: 3px;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+/* .x.axis path { */
+/*     display: none; */
+/* } */
+
+.metric-select {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}

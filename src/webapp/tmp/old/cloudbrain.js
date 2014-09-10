@@ -10,39 +10,53 @@ var mini_data = [];
 var big_data = [];
 var initial = true;
 
-// This function call is hardcoded as JSONP in the anomalies.json file
+var pull_data = function() {
+
+    $.ajax({
+        url: '/metrics',
+        dataType: 'json',
+        success: handle_data
+    });
+}
+
+var handle_data = function(data){
+
+
+    for (i in data) {
+        metric_name = data[i];
+ 
+        $.get("/api?metric=" + metric_name, function(d){
+            console.log("/api?metric=" + FULL_NAMESPACE + "" + metric_name);
+            data = JSON.parse(d)['results'];
+        }); 
+
+    }
+}
+
+
 var handle_data = function(data) {
     
     $('#metrics_listings').empty();
 
     for (i in data) {
-        metric = data[i];
-        name = metric[1];
-        anomalous_point = metric[0]
-        // Add a space after the metric name to make each unique
+        name = data[i];
         to_append = "<div class='sub'><div class='name'>" + name + " </div></a>&nbsp;&nbsp;";
-        //to_append += "<div class='count'>" + parseInt(anomalous_point) + "</div>";
         $('#metrics_listings').append(to_append);
     }
 
+    /*
     if (initial) {
         selected = data[0][1];
         initial = false;
     }
+
     
     handle_interaction();
-  
+    */
 }
 
 
-var pull_data = function() {
 
-    // The callback to this function is handle_data()
-    $.ajax({
-        url: "/static/dump/anomalies.json",
-        dataType: 'jsonp'
-    });
-}
 
 var handle_interaction = function() {
     $('.sub').removeClass('selected');
@@ -206,5 +220,8 @@ Mousetrap.bind(['up', 'down'], function(ev) {
 
     return false;
 }, 'keydown');
+
+
+
 
 
