@@ -6,7 +6,7 @@ nv.addGraph(function() {
   var chart = nv.models.lineWithFocusChart();
 
   chart.xAxis
-      .tickFormat(d3.format(',f'));
+      .tickFormat(d3.format("d"));
 
   chart.yAxis
       .tickFormat(d3.format(',.2f'));
@@ -18,7 +18,7 @@ nv.addGraph(function() {
 
   d3.select('#chart svg')
       .datum(datapoints)
-      .transition().duration(500)
+      .transition().duration(50)
       .call(chart);
 
   nv.utils.windowResize(chart.update);
