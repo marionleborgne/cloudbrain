@@ -1,3 +1,5 @@
+![x](https://github.com/marionleborgne/cloudbrain/blob/master/screenshot.png)
+
 ## CloudBrain
 
 Real-time data analysis of brainwaves in the cloud. Detect patterns and map your mind states to actions.
