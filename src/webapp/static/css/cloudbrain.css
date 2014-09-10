@@ -69,7 +69,7 @@ a:hover {
 }
 
 #navbar {
-    height: 55px;
+    height: 57px;
     background: #1C1C1C;
 }
 
@@ -274,12 +274,4 @@ a:hover {
      height: 400px;
 }
 
-//#mini > div > div {
-//    width: 15px;
-//    text-overflow: ellipsis;
-//}
-//
-//#graph > div > div {
-//    width: 15px;
-//    text-overflow: ellipsis;
-//}
+
