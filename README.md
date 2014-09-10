@@ -1,3 +1,5 @@
+![x](https://github.com/marionleborgne/cloudbrain/blob/master/screenshot.png)
+
 ## CloudBrain
 
 Real-time data analysis of brainwaves in the cloud. Detect patterns and map your mind states to actions.
@@ -79,4 +81,4 @@ Once you get real data flowing through your system, the Analyzer will be able
 start analyzing for anomalies!
 
 ##Licence
-CloudBrain has been adapted from Skyline, a monitoring tool for cloud infrastructures. The MIT licence is included [here](https://github.com/marionleborgne/cloudbrain/blob/master/LICENSE.md). 
+CloudBrain's backend is an adaptation from Skyline, a monitoring tool for cloud infrastructures. The MIT licence of Skyline is included [here](https://github.com/marionleborgne/cloudbrain/blob/master/LICENSE.md). 
