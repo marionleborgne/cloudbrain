@@ -33,7 +33,7 @@ def seed():
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    nbPoints = 3600
+    nbPoints = 1000
     end = int(time.time())
     start = int(end - nbPoints)
 
