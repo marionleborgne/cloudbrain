@@ -97,10 +97,12 @@ class Worker(Process):
                         logger.info("in skip list %s" % self.in_skip_list())
                         continue
 
+                    
                     # Bad data coming in
                     if metric[1][0] < now - MAX_RESOLUTION:
                         logger.info("bad metric %s" % metric[1][0])
                         continue
+                    
 
                     # Append to messagepack main namespace
                     key = ''.join((FULL_NAMESPACE, metric[0]))

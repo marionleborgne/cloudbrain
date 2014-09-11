@@ -3,7 +3,7 @@ import logging
 import simplejson as json
 import sys
 from msgpack import Unpacker
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from daemon import runner
 from os.path import dirname, abspath
 from os import path
@@ -26,78 +26,53 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 def index():
     return render_template('index.html'), 200
 
-@app.route("/stream_mock_data")
-def stream_mock_data():
+@app.route("/load_mock_data")
+def load_mock_data():
     try:
+
+        FULL_NAMESPACE = settings.FULL_NAMESPACE
+        full_uniques = FULL_NAMESPACE + 'unique_metrics'
+        r = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)
+        pipe = r.pipeline()
         metric = 'channel-%s'
-        metric_set = 'unique_metrics'
 
-        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
-        nbPoints = 3600
-        end = int(time.time())
+        nbPoints = 1000
+        end = int(time.time() * 1000)
         start = int(end - nbPoints)
 
         for k in xrange(7):
             for i in xrange(start, end):
                 datapoint = []
+
+                # timestamp
                 datapoint.append(i)
 
+                # value
                 value = 50 + math.sin(i*k * 0.001)
-
                 datapoint.append(value)
-
                 metric_name = metric % k
-                print (metric_name, datapoint)
-                packet = msgpack.packb((metric_name, datapoint))
-                sock.sendto(packet, ('localhost', settings.UDP_PORT))
 
-        r = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)
-        time.sleep(5)
+                # Append to messagepack main namespace
+                key = ''.join((FULL_NAMESPACE, metric_name))
+                logger.info("key %s" % key)
+                pipe.append(key, msgpack.packb(datapoint))
+                pipe.sadd(full_uniques, key)
+                pipe.execute()
 
-        resp = json.dumps({'results' : 'Congratulation! Mock data successfully streamed in.'})
-        return resp, 200
-
+        return redirect("/")
 
     except Exception as e:
         error = "Error: " + e
         resp = json.dumps({'results': error})
         return resp, 500
 
-    '''
-    try:
-        x = r.smembers(settings.FULL_NAMESPACE + metric_set)
-        if x is None:
-            raise NoDataException
-
-        x = r.get(settings.FULL_NAMESPACE + metric)
-        if x is None:
-            raise NoDataException
-
-        #Ignore the mini namespace if OCULUS_HOST isn't set.
-        if settings.OCULUS_HOST != "":
-            x = r.smembers(settings.MINI_NAMESPACE + metric_set)
-            if x is None:
-                raise NoDataException
-
-            x = r.get(settings.MINI_NAMESPACE + metric)
-            if x is None:
-                raise NoDataException
-
-        resp = json.dumps({'results' : 'Congratulation! Mock data successfully streamed in.'})
-        return resp, 200
-
-    except NoDataException:
-        resp = json.dumps({'results' : 'Erps! No data found in Redis. Try again?'})
-        return resp, 500
-    '''
 
 @app.route("/flushall")
 def flushall():
     try:
         REDIS_CONN.flushall()
         resp = json.dumps({'results' : 'Redis operation sucessfull. All keys have been flushed.'})
-        return resp, 200
+        return redirect("/")
     except Exception as e:
         error = "Error: " + e
         resp = json.dumps({'results': error})

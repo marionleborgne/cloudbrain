@@ -296,7 +296,15 @@ def test3():
         return resp, 200
 
 def stream_mock_data():
-    try:
+
+        FULL_NAMESPACE = settings.FULL_NAMESPACE
+        MINI_NAMESPACE = settings.MINI_NAMESPACE
+        MAX_RESOLUTION = settings.MAX_RESOLUTION
+        full_uniques = FULL_NAMESPACE + 'unique_metrics'
+        mini_uniques = MINI_NAMESPACE + 'unique_metrics'
+        r = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)
+        pipe = r.pipeline()
+
         metric = 'channel-%s'
         metric_set = 'unique_metrics'
 
@@ -307,6 +315,7 @@ def stream_mock_data():
         start = int(end - nbPoints)
 
         for k in xrange(7):
+            print k
             for i in xrange(start, end):
                 datapoint = []
                 datapoint.append(i)
@@ -316,21 +325,20 @@ def stream_mock_data():
                 datapoint.append(value)
 
                 metric_name = metric % k
-                print (metric_name, datapoint)
+
+                '''
                 packet = msgpack.packb((metric_name, datapoint))
                 sock.sendto(packet, ('localhost', settings.UDP_PORT))
+                '''
 
-        r = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)
-        time.sleep(5)
+                # Append to messagepack main namespace
+                key = ''.join((FULL_NAMESPACE, metric_name))
+                logger.info("key %s" % key)
+                pipe.append(key, msgpack.packb(datapoint))
+                pipe.sadd(full_uniques, key)
 
-        resp = json.dumps({'results' : 'Congratulation! Mock data successfully streamed in.'})
-        return resp, 200
 
-
-    except Exception as e:
-        error = "Error: " + e
-        resp = json.dumps({'results': error})
-        return resp, 500
+                pipe.execute()
 
 
 
