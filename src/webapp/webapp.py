@@ -48,7 +48,7 @@ def load_mock_data():
                 datapoint.append(i)
 
                 # value
-                value = 50 + math.sin(i*k * 0.001)
+                value = 50 + math.sin(i*k * 0.05)
                 datapoint.append(value)
                 metric_name = metric % k
 
