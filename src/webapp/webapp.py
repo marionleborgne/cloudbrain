@@ -48,7 +48,7 @@ def load_mock_data():
                 datapoint.append(i)
 
                 # value
-                value = 50 + math.sin(i*k * 0.05)
+                value = 50 + math.sin(i*k * 0.01)
                 datapoint.append(value)
                 metric_name = metric % k
 
@@ -84,7 +84,7 @@ def metrics():
     try:
         unique_metrics = list(REDIS_CONN.smembers(settings.FULL_NAMESPACE + 'unique_metrics'))
         if not unique_metrics:
-            resp = json.dumps({'results': 'Error: Could not retrieve list of unique metrics.'})
+            resp = json.dumps({'results': ['channel-0','channel-1','channel-2','channel-3','channel-4','channel-5','channel-6','channel-7']})
             return resp, 404
         else:
             metrics = [metric.replace(settings.FULL_NAMESPACE, "") for metric in unique_metrics]
@@ -92,7 +92,7 @@ def metrics():
             return resp, 200
     except Exception as e:
         error = "Error: " + e
-        resp = json.dumps({'results': error})
+        resp = json.dumps({'results': ['channel-0','channel-1','channel-2','channel-3','channel-4','channel-5','channel-6','channel-7']})
         return resp, 500
 
 
@@ -116,7 +116,7 @@ def data():
     try:
         raw_series = REDIS_CONN.get(settings.FULL_NAMESPACE + metric)
         if not raw_series:
-            resp = json.dumps({'results': 'Error: No metric by that name'})
+            resp = json.dumps({'results': []})
             return resp, 404
         else:
             unpacker = Unpacker(use_list = False)
@@ -145,8 +145,7 @@ def data():
             return resp, 200
 
     except Exception as e:
-        error = "Error: " + e
-        resp = json.dumps({'results': error})
+        resp = json.dumps({'results': []})
         return resp, 500
 
 @app.route("/anomalies", methods=['GET'])
