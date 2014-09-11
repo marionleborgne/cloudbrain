@@ -66,7 +66,7 @@ function load_timeseries(){
   nbMetrics = metrics.length;
   for (i=0;i< nbMetrics;  i++) {
     metric_name = metrics[i];
-    start = +new Date() - 5 * 60 * 1000 // we want the last 5 mn of data (start is in ms )
+    start = +new Date() - 60 * 1000 // we want the last 1 mn of data (start is in ms )
     console.log('/api?metric=' + metric_name + "&start=" + start);
     $.ajax({
       url : '/api?metric=' + metric_name + "&start=" + start ,
