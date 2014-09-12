@@ -70,7 +70,7 @@ class UDPServer(object):
     for i in xrange(nb_channels):
       metric = "channel-%d" %i
       packet = msgpack.packb((metric, [timestamp, datapoint[i]]))
-      self.sock.sendto(packet, ("localhost", 8888))
+      self.sock.sendto(packet, ("cloudbrain.rocks", 8888))
 
 
 

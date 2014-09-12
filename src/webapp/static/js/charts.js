@@ -1,6 +1,8 @@
-var datapoints = get_datapoints()
+var datapoints 
 
 nv.addGraph(function() {
+
+  get_datapoints();
 
   var chart = nv.models.lineWithFocusChart();
 
@@ -41,7 +43,7 @@ function get_datapoints(){
          datapoints = data['results'];
       }
     })
-  console.log("got datapoints")
+
   return datapoints;
 
 }
