@@ -23,7 +23,7 @@ MINI_NAMESPACE = 'mini.'
 # metrics count. Longer durations take a longer to analyze, but they can
 # help the algorithms reduce the noise and provide more accurate anomaly
 # detection.
-FULL_DURATION = 5
+FULL_DURATION = 1
 
 # This is the duration of the 'mini' namespace, if you are also using the
 # Oculus service. It is also the duration of data that is displayed in the

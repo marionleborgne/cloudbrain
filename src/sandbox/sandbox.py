@@ -295,6 +295,61 @@ def test3():
         resp = json.dumps({'results': timeseries})
         return resp, 200
 
+def api():
+    metric = request.args.get('metric', None)
+    start = request.args.get('start', None)
+    end = request.args.get('end', None)
+
+    if metric is None:
+        metrics = ['channel-0', 'channel-1', 'channel-2', 'channel-3', 'channel-4', 'channel-5', 'channel-6', 'channel-7']
+    else:
+        metrics = [metric]
+
+    try:
+        all_channels_data = []
+        for metric in metrics:
+
+            single_channel_data = {}
+
+            raw_series = REDIS_CONN.get(settings.FULL_NAMESPACE + metric)
+            if not raw_series:
+                resp = json.dumps({'results': 'Error: No metric by that name'})
+                return resp, 404
+            else:
+                unpacker = Unpacker(use_list = False)
+                unpacker.feed(raw_series)
+                timeseries = []
+
+                if (start is None) and (end is not None):
+                    for datapoint in unpacker:
+                        if datapoint[0] < int(end):
+                            point = {'x' : datapoint[0], 'y':datapoint[1]}
+                            timeseries.append(point)
+                elif (start is not None) and (end is None):
+                    for datapoint in unpacker:
+                        if datapoint[0] > int(start):
+                            point = {'x' : datapoint[0], 'y':datapoint[1]}
+                            timeseries.append(point)
+                elif (start is not None) and (end is not None):
+                    for datapoint in unpacker:
+                        if (datapoint[0] > int(start)) and (datapoint[0] < int(end)):
+                            point = {'x' : datapoint[0], 'y':datapoint[1]}
+                            timeseries.append(point)
+                elif (start is None) and (end is None):
+                    timeseries = [{'x' : datapoint[0], 'y':datapoint[1]} for datapoint in unpacker]
+
+                single_channel_data['key'] = metric
+                single_channel_data['values'] = timeseries
+                all_channels_data.append(single_channel_data)
+
+        resp = json.dumps({'results': all_channels_data})
+        return resp, 200
+
+    except Exception as e:
+        error = "Error: " + e
+        resp = json.dumps({'results': error})
+        return resp, 500
+
 def stream_mock_data():
 
         FULL_NAMESPACE = settings.FULL_NAMESPACE

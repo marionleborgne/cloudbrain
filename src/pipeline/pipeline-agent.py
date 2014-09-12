@@ -43,12 +43,13 @@ class pipeline():
             else:
                 Worker(listen_queue, pid, skip_mini).start()
 
+
         # Start the listeners
-        Listen(settings.PICKLE_PORT, listen_queue, pid, type="pickle").start()
+        #Listen(settings.PICKLE_PORT, listen_queue, pid, type="pickle").start()
         Listen(settings.UDP_PORT, listen_queue, pid, type="udp").start()
 
         # Start the roomba
-        Roomba(pid, skip_mini).start()
+        #Roomba(pid, skip_mini).start()
 
         # Warn the Mac users
         try:
@@ -56,9 +57,9 @@ class pipeline():
         except NotImplementedError:
             logger.info('WARNING: Queue().qsize() not implemented on Unix platforms like Mac OS X. Queue size logging will be unavailable.')
 
-        # Keep yourself occupied, sucka
+        # Keep yourself occupied
         while 1:
-            time.sleep(100)
+            time.sleep(1)
 
 if __name__ == "__main__":
     """
