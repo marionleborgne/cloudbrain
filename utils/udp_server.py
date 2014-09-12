@@ -37,7 +37,7 @@ parser.add_argument(
 parser.add_argument(
     '--user_name',
     help='The name of the user sending data.',
-    default='unknown_user')
+    default='')
 parser.add_argument(
     '--mock',
     action='store_true',
@@ -68,9 +68,9 @@ class UDPServer(object):
     # Just send channel data.
     timestamp = int (time.time() * 1000)
     for i in xrange(nb_channels):
-      metric = "%s.channel-%d" %(self.user, i)
+      metric = "channel-%d" %i
       packet = msgpack.packb((metric, [timestamp, datapoint[i]]))
-      self.sock.sendto(packet, ("data.ebrain.io", 8888))
+      self.sock.sendto(packet, ("localhost", 8888))
 
 
 

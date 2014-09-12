@@ -40,7 +40,7 @@ def load_mock_data():
         end = int(time.time() * 1000)
         start = int(end - nbPoints)
 
-        for k in xrange(7):
+        for k in xrange(8):
             for i in xrange(start, end):
                 datapoint = []
 
