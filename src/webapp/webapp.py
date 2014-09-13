@@ -25,9 +25,9 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 def index():
     return render_template('index.html'), 200
 
-@app.route("/demo")
-def demo():
-    return render_template('static/demo/build/index.html'), 200
+@app.route("/about")
+def about():
+    return redirect('/static/demo/build/index.html')
 
 
 @app.route("/load_mock_data")
