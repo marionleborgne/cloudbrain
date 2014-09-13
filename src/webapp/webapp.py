@@ -34,7 +34,7 @@ def load_mock_data():
         r = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)
         pipe = r.pipeline()
 
-        with open('/Users/marion/_git/cloudbrain/src/webapp/static/data/data.json', 'rb') as jsonfile:
+        with open('/home/ubuntu/cloudbrain/src/webapp/static/data/data.json', 'rb') as jsonfile:
             data = json.load(jsonfile)
             for channel_data in data:
                 values = channel_data['values']
