@@ -10,10 +10,10 @@ nv.addGraph(function() {
       .tickFormat(d3.format("d"));
 
   chart.yAxis
-      .tickFormat(d3.format(',.2f'));
+      .tickFormat(d3.format(',.5f'));
 
   chart.y2Axis
-      .tickFormat(d3.format(',.2f'));
+      .tickFormat(d3.format(',.5f'));
 
   d3.select('#chart svg')
       .datum(datapoints)

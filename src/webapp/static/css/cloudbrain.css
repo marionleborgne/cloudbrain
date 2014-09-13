@@ -27,6 +27,7 @@ body {
 }
 
 .container {
+       width: 1400px;
     padding-left: 40px;
     padding-right: 40px;
 }
@@ -52,7 +53,7 @@ body {
 }
 
 .container {
-    width: 1400px;
+ 
 }
 
 a {

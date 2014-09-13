@@ -1,3 +1,5 @@
+
+
 import logging
 import sys
 import traceback
@@ -6,11 +8,13 @@ from os.path import dirname, abspath, isdir
 from daemon import runner
 from time import sleep, time
 
+from analyzer import Analyzer
+
 # add the shared settings file to namespace
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 import settings
 
-from analyzer import Analyzer
+
 
 
 class AnalyzerAgent():

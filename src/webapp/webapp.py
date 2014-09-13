@@ -7,10 +7,9 @@ from flask import Flask, request, render_template, redirect
 from daemon import runner
 from os.path import dirname, abspath
 from os import path
-import time
-import math
 import msgpack
 
+import csv
 
 
 # add the shared settings file to namespace
@@ -34,30 +33,25 @@ def load_mock_data():
         full_uniques = FULL_NAMESPACE + 'unique_metrics'
         r = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)
         pipe = r.pipeline()
-        metric = 'channel-%s'
 
-        nbPoints = 1000
-        end = int(time.time() * 1000)
-        start = int(end - nbPoints)
+        with open('/Users/marion/_git/cloudbrain/src/webapp/static/data/data.json', 'rb') as jsonfile:
+            data = json.load(jsonfile)
+            for channel_data in data:
+                values = channel_data['values']
+                metric_name = channel_data['key']
+                for value in values:
+                    if values.index(value) < 1000:
+                        datapoint = []
+                        datapoint.append(value['x'])
+                        datapoint.append(value['y'])
 
-        for k in xrange(8):
-            for i in xrange(start, end):
-                datapoint = []
 
-                # timestamp
-                datapoint.append(i)
-
-                # value
-                value = 50 + math.sin(i*k * 0.01)
-                datapoint.append(value)
-                metric_name = metric % k
-
-                # Append to messagepack main namespace
-                key = ''.join((FULL_NAMESPACE, metric_name))
-                logger.info("key %s" % key)
-                pipe.append(key, msgpack.packb(datapoint))
-                pipe.sadd(full_uniques, key)
-                pipe.execute()
+                        # Append to messagepack main namespace
+                        key = ''.join((FULL_NAMESPACE, metric_name))
+                        logger.info("key %s" % key)
+                        pipe.append(key, msgpack.packb(datapoint))
+                        pipe.sadd(full_uniques, key)
+                        pipe.execute()
 
         return redirect("/")
 

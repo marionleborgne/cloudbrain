@@ -20,6 +20,7 @@ import msgpack
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 import settings
 import redis
+import csv
 
 sys.path.insert(0, dirname(dirname(abspath(__file__))) + "/analyzer")
 from alerters import trigger_alert
@@ -350,13 +351,37 @@ def api():
         resp = json.dumps({'results': error})
         return resp, 500
 
+def mock_data():
+
+
+        FULL_NAMESPACE = settings.FULL_NAMESPACE
+        full_uniques = FULL_NAMESPACE + 'unique_metrics'
+        r = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)
+        pipe = r.pipeline()
+
+        with open('/Users/marion/_git/cloudbrain/src/sandbox/eeg_mock_data.json', 'rb') as jsonfile:
+            data = json.load(jsonfile)
+            for channel_data in data:
+                values = channel_data['values']
+                metric_name = channel_data['key']
+                for value in values:
+                    datapoint = []
+                    datapoint.append(value['x'])
+                    datapoint.append(value['y'])
+
+                    # Append to messagepack main namespace
+                    key = ''.join((FULL_NAMESPACE, metric_name))
+                    logger.info("key %s" % key)
+                    pipe.append(key, msgpack.packb(datapoint))
+                    pipe.sadd(full_uniques, key)
+                    pipe.execute()
+
+
+
 def stream_mock_data():
 
         FULL_NAMESPACE = settings.FULL_NAMESPACE
-        MINI_NAMESPACE = settings.MINI_NAMESPACE
-        MAX_RESOLUTION = settings.MAX_RESOLUTION
         full_uniques = FULL_NAMESPACE + 'unique_metrics'
-        mini_uniques = MINI_NAMESPACE + 'unique_metrics'
         r = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)
         pipe = r.pipeline()
 
@@ -401,5 +426,5 @@ def stream_mock_data():
 if __name__ == '__main__':
     #a = Analyzer(getpid())
     #a.test()
-    resp = stream_mock_data()
+    resp = mock_data()
     print resp
