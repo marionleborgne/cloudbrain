@@ -56,7 +56,7 @@ def load_mock_data():
         return redirect("/")
 
     except Exception as e:
-        error = "Error: " + e
+        error = "Error: " + repr(e)
         resp = json.dumps({'results': error})
         return resp, 500
 
