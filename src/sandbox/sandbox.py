@@ -27,7 +27,7 @@ from alerters import trigger_alert
 from algorithms import run_selected_algorithm
 from algorithm_exceptions import *
 import json
-
+import os
 logger = logging.getLogger("AnalyzerLog")
 
 
@@ -359,23 +359,24 @@ def mock_data():
         r = redis.StrictRedis(unix_socket_path=settings.REDIS_SOCKET_PATH)
         pipe = r.pipeline()
 
-        with open('/Users/marion/_git/cloudbrain/src/sandbox/eeg_mock_data.json', 'rb') as jsonfile:
+        with open(os.getcwd() + '/static/data/data.json', 'rb') as jsonfile:
             data = json.load(jsonfile)
             for channel_data in data:
                 values = channel_data['values']
                 metric_name = channel_data['key']
                 for value in values:
-                    datapoint = []
-                    datapoint.append(value['x'])
-                    datapoint.append(value['y'])
+                    if values.index(value) < 1000:
+                        datapoint = []
+                        datapoint.append(value['x'])
+                        datapoint.append(value['y'])
 
-                    # Append to messagepack main namespace
-                    key = ''.join((FULL_NAMESPACE, metric_name))
-                    logger.info("key %s" % key)
-                    pipe.append(key, msgpack.packb(datapoint))
-                    pipe.sadd(full_uniques, key)
-                    pipe.execute()
 
+                        # Append to messagepack main namespace
+                        key = ''.join((FULL_NAMESPACE, metric_name))
+                        logger.info("key %s" % key)
+                        pipe.append(key, msgpack.packb(datapoint))
+                        pipe.sadd(full_uniques, key)
+                        pipe.execute()
 
 
 def stream_mock_data():
