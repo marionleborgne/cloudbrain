@@ -1,5 +1,35 @@
 #!/usr/bin/env python
 
+__author__ = 'marion@ebrain.io'
+__date__ = '07/10/2013'
+__doc__ = '''
+
+K.O.A.C. = Kernel-induced Online Agglomerative Clustering
+
+__KERNEL__
+* The general idea is to increase the computational power of traditional linear Machine Learning algos
+by mapping the data into a high-dimensional feature space.
+* This technique is usually refered to as the "kernel method" in ML theory.
+* Inspired from the paper: "Improving the robustness of online agglomerative clustering method
+based on kernel-induce distance measures". By Daoqiang Zhang, Songcan Chen, Keren Tan.
+* Which method is doing that? kernel_dist()
+
+__ONLINE__
+* Just the same principle as an online K-means in N dimensions.
+* Which method is doing that? online_clustering()
+* Stream the data. For each new data point:
+  1. Find the closest cluster
+  2. Assign the new data point to this cluser
+  3. Update the cluster centroid accordingly (because there's now a new data poitn in this cluster)
+     Like this: centroid += ( new_datapoint - centroid) / cluster_size
+* Inspired from: http://gromgull.net/blog/2009/08/online-clustering-in-python/
+
+__AGGLOMERATIVE CLUSTERING__
+* Inspired from the paper: "An on-line agglomerative clustering method for non-stationary data". By I. D. Guedalia, M. London, M. Werman.
+* Which method is doing that? trimclusters()
+
+'''
+
 
 import sys
 import math
@@ -52,33 +82,6 @@ class Cluster(object):
 
 class KOAC(object):
 
-    """
-
-    K.O.A.C. = Kernel-induced Online Agglomerative Clustering
-
-    __KERNEL__
-    * The general idea is to increase the computational power of traditional linear Machine Learning algos
-    by mapping the data into a high-dimensional feature space.
-    * This technique is usually refered to as the "kernel method" in ML theory.
-    * Inspired from the paper: "Improving the robustness of online agglomerative clustering method
-    based on kernel-induce distance measures". By Daoqiang Zhang, Songcan Chen, Keren Tan.
-    * Which method is doing that? kernel_dist()
-
-    __ONLINE__
-    * Just the same principle as an online K-means in N dimensions.
-    * Which method is doing that? online_clustering()
-    * Stream the data. For each new data point:
-      1. Find the closest cluster
-      2. Assign the new data point to this cluser
-      3. Update the cluster centroid accordingly (because there's now a new data poitn in this cluster)
-         Like this: centroid += ( new_datapoint - centroid) / cluster_size
-    * Inspired from: http://gromgull.net/blog/2009/08/online-clustering-in-python/
-
-    __AGGLOMERATIVE CLUSTERING__
-    * Inspired from the paper: "An on-line agglomerative clustering method for non-stationary data". By I. D. Guedalia, M. London, M. Werman.
-    * Which method is doing that? trimclusters()
-
-    """
 
     def __init__(self, K_max):
         """N is the upper-limit for the number of clusters"""
@@ -297,6 +300,7 @@ class Test(object):
             print cluster.center
 
 class POC(Test):
+    ''' Proof of concept for the KOAC algorithm '''
    
     def __init__(self): 
         super(POC, self).__init__()
