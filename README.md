@@ -10,10 +10,6 @@ The [EEG](http://en.wikipedia.org/wiki/Electroencephalography) data (brainwaves)
 
 There is a live demo of Cloudbrain available at [cloudbrain.rocks](http://cloudbrain.rocks). For uploading brainwaves into Cloubdrain, see next section.
 
-<form action="http://cloudbrain.rocks">
-    <input type="submit" value="Live Demo">
-</form>
-
 ## How to feed Cloudbrain with [OpenBCI](http://openbci.com) data
 
 ![x](https://raw.github.com/marionleborgne/cloudbrain/master/openbci.png)
