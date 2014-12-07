@@ -7,7 +7,7 @@ LOG_FILE = "cassandra_repository.log"
 PORT = 9160
 NODE_IP = '127.0.0.1'
 NODE_POOL = ['%s:%s' % (NODE_IP, PORT)]
-BATCH_MAX_SIZE = 100
+BATCH_MAX_SIZE = 10
 
 ### muse ###
 

@@ -15,6 +15,7 @@ import time
 import socket
 import json
 
+
 class MuseServer(ServerThread):
     def __init__(self, port, receiver_ip, receiver_port, user):
         ServerThread.__init__(self, port)
@@ -68,7 +69,9 @@ if __name__ == "__main__":
         print str(err)
         sys.exit()
 
-    server.start()
-
-    while 1:
-        time.sleep(1)
+    try:
+        server.start()
+        while 1:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        sys.exit()

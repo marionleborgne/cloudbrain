@@ -5,6 +5,7 @@ Cient for the Muse server.
 """
 
 import json
+import sys
 import socket
 
 from database.cassandra_repository import CassandraRepository
@@ -58,4 +59,7 @@ class MuseClient(object):
 
 if __name__ == "__main__":
     muse_client = MuseClient('localhost', 5555)
-    muse_client.listen()
+    try:
+        muse_client.listen()
+    except KeyboardInterrupt:
+        sys.exit()

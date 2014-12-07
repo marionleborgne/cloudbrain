@@ -15,6 +15,3 @@ AND column_metadata = [
 {column_name: values, validation_class: UTF8Type}
 {column_name: timestamp, validation_class: UTF8Type}
 ];
-
-
-
