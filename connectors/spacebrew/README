@@ -1,0 +1,19 @@
+Instructions
+------------
+
+(We are assuming Spacebrew is running, and you have the MuseIO SDK installed. If not, do these things first.)
+
+% bundle install
+% bundle exec ruby muse_osc_spacebrew_bridge.rb
+
+Using a web browser, visit http://spacebrew.github.io/spacebrew/admin/admin.html?server=localhost
+
+- You should see 'muse' listed under Clients, with two Publishers ( concentration and mellow )
+
+In another terminal...
+
+% muse-io --osc osc.udp://localhost:9090
+
+Now pair with the Muse headset!
+
+Go back to your web browser. The dot to the left of the publisher should be blinking wildly. This is data!!!
