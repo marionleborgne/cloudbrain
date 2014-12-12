@@ -7,46 +7,53 @@ import logging
 import time
 
 
-class Spacebrew(object):
-    # Define any runtime errors we'll need
-    class ConfigurationError(Exception):
-        def __init__(self, brew, explanation):
-            self.brew = brew
-            self.explanation = explanation
+class ConfigurationError(Exception):
+    def __init__(self, brew, explanation):
+        self.brew = brew
+        self.explanation = explanation
 
-        def __str__(self):
-            return repr(self.explanation)
+    def __str__(self):
+        return repr(self.explanation)
 
-    class Slot(object):
-        def __init__(self, name, brewType, default=None):
-            self.name = name
-            self.type = brewType
-            self.value = None
-            self.default = default
 
-        def makeConfig(self):
-            d = {'name': self.name, 'type': self.type, 'default': self.default}
-            return d
+class Publisher(object):
+    def __init__(self, name, brewType, default=None):
+        self.name = name
+        self.type = brewType
+        self.value = None
+        self.default = default
 
-    class Publisher(Slot):
-        pass
+    def make_config(self):
+        d = {'name': self.name, 'type': self.type, 'default': self.default}
+        return d
 
-    class Subscriber(Slot):
-        def __init__(self, name, brewType, default=None):
-            super(Spacebrew.Subscriber, self).__init__(name, brewType, default)
-            self.callbacks = []
 
-        def subscribe(self, target):
-            self.callbacks.append(target)
+class Subscriber(object):
+    def __init__(self, name, brewType, default=None):
+        self.name = name
+        self.type = brewType
+        self.value = None
+        self.default = default
+        self.callbacks = []
 
-        def unsubscribe(self, target):
-            self.callbacks.remove(target)
+    def make_config(self):
+        d = {'name': self.name, 'type': self.type, 'default': self.default}
+        return d
 
-        def disseminate(self, value):
-            for target in self.callbacks:
-                target(value)
+    def subscribe(self, target):
+        self.callbacks.append(target)
 
-    def __init__(self, name, description="", server="sandbox.spacebrew.cc", port=9000):
+    def unsubscribe(self, target):
+        self.callbacks.remove(target)
+
+    def disseminate(self, value):
+        for target in self.callbacks:
+            target(value)
+
+
+class SpacebrewApp(object):
+
+    def __init__(self, name, description="", server="sandbox.spacebrew.cc", port=9000, admin_app=False):
         self.server = server
         self.port = port
         self.name = name
@@ -56,33 +63,38 @@ class Spacebrew(object):
         self.publishers = {}
         self.subscribers = {}
         self.ws = None
+        self.admin = admin_app
 
-    def addPublisher(self, name, brewType="string", default=None):
+    def add_publisher(self, name, brewType="string", default=None):
         if self.connected:
             raise ConfigurationError(self, "Can not add a new publisher to a running Spacebrew instance (yet).")
         else:
-            self.publishers[name] = self.Publisher(name, brewType, default)
+            self.publishers[name] = Publisher(name, brewType, default)
 
-    def addSubscriber(self, name, brewType="string", default=None):
+    def add_subscriber(self, name, brewType="string", default=None):
         if self.connected:
             raise ConfigurationError(self, "Can not add a new subscriber to a running Spacebrew instance (yet).")
         else:
-            self.subscribers[name] = self.Subscriber(name, brewType, default)
+            self.subscribers[name] = Subscriber(name, brewType, default)
 
-    def makeConfig(self):
-        subs = map(lambda x: x.makeConfig(), self.subscribers.values())
-        pubs = map(lambda x: x.makeConfig(), self.publishers.values())
+    def make_config(self):
+        subs = map(lambda x: x.make_config(), self.subscribers.values())
+        pubs = map(lambda x: x.make_config(), self.publishers.values())
         d = {'config': {
             'name': self.name,
             'description': self.description,
             'publish': {'messages': pubs},
             'subscribe': {'messages': subs},
-        }}
+        }
+        }
         return d
 
     def on_open(self, ws):
         logging.info("Opening brew.")
-        ws.send(json.dumps(self.makeConfig()))
+        if self.admin:
+            # register as an admin app
+            ws.send(json.dumps({"admin": [{"admin": True, "no_msgs": True}]}))
+        ws.send(json.dumps(self.make_config()))
         self.connected = True
 
     def on_message(self, ws, message):
@@ -110,6 +122,7 @@ class Spacebrew(object):
             'value': value}}
         self.ws.send(json.dumps(message))
 
+
     def subscribe(self, name, target):
         subscriber = self.subscribers[name]
         subscriber.subscribe(target)
@@ -124,11 +137,8 @@ class Spacebrew(object):
         self.ws = None
 
     def start(self):
-        def run(*args):
-            self.run()
-
         self.started = True
-        self.thread = threading.Thread(target=run)
+        self.thread = threading.Thread(target=self.run)
         self.thread.start()
 
     def stop(self):
@@ -136,11 +146,4 @@ class Spacebrew(object):
         if self.ws is not None:
             self.ws.close()
         self.thread.join()
-
-
-if __name__ == "__main__":
-    print """
-This is the Spacebrew module.
-See spacebrew_ex.py for usage examples.
-"""
 

@@ -1,6 +1,6 @@
 __author__ = 'marion'
 
-from spacebrew.spacebrew import Spacebrew
+from spacebrew.spacebrew import SpacebrewApp
 from database.cassandra_repository import CassandraRepository
 from database.cassandra_repository import convert_muse_data_to_cassandra_column
 from database.cassandra_settings import KEYSPACE
@@ -11,15 +11,14 @@ import json
 
 
 class SpacebrewClient(object):
+
     def __init__(self, name, server):
         # get app name and server from query string
         self.name = name
         server = server
 
         # configure the spacebrew client
-        self.brew = Spacebrew(name, server=server)
-        self.brew.addSubscriber(name, "string")
-        self.brew.subscribe(name, self.handle_value)
+        self.brew = SpacebrewApp(name, server=server)
 
         # cassandra
         self.muse_cassandra_repo = CassandraRepository(KEYSPACE, MUSE_COLUMN_FAMILY)
@@ -28,8 +27,12 @@ class SpacebrewClient(object):
                       '/muse/acc',
                       '/muse/elements/experimental/concentration',
                       '/muse/elements/experimental/mellow']
+
         for path in self.paths:
             self.batches[path] = {}
+            spacebrew_name = path.split('/')[-1]
+            self.brew.add_subscriber(spacebrew_name, "string")
+            self.brew.subscribe(spacebrew_name, self.handle_value)
 
     def handle_value(self, string_value):
         value = json.loads(string_value)
@@ -42,7 +45,7 @@ class SpacebrewClient(object):
 
                 # time stats
                 timestamp = row_key.split('_')[1]
-                print "column added to batch for %s -- %s ms" % (path, timestamp)
+                #print "column added to batch for %s -- %s ms" % (path, timestamp)
 
             elif len(self.batches[path]) == BATCH_MAX_SIZE:
                 self.muse_cassandra_repo.add_batch(self.batches[path])
@@ -52,20 +55,11 @@ class SpacebrewClient(object):
                 timestamp = row_key.split('_')[1]
                 print "column batch stored in cassandra for %s -- %s ms" % (path, timestamp)
 
-
     def start(self):
-        try:
-            self.brew.start()
-            while 1:
-                pass
-        except KeyboardInterrupt:
-            # closing out the app
-            self.brew.stop()
-        finally:
-            # closing out the app
-            self.brew.stop()
+        self.brew.start()
+
 
 
 if __name__ == "__main__":
-    sb_client = SpacebrewClient('cloudbrain', 'localhost')
+    sb_client = SpacebrewClient('cloudbrain', '127.0.0.1')
     sb_client.start()

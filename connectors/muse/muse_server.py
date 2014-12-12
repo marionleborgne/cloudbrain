@@ -16,7 +16,9 @@ import socket
 import json
 
 
+
 class MuseServer(ServerThread):
+
     def __init__(self, port, receiver_ip, receiver_port, user):
         ServerThread.__init__(self, port)
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
