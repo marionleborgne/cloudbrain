@@ -11,6 +11,17 @@ from random import random
 def index():
     return render_template('index.html'), 200
 
+@app.route('/about')
+def about():
+    return render_template('index.html'), 200
+
+@app.route('/eeg-viewer')
+def viewer():
+    return render_template('index.html'), 200
+
+@app.route('/api-doc')
+def about():
+    return render_template('api-doc.html'), 200
 
 @app.route("/data", methods=['GET'])
 def data():
@@ -19,9 +30,8 @@ def data():
     start = int(request.args.get('start', None))
     end = int(request.args.get('end', None))
 
-
-
-    data = []
+    # mock data. will be replaced by real data soon
+    mock_data = []
     for timestamp in range(start, end):
         if metric == 'eeg':
             value = "[\"/muse/eeg\", %s, %s, %s, %s]" % (random()*100, random()*100, random()*100, random()*100)
@@ -36,9 +46,9 @@ def data():
             "metric": metric,
             "value": value,
             "timestamp": timestamp}
-        data.append(datapoint)
+        mock_data.append(datapoint)
 
-    return json.dumps(data)
+    return json.dumps(mock_data)
 
 
 if __name__ == '__main__':

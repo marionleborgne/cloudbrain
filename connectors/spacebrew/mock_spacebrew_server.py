@@ -1,5 +1,6 @@
 """
-Muse Server with mock data
+Spacebrew Server with mock data
+To run Spacebrew: cd spacebrew-server & node node_server_forever.js
 """
 
 __author__ = 'marion'

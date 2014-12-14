@@ -45,7 +45,7 @@ class SpacebrewClient(object):
 
                 # time stats
                 timestamp = row_key.split('_')[1]
-                #print "column added to batch for %s -- %s ms" % (path, timestamp)
+                print "column added to batch for %s -- %s ms" % (path, timestamp)
 
             elif len(self.batches[path]) == BATCH_MAX_SIZE:
                 self.muse_cassandra_repo.add_batch(self.batches[path])
