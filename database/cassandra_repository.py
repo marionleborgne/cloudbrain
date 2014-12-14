@@ -1,7 +1,5 @@
-from sandbox.muse import cassandra_settings
-
 __author__ = 'marion'
-
+import cassandra_settings
 from pycassa.pool import ConnectionPool
 from pycassa.columnfamily import ColumnFamily
 
