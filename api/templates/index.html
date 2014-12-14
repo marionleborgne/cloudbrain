@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+    <title>CloudBrain</title>
+
+    <!-- Icons -->
+    <link rel="shortcut icon" href="/static/images/brain-favicon.png">
+
+    <!--CSS-->
+    <link rel="stylesheet" href="/static/css/cb.css">
+
+
+</head>
+<body>
+<!-- Top bar -->
+<div id="navbar">
+    <div class='container-fluid'>
+        <img src="/static/images/brain-white.png" alt="cloudbrain" id="logo">&nbsp&nbsp
+        <a href='/' id="name" href='/'>CloudBrain</a>
+    </div>
+</div>
+<div class="container-fluid">
+
+
+    <h2>API Documentation</h2>
+
+    <h3>Retrieve Historical Data from a Muse Headset</h3>
+
+     <div><b>Request</b></div>
+    <div>GET request on <b>/data</b> with the following parameters:</div>
+    <div>
+        <ul>
+            <li><b>userId :</b> The ID of the user (or Muse headset) associated with the data you are requesting</li>
+            <li><b>metric : </b> See the <b>Muse Metrics</b> section below for the complete list</li>
+            <li><b>startDate : </b> Start date of the interval of data you are requesting (timestamp in s)</li>
+            <li><b>endDate :</b> End date of the interval of data you are requesting (timestamp in s)</li>
+            <li><i>Don't know how to convert human dates to timestamps? Try <a
+                    href="http://www.epochconverter.com">this.</a></i></li>
+        </ul>
+    </div>
+
+    <div><b>Returns</b></div>
+    <div><code>
+        {
+            'userId': &lt;id&gt;,
+            'metric': &lt;metric&gt;,
+            'values': &lt;metric values&gt;,
+            'values': &lt;timestamp&gt;
+        }
+    </code>
+    </div>
+    <br>
+
+    <div><b>Example</b></div>
+
+    <div>GET <b><a
+            href="http://cloudbrain.rocks:5000/data?userId=1&metric=eeg&start=1418446050&end=1418446950">http://cloudbrain.rocks:5000/data?userId=1&amp;metric=eeg&amp;start=1418446050&amp;end=1418446950</a></b>
+    </div>
+
+    <div>
+        <ul>
+            <li><b>userId :</b> 1</li>
+            <li><b>metric :</b> eeg</li>
+            <li><b>startDate :</b> 1418446050 (Sun, 12 Dec 2014, 8:47:30 PM GMT-8:00)</li>
+            <li><b>endDate :</b> 1418446950 (Sun, 12 Dec 2014, 9:02:30 PM GMT-8:00)</li>
+        </ul>
+    </div>
+
+
+    <h3>Muse Metrics</h3>
+
+    <div>
+        <ul>
+            <li><b>eeg</b></li>
+            <li><b>acc</b></li>
+            <li><b>mellow</b></li>
+            <li><b>concentration</b></li>
+            <li><b>battery</b></li>
+        </ul>
+    </div>
+
+</div>
+</body>
+</html>

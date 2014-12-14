@@ -48,8 +48,6 @@ class SpacebrewServer(object):
 
     def start(self):
         while 1:
-            time.sleep(1)
-            """
             for muse_id in self.muse_ids:
                 for metric in self.metrics:
                     if metric == 'eeg':
@@ -66,7 +64,7 @@ class SpacebrewServer(object):
                         "type": "string", "name": metric, "clientName": muse_id}}
                     self.ws.send(json.dumps(message))
                     time.sleep(0.1)
-            """
+
 
 
 if __name__ == "__main__":

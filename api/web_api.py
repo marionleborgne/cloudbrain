@@ -1,34 +1,44 @@
 #!flask/bin/python
-from flask import Flask
-from database.cassandra_repository import CassandraRepository
-from database.cassandra_settings import KEYSPACE
-from database.cassandra_settings import MUSE_COLUMN_FAMILY
-
-import time
-import json
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
-muse_cassandra_repo = CassandraRepository(KEYSPACE, MUSE_COLUMN_FAMILY)
+app.config['PROPAGATE_EXCEPTIONS'] = True
 
+import json
+from random import random
 
 @app.route('/')
 def index():
-    return "Hello, World!"
+    return render_template('index.html'), 200
 
 
-@app.route('/muse/eeg')
-def get_metric():
+@app.route("/data", methods=['GET'])
+def data():
+    user_id = request.args.get('userId', None)
+    metric = request.args.get('metric', None)
+    start = int(request.args.get('start', None))
+    end = int(request.args.get('end', None))
 
-    # /!\ work in progress
-    # todo: clean and add the rest of the endpoints
-    path = '/muse/eeg'
-    time_horizon = 5  # in ms
-    now = int(time.time() * 1000)
-    start_row_key = '%s_%s' % (path, now)
-    end_row_key = '%s_%s' % (path, now - time_horizon)
-    data = muse_cassandra_repo.get_range(start_row_key, end_row_key)
-    result = json.dumps([d for d in data])
-    return result
+
+
+    data = []
+    for timestamp in range(start, end):
+        if metric == 'eeg':
+            value = "[\"/muse/eeg\", %s, %s, %s, %s]" % (random()*100, random()*100, random()*100, random()*100)
+        elif metric == 'acc':
+            value = "[\"/muse/acc\", %s, %s, %s]" % (random()*100, random()*100, random()*100)
+        elif metric == 'concentration':
+            value = "[\"/muse/elements/experimental/concentration\", %s]" % (random())
+        elif metric == 'mellow':
+            value = "[\"/muse/elements/experimental/mellow\", %s]" % (random())
+        datapoint = {
+            "id": user_id,
+            "metric": metric,
+            "value": value,
+            "timestamp": timestamp}
+        data.append(datapoint)
+
+    return json.dumps(data)
 
 
 if __name__ == '__main__':

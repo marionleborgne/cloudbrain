@@ -1,0 +1,19 @@
+#navbar {
+    height: 55px;
+    background: #1C1C1C;
+}
+
+#logo {
+    width:35px;
+    height:35px;
+    position: relative;
+    top: 5px;
+}
+
+#name {
+    font-weight: bold;
+    font-size: 25px;
+    color: #F9F9F9;
+    position: relative;
+    top: 10px;
+}
