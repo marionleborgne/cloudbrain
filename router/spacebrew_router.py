@@ -75,6 +75,6 @@ if __name__ == "__main__":
     router.link('eeg', 'muse-001', 'cloudbrain')
     router.link('acc', 'muse-001', 'cloudbrain')
     router.link('concentration', 'muse-001', 'cloudbrain')
-    router.link('mellow', 'muse-001', 'cloudbrain')
+    router.link('mellow', 'muse-002', 'cloudbrain')
     time.sleep(1)
     router.unlink("eeg",'muse-001', 'cloudbrain')

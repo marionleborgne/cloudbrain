@@ -24,59 +24,32 @@
 
 </head>
 <body>
-<!-- Top bar>
+
+<!-- Top bar-->
 <div id="navbar">
     <div class='container-fluid'>
-        <img src="/static/images/brain-white.png" alt="cloudbrain" id="logo">&nbsp&nbsp
+        <img src="/static/images/brain-white.png" alt="cloudbrain" id="logo"> &nbsp
         <a href='/' id="name" href='/'>CloudBrain</a>
     </div>
-</div -->
+</div>
 
-<nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="http://cloudbrain.rocks"><b>CloudBrain</b></a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="http://cloudbrain.rocks/eeg-viewer">EEG Viewer<span class="sr-only">(current)</span></a></li>
-                <li><a href="http://cloudbrain.rocks/api-doc">API Documentation</a></li>
-            </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="http://cloudbrain.rocks/about">About</a></li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container-fluid -->
-</nav>
 
 <div class="container-fluid">
 
 
     <h2>API Documentation</h2>
 
-    <h3>Retrieve Historical Data from a Muse Headset</h3>
+
+    <h3>Retrieving Historical Data from CloudBrain</h3>
 
     <div><b>Request</b></div>
     <div>GET request on <b>/data</b> with the following parameters:</div>
     <div>
         <ul>
-            <li><b>userId :</b> The ID of the user (or Muse headset) associated with the data you are requesting</li>
-            <li><b>metric : </b> See the <b>Muse Metrics</b> section below for the complete list</li>
-            <li><b>startDate : </b> Start date of the interval of data you are requesting (timestamp in s)</li>
-            <li><b>endDate :</b> End date of the interval of data you are requesting (timestamp in s)</li>
+            <li><b>userId :</b> The ID of the user (or Muse headset) associated with the data you are requesting.</li>
+            <li><b>metric : </b> See the <b>Muse Metrics</b> section below for the complete list.</li>
+            <li><b>startDate : </b> Start date of the interval of data you are requesting (timestamp in s).</li>
+            <li><b>endDate :</b> End date of the interval of data you are requesting (timestamp in s).</li>
             <li><i>Don't know how to convert human dates to timestamps? Try <a
                     href="http://www.epochconverter.com">this.</a></i></li>
         </ul>
@@ -88,7 +61,7 @@
         'userId': &lt;id&gt;,
         'metric': &lt;metric&gt;,
         'values': &lt;metric values&gt;,
-        'values': &lt;timestamp&gt;
+        'timestamp': &lt;timestamp&gt;
         }
     </code>
     </div>
@@ -115,22 +88,136 @@
         timestamp: 1418446050,
         metric: "eeg",
         id: "1",
-        value: "["/muse/eeg", 65.6492535124, 53.9998992812, 44.3457137152, 82.8679967837]"
+        value: [
+        "/muse/eeg",
+        13.15402350975442,
+        33.73459271633013,
+        40.459618038552705,
+        76.12318497355123
+        ]
         }, ... ,
         {
         timestamp: 1418446950,
         metric: "eeg",
         id: "1",
-        value: "["/muse/eeg", 94.8120991234, 99.6191691391, 70.5775619468, 42.689773857]"
+        value: [
+        "/muse/eeg",
+        13.15402350975442,
+        33.73459271633013,
+        40.459618038552705,
+        76.12318497355123
+        ]
         }]
     </code>
     </div>
     <br>
 
+    <h3>Retrieving Aggregate Data from CloudBrain</h3>
 
-    <h3>Muse Metrics</h3>
+    <div><b>Request</b></div>
+    <div>GET request on <b>/aggregate</b> with the following parameters:</div>
+    <div>
+        <ul>
+            <li><b>userId :</b> The ID of the user (or Muse headset) associated with the data you are requesting.</li>
+            <li><b>metric : </b> See the <b>Metrics</b> section below for the complete list.</li>
+            <li><b>aggregateType : </b> The type of aggregate you want. The value <b>hour</b> will give you an aggregate
+                over the last hour. And the value <b>all</b> will give you an aggregate of all the data.
+            </li>
+        </ul>
+    </div>
 
-    <div>It is possible to request data from CloudBrain for the following metrics</div>
+    <div><b>Returns</b></div>
+    <div><code>
+        {
+        'userId': &lt;id&gt;,
+        'metric': &lt;metric&gt;,
+        'values': &lt;metric values&gt;,
+        'aggregateType': &lt;aggregateType&gt;
+        }
+    </code>
+    </div>
+    <br>
+
+    <div><b>Sample Request</b></div>
+
+    <div>GET <b><a
+            href="http://cloudbrain.rocks/aggregate?aggregateType=hour&metric=eeg&userId=1">http://cloudbrain.rocks/aggregate?userId=1&amp;metric=eeg&amp;aggregateType=hour</a></b>
+    </div>
+
+    <div>
+        <ul>
+            <li><b>userId :</b> 1</li>
+            <li><b>metric :</b> eeg</li>
+            <li><b>aggregateType :</b> hour</li>
+        </ul>
+    </div>
+
+    <div><b>Returns</b></div>
+    <div><code>
+        {
+        aggregateType: "hour",
+        metric: "eeg",
+        userId: "1",
+        value: [
+        "/muse/eeg",
+        13.15402350975442,
+        33.73459271633013,
+        40.459618038552705,
+        76.12318497355123
+        ]
+        }
+    </code>
+    </div>
+    <br>
+
+    <h3>Getting Live Data from CloudBrain with Spacebrew</h3>
+
+    <div>More info comming soon. For an example, visit <b><a
+            href="http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks">http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks</a></b>
+    </div>
+
+    <h3>Routing Spacebrew</h3>
+
+    <h4>Link a publisher and a subscriber</h4>
+    <div><b>Request</b></div>
+    <div>GET request on <b>/link</b> with the following parameters:</div>
+    <div>
+        <ul>
+            <li><b>publisher :</b> The input data coming from the hardware (Muse headset for example).</li>
+            <li><b>subscriber : </b> Set it to 'cloudbrain' to keep historical data. Can also be set to your spacebrew client to get live data.</li>
+            <li><b>metric : </b> The metric you want to route. See the <b>Muse Metrics</b> section below for the complete list.</li>
+        </ul>
+    </div>
+
+    <div><b>Sample Request</b></div>
+
+    <div>GET <b><a
+            href="http://cloudbrain.rocks/link?metric=eeg&publisher=muse-001&subscriber=cloudbrain">http://cloudbrain.rocks/link?metric=eeg&publisher=muse-001&subscriber=cloudbrain</a></b>
+    </div>
+
+     <h4>Unlink a publisher and a subscriber</h4>
+    <div><b>Request</b></div>
+    <div>GET request on <b>/unlink</b> with the following parameters:</div>
+    <div>
+        <ul>
+            <li><b>publisher :</b> The input data coming from the hardware (Muse headset for example).</li>
+            <li><b>subscriber : </b> Set it to 'cloudbrain' to keep historical data. Can also be set to your spacebrew client to get live data.</li>
+            <li><b>metric : </b> The metric you want to unlink. See the <b>Muse Metrics</b> section below for the complete list.</li>
+        </ul>
+    </div>
+
+    <div><b>Sample Request</b></div>
+
+    <div>GET <b><a
+            href="http://cloudbrain.rocks/link?metric=eeg&publisher=muse-001&subscriber=cloudbrain">http://cloudbrain.rocks/link?metric=eeg&publisher=muse-001&subscriber=cloudbrain</a></b>
+    </div>
+
+
+    <h3>Metrics</h3>
+
+    <div>The following metrics are supported by CloudBrain</div>
+    <h4>Muse</h4>
+
     <div>
         <ul>
             <li><b>eeg</b></li>
@@ -141,6 +228,39 @@
         </ul>
     </div>
 
+
+    <h4>OpenBCI</h4>
+
+    <div>
+        <ul>
+            <li><b>channel-0</b></li>
+            <li><b>channel-1</b></li>
+            <li><b>channel-2</b></li>
+            <li><b>channel-3</b></li>
+            <li><b>channel-4</b></li>
+            <li><b>channel-5</b></li>
+            <li><b>channel-6</b></li>
+            <li><b>channel-7</b></li>
+        </ul>
+    </div>
+
+    <h4>NeuroSky</h4>
+
+    <div>
+        <ul>
+            <li><b>attention</b></li>
+            <li><b>meditation</b></li>
+            <li><b>signal</b></li>
+        </ul>
+    </div>
+
+    <h4>Pulse Sensor</h4>
+
+    <div>
+        <ul>
+            <li><b>heart</b></li>
+        </ul>
+    </div>
 </div>
 </body>
 </html>

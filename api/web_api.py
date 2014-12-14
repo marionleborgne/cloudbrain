@@ -12,11 +12,11 @@ from router.spacebrew_router import SpacebrewRouter
 
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
-router = SpacebrewRouter(server=settings.CLOUDBRAIN_ADDRESS)
+sp_router = SpacebrewRouter(server=settings.CLOUDBRAIN_ADDRESS)
 
 @app.route('/')
 def index():
-    return render_template('index.html'), 200
+    return render_template('api-doc.html'), 200
 
 
 @app.route('/about')
@@ -28,8 +28,8 @@ def about():
 def doc():
     return render_template('api-doc.html'), 200
 
-@app.route('/router')
-def router():
+@app.route('/spacebrew')
+def spacebrew():
     return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
 @app.route("/link", methods=['GET'])
@@ -37,7 +37,7 @@ def link():
     publisher = request.args.get('publisher', None)
     subscriber = request.args.get('subscriber', None)
     metric = request.args.get('metric', None)
-    router.link(metric, publisher, subscriber)
+    sp_router.link(metric, publisher, subscriber)
     return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
 @app.route("/unlink", methods=['GET'])
@@ -45,7 +45,7 @@ def unlink():
     publisher = request.args.get('publisher', None)
     subscriber = request.args.get('subscriber', None)
     metric = request.args.get('metric', None)
-    router.unlink(metric, publisher, subscriber)
+    sp_router.unlink(metric, publisher, subscriber)
     return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
 @app.route("/data", methods=['GET'])
