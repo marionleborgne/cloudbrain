@@ -1,13 +1,13 @@
 #navbar {
-    height: 60px;
+    height: 55px;
     background: #1C1C1C;
 }
 
 #logo {
-    width:30px;
-    height:30px;
+    width:35px;
+    height:35px;
     position: relative;
-    bottom: 5px;
+    top: 5px;
 }
 
 #name {
