@@ -3,8 +3,16 @@ from flask import Flask, render_template, request, redirect
 import json
 from random import random
 
+# add the shared settings file to namespace
+import sys
+from os.path import dirname, abspath
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
+import settings
+from router.spacebrew_router import SpacebrewRouter
+
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
+router = SpacebrewRouter(server=settings.CLOUDBRAIN_ADDRESS)
 
 @app.route('/')
 def index():
@@ -26,7 +34,18 @@ def router():
 
 @app.route("/link", methods=['GET'])
 def link():
+    publisher = request.args.get('publisher', None)
+    subscriber = request.args.get('subscriber', None)
+    metric = request.args.get('metric', None)
+    router.link(metric, publisher, subscriber)
+    return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
+@app.route("/unlink", methods=['GET'])
+def unlink():
+    publisher = request.args.get('publisher', None)
+    subscriber = request.args.get('subscriber', None)
+    metric = request.args.get('metric', None)
+    router.unlink(metric, publisher, subscriber)
     return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
 @app.route("/data", methods=['GET'])

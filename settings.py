@@ -1,4 +1,5 @@
 __author__ = 'marion'
 
 
-CLOUDBRAIN_ADDRESS = 'cloudbrain.rocks'
+# http://cloudbrain.rocks
+CLOUDBRAIN_ADDRESS = '54.183.68.29'

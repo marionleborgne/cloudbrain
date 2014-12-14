@@ -4,6 +4,12 @@ from websocket import create_connection
 import json
 import time
 
+# add the shared settings file to namespace
+import sys
+from os.path import dirname, abspath
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
+import settings
+
 
 class SpacebrewRouter(object):
     def __init__(self, server='127.0.0.1', port=9000):
@@ -23,41 +29,41 @@ class SpacebrewRouter(object):
         self.ws.send(json.dumps(message))
 
 
-    def link(self, metric, muse_id, muse_address, cloudbrain_address):
+    def link(self, metric, publisher, subscriber):
         message = {
             "route": {
                 "type": "add",
                 "publisher": {
-                    "clientName": muse_id,
+                    "clientName": publisher,
                     "name": metric,
                     "type": "string",
-                    "remoteAddress": muse_address
+                    "remoteAddress": self.server
                 },
                 "subscriber": {
-                    "clientName": 'cloudbrain',
+                    "clientName": subscriber,
                     "name": metric,
                     "type": "string",
-                    "remoteAddress": cloudbrain_address
+                    "remoteAddress": self.server
                 }
 
             }
         }
         self.ws.send(json.dumps(message))
 
-    def unlink(self, metric, muse_id, muse_address, cloudbrain_address):
+    def unlink(self, metric, publisher, subscriber):
         message = {"route":
                        {"type": "remove",
                         "publisher": {
-                            "clientName": muse_id,
+                            "clientName": publisher,
                             "name": metric,
                             "type": "string",
-                            "remoteAddress": muse_address
+                            "remoteAddress": self.server
                         },
                         "subscriber": {
-                            "clientName": "cloudbrain",
+                            "clientName": subscriber,
                             "name": metric,
                             "type": "string",
-                            "remoteAddress": cloudbrain_address
+                            "remoteAddress": self.server
                         }},
                    "targetType": "admin"}
 
@@ -65,10 +71,10 @@ class SpacebrewRouter(object):
 
 
 if __name__ == "__main__":
-    router = SpacebrewRouter()
-    router.link('eeg', 'muse-001', '127.0.0.1', '127.0.0.1')
-    router.link('acc', 'muse-001', '127.0.0.1', '127.0.0.1')
-    router.link('concentration', 'muse-001', '127.0.0.1', '127.0.0.1')
-    router.link('mellow', 'muse-001', '127.0.0.1', '127.0.0.1')
+    router = SpacebrewRouter(server=settings.CLOUDBRAIN_ADDRESS)
+    router.link('eeg', 'muse-001', 'cloudbrain')
+    router.link('acc', 'muse-001', 'cloudbrain')
+    router.link('concentration', 'muse-001', 'cloudbrain')
+    router.link('mellow', 'muse-001', 'cloudbrain')
     time.sleep(1)
-    router.unlink("acc", 'muse-001', '127.0.0.1', '127.0.0.1')
+    router.unlink("eeg",'muse-001', 'cloudbrain')
