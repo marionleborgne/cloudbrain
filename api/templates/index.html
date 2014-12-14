@@ -45,10 +45,10 @@
     <div>GET request on <b>/data</b> with the following parameters:</div>
     <div>
         <ul>
-            <li><b>userId :</b> The ID of the user (or Muse headset) associated with the data you are requesting</li>
-            <li><b>metric : </b> See the <b>Muse Metrics</b> section below for the complete list</li>
-            <li><b>startDate : </b> Start date of the interval of data you are requesting (timestamp in s)</li>
-            <li><b>endDate :</b> End date of the interval of data you are requesting (timestamp in s)</li>
+            <li><b>userId :</b> The ID of the user (or Muse headset) associated with the data you are requesting.</li>
+            <li><b>metric : </b> See the <b>Muse Metrics</b> section below for the complete list.</li>
+            <li><b>startDate : </b> Start date of the interval of data you are requesting (timestamp in s).</li>
+            <li><b>endDate :</b> End date of the interval of data you are requesting (timestamp in s).</li>
             <li><i>Don't know how to convert human dates to timestamps? Try <a
                     href="http://www.epochconverter.com">this.</a></i></li>
         </ul>
@@ -60,7 +60,7 @@
         'userId': &lt;id&gt;,
         'metric': &lt;metric&gt;,
         'values': &lt;metric values&gt;,
-        'values': &lt;timestamp&gt;
+        'timestamp': &lt;timestamp&gt;
         }
     </code>
     </div>
@@ -99,10 +99,62 @@
     </div>
     <br>
 
+    <h3>Retrieve Aggregate Data from a Muse Headset</h3>
+
+    <div><b>Request</b></div>
+    <div>GET request on <b>/aggregate</b> with the following parameters:</div>
+    <div>
+        <ul>
+            <li><b>userId :</b> The ID of the user (or Muse headset) associated with the data you are requesting.</li>
+            <li><b>metric : </b> See the <b>Muse Metrics</b> section below for the complete list.</li>
+            <li><b>aggregateType : </b> The type of aggregate you want. The value <b>hour</b> will give you an aggregate
+                over the last hour. And the value <b>all</b> will give you an aggregate of all the data.
+            </li>
+        </ul>
+    </div>
+
+    <div><b>Returns</b></div>
+    <div><code>
+        {
+        'userId': &lt;id&gt;,
+        'metric': &lt;metric&gt;,
+        'values': &lt;metric values&gt;,
+        'aggregateType': &lt;aggregateType&gt;
+        }
+    </code>
+    </div>
+    <br>
+
+    <div><b>Sample Request</b></div>
+
+    <div>GET <b><a
+            href="http://cloudbrain.rocks/aggregate?aggregateType=hour&metric=eeg&userId=1">http://cloudbrain.rocks/aggregate?userId=1&amp;metric=eeg&amp;aggregateType=hour</a></b>
+    </div>
+
+    <div>
+        <ul>
+            <li><b>userId :</b> 1</li>
+            <li><b>metric :</b> eeg</li>
+            <li><b>aggregateType :</b> hour</li>
+        </ul>
+    </div>
+
+    <div><b>Returns</b></div>
+    <div><code>
+        {
+        aggregateType: "hour",
+        metric: "eeg",
+        userId: "1",
+        value: "["/muse/eeg", 45.765337012, 12.6723543374, 18.8482813468, 51.600761553]"
+        }
+    </code>
+    </div>
+    <br>
+
 
     <h3>Muse Metrics</h3>
 
-    <div>It is possible to request data from CloudBrain for the following metrics</div>
+    <div>The following Muse metrics are supported by CloudBrain</div>
     <div>
         <ul>
             <li><b>eeg</b></li>
