@@ -19,26 +19,23 @@ import json
 
 class SpacebrewClient(object):
     def __init__(self, name, server, store_in_cassandra=False):
-        # get app name and server from query string
-        self.name = name
-        server = server
-
         # configure the spacebrew client
         self.brew = SpacebrewApp(name, server=server)
 
         # cassandra
-        self.muse_cassandra_repo = CassandraRepository(KEYSPACE, MUSE_COLUMN_FAMILY)
-        self.batches = {}
+        if store_in_cassandra:
+            self.muse_cassandra_repo = CassandraRepository(KEYSPACE, MUSE_COLUMN_FAMILY)
+            self.batches = {}
         self.paths = ['/muse/eeg',
                       '/muse/acc',
                       '/muse/elements/experimental/concentration',
                       '/muse/elements/experimental/mellow']
 
         for path in self.paths:
-            self.batches[path] = {}
             spacebrew_name = path.split('/')[-1]
             self.brew.add_subscriber(spacebrew_name, "string")
             if store_in_cassandra:
+                self.batches[path] = {}
                 self.brew.subscribe(spacebrew_name, self.handle_value_cassandra)
             else:
                 self.brew.subscribe(spacebrew_name, self.handle_value)
