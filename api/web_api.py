@@ -19,7 +19,7 @@ def about():
 
 
 @app.route('/api-doc')
-def about():
+def doc():
     return render_template('api-doc.html'), 200
 
 
