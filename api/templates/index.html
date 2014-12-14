@@ -38,7 +38,7 @@
 
     <h3>Retrieve Historical Data from a Muse Headset</h3>
 
-     <div><b>Request</b></div>
+    <div><b>Request</b></div>
     <div>GET request on <b>/data</b> with the following parameters:</div>
     <div>
         <ul>
@@ -54,10 +54,10 @@
     <div><b>Returns</b></div>
     <div><code>
         {
-            'userId': &lt;id&gt;,
-            'metric': &lt;metric&gt;,
-            'values': &lt;metric values&gt;,
-            'values': &lt;timestamp&gt;
+        'userId': &lt;id&gt;,
+        'metric': &lt;metric&gt;,
+        'values': &lt;metric values&gt;,
+        'values': &lt;timestamp&gt;
         }
     </code>
     </div>
@@ -78,8 +78,27 @@
         </ul>
     </div>
 
+    <div><b>Returns</b></div>
+    <div><code>
+        [{
+        timestamp: 1418446050,
+        metric: "eeg",
+        id: "1",
+        value: "["/muse/eeg", 65.6492535124, 53.9998992812, 44.3457137152, 82.8679967837]"
+        }, ... ,
+        {
+        timestamp: 1418446950,
+        metric: "eeg",
+        id: "1",
+        value: "["/muse/eeg", 94.8120991234, 99.6191691391, 70.5775619468, 42.689773857]"
+        }]
+    </code>
+    </div>
+    <br>
+
 
     <h3>Muse Metrics</h3>
+
     <div>It is possible to request data from CloudBrain for the following metrics</div>
     <div>
         <ul>
