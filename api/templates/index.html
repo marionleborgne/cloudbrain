@@ -39,7 +39,7 @@
 
     <h2>API Documentation</h2>
 
-    <h3>Retrieve Historical Data from a Muse Headset</h3>
+    <h3>Retrieving Historical Data from CloudBrain</h3>
 
     <div><b>Request</b></div>
     <div>GET request on <b>/data</b> with the following parameters:</div>
@@ -99,14 +99,14 @@
     </div>
     <br>
 
-    <h3>Retrieve Aggregate Data from a Muse Headset</h3>
+    <h3>Retrieving Aggregate Data from CloudBrain</h3>
 
     <div><b>Request</b></div>
     <div>GET request on <b>/aggregate</b> with the following parameters:</div>
     <div>
         <ul>
             <li><b>userId :</b> The ID of the user (or Muse headset) associated with the data you are requesting.</li>
-            <li><b>metric : </b> See the <b>Muse Metrics</b> section below for the complete list.</li>
+            <li><b>metric : </b> See the <b>Metrics</b> section below for the complete list.</li>
             <li><b>aggregateType : </b> The type of aggregate you want. The value <b>hour</b> will give you an aggregate
                 over the last hour. And the value <b>all</b> will give you an aggregate of all the data.
             </li>
@@ -152,9 +152,11 @@
     <br>
 
 
-    <h3>Muse Metrics</h3>
+    <h3>Metrics</h3>
 
     <div>The following Muse metrics are supported by CloudBrain</div>
+    <h4>Muse</h4>
+
     <div>
         <ul>
             <li><b>eeg</b></li>
