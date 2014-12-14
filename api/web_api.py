@@ -34,13 +34,15 @@ def data():
     mock_data = []
     for timestamp in range(start, end):
         if metric == 'eeg':
-            value = "[\"/muse/eeg\", %s, %s, %s, %s]" % (random() * 100, random() * 100, random() * 100, random() * 100)
+            value = ['/muse/eeg', random() * 100, random() * 100, random() * 100, random() * 100]
         elif metric == 'acc':
-            value = "[\"/muse/acc\", %s, %s, %s]" % (random() * 100, random() * 100, random() * 100)
+            value = ['/muse/acc', random() * 100, random() * 100, random() * 100]
         elif metric == 'concentration':
-            value = "[\"/muse/elements/experimental/concentration\", %s]" % (random())
+            value = ['/muse/elements/experimental/concentration', random()]
         elif metric == 'mellow':
-            value = "[\"/muse/elements/experimental/mellow\", %s]" % (random())
+            value = ['/muse/elements/experimental/mellow', random()]
+        else:
+            value = [random()]
         datapoint = {
             "userId": user_id,
             "metric": metric,
@@ -59,13 +61,15 @@ def aggregate():
 
     # mock data. will be replaced by real data soon
     if metric == 'eeg':
-        value = "[\"/muse/eeg\", %s, %s, %s, %s]" % (random() * 100, random() * 100, random() * 100, random() * 100)
+        value = ['/muse/eeg', random() * 100, random() * 100, random() * 100, random() * 100]
     elif metric == 'acc':
-        value = "[\"/muse/acc\", %s, %s, %s]" % (random() * 100, random() * 100, random() * 100)
+        value = ['/muse/acc', random() * 100, random() * 100, random() * 100]
     elif metric == 'concentration':
-        value = "[\"/muse/elements/experimental/concentration\", %s]" % (random())
+        value = ['/muse/elements/experimental/concentration', random()]
     elif metric == 'mellow':
-        value = "[\"/muse/elements/experimental/mellow\", %s]" % (random())
+        value = ['/muse/elements/experimental/mellow', random()]
+    else:
+        value = [random()]
 
     mock_data = {
         "userId": user_id,
