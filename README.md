@@ -5,7 +5,7 @@ Files that can be run are in the following directories:
 
 - `connectors`: Connectors for openBCI, Muse, Neurosky and Spacebrew sending data to cloudbrain
 - `listeners`: Cloudbrain Listeners stroring data in Cassandra (again, for openBCI, Muse, Neurosky and Spacebrew )
-- `api`: Web API to request history of data from cloudbrain (need to be cleaned up and enhanced with more endpoints -- only has one for now)
+- `api`: Cloudbrain's web API to retrieve the history of data, route live data, or retrieve data aggregated data (see [cloudbrain.rocks](http://cloudbrain.rocks) for the API documentation)
 - `router`: Router to update spacebrew routes
 
 
