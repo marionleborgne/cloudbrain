@@ -13,11 +13,8 @@ def index():
 
 @app.route('/about')
 def about():
-    return render_template('index.html'), 200
+    return render_template('about.html'), 200
 
-@app.route('/eeg-viewer')
-def viewer():
-    return render_template('index.html'), 200
 
 @app.route('/api-doc')
 def about():
