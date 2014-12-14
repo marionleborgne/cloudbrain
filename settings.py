@@ -1,4 +1,4 @@
 __author__ = 'marion'
 
 
-CLOUDBRAIN_ADDRESS = 'cloubrain.rocks'
+CLOUDBRAIN_ADDRESS = 'cloudbrain.rocks'
