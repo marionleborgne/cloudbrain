@@ -1,5 +1,12 @@
 __author__ = 'marion'
 
+# add the shared settings file to namespace
+import sys
+from os.path import dirname, abspath
+
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
+import settings
+
 from spacebrew.spacebrew import SpacebrewApp
 from database.cassandra_repository import CassandraRepository
 from database.cassandra_repository import convert_muse_data_to_cassandra_column
@@ -11,8 +18,7 @@ import json
 
 
 class SpacebrewClient(object):
-
-    def __init__(self, name, server):
+    def __init__(self, name, server, store_in_cassandra=False):
         # get app name and server from query string
         self.name = name
         server = server
@@ -32,9 +38,17 @@ class SpacebrewClient(object):
             self.batches[path] = {}
             spacebrew_name = path.split('/')[-1]
             self.brew.add_subscriber(spacebrew_name, "string")
-            self.brew.subscribe(spacebrew_name, self.handle_value)
+            if store_in_cassandra:
+                self.brew.subscribe(spacebrew_name, self.handle_value_cassandra)
+            else:
+                self.brew.subscribe(spacebrew_name, self.handle_value)
+
 
     def handle_value(self, string_value):
+        value = json.loads(string_value)
+        print value
+
+    def handle_value_cassandra(self, string_value):
         value = json.loads(string_value)
         path = value[0]
         if path in self.paths:
@@ -55,11 +69,11 @@ class SpacebrewClient(object):
                 timestamp = row_key.split('_')[1]
                 print "column batch stored in cassandra for %s -- %s ms" % (path, timestamp)
 
+
     def start(self):
         self.brew.start()
 
 
-
 if __name__ == "__main__":
-    sb_client = SpacebrewClient('cloudbrain', '127.0.0.1')
+    sb_client = SpacebrewClient('cloudbrain', settings.CLOUDBRAIN_ADDRESS, store_in_cassandra=False)
     sb_client.start()

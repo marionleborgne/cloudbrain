@@ -1,9 +1,21 @@
 """
 Spacebrew Server with mock data
-To run Spacebrew: cd spacebrew-server & node node_server_forever.js
+
+Note that Spacebrew is required.
+
+Spacebrew installation:
+* git clone https://github.com/Spacebrew/spacebrew
+* follow the readme instructions to install and start spacebrew
 """
 
 __author__ = 'marion'
+
+# add the shared settings file to namespace
+import sys
+from os.path import dirname, abspath
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
+import settings
+
 
 import json
 from websocket import create_connection
@@ -69,5 +81,5 @@ class SpacebrewServer(object):
 
 
 if __name__ == "__main__":
-    server = SpacebrewServer()
+    server = SpacebrewServer(server=settings.CLOUDBRAIN_ADDRESS)
     server.start()

@@ -1,12 +1,10 @@
 #!flask/bin/python
-from flask import Flask, render_template, request
-
-app = Flask(__name__)
-app.config['PROPAGATE_EXCEPTIONS'] = True
-
+from flask import Flask, render_template, request, redirect
 import json
 from random import random
 
+app = Flask(__name__)
+app.config['PROPAGATE_EXCEPTIONS'] = True
 
 @app.route('/')
 def index():
@@ -22,6 +20,14 @@ def about():
 def doc():
     return render_template('api-doc.html'), 200
 
+@app.route('/router')
+def router():
+    return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
+
+@app.route("/link", methods=['GET'])
+def link():
+
+    return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
 @app.route("/data", methods=['GET'])
 def data():

@@ -1,6 +1,12 @@
 """
 Muse Server.
 
+Note that both Spacebrew and the MuseIO SDK are required
+
+Spacebrew installation:
+* git clone https://github.com/Spacebrew/spacebrew
+* follow the readme instructions to install and start spacebrew
+
 To start MuseIO, open a terminal or command prompt and type:
 
 muse-io --osc osc.udp://localhost:9090
@@ -11,6 +17,12 @@ __author__ = 'marion'
 
 from liblo import ServerThread, make_method
 import json
+
+# add the shared settings file to namespace
+import sys
+from os.path import dirname, abspath
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
+import settings
 from spacebrew.spacebrew import SpacebrewApp
 
 
@@ -81,6 +93,6 @@ class SpacebrewServer(ServerThread):
 
 
 if __name__ == "__main__":
-    server = SpacebrewServer(9090, 'muse', '127.0.0.1')
+    server = SpacebrewServer(9090, 'muse', settings.CLOUDBRAIN_ADDRESS)
     server.start()
 

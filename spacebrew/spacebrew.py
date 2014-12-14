@@ -1,3 +1,4 @@
+#!/usr/bin/python
 __author__ = 'marion'
 
 import websocket
