@@ -28,6 +28,9 @@ class SpacebrewClient(object):
             self.brew.subscribe(spacebrew_name, self.handle_value)
 
     def handle_value(self, string_value):
+
+        #put your code here
+
         value = json.loads(string_value)
         print value
 
@@ -36,5 +39,5 @@ class SpacebrewClient(object):
 
 
 if __name__ == "__main__":
-    sb_client = SpacebrewClient('cloudbrain', settings.CLOUDBRAIN_ADDRESS)
+    sb_client = SpacebrewClient('booth-example', settings.CLOUDBRAIN_ADDRESS)
     sb_client.start()

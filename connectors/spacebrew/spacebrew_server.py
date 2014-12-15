@@ -21,8 +21,9 @@ import json
 # add the shared settings file to namespace
 import sys
 from os.path import dirname, abspath
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 import settings
+
 from spacebrew.spacebrew import SpacebrewApp
 
 
@@ -93,6 +94,6 @@ class SpacebrewServer(ServerThread):
 
 
 if __name__ == "__main__":
-    server = SpacebrewServer(9090, 'muse', settings.CLOUDBRAIN_ADDRESS)
+    server = SpacebrewServer(9090, 'muse-moxy', settings.CLOUDBRAIN_ADDRESS)
     server.start()
 

@@ -81,5 +81,5 @@ class SpacebrewServer(object):
 
 
 if __name__ == "__main__":
-    server = SpacebrewServer(server=settings.CLOUDBRAIN_ADDRESS)
+    server = SpacebrewServer(muse_ids=['muse-001', 'muse-002', 'muse-003', 'muse-004', 'muse-005'], server=settings.CLOUDBRAIN_ADDRESS)
     server.start()
