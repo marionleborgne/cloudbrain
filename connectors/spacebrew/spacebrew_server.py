@@ -94,6 +94,6 @@ class SpacebrewServer(ServerThread):
 
 
 if __name__ == "__main__":
-    server = SpacebrewServer(9090, 'muse-moxy', settings.CLOUDBRAIN_ADDRESS)
+    server = SpacebrewServer(9090, 'muse-example', settings.CLOUDBRAIN_ADDRESS)
     server.start()
 
