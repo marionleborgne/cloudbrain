@@ -2,12 +2,12 @@ CloudBrain
 ==========
 
 ##Overview
-- `connectors`: Connectors for [OpenBCI](http://openbci.com), [Muse](http://www.choosemuse.com/), [Neurosky](http://neurosky.com/) and [Spacebrew](https://github.com/Spacebrew/spacebrew) sending data to cloudbrain
+- `connectors`: connectors for [OpenBCI](http://openbci.com), [Muse](http://www.choosemuse.com/), [Neurosky](http://neurosky.com/) and [Spacebrew](https://github.com/Spacebrew/spacebrew) sending data to cloudbrain
 - `listeners`: Cloudbrain Listeners to get the live data data for [OpenBCI](http://openbci.com),[Muse](http://www.choosemuse.com/), [Neurosky](http://neurosky.com/) and [Spacebrew](https://github.com/Spacebrew/spacebrew)
 - `api`: Cloudbrain's web API to retrieve the history of data, route live data, or retrieve data aggregated data (see [cloudbrain.rocks](http://cloudbrain.rocks) for the API documentation)
-- `router`: Router to update spacebrew routes (for our [Exploratorium](http://www.exploratorium.edu/) exhibition)
+- `router`: router to update spacebrew routes (for our [Exploratorium](http://www.exploratorium.edu/) exhibition)
 - `spacebrew`: python websocket wrapper to interface with [Spacebrew](https://github.com/Spacebrew/spacebrew)
-- `database` : Cassandra python client
+- `database` : python wrapper to read and write data to cassandra
 
 ##About CloudBrain
 - An instance of CloudBrain is currently running at [cloudbrain.rocks](http://cloudbrain.rocks). This is also where you can find CloudBrain's API documentation.
