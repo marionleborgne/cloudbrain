@@ -22,6 +22,7 @@ import argparse
 # add the shared settings file to namespace
 import sys
 from os.path import dirname, abspath
+
 sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 import settings
 
@@ -29,7 +30,6 @@ from spacebrew.spacebrew import SpacebrewApp
 
 
 class SpacebrewServer(ServerThread):
-
     def __init__(self, muse_port, muse_id, server):
         # Configuring the Muse OSC client
         ServerThread.__init__(self, muse_port)
@@ -37,10 +37,40 @@ class SpacebrewServer(ServerThread):
         # configure the Spacebrew client
         self.brew = SpacebrewApp(muse_id, server=server)
 
-        self.paths = ['/muse/eeg',
-                      '/muse/acc',
-                      '/muse/elements/experimental/concentration',
-                      '/muse/elements/experimental/mellow']
+        self.osc_paths = [
+            {'address': "/muse/eeg", 'arguments': 4},
+            {'address': "/muse/eeg/quantization", 'arguments': 4},
+            {'address': "/muse/eeg/dropped_samples", 'arguments': 1},
+            {'address': "/muse/acc", 'arguments': 3},
+            {'address': "/muse/acc/dropped_samples", 'arguments': 1},
+            {'address': "/muse/batt", 'arguments': 4},
+            {'address': "/muse/drlref", 'arguments': 2},
+            {'address': "/muse/elements/low_freqs_absolute", 'arguments': 4},
+            {'address': "/muse/elements/delta_absolute", 'arguments': 4},
+            {'address': "/muse/elements/theta_absolute", 'arguments': 4},
+            {'address': "/muse/elements/alpha_absolute", 'arguments': 4},
+            {'address': "/muse/elements/beta_absolute", 'arguments': 4},
+            {'address': "/muse/elements/gamma_absolute", 'arguments': 4},
+            {'address': "/muse/elements/delta_relative", 'arguments': 4},
+            {'address': "/muse/elements/theta_relative", 'arguments': 4},
+            {'address': "/muse/elements/alpha_relative", 'arguments': 4},
+            {'address': "/muse/elements/beta_relative", 'arguments': 4},
+            {'address': "/muse/elements/gamma_relative", 'arguments': 4},
+            {'address': "/muse/elements/delta_session_score", 'arguments': 4},
+            {'address': "/muse/elements/theta_session_score", 'arguments': 4},
+            {'address': "/muse/elements/alpha_session_score", 'arguments': 4},
+            {'address': "/muse/elements/beta_session_score", 'arguments': 4},
+            {'address': "/muse/elements/gamma_session_score", 'arguments': 4},
+            {'address': "/muse/elements/touching_forehead", 'arguments': 1},
+            {'address': "/muse/elements/horseshoe", 'arguments': 4},
+            {'address': "/muse/elements/is_good", 'arguments': 4},
+            {'address': "/muse/elements/blink", 'arguments': 1},
+            {'address': "/muse/elements/jaw_clench", 'arguments': 1},
+            {'address': "/muse/elements/experimental/concentration", 'arguments': 1},
+            {'address': "/muse/elements/experimental/mellow", 'arguments': 1}
+        ]
+
+        self.paths = [path['address'] for path in self.osc_paths]
 
         for path in self.paths:
             spacebrew_name = path.split('/')[-1]
@@ -54,44 +84,17 @@ class SpacebrewServer(ServerThread):
         self.brew.stop()
         self.stop()
 
-    # receive accelerometer data
-    @make_method('/muse/acc', 'fff')
-    def acc_callback(self, path, args):
-        data = [path] + args
 
-        sb_name = path.split('/')[-1]
-        self.brew.publish(sb_name, json.dumps(data))
-
-
-    # receive EEG data
-    @make_method('/muse/eeg', 'ffff')
-    def eeg_callback(self, path, args):
-        data = [path] + args
-
-        sb_name = path.split('/')[-1]
-        self.brew.publish(sb_name, json.dumps(data))
-
-    # receive concentration data
-    @make_method('/muse/elements/experimental/concentration', 'f')
-    def concentration_callback(self, path, args):
-        data = [path] + args
-        sb_name = path.split('/')[-1]
-        self.brew.publish(sb_name, json.dumps(data))
-
-    # receive meditation data
-    @make_method('/muse/elements/experimental/mellow', 'f')
-    def mellow_callback(self, path, args):
-        data = [path] + args
-
-        sb_name = path.split('/')[-1]
-        self.brew.publish(sb_name, json.dumps(data))
-
-
-    # handle unexpected messages
+    # handle all messages if the OSC path is in self.paths
     @make_method(None, None)
     def fallback(self, path, args, types, src):
-        # do nothing for now ...
-        pass
+
+        if path in self.paths:
+            data = [path] + args
+
+            sb_name = path.split('/')[-1]
+            self.brew.publish(sb_name, json.dumps(data))
+
 
 parser = argparse.ArgumentParser(
     description='Send data to Spacebrew.')
@@ -104,4 +107,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
     server = SpacebrewServer(9090, 'muse-%s' % args.name, settings.CLOUDBRAIN_ADDRESS)
     server.start()
+
 

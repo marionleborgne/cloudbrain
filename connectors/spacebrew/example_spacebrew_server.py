@@ -27,7 +27,39 @@ class SpacebrewServer(object):
         self.server = server
         self.port = port
         self.muse_ids = muse_ids
-        self.metrics = ['acc', 'eeg', 'mellow', 'concentration']
+        self.osc_paths = [
+            {'address': "/muse/eeg", 'arguments': 4},
+            {'address': "/muse/eeg/quantization", 'arguments': 4},
+            {'address': "/muse/eeg/dropped_samples", 'arguments': 1},
+            {'address': "/muse/acc", 'arguments': 3},
+            {'address': "/muse/acc/dropped_samples", 'arguments': 1},
+            {'address': "/muse/batt", 'arguments': 4},
+            {'address': "/muse/drlref", 'arguments': 2},
+            {'address': "/muse/elements/low_freqs_absolute", 'arguments': 4},
+            {'address': "/muse/elements/delta_absolute", 'arguments': 4},
+            {'address': "/muse/elements/theta_absolute", 'arguments': 4},
+            {'address': "/muse/elements/alpha_absolute", 'arguments': 4},
+            {'address': "/muse/elements/beta_absolute", 'arguments': 4},
+            {'address': "/muse/elements/gamma_absolute", 'arguments': 4},
+            {'address': "/muse/elements/delta_relative", 'arguments': 4},
+            {'address': "/muse/elements/theta_relative", 'arguments': 4},
+            {'address': "/muse/elements/alpha_relative", 'arguments': 4},
+            {'address': "/muse/elements/beta_relative", 'arguments': 4},
+            {'address': "/muse/elements/gamma_relative", 'arguments': 4},
+            {'address': "/muse/elements/delta_session_score", 'arguments': 4},
+            {'address': "/muse/elements/theta_session_score", 'arguments': 4},
+            {'address': "/muse/elements/alpha_session_score", 'arguments': 4},
+            {'address': "/muse/elements/beta_session_score", 'arguments': 4},
+            {'address': "/muse/elements/gamma_session_score", 'arguments': 4},
+            {'address': "/muse/elements/touching_forehead", 'arguments': 1},
+            {'address': "/muse/elements/horseshoe", 'arguments': 4},
+            {'address': "/muse/elements/is_good", 'arguments': 4},
+            {'address': "/muse/elements/blink", 'arguments': 1},
+            {'address': "/muse/elements/jaw_clench", 'arguments': 1},
+            {'address': "/muse/elements/experimental/concentration", 'arguments': 1},
+            {'address': "/muse/elements/experimental/mellow", 'arguments': 1}
+        ]
+
         self.ws = create_connection("ws://%s:%s" % (self.server, self.port))
 
         for muse in muse_ids:
@@ -35,24 +67,7 @@ class SpacebrewServer(object):
                 'config': {
                     'name': muse,
                     'publish': {
-                        'messages': [
-                            {
-                                'name': 'acc',
-                                'type': 'string'
-                            },
-                            {
-                                'name': 'eeg',
-                                'type': 'string'
-                            },
-                            {
-                                'name': 'mellow',
-                                'type': 'string'
-                            },
-                            {
-                                'name': 'concentration',
-                                'type': 'string'
-                            }
-                        ]
+                        'messages': [{'name': name['address'].split('/')[-1], 'type': 'string'} for name in self.osc_paths]
                     }
                 }
             }
@@ -62,15 +77,11 @@ class SpacebrewServer(object):
     def start(self):
         while 1:
             for muse_id in self.muse_ids:
-                for metric in self.metrics:
-                    if metric == 'eeg':
-                        value = "[\"/muse/eeg\", 0, 0, 0, 0]"
-                    elif metric == 'acc':
-                        value = "[\"/muse/acc\", 0, 0, 0]"
-                    elif metric == 'concentration':
-                        value = "[\"/muse/elements/experimental/concentration\", 0]"
-                    elif metric == 'mellow':
-                        value = "[\"/muse/elements/experimental/mellow\", 0]"
+                for path in self.osc_paths:
+                    metric = path['address'].split('/')[-1]
+                    nb_args = path['arguments']
+
+                    value = [path['address']] + [0]*nb_args
 
                     message = {"message": {
                         "value": value,
@@ -81,5 +92,5 @@ class SpacebrewServer(object):
 
 
 if __name__ == "__main__":
-    server = SpacebrewServer(muse_ids=['muse-001', 'muse-002', 'muse-003', 'muse-004', 'muse-005'], server=settings.CLOUDBRAIN_ADDRESS)
+    server = SpacebrewServer(muse_ids=['muse-example-1', 'muse-example-2'], server=settings.CLOUDBRAIN_ADDRESS)
     server.start()
