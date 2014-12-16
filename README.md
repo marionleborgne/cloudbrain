@@ -29,7 +29,7 @@ CloudBrain
 - Check if you muse is in the column “publishers” of the [SpaceBrew interface](http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks).
 
 
-##Reading data fromCloudBrain
+##Reading data from CloudBrain
 - Open a new terminal tab and run:
 <br>
 `cd cloudbrain/listeners`
