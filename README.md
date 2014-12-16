@@ -19,18 +19,16 @@ CloudBrain
 - Pair your Muse via Bluetooth.
 - Start MuseIO: open a terminal or command prompt and run: `muse-io --osc osc.udp://localhost:9090`
 - Open a new terminal tab and run: 
-  ```
-  git clone https://github.com/marionleborgne/cloudbrain
-  cd cloudbrain/connectors/spacebrew
-  python spacebrew_server.py --name=YOUR_NAME_HERE
-  ```
+1. `git clone https://github.com/marionleborgne/cloudbrain`
+2. `cd cloudbrain/connectors/spacebrew`
+3. `python spacebrew_server.py --name=YOUR_NAME_HERE`
 - The last command will register your muse to cloudbrain’s spacebrew
 - Check if you muse is in the column “publishers” of the [SpaceBrew interface](http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks).
 
 
 ##Reading data fromCloudBrain
 - Open a new terminal tab and run:
-`cd cloudbrain/listeners`
-`python example_spacebrew_client.py --name=YOUR_NAME_HERE`
+1. `cd cloudbrain/listeners`
+2. `python example_spacebrew_client.py --name=YOUR_NAME_HERE`
 - The last command will register your booth to cloudbrain’s spacebrew
 - Check if you booth is in the column “subscridbers” of the [SpaceBrew interface](http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks).
