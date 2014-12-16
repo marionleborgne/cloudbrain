@@ -5,7 +5,7 @@ CloudBrain
 - `connectors`: Connectors for openBCI, Muse, Neurosky and Spacebrew sending data to cloudbrain
 - `listeners`: Cloudbrain Listeners to get the live data data for OpenBCI, Muse, Neurosky and Spacebrew
 - `api`: Cloudbrain's web API to retrieve the history of data, route live data, or retrieve data aggregated data (see [cloudbrain.rocks](http://cloudbrain.rocks) for the API documentation)
-- `router`: Router to update spacebrew routes
+- `router`: Router to update spacebrew routes (for our [http://www.exploratorium.edu/](Exploratorium) exhibition)
 - `spacebrew`: python websocket wrapper to interface with Spacebrew
 - `database` : Cassandra python client
 
