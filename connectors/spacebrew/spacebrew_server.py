@@ -17,6 +17,7 @@ __author__ = 'marion'
 
 from liblo import ServerThread, make_method
 import json
+import argparse
 
 # add the shared settings file to namespace
 import sys
@@ -92,8 +93,15 @@ class SpacebrewServer(ServerThread):
         # do nothing for now ...
         pass
 
+parser = argparse.ArgumentParser(
+    description='Send data to Spacebrew.')
+parser.add_argument(
+    '--name',
+    help='Your name or ID without spaces or special characters',
+    default='example')
 
 if __name__ == "__main__":
-    server = SpacebrewServer(9090, 'muse-moxy', settings.CLOUDBRAIN_ADDRESS)
+    args = parser.parse_args()
+    server = SpacebrewServer(9090, 'muse-%s' % args.name, settings.CLOUDBRAIN_ADDRESS)
     server.start()
 
