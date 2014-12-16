@@ -23,7 +23,7 @@ import time
 
 
 class SpacebrewServer(object):
-    def __init__(self, muse_ids=['muse-001', 'muse-002'], server='127.0.0.1', port=9000):
+    def __init__(self, muse_ids=['muse-example'], server='127.0.0.1', port=9000):
         self.server = server
         self.port = port
         self.muse_ids = muse_ids
@@ -92,5 +92,5 @@ class SpacebrewServer(object):
 
 
 if __name__ == "__main__":
-    server = SpacebrewServer(muse_ids=['muse-example-1', 'muse-example-2'], server=settings.CLOUDBRAIN_ADDRESS)
+    server = SpacebrewServer(muse_ids=['muse-001', 'muse-002'], server=settings.CLOUDBRAIN_ADDRESS)
     server.start()
