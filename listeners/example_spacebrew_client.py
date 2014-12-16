@@ -1,7 +1,5 @@
 __author__ = 'marion'
 
-__author__ = 'marion'
-
 # add the shared settings file to namespace
 import sys
 from os.path import dirname, abspath
