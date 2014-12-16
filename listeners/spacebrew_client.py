@@ -29,14 +29,41 @@ class SpacebrewClient(object):
         # cassandra
         self.muse_cassandra_repo = CassandraRepository(KEYSPACE, MUSE_COLUMN_FAMILY)
         self.batches = {}
-        self.paths = ['/muse/eeg',
-                      '/muse/acc',
-                      '/muse/elements/experimental/concentration',
-                      '/muse/elements/experimental/mellow']
+        self.osc_paths = [
+            {'address': "/muse/eeg", 'arguments': 4},
+            {'address': "/muse/eeg/quantization", 'arguments': 4},
+            {'address': "/muse/eeg/dropped_samples", 'arguments': 1},
+            {'address': "/muse/acc", 'arguments': 3},
+            {'address': "/muse/acc/dropped_samples", 'arguments': 1},
+            {'address': "/muse/batt", 'arguments': 4},
+            {'address': "/muse/drlref", 'arguments': 2},
+            {'address': "/muse/elements/low_freqs_absolute", 'arguments': 4},
+            {'address': "/muse/elements/delta_absolute", 'arguments': 4},
+            {'address': "/muse/elements/theta_absolute", 'arguments': 4},
+            {'address': "/muse/elements/alpha_absolute", 'arguments': 4},
+            {'address': "/muse/elements/beta_absolute", 'arguments': 4},
+            {'address': "/muse/elements/gamma_absolute", 'arguments': 4},
+            {'address': "/muse/elements/delta_relative", 'arguments': 4},
+            {'address': "/muse/elements/theta_relative", 'arguments': 4},
+            {'address': "/muse/elements/alpha_relative", 'arguments': 4},
+            {'address': "/muse/elements/beta_relative", 'arguments': 4},
+            {'address': "/muse/elements/gamma_relative", 'arguments': 4},
+            {'address': "/muse/elements/delta_session_score", 'arguments': 4},
+            {'address': "/muse/elements/theta_session_score", 'arguments': 4},
+            {'address': "/muse/elements/alpha_session_score", 'arguments': 4},
+            {'address': "/muse/elements/beta_session_score", 'arguments': 4},
+            {'address': "/muse/elements/gamma_session_score", 'arguments': 4},
+            {'address': "/muse/elements/touching_forehead", 'arguments': 1},
+            {'address': "/muse/elements/horseshoe", 'arguments': 4},
+            {'address': "/muse/elements/is_good", 'arguments': 4},
+            {'address': "/muse/elements/blink", 'arguments': 1},
+            {'address': "/muse/elements/jaw_clench", 'arguments': 1},
+            {'address': "/muse/elements/experimental/concentration", 'arguments': 1},
+            {'address': "/muse/elements/experimental/mellow", 'arguments': 1}
+        ]
 
-        for path in self.paths:
-            self.batches[path] = {}
-            spacebrew_name = path.split('/')[-1]
+        for path in self.osc_paths:
+            spacebrew_name = path['address'].split('/')[-1]
             self.brew.add_subscriber(spacebrew_name, "string")
             self.brew.subscribe(spacebrew_name, self.handle_value)
 
