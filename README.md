@@ -1,4 +1,4 @@
-cloudbrain
+CloudBrain
 ==========
 
 ##Overview
