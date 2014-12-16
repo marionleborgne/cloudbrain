@@ -32,4 +32,3 @@ cloudbrain
 `python example_spacebrew_client.py --name=YOUR_NAME_HERE`
 - The last command will register your booth to cloudbrain’s spacebrew
 - Check if you booth is in the column “subscridbers” of the [http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks](spacebrew interface).
-- 
