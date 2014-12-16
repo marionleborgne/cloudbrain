@@ -2,8 +2,8 @@ CloudBrain
 ==========
 
 ##Overview
-- `connectors`: Connectors for openBCI, Muse, Neurosky and [Spacebrew](https://github.com/Spacebrew/spacebrew) sending data to cloudbrain
-- `listeners`: Cloudbrain Listeners to get the live data data for OpenBCI, Muse, Neurosky and [Spacebrew](https://github.com/Spacebrew/spacebrew)
+- `connectors`: Connectors for [OpenBCI](http://openbci.com), Muse, Neurosky and [Spacebrew](https://github.com/Spacebrew/spacebrew) sending data to cloudbrain
+- `listeners`: Cloudbrain Listeners to get the live data data for [OpenBCI](http://openbci.com), Muse, Neurosky and [Spacebrew](https://github.com/Spacebrew/spacebrew)
 - `api`: Cloudbrain's web API to retrieve the history of data, route live data, or retrieve data aggregated data (see [cloudbrain.rocks](http://cloudbrain.rocks) for the API documentation)
 - `router`: Router to update spacebrew routes (for our [Exploratorium](http://www.exploratorium.edu/) exhibition)
 - `spacebrew`: python websocket wrapper to interface with [Spacebrew](https://github.com/Spacebrew/spacebrew)
@@ -15,7 +15,7 @@ CloudBrain
 - Routing of live data is done via SpaceBrew (currently running on the CloudBrain server). To visualize how the data is being routed you can go to [this interface](http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks).
 
 ##Sending data to CloudBrain
-- Install the [http://www.choosemuse.com/developer-kit/](MuseIO SDK)
+- Install the [MuseIO SDK](http://www.choosemuse.com/developer-kit/)
 - Pair your Muse via Bluetooth.
 - Start MuseIO: open a terminal or command prompt and run: `muse-io --osc osc.udp://localhost:9090`
 - Open a new terminal tab and run: 
