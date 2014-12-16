@@ -31,7 +31,9 @@ CloudBrain
 
 ##Reading data fromCloudBrain
 - Open a new terminal tab and run:
-1. `cd cloudbrain/listeners`
-2. `python example_spacebrew_client.py --name=YOUR_NAME_HERE`
+<br>
+`cd cloudbrain/listeners`
+<br>
+`python example_spacebrew_client.py --name=YOUR_NAME_HERE`
 - The last command will register your booth to cloudbrain’s spacebrew
 - Check if you booth is in the column “subscridbers” of the [SpaceBrew interface](http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks).
