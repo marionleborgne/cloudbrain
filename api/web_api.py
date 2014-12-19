@@ -1,7 +1,8 @@
 #!flask/bin/python
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, current_app
 import json
 from random import random
+from functools import wraps
 
 # add the shared settings file to namespace
 import sys
@@ -13,6 +14,19 @@ from router.spacebrew_router import SpacebrewRouter
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 sp_router = SpacebrewRouter(server=settings.CLOUDBRAIN_ADDRESS)
+
+
+def support_jsonp(f):
+    """Wraps JSONified output for JSONP"""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        callback = request.args.get('callback', False)
+        if callback:
+            content = str(callback) + '(' + f() + ')'
+            return current_app.response_class(content, mimetype='application/json')
+        else:
+            return f(*args, **kwargs)
+    return decorated_function
 
 @app.route('/')
 def index():
@@ -49,6 +63,7 @@ def unlink():
     return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
 @app.route("/data", methods=['GET'])
+@support_jsonp
 def data():
     user_id = request.args.get('userId', None)
     metric = request.args.get('metric', None)
@@ -79,6 +94,7 @@ def data():
 
 
 @app.route("/aggregate", methods=['GET'])
+@support_jsonp
 def aggregate():
     user_id = request.args.get('userId', None)
     metric = request.args.get('metric', None)
