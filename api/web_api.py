@@ -52,7 +52,8 @@ def link():
     subscriber = request.args.get('subscriber', None)
     pub_metric = request.args.get('pub_metric', None)
     sub_metric = request.args.get('sub_metric', None)
-    sp_router.link(pub_metric, sub_metric, publisher, subscriber)
+    sub_ip = request.args.get('sub_ip', None)
+    sp_router.link(pub_metric, sub_metric, publisher, subscriber, sub_ip)
     return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
 @app.route("/unlink", methods=['GET'])
@@ -61,7 +62,33 @@ def unlink():
     subscriber = request.args.get('subscriber', None)
     pub_metric = request.args.get('pub_metric', None)
     sub_metric = request.args.get('sub_metric', None)
-    sp_router.unlink(pub_metric, sub_metric, publisher, subscriber)
+    sub_ip = request.args.get('sub_ip', None)
+    sp_router.unlink(pub_metric, sub_metric, publisher, subscriber, sub_ip)
+    return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
+
+@app.route("/patch", methods=['POST'])
+def patch():
+    core = request.form["core"]
+    rfid = request.form["rfid"]
+
+    print settings.CORES[core]
+    print settings.TAGS[rfid]
+
+    muse = settings.TAGS[rfid]
+    booth = settings.CORES[core]
+    metrics = settings.BOOTHS[booth]["required_routes"]
+    ip = settings.BOOTHS[booth]["ip"]
+
+    #Unlink existing required routes connected to Booth
+    museids = {v: k for k, v in settings.TAGS.items()}
+    for museid in museids:
+        for metric in metrics:
+            sp_router.unlink(metric[0], metric[1], 'muse-%s' % museid, booth, ip)
+
+    #Link Booth
+    for metric in metrics:
+        sp_router.link(metric[0], metric[1], 'muse-%s' % muse, booth, ip)
+
     return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
 @app.route("/data", methods=['GET'])
