@@ -50,16 +50,18 @@ def spacebrew():
 def link():
     publisher = request.args.get('publisher', None)
     subscriber = request.args.get('subscriber', None)
-    metric = request.args.get('metric', None)
-    sp_router.link(metric, publisher, subscriber)
+    pub_metric = request.args.get('pub_metric', None)
+    sub_metric = request.args.get('sub_metric', None)
+    sp_router.link(pub_metric, sub_metric, publisher, subscriber)
     return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
 @app.route("/unlink", methods=['GET'])
 def unlink():
     publisher = request.args.get('publisher', None)
     subscriber = request.args.get('subscriber', None)
-    metric = request.args.get('metric', None)
-    sp_router.unlink(metric, publisher, subscriber)
+    pub_metric = request.args.get('pub_metric', None)
+    sub_metric = request.args.get('sub_metric', None)
+    sp_router.unlink(pub_metric, sub_metric, publisher, subscriber)
     return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
 @app.route("/data", methods=['GET'])

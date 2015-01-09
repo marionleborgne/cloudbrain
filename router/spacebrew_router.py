@@ -29,19 +29,19 @@ class SpacebrewRouter(object):
         self.ws.send(json.dumps(message))
 
 
-    def link(self, metric, publisher, subscriber):
+    def link(self, pub_metric, sub_metric, publisher, subscriber):
         message = {
             "route": {
                 "type": "add",
                 "publisher": {
                     "clientName": publisher,
-                    "name": metric,
+                    "name": pub_metric,
                     "type": "string",
                     "remoteAddress": self.server
                 },
                 "subscriber": {
                     "clientName": subscriber,
-                    "name": metric,
+                    "name": sub_metric,
                     "type": "string",
                     "remoteAddress": self.server
                 }
@@ -49,25 +49,27 @@ class SpacebrewRouter(object):
             }
         }
         self.ws.send(json.dumps(message))
+        print json.dumps(message)
 
-    def unlink(self, metric, publisher, subscriber):
+    def unlink(self, pub_metric, sub_metric, publisher, subscriber):
         message = {"route":
                        {"type": "remove",
                         "publisher": {
                             "clientName": publisher,
-                            "name": metric,
+                            "name": pub_metric,
                             "type": "string",
                             "remoteAddress": self.server
                         },
                         "subscriber": {
                             "clientName": subscriber,
-                            "name": metric,
+                            "name": sub_metric,
                             "type": "string",
                             "remoteAddress": self.server
                         }},
                    "targetType": "admin"}
 
         self.ws.send(json.dumps(message))
+
 
 
 if __name__ == "__main__":
