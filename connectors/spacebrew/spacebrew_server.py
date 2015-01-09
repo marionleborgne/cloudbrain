@@ -16,7 +16,6 @@ muse-io --osc osc.udp://localhost:9090
 __author__ = 'marion'
 
 from liblo import ServerThread, make_method
-import json
 import argparse
 
 # add the shared settings file to namespace
@@ -38,45 +37,43 @@ class SpacebrewServer(ServerThread):
         self.brew = SpacebrewApp(muse_id, server=server)
 
         self.osc_paths = [
-            {'address': "/muse/eeg", 'arguments': 4},
-            {'address': "/muse/eeg/quantization", 'arguments': 4},
-            {'address': "/muse/eeg/dropped_samples", 'arguments': 1},
-            {'address': "/muse/acc", 'arguments': 3},
-            {'address': "/muse/acc/dropped_samples", 'arguments': 1},
-            {'address': "/muse/batt", 'arguments': 4},
-            {'address': "/muse/drlref", 'arguments': 2},
-            {'address': "/muse/elements/low_freqs_absolute", 'arguments': 4},
-            {'address': "/muse/elements/delta_absolute", 'arguments': 4},
-            {'address': "/muse/elements/theta_absolute", 'arguments': 4},
-            {'address': "/muse/elements/alpha_absolute", 'arguments': 4},
-            {'address': "/muse/elements/beta_absolute", 'arguments': 4},
-            {'address': "/muse/elements/gamma_absolute", 'arguments': 4},
-            {'address': "/muse/elements/delta_relative", 'arguments': 4},
-            {'address': "/muse/elements/theta_relative", 'arguments': 4},
-            {'address': "/muse/elements/alpha_relative", 'arguments': 4},
-            {'address': "/muse/elements/beta_relative", 'arguments': 4},
-            {'address': "/muse/elements/gamma_relative", 'arguments': 4},
-            {'address': "/muse/elements/delta_session_score", 'arguments': 4},
-            {'address': "/muse/elements/theta_session_score", 'arguments': 4},
-            {'address': "/muse/elements/alpha_session_score", 'arguments': 4},
-            {'address': "/muse/elements/beta_session_score", 'arguments': 4},
-            {'address': "/muse/elements/gamma_session_score", 'arguments': 4},
-            {'address': "/muse/elements/touching_forehead", 'arguments': 1},
-            {'address': "/muse/elements/horseshoe", 'arguments': 4},
-            {'address': "/muse/elements/is_good", 'arguments': 4},
-            {'address': "/muse/elements/blink", 'arguments': 1},
-            {'address': "/muse/elements/jaw_clench", 'arguments': 1},
-            {'address': "/muse/elements/experimental/concentration", 'arguments': 1},
-            {'address': "/muse/elements/experimental/mellow", 'arguments': 1}
+            '/muse/eeg',
+            '/muse/eeg/quantization',
+            '/muse/eeg/dropped_samples',
+            '/muse/acc',
+            '/muse/acc/dropped_samples',
+            '/muse/batt',
+            '/muse/drlref',
+            '/muse/elements/low_freqs_absolute',
+            '/muse/elements/delta_absolute',
+            '/muse/elements/theta_absolute',
+            '/muse/elements/alpha_absolute',
+            '/muse/elements/beta_absolute',
+            '/muse/elements/gamma_absolute',
+            '/muse/elements/delta_relative',
+            '/muse/elements/theta_relative',
+            '/muse/elements/alpha_relative',
+            '/muse/elements/beta_relative',
+            '/muse/elements/gamma_relative',
+            '/muse/elements/delta_session_score',
+            '/muse/elements/theta_session_score',
+            '/muse/elements/alpha_session_score',
+            '/muse/elements/beta_session_score',
+            '/muse/elements/gamma_session_score',
+            '/muse/elements/touching_forehead',
+            '/muse/elements/horseshoe',
+            '/muse/elements/is_good',
+            '/muse/elements/blink',
+            '/muse/elements/jaw_clench',
+            '/muse/elements/experimental/concentration',
+            '/muse/elements/experimental/mellow'
         ]
 
-        self.paths = [path['address'] for path in self.osc_paths]
+        for osc_path in self.osc_paths:
+            spacebrew_name = osc_path.split('/')[-1]
+            self.brew.add_publisher(spacebrew_name, 'string')
 
-        for path in self.paths:
-            spacebrew_name = path.split('/')[-1]
-            self.brew.add_publisher(spacebrew_name, "string")
-
-        # connect to spacebrew
+        # Connect to spacebrew
         self.brew.start()
 
 
@@ -85,15 +82,13 @@ class SpacebrewServer(ServerThread):
         self.stop()
 
 
-    # handle all messages if the OSC path is in self.paths
+    # Handle all messages if the OSC path is in self.osc_paths
     @make_method(None, None)
     def fallback(self, path, args, types, src):
-
-        if path in self.paths:
-            data = [path] + args
-
-            sb_name = path.split('/')[-1]
-            self.brew.publish(sb_name, json.dumps(data))
+        if path in self.osc_paths:
+            spacebrew_name = path.split('/')[-1]
+            value = ','.join([str(arg) for arg in args])
+            self.brew.publish(spacebrew_name, value)
 
 
 parser = argparse.ArgumentParser(
@@ -102,10 +97,17 @@ parser.add_argument(
     '--name',
     help='Your name or ID without spaces or special characters',
     default='example')
+parser.add_argument(
+    '--port',
+    help='UDP port to accept OSC messages',
+    default=5001)
+parser.add_argument(
+    '--host',
+    help='Hostname of Spacebrew server',
+    default=settings.CLOUDBRAIN_ADDRESS)
 
 if __name__ == "__main__":
     args = parser.parse_args()
-    server = SpacebrewServer(9090, 'muse-%s' % args.name, settings.CLOUDBRAIN_ADDRESS)
+    server = SpacebrewServer(args.port, 'muse-%s' % args.name, args.host)
     server.start()
-
 
