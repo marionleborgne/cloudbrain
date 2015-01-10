@@ -44,6 +44,10 @@ class SpacebrewServer(ServerThread):
             '/muse/acc/dropped_samples',
             '/muse/batt',
             '/muse/drlref',
+            '/muse/elements/raw_fft0',
+            '/muse/elements/raw_fft1',
+            '/muse/elements/raw_fft2',
+            '/muse/elements/raw_fft3',
             '/muse/elements/low_freqs_absolute',
             '/muse/elements/delta_absolute',
             '/muse/elements/theta_absolute',
@@ -70,7 +74,7 @@ class SpacebrewServer(ServerThread):
         ]
 
         for osc_path in self.osc_paths:
-            spacebrew_name = osc_path.split('/')[-1]
+            spacebrew_name = self.calculate_spacebrew_name(osc_path)
             self.brew.add_publisher(spacebrew_name, 'string')
 
         # Connect to spacebrew
@@ -86,9 +90,21 @@ class SpacebrewServer(ServerThread):
     @make_method(None, None)
     def fallback(self, path, args, types, src):
         if path in self.osc_paths:
-            spacebrew_name = path.split('/')[-1]
+            spacebrew_name = self.calculate_spacebrew_name(path)
             value = ','.join([str(arg) for arg in args])
             self.brew.publish(spacebrew_name, value)
+
+
+    def calculate_spacebrew_name(self, osc_path):
+        spacebrew_name = osc_path.split('/')[-1]
+        return self.disambiguate_name_collisions(spacebrew_name, osc_path)
+
+
+    def disambiguate_name_collisions(self, spacebrew_name, osc_path):
+        if spacebrew_name == 'dropped_samples':
+            return osc_path.split('/')[-2] + '_' + osc_path.split('/')[-1]
+        else:
+            return spacebrew_name
 
 
 parser = argparse.ArgumentParser(
