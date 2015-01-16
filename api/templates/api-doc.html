@@ -185,14 +185,16 @@
         <ul>
             <li><b>publisher :</b> The input data coming from the hardware (Muse headset for example).</li>
             <li><b>subscriber : </b> Set it to 'cloudbrain' to keep historical data. Can also be set to your spacebrew client to get live data.</li>
-            <li><b>metric : </b> The metric you want to route. See the <b>Muse Metrics</b> section below for the complete list.</li>
+            <li><b>pub_metric : </b> The publisher name of the metric you want to route. See the <b>Muse Metrics</b> section below for the complete list.</li>
+            <li><b>sub_metric : </b> The subscriber name of the metric you want to route.</li>
+
         </ul>
     </div>
 
     <div><b>Sample Request</b></div>
 
     <div>GET <b><a
-            href="http://cloudbrain.rocks/link?metric=eeg&publisher=muse-001&subscriber=cloudbrain">http://cloudbrain.rocks/link?metric=eeg&publisher=muse-001&subscriber=cloudbrain</a></b>
+            href="http://cloudbrain.rocks/link?pub_metric=eeg&sub_metric=muse-1-eeg&publisher=muse-001&subscriber=cloudbrain">http://cloudbrain.rocks/link?pub_metric=eeg&sub_metric=muse-1-eeg&publisher=muse-001&subscriber=cloudbrain</a></b>
     </div>
 
      <h4>Unlink a publisher and a subscriber</h4>
@@ -202,14 +204,16 @@
         <ul>
             <li><b>publisher :</b> The input data coming from the hardware (Muse headset for example).</li>
             <li><b>subscriber : </b> Set it to 'cloudbrain' to keep historical data. Can also be set to your spacebrew client to get live data.</li>
-            <li><b>metric : </b> The metric you want to unlink. See the <b>Muse Metrics</b> section below for the complete list.</li>
+            <li><b>pub_metric : </b> The publisher name of the metric you want to unlink. See the <b>Muse Metrics</b> section below for the complete list.</li>
+            <li><b>sub_metric : </b> The subscriber name of the metric you want to unlink.</li>
+
         </ul>
     </div>
 
     <div><b>Sample Request</b></div>
 
     <div>GET <b><a
-            href="http://cloudbrain.rocks/link?metric=eeg&publisher=muse-001&subscriber=cloudbrain">http://cloudbrain.rocks/link?metric=eeg&publisher=muse-001&subscriber=cloudbrain</a></b>
+            href="http://cloudbrain.rocks/unlink?pub_metric=eeg&sub_metric=muse-1-eeg&publisher=muse-001&subscriber=cloudbrain">http://cloudbrain.rocks/link?pub_metric=eeg&sub_metric=muse-1-eeg&publisher=muse-001&subscriber=cloudbrain</a></b>
     </div>
 
 
