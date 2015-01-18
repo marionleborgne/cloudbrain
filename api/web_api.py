@@ -32,11 +32,9 @@ def support_jsonp(f):
 def index():
     return render_template('api-doc.html'), 200
 
-
 @app.route('/about')
 def about():
     return render_template('about.html'), 200
-
 
 @app.route('/api-doc')
 def doc():
@@ -54,6 +52,8 @@ def link():
     sub_metric = request.args.get('sub_metric', None)
     sub_ip = request.args.get('sub_ip', None)
     sp_router.link(pub_metric, sub_metric, publisher, subscriber, sub_ip)
+    sp_router.link("{0}-connect".format(subscriber), "connect", "router", subscriber, sub_ip)
+    sp_router.connect_event(subscriber, publisher)
     return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
 @app.route("/unlink", methods=['GET'])
@@ -64,6 +64,8 @@ def unlink():
     sub_metric = request.args.get('sub_metric', None)
     sub_ip = request.args.get('sub_ip', None)
     sp_router.unlink(pub_metric, sub_metric, publisher, subscriber, sub_ip)
+    sp_router.link("{0}-disconnect".format(subscriber), "disconnect", "router", subscriber, sub_ip)
+    sp_router.disconnect_event(subscriber, publisher)
     return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
 @app.route("/patch", methods=['POST'])
@@ -74,8 +76,8 @@ def patch():
     print settings.CORES[core]
     print settings.TAGS[rfid]
 
-    muse = settings.TAGS[rfid]
-    booth = settings.CORES[core]
+    muse = settings.TAGS[rfid] # e.g. TAGS["ce9686e5"] is 5008
+    booth = settings.CORES[core] # e.g. CORES["53ff68066667574815362067"] is "booth-1"
     metrics = settings.BOOTHS[booth]["required_routes"]
     ip = settings.BOOTHS[booth]["ip"]
 
@@ -120,7 +122,6 @@ def data():
         mock_data.append(datapoint)
 
     return json.dumps(mock_data)
-
 
 @app.route("/aggregate", methods=['GET'])
 @support_jsonp

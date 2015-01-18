@@ -8,10 +8,10 @@ CLOUDBRAIN_ADDRESS = '127.0.0.1'
 #TagID => MuseID
 TAGS = {
     "ce9686e5": 5008,
-    "19e8f635": 5009,
+    "5b64d6ec": 5009,
     "a52df735": 5010,
     "3153f935": 5011,
-    "3686f735": 5012,
+    "9b68d5ec": 5012,
     "82ecf735": 5013,
     "00b2f735": 5014,
     "7385368c": 5015
@@ -38,16 +38,16 @@ CORES = {
 #Booth Name => {"ip" => IP Address, "required_routes" => [[pub_metric, sub_metric], [pub_metric, sub_metric], ...]}
 BOOTHS = {
     "muse-manager": {"ip": "10.0.0.2", "required_routes": [["batt", "battery-muse9"],["horseshoe", "horseshoe-muse9"],["touching_forehead", "touching-muse9"]]},
-    "booth-1": {"ip": "10.0.0.101", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-2": {"ip": "10.0.0.102", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-3": {"ip": "10.0.0.103", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-4": {"ip": "10.0.0.104", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-5": {"ip": "10.0.0.105", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-6": {"ip": "10.0.0.106", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-7": {"ip": "10.0.0.107", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-8": {"ip": "10.0.0.108", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-9": {"ip": "10.0.0.109", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-10":{"ip": "10.0.0.110", "required_routes":  [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-11":{"ip": "10.0.0.111", "required_routes":  [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-12":{"ip": "10.0.0.112", "required_routes":  [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]}
+    "booth-1": {"ip": "10.0.0.201", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
+    "booth-2": {"ip": "10.0.0.202", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
+    "booth-3": {"ip": "10.0.0.203", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
+    "booth-4": {"ip": "10.0.0.204", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
+    "booth-5": {"ip": "10.0.0.205", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
+    "booth-6": {"ip": "10.0.0.206", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
+    "booth-7": {"ip": "10.0.0.207", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
+    "booth-8": {"ip": "10.0.0.208", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
+    "booth-9": {"ip": "10.0.0.209", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
+    "booth-10": {"ip": "10.0.0.210", "required_routes":  [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
+    "booth-11": {"ip": "10.0.0.211", "required_routes":  [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
+    "booth-12": {"ip": "10.0.0.212", "required_routes":  [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]}
 }
