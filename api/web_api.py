@@ -149,6 +149,17 @@ def aggregates():
 
     return json.dumps(mock_data)
 
+@app.route("/data/visitors", methods=['GET'])
+@support_jsonp
+def nb_visitors():
+
+    visitors = random() * 100000
+
+    mock_data = {
+        "visitors": visitors
+    }
+
+    return json.dumps(mock_data)
 
 @app.route("/data/aggregates/fft", methods=['GET'])
 @support_jsonp
