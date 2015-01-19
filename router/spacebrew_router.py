@@ -10,6 +10,7 @@ import sys
 from os.path import dirname, abspath
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 import settings
+from pprint import pprint
 
 
 class SpacebrewRouter(object):
@@ -32,11 +33,18 @@ class SpacebrewRouter(object):
         self.brew = Spacebrew("router", description="Spacebrew Router", server=server)
 
         # Add publishers for RFID connect and disconnect events
-        for booth_number in range(1, 20):
+        for booth_number in range(1, 24):
             self.brew.addPublisher("booth-{0}-connect".format(booth_number), "string")
             self.brew.addPublisher("booth-{0}-disconnect".format(booth_number), "string")
 
         self.brew.start()
+
+    def get_spacebrew_config(self):
+        message = {
+            "status": True
+        }
+        self.ws.send(json.dumps(message))
+        return json.loads(self.ws.recv())
 
     def link(self, pub_metric, sub_metric, publisher, subscriber, sub_ip):
         message = {
@@ -57,6 +65,7 @@ class SpacebrewRouter(object):
             }
         }
         self.ws.send(json.dumps(message))
+        json.loads(self.ws.recv())
 
     def unlink(self, pub_metric, sub_metric, publisher, subscriber, sub_ip):
         message = {
@@ -79,11 +88,11 @@ class SpacebrewRouter(object):
         }
         self.ws.send(json.dumps(message))
 
-    def connect_event(self, subscriber, publisher):
-        self.brew.publish("{0}-connect".format(subscriber), publisher)
+    def connect_event(self, booth, muse):
+        self.brew.publish("{0}-connect".format(booth), muse)
 
-    def disconnect_event(self, subscriber, publisher):
-        self.brew.publish("{0}-disconnect".format(subscriber), publisher)
+    def disconnect_event(self, booth, muse):
+        self.brew.publish("{0}-disconnect".format(booth), muse)
 
 
 if __name__ == "__main__":

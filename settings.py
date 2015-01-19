@@ -35,19 +35,19 @@ CORES = {
     "53ff72066667574858362167": "booth-12"
 }
 
-#Booth Name => {"ip" => IP Address, "required_routes" => [[pub_metric, sub_metric], [pub_metric, sub_metric], ...]}
+#Booth Name => {"ip" => IP Address}
 BOOTHS = {
-    "muse-manager": {"ip": "10.0.0.2", "required_routes": [["batt", "battery-muse9"],["horseshoe", "horseshoe-muse9"],["touching_forehead", "touching-muse9"]]},
-    "booth-1": {"ip": "10.0.0.201", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-2": {"ip": "10.0.0.202", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-3": {"ip": "10.0.0.203", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-4": {"ip": "10.0.0.204", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-5": {"ip": "10.0.0.205", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-6": {"ip": "10.0.0.206", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-7": {"ip": "10.0.0.207", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-8": {"ip": "10.0.0.208", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-9": {"ip": "10.0.0.209", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-10": {"ip": "10.0.0.210", "required_routes":  [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-11": {"ip": "10.0.0.211", "required_routes":  [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-12": {"ip": "10.0.0.212", "required_routes":  [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]}
+    "muse-manager": {"ip": "10.0.0.2"},
+    "booth-1": {"ip": "10.0.0.201"},
+    "booth-2": {"ip": "10.0.0.202"},
+    "booth-3": {"ip": "10.0.0.203"},
+    "booth-4": {"ip": "10.0.0.204"},
+    "booth-5": {"ip": "10.0.0.205"},
+    "booth-6": {"ip": "10.0.0.206"},
+    "booth-7": {"ip": "10.0.0.207"},
+    "booth-8": {"ip": "10.0.0.208"},
+    "booth-9": {"ip": "10.0.0.209"},
+    "booth-10": {"ip": "10.0.0.210"},
+    "booth-11": {"ip": "10.0.0.211"},
+    "booth-12": {"ip": "10.0.0.212"}
 }
