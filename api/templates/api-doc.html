@@ -183,18 +183,19 @@
     <div>GET request on <b>/link</b> with the following parameters:</div>
     <div>
         <ul>
-            <li><b>publisher :</b> The input data coming from the hardware (Muse headset for example).</li>
-            <li><b>subscriber : </b> Set it to 'cloudbrain' to keep historical data. Can also be set to your spacebrew client to get live data.</li>
+            <li><b>publisher :</b> The name of the Spacebrew publisher.</li>
+            <li><b>subscriber : </b> The name of the Spacebrew subscriber.</li>
             <li><b>pub_metric : </b> The publisher name of the metric you want to route. See the <b>Muse Metrics</b> section below for the complete list.</li>
             <li><b>sub_metric : </b> The subscriber name of the metric you want to route.</li>
-
+            <li><b>pub_ip : </b> The IP address of the publisher.</li>
+            <li><b>sub_ip : </b> The IP address of the subscriber.</li>
         </ul>
     </div>
 
     <div><b>Sample Request</b></div>
 
     <div>GET <b><a
-            href="http://cloudbrain.rocks/link?pub_metric=eeg&sub_metric=muse-1-eeg&publisher=muse-001&subscriber=cloudbrain">http://cloudbrain.rocks/link?pub_metric=eeg&sub_metric=muse-1-eeg&publisher=muse-001&subscriber=cloudbrain</a></b>
+            href="http://cloudbrain.rocks/link?pub_metric=eeg&sub_metric=muse-001-eeg&publisher=muse-001&subscriber=booth-example&pub_ip=54.183.68.29&sub_ip=54.183.68.29">http://cloudbrain.rocks/link?pub_metric=eeg&sub_metric=muse-001-eeg&publisher=muse-001&subscriber=booth-example&pub_ip=54.183.68.29&sub_ip=54.183.68.29</a></b>
     </div>
 
      <h4>Unlink a publisher and a subscriber</h4>
@@ -202,18 +203,19 @@
     <div>GET request on <b>/unlink</b> with the following parameters:</div>
     <div>
         <ul>
-            <li><b>publisher :</b> The input data coming from the hardware (Muse headset for example).</li>
-            <li><b>subscriber : </b> Set it to 'cloudbrain' to keep historical data. Can also be set to your spacebrew client to get live data.</li>
+            <li><b>publisher :</b> The name of the Spacebrew publisher.</li>
+            <li><b>subscriber : </b> The name of the Spacebrew subscriber.</li>
             <li><b>pub_metric : </b> The publisher name of the metric you want to unlink. See the <b>Muse Metrics</b> section below for the complete list.</li>
             <li><b>sub_metric : </b> The subscriber name of the metric you want to unlink.</li>
-
+            <li><b>pub_ip : </b> The IP address of the publisher.</li>
+            <li><b>sub_ip : </b> The IP address of the subscriber.</li>
         </ul>
     </div>
 
     <div><b>Sample Request</b></div>
 
     <div>GET <b><a
-            href="http://cloudbrain.rocks/unlink?pub_metric=eeg&sub_metric=muse-1-eeg&publisher=muse-001&subscriber=cloudbrain">http://cloudbrain.rocks/link?pub_metric=eeg&sub_metric=muse-1-eeg&publisher=muse-001&subscriber=cloudbrain</a></b>
+            href="http://cloudbrain.rocks/unlink?pub_metric=eeg&sub_metric=muse-001-eeg&publisher=muse-001&subscriber=booth-example&pub_ip=54.183.68.29&sub_ip=54.183.68.29">http://cloudbrain.rocks/unlink?pub_metric=eeg&sub_metric=muse-001-eeg&publisher=muse-001&subscriber=booth-example&pub_ip=54.183.68.29&sub_ip=54.183.68.29</a></b>
     </div>
 
 
