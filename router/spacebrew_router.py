@@ -29,7 +29,7 @@ class SpacebrewRouter(object):
         self.ws.send(json.dumps(message))
 
 
-    def link(self, pub_metric, sub_metric, publisher, subscriber, sub_ip):
+    def link(self, pub_metric, sub_metric, publisher, subscriber, pub_ip, sub_ip):
         message = {
             "route": {
                 "type": "add",
@@ -37,7 +37,7 @@ class SpacebrewRouter(object):
                     "clientName": publisher,
                     "name": pub_metric,
                     "type": "string",
-                    "remoteAddress": self.server
+                    "remoteAddress": pub_ip
                 },
                 "subscriber": {
                     "clientName": subscriber,
@@ -49,16 +49,16 @@ class SpacebrewRouter(object):
             }
         }
         self.ws.send(json.dumps(message))
-        print json.dumps(message)
+        return json.dumps(message)
 
-    def unlink(self, pub_metric, sub_metric, publisher, subscriber, sub_ip):
+    def unlink(self, pub_metric, sub_metric, publisher, subscriber, pub_ip, sub_ip):
         message = {"route":
                        {"type": "remove",
                         "publisher": {
                             "clientName": publisher,
                             "name": pub_metric,
                             "type": "string",
-                            "remoteAddress": self.server
+                            "remoteAddress": pub_ip
                         },
                         "subscriber": {
                             "clientName": subscriber,
@@ -69,13 +69,11 @@ class SpacebrewRouter(object):
                    "targetType": "admin"}
 
         self.ws.send(json.dumps(message))
-
+        return json.dumps(message)
 
 if __name__ == "__main__":
     router = SpacebrewRouter(server=settings.CLOUDBRAIN_ADDRESS)
-    router.link('eeg', 'muse-001', 'cloudbrain')
-    router.link('acc', 'muse-001', 'cloudbrain')
-    router.link('concentration', 'muse-001', 'cloudbrain')
-    router.link('mellow', 'muse-002', 'cloudbrain')
+    router.link('eeg', 'eeg', 'muse-001', 'cloudbrain', '127.0.0.1', '127.0.0.1')
+    router.link('acc', 'acc', 'muse-001', 'cloudbrain', '127.0.0.1', '127.0.0.1')
     time.sleep(1)
-    router.unlink("eeg",'muse-001', 'cloudbrain')
+    router.unlink("eeg",'eeg', 'muse-001', 'cloudbrain', '127.0.0.1', '127.0.0.1')

@@ -53,8 +53,9 @@ def link():
     pub_metric = request.args.get('pub_metric', None)
     sub_metric = request.args.get('sub_metric', None)
     sub_ip = request.args.get('sub_ip', None)
-    sp_router.link(pub_metric, sub_metric, publisher, subscriber, sub_ip)
-    return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
+    pub_ip = request.args.get('pub_ip', None)
+    response = sp_router.link(pub_metric, sub_metric, publisher, subscriber, pub_ip, sub_ip)
+    return response, 200
 
 @app.route("/unlink", methods=['GET'])
 def unlink():
@@ -63,8 +64,9 @@ def unlink():
     pub_metric = request.args.get('pub_metric', None)
     sub_metric = request.args.get('sub_metric', None)
     sub_ip = request.args.get('sub_ip', None)
-    sp_router.unlink(pub_metric, sub_metric, publisher, subscriber, sub_ip)
-    return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
+    pub_ip = request.args.get('pub_ip', None)
+    response = sp_router.unlink(pub_metric, sub_metric, publisher, subscriber, pub_ip, sub_ip)
+    return response, 200
 
 @app.route("/patch", methods=['POST'])
 def patch():
