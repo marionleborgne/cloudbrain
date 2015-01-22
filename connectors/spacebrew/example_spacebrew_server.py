@@ -88,7 +88,7 @@ class SpacebrewServer(object):
                         "type": "string", "name": spacebrew_name, "clientName": muse_id}}
                     self.ws.send(json.dumps(message))
                     print value
-                    time.sleep(0.01)
+                    time.sleep(0.1)
 
 
     def calculate_spacebrew_name(self, osc_path):
