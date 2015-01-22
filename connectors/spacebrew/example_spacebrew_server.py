@@ -88,11 +88,28 @@ class SpacebrewServer(object):
                         "type": "string", "name": metric, "clientName": muse_id}}
                     '''
 
-                    args = [path['address']] + [0]*path['arguments']
-                    message = ','.join([str(arg) for arg in args])
-                    print message
-                    self.ws.send(message)
+                    spacebrew_name = self.calculate_spacebrew_name(path['address'])
+                    args = [spacebrew_name] + [0]*path['arguments']
+                    value = ','.join([str(arg) for arg in args])
+
+                    message = {"message": {
+                        "value": value,
+                        "type": "string", "name": spacebrew_name, "clientName": muse_id}}
+                    self.ws.send(json.dumps(message))
+                    print value
                     time.sleep(0.01)
+
+
+    def calculate_spacebrew_name(self, osc_path):
+        spacebrew_name = osc_path.split('/')[-1]
+        return self.disambiguate_name_collisions(spacebrew_name, osc_path)
+
+
+    def disambiguate_name_collisions(self, spacebrew_name, osc_path):
+        if spacebrew_name == 'dropped_samples':
+            return osc_path.split('/')[-2] + '_' + osc_path.split('/')[-1]
+        else:
+            return spacebrew_name
 
 
 
