@@ -53,10 +53,8 @@ class SpacebrewClient(object):
             self.brew.add_subscriber(spacebrew_name, "string")
             self.brew.subscribe(spacebrew_name, self.handle_value)
 
-    def handle_value(self, string_value):
-
-        value = json.loads(string_value)
-
+    def handle_value(self, value):
+        print value
         # YOUR CODE HERE
 
 

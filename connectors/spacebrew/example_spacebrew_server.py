@@ -78,16 +78,21 @@ class SpacebrewServer(object):
         while 1:
             for muse_id in self.muse_ids:
                 for path in self.osc_paths:
+
+                    '''
                     metric = path['address'].split('/')[-1]
                     nb_args = path['arguments']
-
                     value = [path['address']] + [0]*nb_args
-
                     message = {"message": {
                         "value": value,
                         "type": "string", "name": metric, "clientName": muse_id}}
-                    self.ws.send(json.dumps(message))
-                    time.sleep(0.1)
+                    '''
+
+                    args = [path['address']] + [0]*path['arguments']
+                    message = ','.join([str(arg) for arg in args])
+                    print message
+                    self.ws.send(message)
+                    time.sleep(0.01)
 
 
 
