@@ -80,7 +80,7 @@ class SpacebrewServer(object):
                 for path in self.osc_paths:
 
                     spacebrew_name = self.calculate_spacebrew_name(path['address'])
-                    args = [spacebrew_name] + [0]*path['arguments']
+                    args = [path['address']] + [0]*path['arguments']
                     value = ','.join([str(arg) for arg in args])
 
                     message = {"message": {
