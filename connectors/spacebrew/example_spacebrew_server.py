@@ -79,15 +79,6 @@ class SpacebrewServer(object):
             for muse_id in self.muse_ids:
                 for path in self.osc_paths:
 
-                    '''
-                    metric = path['address'].split('/')[-1]
-                    nb_args = path['arguments']
-                    value = [path['address']] + [0]*nb_args
-                    message = {"message": {
-                        "value": value,
-                        "type": "string", "name": metric, "clientName": muse_id}}
-                    '''
-
                     spacebrew_name = self.calculate_spacebrew_name(path['address'])
                     args = [spacebrew_name] + [0]*path['arguments']
                     value = ','.join([str(arg) for arg in args])
