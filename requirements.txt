@@ -1,2 +1,2 @@
-pycassa
+cassandra-driver
 pyliblo
