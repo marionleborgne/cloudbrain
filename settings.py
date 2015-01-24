@@ -2,10 +2,39 @@ __author__ = 'marion'
 
 
 # http://cloudbrain.rocks
-CLOUDBRAIN_ADDRESS = 'cloudbrain.rocks'
+CLOUDBRAIN_ADDRESS = '127.0.0.1'
 
 #TagID => MuseID
 TAGS = {
+    "2b08d4ec": 5001,
+    "dbbad4ec": 5002,
+    "5ba8d4ec": 5003,
+    "bb88d4ec": 5004,
+    "2b14d4ec": 5005,
+    "5b0fd4ec": 5006,
+    "ab0ed6ec": 5007,
+    "5b79d5ec": 5008,
+    "19e8f635": 5009,
+    "abe1d3ec": 5010,
+    "ebdfd3ec": 5011,
+    "9b68d5ec": 5012,
+    "4b68d3ec": 5013,
+    "5bb1d5ec": 5014,
+    "5b0cd4ec": 5015,
+    "6b69d5ec": 5016,
+    "5b67d5ec": 5017,
+    "dbaad4ec": 5018,
+    "4b07d4ec": 5019,
+    "ebdbd3ec": 5020,
+    "4b68d5ec": 5021,
+    "ce9686e5": 5008,
+    "19e8f635": 5009,
+    "abe1d3ec": 5010,
+    "3153f935": 5011,
+    "9b68d5ec": 5012,
+    "82ecf735": 5013,
+    "00b2f735": 5014,
+    "7385368c": 5015,
     "ce9686e5": 5008,
     "5b64d6ec": 5009,
     "a52df735": 5010,
