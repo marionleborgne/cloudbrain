@@ -47,6 +47,7 @@ TAGS = {
 
 #MuseID => BoothIP
 #todo: update with real booth IPs
+
 MUSE_IPS = {
     5008: '50.185.173.15',
     5009: '50.185.173.15',
