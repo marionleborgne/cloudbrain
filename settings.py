@@ -2,8 +2,7 @@ __author__ = 'marion'
 
 
 # http://cloudbrain.rocks
-CLOUDBRAIN_ADDRESS = '127.0.0.1'
-
+CLOUDBRAIN_ADDRESS = 'cloudbrain.rocks'
 
 #TagID => MuseID
 TAGS = {
@@ -17,6 +16,21 @@ TAGS = {
     "7385368c": 5015
 }
 
+#MuseID => BoothIP
+#todo: update with real booth IPs
+MUSE_IPS = {
+    5008: '50.185.173.15',
+    5009: '50.185.173.15',
+    5010: '127.0.0.1',
+    5011: '127.0.0.1',
+    5012: '127.0.0.1',
+    5013: '127.0.0.1',
+    5014: '127.0.0.1',
+    5015: '127.0.0.1'
+}
+
+# IP address of cassandra cluster
+CASSANDRA_IP = '50.185.173.15'
 
 #CoreID => Booth Name
 CORES = {

@@ -52,6 +52,30 @@ def doc():
 def spacebrew():
     return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
+# NOTE - I removed this from my branch because we're using /patch for the routing
+@app.route("/link", methods=['GET'])
+def link():
+    publisher = request.args.get('publisher', None)
+    subscriber = request.args.get('subscriber', None)
+    pub_metric = request.args.get('pub_metric', None)
+    sub_metric = request.args.get('sub_metric', None)
+    sub_ip = request.args.get('sub_ip', None)
+    pub_ip = request.args.get('pub_ip', None)
+    response = sp_router.link(pub_metric, sub_metric, publisher, subscriber, pub_ip, sub_ip)
+    return response, 200
+
+# NOTE - I removed this from my branch because we're using /patch for the routing
+@app.route("/unlink", methods=['GET'])
+def unlink():
+    publisher = request.args.get('publisher', None)
+    subscriber = request.args.get('subscriber', None)
+    pub_metric = request.args.get('pub_metric', None)
+    sub_metric = request.args.get('sub_metric', None)
+    sub_ip = request.args.get('sub_ip', None)
+    pub_ip = request.args.get('pub_ip', None)
+    response = sp_router.unlink(pub_metric, sub_metric, publisher, subscriber, pub_ip, sub_ip)
+    return response, 200
+
 @app.route("/patch", methods=['POST'])
 def patch():
     # Lookup Muse Headset by RFID Tag ID
@@ -147,9 +171,9 @@ def data():
 
     return json.dumps(mock_data)
 
-@app.route("/aggregate", methods=['GET'])
+@app.route("/data/aggregates", methods=['GET'])
 @support_jsonp
-def aggregate():
+def aggregates():
     user_id = request.args.get('userId', None)
     metric = request.args.get('metric', None)
     aggregateType = request.args.get('aggregateType', None)
@@ -173,6 +197,39 @@ def aggregate():
         "aggregateType": aggregateType}
 
     return json.dumps(mock_data)
+
+@app.route("/data/visitors", methods=['GET'])
+@support_jsonp
+def nb_visitors():
+
+    visitors = random() * 100000
+
+    mock_data = {
+        "visitors": visitors
+    }
+
+    return json.dumps(mock_data)
+
+@app.route("/data/aggregates/fft", methods=['GET'])
+@support_jsonp
+def fft_aggregates():
+
+    # mock values
+    alpha = random() * 10
+    beta = random() * 10
+    gamma = random() * 10
+    theta = random() * 10
+
+    mock_data = {
+        "alpha": {'avg': alpha, 'std': 0.1},
+        "beta":  {'avg': beta, 'std': 0.1},
+        "gamma":  {'avg': gamma, 'std': 0.1},
+        "theta":  {'avg': theta, 'std': 0.1}
+    }
+
+    return json.dumps(mock_data)
+
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', 8080)

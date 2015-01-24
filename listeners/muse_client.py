@@ -8,8 +8,8 @@ import json
 import sys
 import socket
 
-from database.cassandra_repository import CassandraRepository
-from database.cassandra_repository import convert_muse_data_to_cassandra_column
+from database.old.cassandra_repository import CassandraRepository
+from database.old.cassandra_repository import convert_muse_data_to_cassandra_column
 from database.cassandra_settings import KEYSPACE
 from database.cassandra_settings import MUSE_COLUMN_FAMILY
 from database.cassandra_settings import BATCH_MAX_SIZE

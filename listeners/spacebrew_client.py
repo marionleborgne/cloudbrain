@@ -7,13 +7,11 @@ sys.path.insert(0, dirname(dirname(abspath(__file__))))
 import settings
 
 from spacebrew.spacebrew import SpacebrewApp
-from database.cassandra_repository import CassandraRepository
-from database.cassandra_repository import convert_muse_data_to_cassandra_column
-from database.cassandra_settings import KEYSPACE
-from database.cassandra_settings import MUSE_COLUMN_FAMILY
-from database.cassandra_settings import BATCH_MAX_SIZE
-
-import json
+from database.old.cassandra_repository import CassandraRepository
+from database.old.cassandra_repository import convert_muse_data_to_cassandra_column
+from database.old.cassandra_settings import KEYSPACE
+from database.old.cassandra_settings import MUSE_COLUMN_FAMILY
+from database.old.cassandra_settings import BATCH_MAX_SIZE
 
 
 class SpacebrewClient(object):
@@ -67,8 +65,7 @@ class SpacebrewClient(object):
             self.brew.add_subscriber(spacebrew_name, "string")
             self.brew.subscribe(spacebrew_name, self.handle_value)
 
-    def handle_value(self, string_value):
-        value = json.loads(string_value)
+    def handle_value(self, value):
         path = value[0]
         if path in self.paths:
             row_key, column = convert_muse_data_to_cassandra_column(path, value)

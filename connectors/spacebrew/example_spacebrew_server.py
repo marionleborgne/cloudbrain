@@ -78,19 +78,32 @@ class SpacebrewServer(object):
         while 1:
             for muse_id in self.muse_ids:
                 for path in self.osc_paths:
-                    metric = path['address'].split('/')[-1]
-                    nb_args = path['arguments']
 
-                    value = [path['address']] + [0]*nb_args
+                    spacebrew_name = self.calculate_spacebrew_name(path['address'])
+                    args = [path['address']] + [0]*path['arguments']
+                    value = ','.join([str(arg) for arg in args])
 
                     message = {"message": {
                         "value": value,
-                        "type": "string", "name": metric, "clientName": muse_id}}
+                        "type": "string", "name": spacebrew_name, "clientName": muse_id}}
                     self.ws.send(json.dumps(message))
+                    print value
                     time.sleep(0.1)
+
+
+    def calculate_spacebrew_name(self, osc_path):
+        spacebrew_name = osc_path.split('/')[-1]
+        return self.disambiguate_name_collisions(spacebrew_name, osc_path)
+
+
+    def disambiguate_name_collisions(self, spacebrew_name, osc_path):
+        if spacebrew_name == 'dropped_samples':
+            return osc_path.split('/')[-2] + '_' + osc_path.split('/')[-1]
+        else:
+            return spacebrew_name
 
 
 
 if __name__ == "__main__":
-    server = SpacebrewServer(muse_ids=['muse-001', 'muse-002'], server=settings.CLOUDBRAIN_ADDRESS)
+    server = SpacebrewServer(muse_ids=['muse-5008', 'muse-5009'], server=settings.CLOUDBRAIN_ADDRESS)
     server.start()
