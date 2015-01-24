@@ -12,7 +12,12 @@ CREATE KEYSPACE cloudbrain WITH  replication = {'class': 'SimpleStrategy', 'repl
 
 from cassandra.cluster import Cluster
 from cassandra import InvalidRequest
-
+# add the shared settings file to namespace
+import sys
+from os.path import dirname, abspath
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
+import settings
+from router.spacebrew_router import SpacebrewRouter
 
 muse_osc_paths = [
             {'address': "/muse/eeg", 'arguments': 4},
@@ -59,13 +64,17 @@ def disambiguate_name_collisions(spacebrew_name, osc_path):
         return spacebrew_name
 
 
+# spacebrew router
+sp_router = SpacebrewRouter(server=settings.CLOUDBRAIN_ADDRESS)
+
+# cassandra cluster
 cluster = Cluster()
 session = cluster.connect('cloudbrain')
 
 # templates for column family creation
 create_column_family_template = "CREATE TABLE %s (muse_id text, timestamp timestamp, %s PRIMARY KEY (muse_id, timestamp));"
 drop_column_family_template = "DROP TABLE %s;"
-column_template = 'value%s double, '
+column_template = 'value_%s double, '
 
 for path in muse_osc_paths:
     column_family_name = calculate_spacebrew_name(path['address'])
@@ -85,3 +94,6 @@ for path in muse_osc_paths:
     except InvalidRequest:
         print create_column_family
         session.execute(create_column_family)
+
+    for muse_id in settings.MUSE_IPS:
+        sp_router.link(column_family_name, column_family_name, 'muse-%s' % muse_id, 'cassandra', settings.MUSE_IPS[muse_id], settings.CASSANDRA_IP)
