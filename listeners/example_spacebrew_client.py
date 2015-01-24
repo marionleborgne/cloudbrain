@@ -8,7 +8,6 @@ from os.path import dirname, abspath
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 import settings
 from spacebrew.spacebrew import SpacebrewApp
-import json
 
 
 class SpacebrewClient(object):
@@ -49,7 +48,7 @@ class SpacebrewClient(object):
         ]
 
         for path in self.osc_paths:
-            spacebrew_name = path['address'].split('/')[-1]
+            spacebrew_name = self.calculate_spacebrew_name(path['address'])
             self.brew.add_subscriber(spacebrew_name, "string")
             self.brew.subscribe(spacebrew_name, self.handle_value)
 
@@ -60,6 +59,17 @@ class SpacebrewClient(object):
 
     def start(self):
         self.brew.start()
+
+    def calculate_spacebrew_name(self, osc_path):
+        spacebrew_name = osc_path.split('/')[-1]
+        return self.disambiguate_name_collisions(spacebrew_name, osc_path)
+
+
+    def disambiguate_name_collisions(self, spacebrew_name, osc_path):
+        if spacebrew_name == 'dropped_samples':
+            return osc_path.split('/')[-2] + '_' + osc_path.split('/')[-1]
+        else:
+            return spacebrew_name
 
 
 parser = argparse.ArgumentParser(

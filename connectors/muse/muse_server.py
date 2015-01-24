@@ -27,6 +27,7 @@ class MuseServer(ServerThread):
         self.server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.user = user
 
+    '''
     # receive accelerometer data
     @make_method('/muse/acc', 'fff')
     def acc_callback(self, path, args):
@@ -36,10 +37,17 @@ class MuseServer(ServerThread):
 
 
     # receive EEG data
-    @make_method('/muse/eeg', 'ffff')
+    @make_method('/muse/elements/alpha_absolute', 'ffff')
     def eeg_callback(self, path, args):
         data = [path] + args
-        print data
+
+        self.sock.sendto(json.dumps(data), (self.receiver_ip, self.receiver_port))
+
+    # receive horseshoe data
+    @make_method("/muse/elements/horseshoe", 'ffff')
+    def horseshoe_callback(self, path, args):
+        data = [path] + args
+        #print data
         self.sock.sendto(json.dumps(data), (self.receiver_ip, self.receiver_port))
 
     #receive concentration data
@@ -55,12 +63,13 @@ class MuseServer(ServerThread):
         data = [path] + args
         self.sock.sendto(json.dumps(data), (self.receiver_ip, self.receiver_port))
 
-
+    '''
     #handle unexpected messages
     @make_method(None, None)
     def fallback(self, path, args, types, src):
         # do nothing for now ...
-        pass
+        data = [path] + args
+        print data
 
 
 if __name__ == "__main__":
