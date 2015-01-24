@@ -35,18 +35,18 @@ CORES = {
     "53ff6e065067fffffffffff3": "booth-12"
 }
 
-#Booth Name => {"ip" => IP Address, "required_routes" => [[pub_metric, sub_metric], [pub_metric, sub_metric], ...]}
+#Booth Name => {"ip" => IP Address}
 BOOTHS = {
-    "booth-1": {"ip": "0.0.0.1", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-2": {"ip": "0.0.0.2", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-3": {"ip": "0.0.0.3", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-4": {"ip": "0.0.0.4", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-5": {"ip": "0.0.0.5", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-6": {"ip": "0.0.0.6", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-7": {"ip": "0.0.0.7", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-8": {"ip": "0.0.0.8", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-9": {"ip": "0.0.0.9", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-10":{"ip": "0.0.0.10", "required_routes":  [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-11":{"ip": "0.0.0.11", "required_routes":  [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-12":{"ip": "0.0.0.12", "required_routes":  [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]}
+    "booth-1": {"ip": "0.0.0.1"},
+    "booth-2": {"ip": "0.0.0.2"},
+    "booth-3": {"ip": "0.0.0.3"},
+    "booth-4": {"ip": "0.0.0.4"},
+    "booth-5": {"ip": "0.0.0.5"},
+    "booth-6": {"ip": "0.0.0.6"},
+    "booth-7": {"ip": "0.0.0.7"},
+    "booth-8": {"ip": "0.0.0.8"},
+    "booth-9": {"ip": "0.0.0.9"},
+    "booth-10":{"ip": "0.0.0.10"},
+    "booth-11":{"ip": "0.0.0.11"},
+    "booth-12":{"ip": "0.0.0.12"}
 }

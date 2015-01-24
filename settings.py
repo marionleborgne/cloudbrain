@@ -2,15 +2,44 @@ __author__ = 'marion'
 
 
 # http://cloudbrain.rocks
-CLOUDBRAIN_ADDRESS = 'cloudbrain.rocks'
+CLOUDBRAIN_ADDRESS = '127.0.0.1'
 
 #TagID => MuseID
 TAGS = {
+    "2b08d4ec": 5001,
+    "dbbad4ec": 5002,
+    "5ba8d4ec": 5003,
+    "bb88d4ec": 5004,
+    "2b14d4ec": 5005,
+    "5b0fd4ec": 5006,
+    "ab0ed6ec": 5007,
+    "5b79d5ec": 5008,
+    "19e8f635": 5009,
+    "abe1d3ec": 5010,
+    "ebdfd3ec": 5011,
+    "9b68d5ec": 5012,
+    "4b68d3ec": 5013,
+    "5bb1d5ec": 5014,
+    "5b0cd4ec": 5015,
+    "6b69d5ec": 5016,
+    "5b67d5ec": 5017,
+    "dbaad4ec": 5018,
+    "4b07d4ec": 5019,
+    "ebdbd3ec": 5020,
+    "4b68d5ec": 5021,
     "ce9686e5": 5008,
     "19e8f635": 5009,
+    "abe1d3ec": 5010,
+    "3153f935": 5011,
+    "9b68d5ec": 5012,
+    "82ecf735": 5013,
+    "00b2f735": 5014,
+    "7385368c": 5015,
+    "ce9686e5": 5008,
+    "5b64d6ec": 5009,
     "a52df735": 5010,
     "3153f935": 5011,
-    "3686f735": 5012,
+    "9b68d5ec": 5012,
     "82ecf735": 5013,
     "00b2f735": 5014,
     "7385368c": 5015
@@ -18,6 +47,7 @@ TAGS = {
 
 #MuseID => BoothIP
 #todo: update with real booth IPs
+
 MUSE_IPS = {
     5008: '50.185.173.15',
     5009: '50.185.173.15',
@@ -49,19 +79,19 @@ CORES = {
     "53ff72066667574858362167": "booth-12"
 }
 
-#Booth Name => {"ip" => IP Address, "required_routes" => [[pub_metric, sub_metric], [pub_metric, sub_metric], ...]}
+#Booth Name => {"ip" => IP Address}
 BOOTHS = {
-    "muse-manager": {"ip": "10.0.0.2", "required_routes": [["batt", "battery-muse9"],["horseshoe", "horseshoe-muse9"],["touching_forehead", "touching-muse9"]]},
-    "booth-1": {"ip": "10.0.0.101", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-2": {"ip": "10.0.0.102", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-3": {"ip": "10.0.0.103", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-4": {"ip": "10.0.0.104", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-5": {"ip": "10.0.0.105", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-6": {"ip": "10.0.0.106", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-7": {"ip": "10.0.0.107", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-8": {"ip": "10.0.0.108", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-9": {"ip": "10.0.0.109", "required_routes": [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-10":{"ip": "10.0.0.110", "required_routes":  [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-11":{"ip": "10.0.0.111", "required_routes":  [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]},
-    "booth-12":{"ip": "10.0.0.112", "required_routes":  [["eeg", "eeg"], ["mellow", "mellow"], ["concentration", "concentration"]]}
+    "muse-manager": {"ip": "10.0.0.2"},
+    "booth-1": {"ip": "10.0.0.201"},
+    "booth-2": {"ip": "10.0.0.202"},
+    "booth-3": {"ip": "10.0.0.203"},
+    "booth-4": {"ip": "10.0.0.204"},
+    "booth-5": {"ip": "10.0.0.205"},
+    "booth-6": {"ip": "10.0.0.206"},
+    "booth-7": {"ip": "10.0.0.207"},
+    "booth-8": {"ip": "10.0.0.208"},
+    "booth-9": {"ip": "10.0.0.209"},
+    "booth-10": {"ip": "10.0.0.210"},
+    "booth-11": {"ip": "10.0.0.211"},
+    "booth-12": {"ip": "10.0.0.212"}
 }
