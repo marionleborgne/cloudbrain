@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, current_app
 import json
 from random import random
 from functools import wraps
+import re
 
 # add the shared settings file to namespace
 import sys
@@ -14,7 +15,14 @@ from router.spacebrew_router import SpacebrewRouter
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 sp_router = SpacebrewRouter(server=settings.CLOUDBRAIN_ADDRESS)
+sp_config_cache = {
+    "subscriptions": {
 
+    },
+    "routes": {
+
+    }
+}
 
 def support_jsonp(f):
     """Wraps JSONified output for JSONP"""
@@ -32,11 +40,9 @@ def support_jsonp(f):
 def index():
     return render_template('api-doc.html'), 200
 
-
 @app.route('/about')
 def about():
     return render_template('about.html'), 200
-
 
 @app.route('/api-doc')
 def doc():
@@ -46,6 +52,7 @@ def doc():
 def spacebrew():
     return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
+# NOTE - I removed this from my branch because we're using /patch for the routing
 @app.route("/link", methods=['GET'])
 def link():
     publisher = request.args.get('publisher', None)
@@ -57,6 +64,7 @@ def link():
     response = sp_router.link(pub_metric, sub_metric, publisher, subscriber, pub_ip, sub_ip)
     return response, 200
 
+# NOTE - I removed this from my branch because we're using /patch for the routing
 @app.route("/unlink", methods=['GET'])
 def unlink():
     publisher = request.args.get('publisher', None)
@@ -70,28 +78,70 @@ def unlink():
 
 @app.route("/patch", methods=['POST'])
 def patch():
-    core = request.form["core"]
+    # Lookup Muse Headset by RFID Tag ID
     rfid = request.form["rfid"]
-
-    print settings.CORES[core]
-    print settings.TAGS[rfid]
-
     muse = settings.TAGS[rfid]
+
+    # Lookup Booth Number by SparkCore Serial Number
+    core = request.form["core"]
     booth = settings.CORES[core]
-    metrics = settings.BOOTHS[booth]["required_routes"]
+
+    # Get IP address for the Booth
     ip = settings.BOOTHS[booth]["ip"]
 
-    #Unlink existing required routes connected to Booth
-    museids = {v: k for k, v in settings.TAGS.items()}
-    for museid in museids:
-        for metric in metrics:
-            sp_router.unlink(metric[0], metric[1], 'muse-%s' % museid, booth, ip)
+    # Get current Spacebrew configuration state
+    spacebrew_configs = sp_router.get_spacebrew_config()
 
-    #Link Booth
-    for metric in metrics:
-        sp_router.link(metric[0], metric[1], 'muse-%s' % muse, booth, ip)
+    for spacebrew_config in spacebrew_configs:
+        # This hash defines a client
+        if type(spacebrew_config) is dict and 'config' in spacebrew_config:
+            # Use only Booth configs since we control the Muse config
+            config_name = spacebrew_config['config']['name'].encode('ascii', 'ignore')
+            if re.match("booth-\d+", config_name):
+                # Set booth subscriptions
+                sp_config_cache["subscriptions"][config_name] = []
+                for message in spacebrew_config['config']['subscribe']['messages']:
+                    sp_config_cache["subscriptions"][config_name].append(message["name"].encode('ascii', 'ignore'))
 
-    return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
+        # TODO: Cache existing routes so we can hand-route things then disconnect them automatically
+        # # This hash defines the routes
+        # if 'route' in spacebrew_config:
+        #     booth_identity = spacebrew_config['route']['subscriber']['clientName']
+        #     muse_identity = spacebrew_config['route']['publisher']['clientName']
+        #     print "Found route between for %s and %s" % (muse_identity, booth_identity)
+
+    # Unlink subscription routes for requested Booth and Muse
+    if booth in sp_config_cache["routes"]:
+        # Remove route from cache
+        previous_muse = sp_config_cache["routes"].pop(booth)
+
+        # Inform the booth it has been connected from the previous muse
+        sp_router.disconnect_event(booth, 'muse-%s' % previous_muse)
+        # Adding logging for disconnection here
+
+        # For each subscription, unlink it
+        for data_channel in sp_config_cache["subscriptions"][booth]:
+            # Keep these data channels
+            if data_channel != "connect" and data_channel != "disconnect":
+                sp_router.unlink(data_channel, data_channel, 'muse-%s' % previous_muse, booth, ip)
+
+    # Link subscription routes for requested Booth and Muse
+    if booth in sp_config_cache["subscriptions"]:
+        # Inform the booth it has been connected to a new muse
+        sp_router.connect_event(booth, 'muse-%s' % muse)
+        # Adding logging for connection here
+
+        # For each subscription, link it
+        for data_channel in sp_config_cache["subscriptions"][booth]:
+            if data_channel == "connect" or data_channel == "disconnect":
+                sp_router.link(booth + '-' + data_channel, data_channel, 'router', booth, ip)
+            else:
+                sp_router.link(data_channel, data_channel, 'muse-%s' % muse, booth, ip)
+
+        # Add route to cache
+        sp_config_cache["routes"][booth] = muse
+
+    return 'OK'
 
 @app.route("/data", methods=['GET'])
 @support_jsonp
@@ -122,7 +172,6 @@ def data():
         mock_data.append(datapoint)
 
     return json.dumps(mock_data)
-
 
 @app.route("/data/aggregates", methods=['GET'])
 @support_jsonp
