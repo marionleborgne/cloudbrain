@@ -117,6 +117,7 @@ def patch():
 
         # Inform the booth it has been connected from the previous muse
         sp_router.disconnect_event(booth, 'muse-%s' % previous_muse)
+        # Adding logging for disconnection here
 
         # For each subscription, unlink it
         for data_channel in sp_config_cache["subscriptions"][booth]:
@@ -128,6 +129,7 @@ def patch():
     if booth in sp_config_cache["subscriptions"]:
         # Inform the booth it has been connected to a new muse
         sp_router.connect_event(booth, 'muse-%s' % muse)
+        # Adding logging for connection here
 
         # For each subscription, link it
         for data_channel in sp_config_cache["subscriptions"][booth]:
