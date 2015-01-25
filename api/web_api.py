@@ -141,7 +141,7 @@ def patch():
         # Add route to cache
         sp_config_cache["routes"][booth] = muse
 
-    return 'OK'
+    return 'OK', 200
 
 @app.route("/data", methods=['GET'])
 @support_jsonp
