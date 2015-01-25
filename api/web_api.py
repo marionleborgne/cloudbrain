@@ -217,16 +217,18 @@ def nb_visitors():
 def fft_aggregates():
 
     # mock values
-    alpha = random() * 10
-    beta = random() * 10
-    gamma = random() * 10
-    theta = random() * 10
+    alpha = 0.5 - random()
+    beta = 0.5 - random()
+    gamma = 0.5 - random()
+    theta = 0.5 - random()
+    delta = 0.5 - random()
 
     mock_data = {
-        "alpha": {'avg': alpha, 'std': 0.1},
-        "beta":  {'avg': beta, 'std': 0.1},
-        "gamma":  {'avg': gamma, 'std': 0.1},
-        "theta":  {'avg': theta, 'std': 0.1}
+        "alpha": {'avg': alpha},
+        "beta":  {'avg': beta},
+        "gamma":  {'avg': gamma},
+        "theta":  {'avg': theta},
+        "delta":  {'avg': delta}
     }
 
     return json.dumps(mock_data)
