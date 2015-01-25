@@ -1,2 +1,3 @@
 cassandra-driver
 pyliblo
+websocket-client
