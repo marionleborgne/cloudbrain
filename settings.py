@@ -60,7 +60,7 @@ MUSE_IPS = {
 }
 
 # IP address of cassandra cluster
-CASSANDRA_IP = '50.185.173.15'
+CASSANDRA_IP = '104.236.15.197'
 
 #CoreID => Booth Name
 CORES = {
