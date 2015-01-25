@@ -18,12 +18,13 @@ import sys
 from os.path import dirname, abspath
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 from settings import CASSANDRA_METRICS
+from settings import CASSANDRA_IP
 
 from spacebrew_utils import calculate_spacebrew_name
 
 
 # cassandra cluster
-cluster = Cluster()
+cluster = Cluster(contact_points=[CASSANDRA_IP], port=9160)
 session = cluster.connect('cloudbrain')
 
 # templates for column family creation
