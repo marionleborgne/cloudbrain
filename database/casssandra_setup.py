@@ -24,7 +24,7 @@ from spacebrew_utils import calculate_spacebrew_name
 
 
 # cassandra cluster
-cluster = Cluster(contact_points=[CASSANDRA_IP], port=9160)
+cluster = Cluster(contact_points=[CASSANDRA_IP])
 session = cluster.connect('cloudbrain')
 
 # templates for column family creation
