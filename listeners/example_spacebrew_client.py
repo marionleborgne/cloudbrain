@@ -81,5 +81,5 @@ parser.add_argument(
 
 if __name__ == "__main__":
     args = parser.parse_args()
-    sb_client = SpacebrewClient('booth-%s' % args.name, settings.CLOUDBRAIN_ADDRESS)
+    sb_client = SpacebrewClient('booth-%s' % args.name, settings.CLOUDBRAIN_IP)
     sb_client.start()

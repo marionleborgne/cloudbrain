@@ -91,5 +91,5 @@ class SpacebrewClient(object):
 
 
 if __name__ == "__main__":
-    sb_client = SpacebrewClient('cloudbrain', settings.CLOUDBRAIN_ADDRESS)
+    sb_client = SpacebrewClient('cloudbrain', settings.CLOUDBRAIN_IP)
     sb_client.start()

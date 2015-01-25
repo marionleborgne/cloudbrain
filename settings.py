@@ -2,7 +2,7 @@ __author__ = 'marion'
 
 
 # http://cloudbrain.rocks
-CLOUDBRAIN_ADDRESS = '127.0.0.1'
+CLOUDBRAIN_IP = '127.0.0.1'
 
 # TagID => MuseID
 TAGS = {
@@ -95,7 +95,8 @@ BOOTHS = {
 CASSANDRA_SPACEBREW_NAME = 'cassandra'
 
 # IP address of cassandra cluster
-CASSANDRA_IP = '104.236.15.197'
+#CASSANDRA_IP = '104.236.15.197'
+CASSANDRA_IP = '127.0.0.1'
 
 # Metrics for Cassandra
 CASSANDRA_METRICS = {

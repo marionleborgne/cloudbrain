@@ -96,7 +96,7 @@ class SpacebrewRouter(object):
 
 
 if __name__ == "__main__":
-    router = SpacebrewRouter(server=settings.CLOUDBRAIN_ADDRESS)
+    router = SpacebrewRouter(server=settings.CLOUDBRAIN_IP)
     router.link('eeg', 'eeg', 'muse-001', 'cloudbrain', '127.0.0.1', '127.0.0.1')
     router.link('acc', 'acc', 'muse-001', 'cloudbrain', '127.0.0.1', '127.0.0.1')
     time.sleep(1)
