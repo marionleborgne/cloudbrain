@@ -65,7 +65,7 @@ class SpacebrewServer(object):
         for muse in muse_ids:
             config = {
                 'config': {
-                    'name': muse,
+                    'name': 'muse-%s' % muse,
                     'publish': {
                         'messages': [{'name': name['address'].split('/')[-1], 'type': 'string'} for name in self.osc_paths]
                     }
@@ -80,14 +80,15 @@ class SpacebrewServer(object):
                 for path in self.osc_paths:
 
                     spacebrew_name = self.calculate_spacebrew_name(path['address'])
-                    args = [path['address']] + [0]*path['arguments']
+                    args = [path['address']] + [0.1]*path['arguments'] + [muse_id]
                     value = ','.join([str(arg) for arg in args])
 
                     message = {"message": {
                         "value": value,
-                        "type": "string", "name": spacebrew_name, "clientName": muse_id}}
+                        "type": "string", "name": spacebrew_name, "clientName": 'muse-%s' % muse_id}}
+
+                    print message
                     self.ws.send(json.dumps(message))
-                    print value
                     time.sleep(0.1)
 
 
@@ -105,5 +106,5 @@ class SpacebrewServer(object):
 
 
 if __name__ == "__main__":
-    server = SpacebrewServer(muse_ids=['muse-5008', 'muse-5009'], server=settings.CLOUDBRAIN_ADDRESS)
+    server = SpacebrewServer(muse_ids=settings.MUSE_PORTS, server=settings.CLOUDBRAIN_ADDRESS)
     server.start()
