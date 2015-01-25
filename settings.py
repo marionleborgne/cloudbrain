@@ -4,7 +4,7 @@ __author__ = 'marion'
 # http://cloudbrain.rocks
 CLOUDBRAIN_ADDRESS = '127.0.0.1'
 
-#TagID => MuseID
+# TagID => MuseID
 TAGS = {
     "2b08d4ec": 5001,
     "dbbad4ec": 5002,
@@ -45,24 +45,19 @@ TAGS = {
     "7385368c": 5015
 }
 
-#MuseID => BoothIP
-#todo: update with real booth IPs
+# Muse Port numbers
 
-MUSE_IPS = {
-    5008: '127.0.0.1',
-    5009: '127.0.0.1',
-    5010: '127.0.0.1',
-    5011: '127.0.0.1',
-    5012: '127.0.0.1',
-    5013: '127.0.0.1',
-    5014: '127.0.0.1',
-    5015: '127.0.0.1'
-}
+MUSE_PORTS = [
+    5008,
+    5009,
+    5010,
+    5011,
+    5012,
+    5013,
+    5014,
+    5015]
 
-# IP address of cassandra cluster
-CASSANDRA_IP = '104.236.15.197'
-
-#CoreID => Booth Name
+# CoreID => Booth Name
 CORES = {
     "53ff6e065067544819260487": "muse-manager",
     "53ff68066667574815362067": "booth-1",
@@ -95,3 +90,46 @@ BOOTHS = {
     "booth-11": {"ip": "10.0.0.211"},
     "booth-12": {"ip": "10.0.0.212"}
 }
+
+# cassandra spacebrew subscriber name
+CASSANDRA_SPACEBREW_NAME = 'cassandra'
+
+# IP address of cassandra cluster
+CASSANDRA_IP = '104.236.15.197'
+
+# Metrics for Cassandra
+CASSANDRA_METRICS = {
+    "/muse/eeg": 4,
+    #"/muse/eeg/quantization": 4,
+    #"/muse/eeg/dropped_samples": 1,
+    #"/muse/acc": 3,
+    #"/muse/acc/dropped_samples": 1,
+    "/muse/batt": 4,
+    #"/muse/drlref": 2,
+    #"/muse/elements/low_freqs_absolute": 4,
+    "/muse/elements/delta_absolute": 4,
+    "/muse/elements/theta_absolute": 4,
+    "/muse/elements/alpha_absolute": 4,
+    "/muse/elements/beta_absolute": 4,
+    "/muse/elements/gamma_absolute": 4,
+    #"/muse/elements/delta_relative": 4,
+    #"/muse/elements/theta_relative": 4,
+    #"/muse/elements/alpha_relative": 4,
+    #"/muse/elements/beta_relative": 4,
+    #"/muse/elements/gamma_relative": 4,
+    #"/muse/elements/delta_session_score": 4,
+    #"/muse/elements/theta_session_score": 4,
+    #"/muse/elements/alpha_session_score": 4,
+    #"/muse/elements/beta_session_score": 4,
+    #"/muse/elements/gamma_session_score": 4,
+    #"/muse/elements/touching_forehead": 1,
+    "/muse/elements/horseshoe": 4,
+    "/muse/elements/is_good": 4,
+    "/muse/elements/blink": 1,
+    "/muse/elements/jaw_clench": 1,
+    "/muse/elements/experimental/concentration": 1,
+    "/muse/elements/experimental/mellow": 1
+}
+
+
+
