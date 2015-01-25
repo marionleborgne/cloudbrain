@@ -10,7 +10,7 @@ from settings import CLOUDBRAIN_IP
 from settings import CASSANDRA_METRICS
 from settings import MUSE_PORTS
 from settings import CASSANDRA_SPACEBREW_NAME
-from settings import CASSANDRA_IP
+from settings import CASSANDRA_SPACEBREW_IP
 from spacebrew.spacebrew import SpacebrewApp
 from router.spacebrew_router import SpacebrewRouter
 
@@ -49,7 +49,7 @@ class CassandraSpacebrewClient(object):
                 publisher_name = 'muse-%s' % muse_port
                 subscriber_name = CASSANDRA_SPACEBREW_NAME
                 self.sp_router.link(publisher_metric_name, subscriber_metric_name, publisher_name, subscriber_name,
-                                    CLOUDBRAIN_IP, CASSANDRA_IP)
+                                    CLOUDBRAIN_IP, CASSANDRA_SPACEBREW_IP)
 
 
         end = time.time()
