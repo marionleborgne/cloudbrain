@@ -13,20 +13,20 @@ __author__ = 'marion'
 # add the shared settings file to namespace
 import sys
 from os.path import dirname, abspath
+
 sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 import settings
-
 
 import json
 from websocket import create_connection
 import time
-
+import threading
 
 class SpacebrewServer(object):
-    def __init__(self, muse_ids=['muse-example'], server='127.0.0.1', port=9000):
+    def __init__(self, muse_id=5008, server='127.0.0.1', port=9000):
+        self.muse_id = muse_id
         self.server = server
         self.port = port
-        self.muse_ids = muse_ids
         self.osc_paths = [
             {'address': "/muse/eeg", 'arguments': 4},
             {'address': "/muse/eeg/quantization", 'arguments': 4},
@@ -62,34 +62,39 @@ class SpacebrewServer(object):
 
         self.ws = create_connection("ws://%s:%s" % (self.server, self.port))
 
-        for muse in muse_ids:
-            config = {
-                'config': {
-                    'name': 'muse-%s' % muse,
-                    'publish': {
-                        'messages': [{'name': name['address'].split('/')[-1], 'type': 'string'} for name in self.osc_paths]
-                    }
+
+        config = {
+            'config': {
+                'name': 'muse-%s' % self.muse_id,
+                'publish': {
+                    'messages': [{'name': name['address'].split('/')[-1], 'type': 'string'} for name in
+                                 self.osc_paths]
                 }
             }
+        }
 
-            self.ws.send(json.dumps(config))
+        self.ws.send(json.dumps(config))
+
+        self.threads = []
 
     def start(self):
+        t = threading.Thread(target=self.send_data)
+        self.threads.append(t)
+        t.start()
+
+    def send_data(self):
         while 1:
-            for muse_id in self.muse_ids:
-                for path in self.osc_paths:
+            for path in self.osc_paths:
+                spacebrew_name = self.calculate_spacebrew_name(path['address'])
+                args = [0.1] * path['arguments']
+                value = ','.join([str(arg) for arg in args])
 
-                    spacebrew_name = self.calculate_spacebrew_name(path['address'])
-                    args = [path['address']] + [0.1]*path['arguments'] + [muse_id]
-                    value = ','.join([str(arg) for arg in args])
+                message = {"message": {
+                    "value": value,
+                    "type": "string", "name": spacebrew_name, "clientName": 'muse-%s' % self.muse_id}}
 
-                    message = {"message": {
-                        "value": value,
-                        "type": "string", "name": spacebrew_name, "clientName": 'muse-%s' % muse_id}}
-
-                    print message
-                    self.ws.send(json.dumps(message))
-                    time.sleep(0.1)
+                self.ws.send(json.dumps(message))
+                time.sleep(0.1)
 
 
     def calculate_spacebrew_name(self, osc_path):
@@ -104,7 +109,8 @@ class SpacebrewServer(object):
             return spacebrew_name
 
 
-
 if __name__ == "__main__":
-    server = SpacebrewServer(muse_ids=settings.MUSE_PORTS, server=settings.CLOUDBRAIN_ADDRESS)
-    server.start()
+
+    for muse_port in settings.MUSE_PORTS:
+        server = SpacebrewServer(muse_id=muse_port, server=settings.CLOUDBRAIN_IP)
+        server.start()
