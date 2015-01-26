@@ -20,6 +20,8 @@ body {
   color: white;
   max-height: 710px;
   overflow: hidden;
+  max-width: 1024px;
+  margin: 0 auto;
 }
 
 .clearfix {
@@ -44,14 +46,11 @@ h1.title {
   margin: 0;
   /* border-bottom: 1px solid white; */
   color: white;
-  height: 220px;
-  overflow: hidden;
 }
 #avg aside {
   float: left;
   width: 400px;
   margin-left: 20px;
-  display: none;
 }
 .legends {
   height: 1.3em;
@@ -78,6 +77,13 @@ h1.title {
 .legends .legend.avg {
   background: rgb(174, 199, 232);
 }
+#avg aside {
+  display: block;
+  width: 100%;
+  clear: both;
+  color: white;
+  font-size: 1.5em;
+}
 #avg aside dl {
   margin: 0;
 }
@@ -90,7 +96,6 @@ h1.title {
 #avg aside dd {
   display: inline;
   margin-left: 0;
-  display: none;
 }
 #avg .zero {
   margin-top: 104px;
@@ -119,7 +124,7 @@ h1.title {
   width: 100%;
   border-top: 1px dashed rgba(255, 255, 255, 0.69);
   margin-top: 150px;
-  box-shadow: 1px 97px 0px rgba(255, 255, 255, 0.69);
+  /* box-shadow: 1px 97px 0px rgba(255, 255, 255, 0.69); */
   border: none;
 }
 #avg .graph .bar {
@@ -162,25 +167,25 @@ h1.title {
 }
 #avg .graph .red .fill {
   background: rgb(247, 5, 5);
-  box-shadow: 1px -5px 2px rgba(255, 0, 0, 0.55);
+  /* box-shadow: 1px -5px 2px rgba(255, 0, 0, 0.55); */
   /* width: 89px; */
   /* width: 93px; */
 }
 #avg .graph .orange .fill {
   background: rgb(255, 138, 6);
-  box-shadow: 1px -5px 2px rgba(255, 116, 0, 0.55);
+  /* box-shadow: 1px -5px 2px rgba(255, 116, 0, 0.55); */
 }
 #avg .graph .green .fill {
   background: rgb(107, 255, 6);
-  box-shadow: 1px -5px 2px rgba(74, 255, 0, 0.55);
+  /* box-shadow: 1px -5px 2px rgba(74, 255, 0, 0.55); */
 }
 #avg .graph .yellow .fill {
   background: rgb(250, 255, 51);
-  box-shadow: 1px -5px 2px rgba(255, 246, 80, 0.65);
+  /* box-shadow: 1px -5px 2px rgba(255, 246, 80, 0.65); */
 }
 #avg .graph .blue .fill {
   background: rgb(6, 85, 255);
-  box-shadow: 1px -5px 2px rgba(75, 131, 232, 0.55);
+  /* box-shadow: 1px -5px 2px rgba(75, 131, 232, 0.55); */
 }
 
 /* spider graphs */
