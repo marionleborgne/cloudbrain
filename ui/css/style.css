@@ -55,6 +55,7 @@ h1.title {
 }
 .legends {
   height: 1.3em;
+  margin-top:10px;
 }
 .legends p {
   float: left;
