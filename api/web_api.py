@@ -44,6 +44,11 @@ def index():
 def about():
     return render_template('about.html'), 200
 
+@app.route('/explo')
+def explo():
+    return render_template('cloudbrain.html'), 200
+
+
 @app.route('/api-doc')
 def doc():
     return render_template('api-doc.html'), 200
