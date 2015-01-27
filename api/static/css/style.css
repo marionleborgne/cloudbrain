@@ -208,6 +208,15 @@ h1.title {
   float: left;
   margin: 10px 0 0 0;
 }
+.radar .icon {
+  width: 18px;
+  float: left;
+  height: 18px;
+  margin-right: 11px;
+}
+.radar .icon path {
+  fill: red;
+}
 .radar p {
   color: white;
   font-size: 0.9em;
