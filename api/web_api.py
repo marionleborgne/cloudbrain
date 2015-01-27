@@ -17,10 +17,8 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 sp_router = SpacebrewRouter(server=settings.CLOUDBRAIN_IP)
 sp_config_cache = {
     "subscriptions": {
-
     },
     "routes": {
-
     }
 }
 
@@ -48,6 +46,9 @@ def about():
 def explo():
     return render_template('cloudbrain.html'), 200
 
+@app.route('/form')
+def consent_form():
+    return render_template('EEG-Data-Permission.html'), 200
 
 @app.route('/api-doc')
 def doc():
