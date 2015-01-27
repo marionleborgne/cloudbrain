@@ -111,6 +111,8 @@ class SpacebrewServer(object):
 
 if __name__ == "__main__":
 
-    for muse_port in settings.MUSE_PORTS:
+    #muse_ports = settings.MUSE_PORTS
+    muse_ports = ['mock']
+    for muse_port in muse_ports:
         server = SpacebrewServer(muse_id=muse_port, server=settings.CLOUDBRAIN_IP)
         server.start()

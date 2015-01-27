@@ -48,7 +48,11 @@ def explo():
 
 @app.route('/form')
 def consent_form():
-    return render_template('EEG-Data-Permission.html'), 200
+    return render_template('form.html'), 200
+
+@app.route('/form-2')
+def consent_form_2():
+    return render_template('form-2.html'), 200
 
 @app.route('/api-doc')
 def doc():
@@ -60,6 +64,7 @@ def spacebrew():
 
 # NOTE - I removed this from my branch because we're using /patch for the routing
 @app.route("/link", methods=['GET'])
+@support_jsonp
 def link():
     publisher = request.args.get('publisher', None)
     subscriber = request.args.get('subscriber', None)
@@ -72,6 +77,7 @@ def link():
 
 # NOTE - I removed this from my branch because we're using /patch for the routing
 @app.route("/unlink", methods=['GET'])
+@support_jsonp
 def unlink():
     publisher = request.args.get('publisher', None)
     subscriber = request.args.get('subscriber', None)
@@ -83,6 +89,7 @@ def unlink():
     return response, 200
 
 @app.route("/patch", methods=['POST'])
+@support_jsonp
 def patch():
     # Lookup Muse Headset by RFID Tag ID
     rfid = request.form["rfid"]
