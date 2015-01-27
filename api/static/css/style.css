@@ -1,0 +1,229 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,700,500);
+
+/*http://www.paulirish.com/2012/box-sizing-border-box-ftw/*/
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+
+body {
+  background: rgba(0,0,0,1);
+  height: 750;
+  width:  1280;
+  padding: 0;
+  margin: 0;
+  font-size: 15px;
+  font-family: Roboto, arial, sans-serif;
+  color: white;
+  max-height: 710px;
+  overflow: hidden;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.clearfix {
+  overflow: auto;
+}
+.container {
+  max-width: 1024px;
+  width: 1280px; /*100%;*/
+  margin: 0 auto;
+}
+h1.title {
+  color: white;
+  text-align:left;
+  margin: 0;
+  padding: 0;
+  font-size: 1.2em;
+}
+#avg {
+  width: 100%;
+  background: black;
+  padding: 1em;
+  margin: 0;
+  /* border-bottom: 1px solid white; */
+  color: white;
+}
+#avg aside {
+  float: left;
+  width: 400px;
+  margin-left: 20px;
+}
+.legends {
+  height: 1.3em;
+  margin-top:10px;
+}
+.legends p {
+  float: left;
+  margin: 0;
+  line-height: 12px;
+}
+.legends p:last-child {
+  margin-left: 20px;
+}
+.legends .legend {
+  width: 1em;
+  height: 1em;
+  display: block;
+  float: left;
+  margin-right: 1em;
+}
+.legends .legend.live {
+  background: rgb(31, 119, 180);
+}
+.legends .legend.avg {
+  background: rgb(174, 199, 232);
+}
+#avg aside {
+  display: block;
+  width: 100%;
+  clear: both;
+  color: white;
+  font-size: 1.5em;
+}
+#avg aside dl {
+  margin: 0;
+}
+#avg aside dt {
+  font-weight: 700;
+  display: block;
+  float: left;
+  clear: both;
+}
+#avg aside dd {
+  display: inline;
+  margin-left: 0;
+}
+#avg .zero {
+  margin-top: 104px;
+  border-top: 1px dashed white;
+  height: 1px;
+}
+#avg .zero span {
+  display: block;
+  margin-top: -12px;
+  position: absolute;
+}
+#avg .graph {
+  width: 100%;
+  float: left;
+  height: 200px;
+  /* border: 1px solid red; */
+  border:none; /* 1px solid rgba(255, 255, 255, 0.69); */
+  border-right: none;
+  border-top: none;
+  margin: 0;
+}
+#avg .graph:after {
+  content: "";
+  display: block;
+  height: 1px;
+  width: 100%;
+  border-top: 1px dashed rgba(255, 255, 255, 0.69);
+  margin-top: 150px;
+  /* box-shadow: 1px 97px 0px rgba(255, 255, 255, 0.69); */
+  border: none;
+}
+#avg .graph .bar {
+  height: 205px;
+  position: relative;
+  width: 130px;
+  margin-left: 0;
+  float: left;
+  width: 18%;
+}
+#avg .graph .fill {
+  position: absolute;
+  width: 66px;
+  left: 50%;
+  margin-left: -25px;
+  /* border: 1px solid rgba(51, 51, 51, 0.52); */
+  border: 1px solid black;
+  border-right: none;
+  transition: height 5, bottom 5s, top 5s;
+  width: 100px;
+}
+#avg .graph .title {
+  position: absolute;
+  bottom: 90px;
+  font-size: 1em;
+  text-align: center;
+  width: 100%;
+  margin: 0;
+  z-index: 12;
+}
+#avg .graph .fill span {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  transition: bottom 5s;
+  overflow: visible;
+  white-space: nowrap;
+  margin-left: -2px;
+  line-height: 29px;
+}
+#avg .graph .red .fill {
+  background: rgb(247, 5, 5);
+  /* box-shadow: 1px -5px 2px rgba(255, 0, 0, 0.55); */
+  /* width: 89px; */
+  /* width: 93px; */
+}
+#avg .graph .orange .fill {
+  background: rgb(255, 138, 6);
+  /* box-shadow: 1px -5px 2px rgba(255, 116, 0, 0.55); */
+}
+#avg .graph .green .fill {
+  background: rgb(107, 255, 6);
+  /* box-shadow: 1px -5px 2px rgba(74, 255, 0, 0.55); */
+}
+#avg .graph .yellow .fill {
+  background: rgb(250, 255, 51);
+  /* box-shadow: 1px -5px 2px rgba(255, 246, 80, 0.65); */
+}
+#avg .graph .blue .fill {
+  background: rgb(6, 85, 255);
+  /* box-shadow: 1px -5px 2px rgba(75, 131, 232, 0.55); */
+}
+
+/* spider graphs */
+.axis line {
+  stroke: #FF;
+}
+
+.axis path {
+  fill: none;
+  stroke: #FFF;
+}
+
+.axis + .axis g text {
+  display: none;
+}
+
+.radar {
+  height: 200px;
+  width: 200px;
+  float: left;
+  margin: 10px 0 0 0;
+}
+.radar .icon {
+  width: 18px;
+  float: left;
+  height: 18px;
+  margin-right: 11px;
+}
+.radar .icon path {
+  fill: red;
+}
+.radar p {
+  color: white;
+  font-size: 0.9em;
+}
+.radar text {
+  fill: white;
+}
+.radar-chart-serie1 {
+  fill: none !important;
+}

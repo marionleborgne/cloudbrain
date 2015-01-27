@@ -1,0 +1,26 @@
+{
+  "name": "radar-chart-d3",
+  "main": [
+    "src/radar-chart.js",
+    "src/radar-chart.css"
+  ],
+  "description": "Radar chart based on D3",
+  "license": "Apache",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "homepage": "https://github.com/alangrafu/radar-chart-d3",
+  "_release": "57e057eea2",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "57e057eea23022d8081b6635cb1a0b15bf842a53"
+  },
+  "_source": "git@github.com:alangrafu/radar-chart-d3.git",
+  "_target": "*",
+  "_originalSource": "git@github.com:alangrafu/radar-chart-d3.git",
+  "_direct": true
+}
