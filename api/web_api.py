@@ -46,6 +46,14 @@ def about():
 def explo():
     return render_template('cloudbrain.html'), 200
 
+@app.route('/average')
+def average():
+    return render_template('average.html'), 200
+
+@app.route('/radarcharts')
+def radarcharts():
+    return render_template('radar.html'), 200
+
 @app.route('/form')
 def consent_form():
     return render_template('form.html'), 200
