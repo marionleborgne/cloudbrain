@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="/static/css/style.css" type="text/css" media="screen" charset="utf-8">
 </head>
 <body data-ng-app="cogtech.central">
+<main>
+  <header ct-header></header>
   <section class="container" ng-controller="avgController as avg">
     <div id="avg" class="clearfix">
       <h1 class="title">Average Values Across <span data-ng-bind="avg.totalvisitors">&nbsp;</span> Visitors</h1>
@@ -34,5 +36,6 @@
       </aside>
     </div>
   </section>
+</main>
 </body>
 
