@@ -58,6 +58,11 @@ def radarcharts():
 def consent_form():
     return render_template('form.html'), 200
 
+@app.route('/thank-you')
+def thanks():
+    return render_template('thanks.html'), 200
+
+
 @app.route('/api-doc')
 def doc():
     return render_template('api-doc.html'), 200
