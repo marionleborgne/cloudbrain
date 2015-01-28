@@ -8,11 +8,6 @@
 - `spacebrew`: python websocket wrapper to interface with [Spacebrew](https://github.com/Spacebrew/spacebrew)
 - `database` : python wrapper to read and write data to cassandra
 
-## Infrastructure @ The Exploratorium
-Infrastructure v2.0 for the [Exploratorium of San Francisco](http://www.exploratorium.edu/). The exhibit is called [*Cognitive Technology*](http://www.exploratorium.edu/press-office/press-releases/new-exhibition-understanding-influencing-brain-activity-opens) and starts on February 2015.
-
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/explo-infra.png)
-
 ##Getting started with CloudBrain
 - An instance of CloudBrain is currently running at [cloudbrain.rocks](http://cloudbrain.rocks). This is also where you can find CloudBrain's API documentation.
 - The packages that you want to use are `connectors` and `listeners`. Connectors will allow you to send live data to CloudBrain. Listeners will allow you to read live data from CloudBrain.
@@ -42,3 +37,8 @@ Infrastructure v2.0 for the [Exploratorium of San Francisco](http://www.explorat
 `python example_spacebrew_client.py --name=YOUR_NAME_HERE`
 - The last command will register your booth to cloudbrain’s spacebrew
 - Check if you booth is in the column “subscridbers” of the [SpaceBrew interface](http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks).
+
+## Infrastructure @ The Exploratorium
+Infrastructure v2.0 for the [Exploratorium of San Francisco](http://www.exploratorium.edu/). The exhibit is called [*Cognitive Technology*](http://www.exploratorium.edu/press-office/press-releases/new-exhibition-understanding-influencing-brain-activity-opens) and starts on February 2015.
+
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/explo-infra.png)
