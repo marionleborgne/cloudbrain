@@ -1,4 +1,4 @@
-CloudBrain
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/api/static/images/brain-black.png) CloudBrain
 ==========
 
 ##Overview
