@@ -9,7 +9,6 @@ from settings import CASSANDRA_METRICS
 from settings import MUSE_PORTS
 from settings import SPACEBREW_CASSANDRA_NAME
 from settings import SPACEBREW_CASSANDRA_IP
-from spacebrew.spacebrew import SpacebrewApp
 from settings import SPACEBREW_BRAINSERVER_IP
 from router.spacebrew_router import SpacebrewRouter
 
@@ -21,14 +20,6 @@ start = time.time()
 
 # spacebrew router
 sp_router = SpacebrewRouter(server=EXPLO_BRAINSERVER_IP)
-
-
-MUSE_PORTS = [7777]
-SPACEBREW_BRAINSERVER_IP = '54.183.68.29'
-
-
-# configure the spacebrew client
-brew = SpacebrewApp(SPACEBREW_CASSANDRA_NAME, server=EXPLO_BRAINSERVER_IP)
 for path in CASSANDRA_METRICS:
 
     publisher_metric_name = calculate_spacebrew_name(path)
@@ -48,7 +39,6 @@ for path in CASSANDRA_METRICS:
 
 end = time.time()
 
-print 'routing cassandra took %s s' % (end - start)
+print 'routing took %s s' % (end - start)
 
-brew.start()
 

@@ -5,6 +5,7 @@
 
     <!--CSS-->
     <link rel="stylesheet" href="/static/css/form.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
     <!--JS-->
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
@@ -49,6 +50,7 @@
                 </select>
             </td>
         </tr>
+        <br><br>
         <p>Do you agree to allow the Berkeley Cognitive Technology Group to record the data from your EEG headset during
             this exhibit? </p>
 
@@ -74,7 +76,7 @@
                     <option value="n" selected="selected"></option>
                     <option value="m">Male</option>
                     <option value="f">Female</option>
-                    <option value="f">Other</option>
+                    <option value="o">Other</option>
                 </select>
             </td>
         </tr>
@@ -97,14 +99,14 @@
             </td>
         </tr>
 
+        <br>
+        <br>
         <p>If at any point during this exhibit you decide that you would prefer to delete your data, please let one of
             our attendants know.</p>
 
-        <tr>
-            <td><input class="button green" type="button" name="done" id="done" value="DONE"
-                       onClick="refresh(this.name)"/></td>
+        <br>
 
-        </tr>
+        <div markdown="0"><a href="/thank-you" class="btn btn-primary btn-lg ">Done</a></div>
 
 
     </div>

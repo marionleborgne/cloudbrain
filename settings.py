@@ -107,6 +107,7 @@ BOOTHS = {
 
 # cassandra spacebrew subscriber name
 SPACEBREW_CASSANDRA_NAME = 'cassandra'
+SPACEBREW_DATA_VIZ_NAME = 'data-visualization'
 SPACEBREW_CASSANDRA_IP = '104.236.15.197'
 SPACEBREW_BRAINSERVER_IP = '127.0.0.1'
 
@@ -149,3 +150,9 @@ CASSANDRA_METRICS = {
 
 
 
+# Metrics for data viz
+DATA_VIZ_METRICS = { "/muse/elements/delta_absolute": 4,
+    "/muse/elements/theta_absolute": 4,
+    "/muse/elements/alpha_absolute": 4,
+    "/muse/elements/beta_absolute": 4,
+    "/muse/elements/gamma_absolute": 4}

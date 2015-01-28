@@ -28,7 +28,7 @@ def support_jsonp(f):
     def decorated_function(*args, **kwargs):
         callback = request.args.get('callback', False)
         if callback:
-            content = str(callback) + '(' + f() + ')'
+            content = str(callback) + '(' + str(f()) + ')'
             return current_app.response_class(content, mimetype='application/json')
         else:
             return f(*args, **kwargs)
@@ -57,6 +57,11 @@ def radarcharts():
 @app.route('/form')
 def consent_form():
     return render_template('form.html'), 200
+
+@app.route('/thank-you')
+def thanks():
+    return render_template('thanks.html'), 200
+
 
 @app.route('/api-doc')
 def doc():
