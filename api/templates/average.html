@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <head>
   <title>Equalizer</title>
-  <script src="./static/scripts/angular.js"></script>
-  <script src="./static/scripts/sb-1.4.1.js"></script>
-  <script src="./static/scripts/sb-admin-0.1.4.js"></script>
-  <script src="./static/scripts/d3.js"></script>
-  <script src="./static/scripts/radar-chart.js"></script>
-    <script src="./static/scripts/main.js"></script>
-  <link rel="stylesheet" href="./static/css/reset.css" type="text/css" media="screen" charset="utf-8">
-  <link rel="stylesheet" href="./static/css/radar-chart.css" type="text/css" media="screen" charset="utf-8">
-  <link rel="stylesheet" href="./static/css/style.css" type="text/css" media="screen" charset="utf-8">
+  <script src="./scripts/angular.js"></script>
+  <script src="./scripts/sb-1.4.1.js"></script>
+  <script src="./scripts/sb-admin-0.1.4.js"></script>
+  <script src="./scripts/d3.js"></script>
+  <script src="./scripts/radar-chart.js"></script>
+    <script src="./scripts/main.js"></script>
+  <link rel="stylesheet" href="./css/reset.css" type="text/css" media="screen" charset="utf-8">
+  <link rel="stylesheet" href="./css/radar-chart.css" type="text/css" media="screen" charset="utf-8">
+  <link rel="stylesheet" href="./css/style.css" type="text/css" media="screen" charset="utf-8">
 </head>
 <body data-ng-app="cogtech.central">
   <section class="container" ng-controller="avgController as avg">
     <div id="avg" class="clearfix">
-      <h1 class="title">Average Values Across <span ng-bind="avg.totalvisitors">&nbsp;</span> Visitors</h1>
+      <h1 class="title">Average Values Across <span data-ng-bind="avg.totalvisitors">&nbsp;</span> Visitors</h1>
       <div class="graph">
         <div data-ct-bar data-title="Alpha" data-color="red" data-value="avg.c.alpha"></div>
         <div data-ct-bar data-title="Beta" data-color="orange" data-value="avg.c.beta"></div>
@@ -25,11 +25,11 @@
       </div>
       <aside>
         <dl>
-          <dt>Delta (0-4 Hz) </dt><dd> Delta waves are the slowest types of brainwaves. They are associated with unconsciousness, deep sleep or catalepsy.</dd>
-          <dt>Theta (4-7 Hz) </dt><dd> Theta waves are associated with reduced consciousness.</dd>
-          <dt>Alpha (7-13 Hz) </dt><dd> Alpha waves occur when we are in a state of physical and mental relaxation, although aware of what is happening around us.</dd>
-          <dt>Beta (13-30 Hz) </dt><dd> Beta waves are emitted when we are consciously alert, or we feel agitated, tense, afraid.</dd>
-          <dt>Gamma (30-70 Hz) </dt><dd>  Gamma waves are involved in cognitive processing,consolidation of information and sudden insight.</dd>
+          <dt>Delta (0-4 Hz)</dt><dd> Delta waves are the slowest types of brainwaves. They are associated with unconsciousness, deep sleep or catalepsy.</dd>
+          <dt>Theta (4-7 Hz)</dt><dd> a state associated with reduced consciousness.</dd>
+          <dt>Alpha (7-13 Hz)</dt><dd> Alpha waves occur when we are in a state of physical and mental relaxation, although aware of what is happening around us.</dd>
+          <dt>Beta (13-30 Hz)</dt><dd> Beta waves are emitted when we are consciously alert, or we feel agitated, tense, afraid.</dd>
+          <dt>Gamma (30-70 Hz)</dt><dd>  Gamma waves are involved in cognitive processing,consolidation of information and sudden insight.</dd>
         </dl>
       </aside>
     </div>
