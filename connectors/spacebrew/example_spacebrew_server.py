@@ -112,7 +112,7 @@ class SpacebrewServer(object):
 if __name__ == "__main__":
 
     #muse_ports = settings.MUSE_PORTS
-    muse_ports = [5025]
+    muse_ports = [5021]
     for muse_port in muse_ports:
         server = SpacebrewServer(muse_id=muse_port, server=settings.EXPLO_BRAINSERVER_IP)
         server.start()

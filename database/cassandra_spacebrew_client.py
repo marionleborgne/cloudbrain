@@ -10,10 +10,7 @@ from settings import EXPLO_BRAINSERVER_IP
 from settings import CASSANDRA_METRICS
 from settings import MUSE_PORTS
 from settings import SPACEBREW_CASSANDRA_NAME
-from settings import SPACEBREW_CASSANDRA_IP
 from spacebrew.spacebrew import SpacebrewApp
-from settings import SPACEBREW_BRAINSERVER_IP
-from router.spacebrew_router import SpacebrewRouter
 
 from spacebrew_utils import calculate_spacebrew_name
 import time
@@ -23,9 +20,6 @@ class CassandraSpacebrewClient(object):
     def __init__(self, name, server):
 
         start = time.time()
-
-        # spacebrew router
-        self.sp_router = SpacebrewRouter(server=server)
 
         # configure cassandra cluster
         self.cluster = Cluster()
@@ -45,13 +39,6 @@ class CassandraSpacebrewClient(object):
                 # handle value
                 handle_value = self.handle_value_factory(publisher_metric_name, muse_port)
                 self.brew.subscribe(subscriber_metric_name, handle_value)
-
-                # route data
-                publisher_name = 'muse-%s' % muse_port
-                subscriber_name = SPACEBREW_CASSANDRA_NAME
- 
-                self.sp_router.link(publisher_metric_name, subscriber_metric_name, publisher_name, subscriber_name,
-                                    SPACEBREW_BRAINSERVER_IP, SPACEBREW_CASSANDRA_IP)
 
 
         end = time.time()
