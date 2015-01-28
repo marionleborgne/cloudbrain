@@ -291,16 +291,6 @@ angular.module('cogtech.central',[])
     _this.waves = ['alpha_absolute', 'beta_absolute', 'gamma_absolute', 'theta_absolute','delta_absolute'];
     _this.data = [
       {
-      className : _this.muse ? _this.muse.id : "",
-      axes: [
-        {axis: "Alpha", value: 80},
-        {axis: "Beta", value: 70},
-        {axis: "Gamma", value: 50},
-        {axis: "Theta", value: 60},
-        {axis: "Delta", value: 40},
-      ]
-    },
-    {
       className : 'average',
       axes: [
         {axis: "Alpha", value: 19},
@@ -308,6 +298,16 @@ angular.module('cogtech.central',[])
         {axis: "Gamma", value: 19},
         {axis: "Theta", value: 14},
         {axis: "Delta", value: 20},
+      ]
+    },
+    {
+      className : _this.muse ? _this.muse.id : "",
+      axes: [
+        {axis: "Alpha", value: 80},
+        {axis: "Beta", value: 70},
+        {axis: "Gamma", value: 50},
+        {axis: "Theta", value: 60},
+        {axis: "Delta", value: 40},
       ]
     }
     ];
@@ -321,7 +321,7 @@ angular.module('cogtech.central',[])
         }
         _this.avgs[k] = ($avg.avg[k].avg + 1 ) * 10;
       });
-      _this.data[1] = {
+      _this.data[0] = {
         className : 'average',
         axes: [
           {axis: "Alpha", value: _this.avgs.alpha},
@@ -333,7 +333,7 @@ angular.module('cogtech.central',[])
       };
       if(!$spacebrew.data[_this.muse.id] || !$spacebrew.data[_this.muse.id].alpha_absolute){
         // If there's no data for the current muse, leave it blank or in zero
-        _this.data[0].axes = [
+        _this.data[1].axes = [
           {axis: "Alpha", value: 0},
           {axis: "Beta", value: 0},
           {axis: "Gamma", value: 0},
@@ -343,7 +343,7 @@ angular.module('cogtech.central',[])
         return;
       }
       angular.forEach(_this.data[0].axes, function (v, k) {
-        _this.data[0].axes[k].value = ($spacebrew.getValue(_this.muse.id, _this.waves[k]) + 1 ) * 10;
+        _this.data[1].axes[k].value = ($spacebrew.getValue(_this.muse.id, _this.waves[k]) + 1 ) * 10;
       });
       _this.reDraw();
     }, 1000);
