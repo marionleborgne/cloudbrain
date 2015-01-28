@@ -58,10 +58,6 @@ def radarcharts():
 def consent_form():
     return render_template('form.html'), 200
 
-@app.route('/form-2')
-def consent_form_2():
-    return render_template('form-2.html'), 200
-
 @app.route('/api-doc')
 def doc():
     return render_template('api-doc.html'), 200
@@ -70,7 +66,33 @@ def doc():
 def spacebrew():
     return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
-# NOTE - I removed this from my branch because we're using /patch for the routing
+
+
+@app.route('/post', methods = ['POST'])
+def post():
+    # Get the parsed contents of the form data
+    json = request.json
+    print(json)
+
+
+@app.route("/set_gender", methods=['GET'])
+@support_jsonp
+def set_gender():
+    r = request.args.get('gender', None)
+    return r, 200
+
+@app.route("/set_age", methods=['GET'])
+@support_jsonp
+def set_age():
+    r = request.args.get('age', None)
+    return r, 200
+
+@app.route("/approved", methods=['GET'])
+@support_jsonp
+def approved():
+    r = request.args.get('choice', None)
+    return r, 200
+
 @app.route("/link", methods=['GET'])
 @support_jsonp
 def link():
@@ -83,7 +105,7 @@ def link():
     response = sp_router.link(pub_metric, sub_metric, publisher, subscriber, pub_ip, sub_ip)
     return response, 200
 
-# NOTE - I removed this from my branch because we're using /patch for the routing
+
 @app.route("/unlink", methods=['GET'])
 @support_jsonp
 def unlink():
