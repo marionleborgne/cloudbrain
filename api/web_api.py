@@ -75,6 +75,12 @@ def post():
     print(json)
 
 
+@app.route("/set_tag", methods=['GET'])
+@support_jsonp
+def set_tag():
+    r = request.args.get('number', None)
+    return r, 200
+
 @app.route("/set_gender", methods=['GET'])
 @support_jsonp
 def set_gender():

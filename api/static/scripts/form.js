@@ -9,6 +9,15 @@ function touchButton(param) {
 
 }
 
+function setTag(param) {
+    $.ajax({
+            url: '/set_tag?number=' + param,
+            success: function (ret) {
+              //alert('JSON posted: ' + JSON.stringify(ret));
+            }
+          });
+}
+
 function setGender(param) {
     $.ajax({
             url: '/set_gender?gender=' + param,
