@@ -1,5 +1,5 @@
 ![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/api/static/images/cb-logo.png)
-
+<img src="https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/api/static/images/cb-logo.png" width="200">
 ##Overview
 - `connectors`: connectors for [OpenBCI](http://openbci.com), [Muse](http://www.choosemuse.com/), [Neurosky](http://neurosky.com/) and [Spacebrew](https://github.com/Spacebrew/spacebrew) sending data to cloudbrain
 - `listeners`: Cloudbrain Listeners to get the live data data for [OpenBCI](http://openbci.com),[Muse](http://www.choosemuse.com/), [Neurosky](http://neurosky.com/) and [Spacebrew](https://github.com/Spacebrew/spacebrew)
