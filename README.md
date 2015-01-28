@@ -8,7 +8,7 @@
 - `spacebrew`: python websocket wrapper to interface with [Spacebrew](https://github.com/Spacebrew/spacebrew)
 - `database` : python wrapper to read and write data to cassandra
 
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/Infrastructure.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/explo-infrastructure.png)
 
 ##Getting started with CloudBrain
 - An instance of CloudBrain is currently running at [cloudbrain.rocks](http://cloudbrain.rocks). This is also where you can find CloudBrain's API documentation.
