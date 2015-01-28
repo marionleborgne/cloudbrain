@@ -4,10 +4,8 @@ angular.module('cogtech.central',[])
   f.template = ''+
     '<img src="/static/img/brain.png" alt="cloud brain" class="logo">'+
     ' <h1>CloudBrain</h1>'+
-    '<div style="height: 1.3em;" class="legends">'+
-    ' <p style="float: left; margin: 0;"><span class="legend live">&nbsp;</span> Live Muse Data</p>'+
-    '<p style="float: left; margin: 0; margin-left: 20px;"><span class="legend avg">&nbsp;</span> Average Across All Visitors</p>'+
-    '</div>';
+    '<ng-transclude></ng-transclude>';
+  f.transclude = true;
   f.scope = {};
   return f;
 })

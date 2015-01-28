@@ -52,6 +52,11 @@ header h1 {
   float:left;
   line-height: 36px;
 }
+header h2 {
+  font-size: 15px;
+  margin-left: 20px;
+  float: left;
+}
 .clearfix {
   overflow: auto;
   clear: both;
@@ -83,9 +88,10 @@ h1.title {
 }
 .legends {
   height: 1.3em;
-  margin-top:10px;
-  float: right;
+  margin-top:5px;
   margin-right: 10px;
+  font-size: 14px;
+  padding-left: 320px;
 }
 .legends p {
   float: left;
@@ -237,13 +243,14 @@ h1.title {
   background: black;
   float: left;
   margin: 0;
-  height: 165px;
+  height: 160px;
   width: 229px;
-  margin-bottom: 4px;
-  margin-top: 4px;
+  margin-bottom: 3px;
+  margin-top: 3px;
   margin-left: 13px;
   margin-right: 13px;
-  border: 1px solid rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(166, 161, 161, 0.7);
+  border-radius: 10px;
   background: rgba(0, 0, 0, 0.53);
 }
 .radar:nth-child(5n+1) {
@@ -255,7 +262,7 @@ h1.title {
 .radar text {
   fill: white;
 }
-.radar .icon {
+.radar .icon , svg.icon{
   width: 18px;
   float: left;
   height: 18px;
