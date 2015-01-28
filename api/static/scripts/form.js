@@ -35,3 +35,12 @@ function setAge(param) {
             }
           });
 }
+
+function refresh(param) {
+    $.ajax({
+            url: '/form',
+            success: function (ret) {
+              //alert('JSON posted: ' + JSON.stringify(ret));
+            }
+          });
+}

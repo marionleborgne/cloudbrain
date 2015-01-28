@@ -9,7 +9,6 @@ from settings import CASSANDRA_METRICS
 from settings import MUSE_PORTS
 from settings import SPACEBREW_CASSANDRA_NAME
 from settings import SPACEBREW_CASSANDRA_IP
-from spacebrew.spacebrew import SpacebrewApp
 from settings import SPACEBREW_BRAINSERVER_IP
 from router.spacebrew_router import SpacebrewRouter
 
