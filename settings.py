@@ -91,7 +91,7 @@ BOOTHS = {
 
 # cassandra spacebrew subscriber name
 SPACEBREW_CASSANDRA_NAME = 'cassandra'
-SPACEBREW_CASSANDRA_IP = '50.185.173.15'
+SPACEBREW_CASSANDRA_IP = '104.236.15.197'
 SPACEBREW_BRAINSERVER_IP = '127.0.0.1'
 
 # IP address of cassandra cluster
