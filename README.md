@@ -1,4 +1,4 @@
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/api/static/images/brain-black.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/api/static/images/cb-logo.png)
 
 ##Overview
 - `connectors`: connectors for [OpenBCI](http://openbci.com), [Muse](http://www.choosemuse.com/), [Neurosky](http://neurosky.com/) and [Spacebrew](https://github.com/Spacebrew/spacebrew) sending data to cloudbrain
