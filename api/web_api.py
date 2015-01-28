@@ -14,7 +14,7 @@ from router.spacebrew_router import SpacebrewRouter
 
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
-sp_router = SpacebrewRouter(server=settings.CLOUDBRAIN_IP)
+sp_router = SpacebrewRouter(server=settings.EXPLO_BRAINSERVER_IP)
 sp_config_cache = {
     "subscriptions": {
     },

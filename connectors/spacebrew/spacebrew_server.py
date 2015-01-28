@@ -120,7 +120,7 @@ parser.add_argument(
 parser.add_argument(
     '--host',
     help='Hostname of Spacebrew server',
-    default=settings.CLOUDBRAIN_IP)
+    default=settings.EXPLO_BRAINSERVER_IP)
 
 if __name__ == "__main__":
     args = parser.parse_args()
