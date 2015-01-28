@@ -65,8 +65,7 @@ MUSE_PORTS = [
     5017,
     5018,
     5019,
-    5020,
-    5055]
+    7777]
 
 # CoreID => Booth Name
 CORES = {
