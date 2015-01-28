@@ -25,9 +25,10 @@ body {
   max-width: 1270px;
   margin: 0 auto;
   overflow: hidden;
+  background-size: cover;
 }
 main {
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
   max-width: 1270px;
   overflow: hidden;
