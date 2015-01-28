@@ -1,12 +1,12 @@
 body {
 padding:20px;
 font-family: Arial, Helvetica, sans-serif;
-font-size:28px;
+font-size:20px;
 }
-table {margin-left:30px;}
+table {margin-left:20px;}
 .button {
     width:140px;
-    font-size:28px;
+    font-size:20px;
     padding: 8px 12px;
     border:none;
     border-radius:6px;
@@ -21,7 +21,7 @@ table {margin-left:30px;}
     color:white;
 }
 select, option {
-    font-size:30px;
+    font-size:20px;
     padding:8px 10px;
     background-color:#eee;
     border-color:black;
@@ -32,7 +32,7 @@ option {
     padding:6px;
 }
 .box {
-    font-size:28px;
+    font-size:20px;
     text-align:left;
     margin:6px;
     width:1000px
