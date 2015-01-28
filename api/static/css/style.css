@@ -1,5 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,700,500);
 
+
 /*http://www.paulirish.com/2012/box-sizing-border-box-ftw/*/
 html {
   box-sizing: border-box;
@@ -207,15 +208,6 @@ h1.title {
   width: 200px;
   float: left;
   margin: 10px 0 0 0;
-}
-.radar .icon {
-  width: 18px;
-  float: left;
-  height: 18px;
-  margin-right: 11px;
-}
-.radar .icon path {
-  fill: red;
 }
 .radar p {
   color: white;
