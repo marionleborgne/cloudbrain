@@ -23,6 +23,10 @@ start = time.time()
 sp_router = SpacebrewRouter(server=EXPLO_BRAINSERVER_IP)
 
 
+MUSE_PORTS = [7777]
+SPACEBREW_BRAINSERVER_IP = '54.183.68.29'
+
+
 # configure the spacebrew client
 brew = SpacebrewApp(SPACEBREW_CASSANDRA_NAME, server=EXPLO_BRAINSERVER_IP)
 for path in CASSANDRA_METRICS:

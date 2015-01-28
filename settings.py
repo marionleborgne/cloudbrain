@@ -1,5 +1,9 @@
 __author__ = 'marion'
 
+#log directory
+LOG_DIR = '/var/log/supervisor'
+
+# IP of brainserver
 EXPLO_BRAINSERVER_IP = '208.66.31.59'
 
 # TagID => MuseID
