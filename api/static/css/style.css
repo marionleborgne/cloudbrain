@@ -22,6 +22,7 @@ body {
   margin: 0 auto;
   overflow: hidden;
   background-size: cover;
+  background: black;
 }
 main {
   margin: 0 auto;

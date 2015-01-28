@@ -496,6 +496,9 @@ angular.module('cogtech.central',[])
   };
 
   _this.addRoute = function addRoute (client) {
+    if(!client || !client.name){
+      return;
+    }
     if(!_this.client || !_this.client.name) {
       $log.info('postponing creation of routes');
       return;
