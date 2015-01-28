@@ -8,7 +8,10 @@
 - `spacebrew`: python websocket wrapper to interface with [Spacebrew](https://github.com/Spacebrew/spacebrew)
 - `database` : python wrapper to read and write data to cassandra
 
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/explo-infrastructure.png)
+## Infrastructure @ The Exploratorium
+Infrastructure v2.0 for the [Exploratorium of San Francisco](http://www.exploratorium.edu/). The exhibit is called [*Cognitive Technology*](http://www.exploratorium.edu/press-office/press-releases/new-exhibition-understanding-influencing-brain-activity-opens) and starts on February 2015.
+
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/explo-infra.png)
 
 ##Getting started with CloudBrain
 - An instance of CloudBrain is currently running at [cloudbrain.rocks](http://cloudbrain.rocks). This is also where you can find CloudBrain's API documentation.
