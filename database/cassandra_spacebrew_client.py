@@ -49,10 +49,7 @@ class CassandraSpacebrewClient(object):
                 # route data
                 publisher_name = 'muse-%s' % muse_port
                 subscriber_name = SPACEBREW_CASSANDRA_NAME
-                self.sp_router.unlink(publisher_metric_name, subscriber_metric_name, publisher_name, subscriber_name,
-                                    SPACEBREW_BRAINSERVER_IP, SPACEBREW_CASSANDRA_IP)
-
-                time.sleep(1)
+ 
                 self.sp_router.link(publisher_metric_name, subscriber_metric_name, publisher_name, subscriber_name,
                                     SPACEBREW_BRAINSERVER_IP, SPACEBREW_CASSANDRA_IP)
 
