@@ -14,7 +14,7 @@
 <body data-ng-app="cogtech.central">
   <section class="container" ng-controller="avgController as avg">
     <div id="avg" class="clearfix">
-      <h1 class="title">Average Values Across <span ng-bind="avg.totalvisitors">&nbsp;</span> Visitors</h1>
+      <h1 class="title">Average Values Across {{avg.totalvisitors}} Visitors</h1>
       <div class="graph">
         <div data-ct-bar data-title="Alpha" data-color="red" data-value="avg.c.alpha"></div>
         <div data-ct-bar data-title="Beta" data-color="orange" data-value="avg.c.beta"></div>
