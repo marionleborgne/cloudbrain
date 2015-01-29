@@ -258,7 +258,7 @@ def aggregates():
 @support_jsonp
 def nb_visitors():
 
-    visitors = random() * 100000
+    visitors = 35
 
     mock_data = {
         "visitors": visitors
