@@ -508,9 +508,9 @@ angular.module('cogtech.central',[])
           "&subscriber="+_this.client.name+"&sub_ip="+_this.client.remoteAddress+"0&pub_ip="+client.remoteAddress;
         // TODO, could replace client.remoteAddress with ip of server
         $log.info(url);
-        $http.jsonp(url + "&callback=JSON_CALLBACK").then(function (response) {
-          $log.info(response.data);
-        });
+        //  $http.jsonp(url + "&callback=JSON_CALLBACK").then(function (response) {
+        //   $log.info(response.data);
+        //  });
       });
     });
   };
