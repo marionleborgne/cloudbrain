@@ -258,10 +258,8 @@ def aggregates():
 @support_jsonp
 def nb_visitors():
 
-    visitors = 35
-
     mock_data = {
-        "visitors": visitors
+        "visitors": 12
     }
 
     return json.dumps(mock_data)
