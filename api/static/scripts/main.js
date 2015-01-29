@@ -1,4 +1,9 @@
-angular.module('cogtech.central',[])
+angular.module('cogtech.central',[], function($locationProvider) {
+  $locationProvider.html5Mode({
+    enable: true,
+    requireBase: false
+  });
+})
 .directive('ctHeader', function () {
   var f = {};
   f.template = ''+
@@ -414,9 +419,12 @@ angular.module('cogtech.central',[])
     {id: 5020, color: 'white', number: 20},
   ];
 })
-.service('$spacebrew', function ($timeout, $log, $http, muses) {
+.service('$spacebrew', function ($timeout, $log, $http, muses, $location) {
   var sb, _this;
   _this = this;
+  // http://localhost:3030/main.html#/?booth=monolith
+  // Gotta use something like this or the retarded thing might not work
+  // $location.search().booth  "monolith"
 
   _this.museClients = [];
   _this.client = {};
@@ -440,7 +448,7 @@ angular.module('cogtech.central',[])
   };
   angular.forEach(muses, function (client) {
     angular.forEach(_this.waves, function (wave) {
-      _this.channels.push(wave + '-' +client.id);
+      _this.channels.push(wave + '-muse-' +client.id);
       _this.data[client.id] = {
         alpha_absolute: [0,0,1,0],
         beta_absolute:  [0,0,1,0],
@@ -461,7 +469,7 @@ angular.module('cogtech.central',[])
     sb.onStringMessage = function (name, value) {
       $log.info("message received", name, value);
       // TODO fix the shitty regex
-      _this.data[name.replace(/.*_absolute-/,'')][name.replace(/-.*/,'')] = value.split(",");
+      _this.data[name.replace(/.*_absolute-muse/,'')][name.replace(/-muse-.*/,'')] = value.split(",");
     };
     sb.onOpen = function () {
       $log.info('connected to Spacebrew');
@@ -504,7 +512,7 @@ angular.module('cogtech.central',[])
     angular.forEach(muses, function (muse) {
       angular.forEach(_this.waves, function(wave) {
         var url = "http://"+_this.options.cloudbrain+"/link?pub_metric="+wave+"&"+
-        "sub_metric="+wave+"-"+muse.id+"&publisher="+client.name+
+        "sub_metric="+wave+"-muse-"+muse.id+"&publisher="+client.name+
           "&subscriber="+_this.client.name+"&sub_ip="+_this.client.remoteAddress+"0&pub_ip="+client.remoteAddress;
         // TODO, could replace client.remoteAddress with ip of server
         $log.info(url);
