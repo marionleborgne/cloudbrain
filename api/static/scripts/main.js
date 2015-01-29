@@ -419,18 +419,21 @@ angular.module('cogtech.central',[], function($locationProvider) {
     {id: 5020, color: 'white', number: 20},
   ];
 })
-.service('$spacebrew', function ($timeout, $log, $http, muses, $location) {
-  var sb, _this;
+.service('$spacebrew', function ($timeout, $log, $http, muses, $location, $window) {
+  var sb, _this, subscriber;
   _this = this;
   // http://localhost:3030/main.html#/?booth=monolith
   // Gotta use something like this or the retarded thing might not work
   // $location.search().booth  "monolith"
-
+  subscriber = 'data-visualization';
+  if($window.location.href.match('main.html')){
+    subscriber = 'master-viz';
+  }
   _this.museClients = [];
   _this.client = {};
   _this.data = {};
   _this.options = {
-    name: 'data-visualization',
+    name: subscriber,
     server : '107.170.205.177',//'208.66.31.59',
     description : 'Main dashboard in room',
     cloudbrain: '54.183.68.29'
@@ -469,7 +472,7 @@ angular.module('cogtech.central',[], function($locationProvider) {
     sb.onStringMessage = function (name, value) {
       $log.info("message received", name, value);
       // TODO fix the shitty regex
-      _this.data[name.replace(/.*_absolute-muse/,'')][name.replace(/-muse-.*/,'')] = value.split(",");
+      _this.data[name.replace(/.*_absolute-muse-/,'')][name.replace(/-muse-.*/,'')] = value.split(",");
     };
     sb.onOpen = function () {
       $log.info('connected to Spacebrew');
