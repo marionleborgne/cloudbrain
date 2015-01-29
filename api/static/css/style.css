@@ -27,7 +27,7 @@ body {
 main {
   margin: 0 auto;
   padding: 0;
-  max-width: 1280px;
+  max-width: 100%;
   overflow: hidden;
   max-height: 100%;
   height: 720px;
@@ -84,7 +84,7 @@ h1.title {
 #avg aside {
   float: left;
   width: 400px;
-  margin-left: 20px;
+  /* margin-left: 20px; */
 }
 .legends {
   height: 1.3em;
