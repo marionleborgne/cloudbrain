@@ -425,7 +425,7 @@ angular.module('cogtech.central',[])
     name: 'data-visualization',
     server : 'cloudbrain.rocks',
     description : 'Main dashboard in room',
-    cloudbrain: 'cloudbrain.rocks'
+    cloudbrain: '208.66.31.59'
   };
   _this.waves = [
     'alpha_absolute',
