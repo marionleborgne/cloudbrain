@@ -1,35 +1,22 @@
 <!DOCTYPE html>
 <head>
-  <title>CloudBrain</title>
-  <style>
-  .logo{
-    /* width:100px;*/
-  }
-  </style>
-  <!---webkit-filter:invert(100%);-->
+  <title>Equalizer</title>
   <script src="/static/scripts/angular.js"></script>
   <script src="/static/scripts/sb-1.4.1.js"></script>
   <script src="/static/scripts/sb-admin-0.1.4.js"></script>
   <script src="/static/scripts/d3.js"></script>
   <script src="/static/scripts/radar-chart.js"></script>
-  <script src="/static/scripts/main.js"></script>
+    <script src="/static/scripts/main.js"></script>
   <link rel="stylesheet" href="/static/css/reset.css" type="text/css" media="screen" charset="utf-8">
   <link rel="stylesheet" href="/static/css/radar-chart.css" type="text/css" media="screen" charset="utf-8">
   <link rel="stylesheet" href="/static/css/style.css" type="text/css" media="screen" charset="utf-8">
 </head>
 <body data-ng-app="cogtech.central">
-  <header ct-header>
-    <h2>Look at your visitor number, find it on the screen, and see how your brainwaves compare with others.</h2>
-  </header>
-  <section class="headsets">
-    <h1>What are these headsets doing?</h1>
-    <p>
-      The Muse headset measures brain signals: much like a heart rate monitor measures your heartbeat. The neurons in our brain communicate via electronic pulses sent from one neuron to the other. When a large number of neurons fire at the same rate, they create an electronic waves that we can measure from outside the head.
-    </p>
-  </section>
+<main>
+  <header ct-header></header>
   <section class="container" ng-controller="avgController as avg">
     <div id="avg" class="clearfix">
-      <h1 class="title">Here you can see the average brain-wave values across all <span ng-bind="avg.totalvisitors">&nbsp;</span> visitors that have been to this exhibit so far.</h1>
+      <h1 class="title">Average Values Across <span data-ng-bind="avg.totalvisitors">&nbsp;</span> Visitors</h1>
       <div class="graph">
         <div data-ct-bar data-title="Alpha" data-color="red" data-value="avg.c.alpha"></div>
         <div data-ct-bar data-title="Beta" data-color="orange" data-value="avg.c.beta"></div>
@@ -38,18 +25,17 @@
         <div data-ct-bar data-title="Delta" data-color="blue" data-value="avg.c.delta"></div>
         <div class="zero"><span>&nbsp;</span></div>
       </div>
+      <aside>
+        <dl>
+          <dt>Delta (0-4 Hz)</dt><dd> Delta waves are the slowest types of brainwaves. They are associated with unconsciousness, deep sleep or catalepsy.</dd>
+          <dt>Theta (4-7 Hz)</dt><dd> a state associated with reduced consciousness.</dd>
+          <dt>Alpha (7-13 Hz)</dt><dd> Alpha waves occur when we are in a state of physical and mental relaxation, although aware of what is happening around us.</dd>
+          <dt>Beta (13-30 Hz)</dt><dd> Beta waves are emitted when we are consciously alert, or we feel agitated, tense, afraid.</dd>
+          <dt>Gamma (30-70 Hz)</dt><dd>  Gamma waves are involved in cognitive processing,consolidation of information and sudden insight.</dd>
+        </dl>
+      </aside>
     </div>
-     </section>
-    <section class="waves">
-    <h1>What kinds of waves are we measuring?</h1>
-    <ul>
-      <li><b>Delta Waves</b> are the slowest waves <b>(0-4 Hz)</b> and are present mostly during sleep.</li>
-      <li><b>Theta Waves (4-7 Hz)</b> are occur during sleep or very deep relaxation.</li>
-      <li><b>Alpha Waves (7-13 Hz)</b> are given off when one is calm and relaxed.</li>
-      <li><b>Beta (13-30 Hz)</b> are emitted when we are consciously alert, or when we feel tense, agitated, or afraid.</li>
-      <li><b>Gamma</b> are the fastest-moving waves <b>(30-70 Hz)</b> and are associated with cognitive processing and sudden insight.</li>
-    </ul>
   </section>
-    <!--<h3>On the next screen, you will see the brain-wave data for each visitor in the exhibit currently. Check the number on your Muse headset to see which graph is yours! Are you close to the average? How close are your brain waves to your friend's?</h3>-->
+</main>
 </body>
 
