@@ -41,8 +41,9 @@ header {
 }
 header .logo {
   height: 30px;
-  margin: 3px 2px 2px;
+  margin: 3px 20px 2px;
   float:left;
+
 }
 header h1 {
   display: inline;
