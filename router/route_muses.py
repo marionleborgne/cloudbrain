@@ -16,11 +16,13 @@ start = time.time()
 
 # todo: remove these lines line
 subscriber_name = SPACEBREW_DATA_VIZ_NAME
-publisher_ip = '127.0.0.1'
+#publisher_ip = '127.0.0.1'
+publisher_ip = '107.170.205.177'
 #subscriber_ip = '50.185.173.15'
 #subscriber_ip = '108.74.162.96'
-subscriber_ip = '10.0.0.1'
-spacebrew_server_ip = '208.66.31.59'
+subscriber_ip = '10.0.0.245'
+#subscriber_ip = '208.66.31.59'
+spacebrew_server_ip = '107.170.205.177'
 
 # spacebrew router
 sp_router = SpacebrewRouter(server=spacebrew_server_ip)
@@ -29,7 +31,7 @@ for path in DATA_VIZ_METRICS:
     publisher_metric_name = calculate_spacebrew_name(path)
     for muse_port in MUSE_PORTS:
 
-        subscriber_metric_name = '%s-%s' % (publisher_metric_name, muse_port)
+        subscriber_metric_name = '%s-muse-%s' % (publisher_metric_name, muse_port)
 
         # route data FROM the muses
         publisher_name = 'muse-%s' % muse_port

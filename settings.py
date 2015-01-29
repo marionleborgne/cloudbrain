@@ -4,7 +4,7 @@ __author__ = 'marion'
 LOG_DIR = '/var/log/supervisor'
 
 # IP of brainserver
-EXPLO_BRAINSERVER_IP = '208.66.31.59'
+EXPLO_BRAINSERVER_IP = '107.170.205.177'
 
 # TagID => MuseID
 TAGS = {
