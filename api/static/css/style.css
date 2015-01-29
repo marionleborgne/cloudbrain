@@ -353,6 +353,7 @@ body.main .container .radar:nth-child(5n+1) {
 }
 body.main .othertext {
   font-size: 20px;
+  background: rgba(0, 0, 0, 0.71);
 }
 body.main .othertext p{
   margin: 1px 1em;
