@@ -6,13 +6,11 @@ from cassandra.cluster import Cluster
 import sys
 from os.path import dirname, abspath
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
-from settings import CLOUDBRAIN_IP
+from settings import EXPLO_BRAINSERVER_IP
 from settings import CASSANDRA_METRICS
 from settings import MUSE_PORTS
-from settings import CASSANDRA_SPACEBREW_NAME
-from settings import CASSANDRA_SPACEBREW_IP
+from settings import SPACEBREW_CASSANDRA_NAME
 from spacebrew.spacebrew import SpacebrewApp
-from router.spacebrew_router import SpacebrewRouter
 
 from spacebrew_utils import calculate_spacebrew_name
 import time
@@ -22,9 +20,6 @@ class CassandraSpacebrewClient(object):
     def __init__(self, name, server):
 
         start = time.time()
-
-        # spacebrew router
-        self.sp_router = SpacebrewRouter(server=server)
 
         # configure cassandra cluster
         self.cluster = Cluster()
@@ -44,12 +39,6 @@ class CassandraSpacebrewClient(object):
                 # handle value
                 handle_value = self.handle_value_factory(publisher_metric_name, muse_port)
                 self.brew.subscribe(subscriber_metric_name, handle_value)
-
-                # route data
-                publisher_name = 'muse-%s' % muse_port
-                subscriber_name = CASSANDRA_SPACEBREW_NAME
-                self.sp_router.link(publisher_metric_name, subscriber_metric_name, publisher_name, subscriber_name,
-                                    CLOUDBRAIN_IP, CASSANDRA_SPACEBREW_IP)
 
 
         end = time.time()
@@ -86,5 +75,5 @@ class CassandraSpacebrewClient(object):
 
 
 if __name__ == "__main__":
-    sb_client = CassandraSpacebrewClient(CASSANDRA_SPACEBREW_NAME, CLOUDBRAIN_IP)
+    sb_client = CassandraSpacebrewClient(SPACEBREW_CASSANDRA_NAME, EXPLO_BRAINSERVER_IP)
     sb_client.start()

@@ -1,8 +1,10 @@
 __author__ = 'marion'
 
+#log directory
+LOG_DIR = '/var/log/supervisor'
 
-# http://cloudbrain.rocks
-CLOUDBRAIN_IP = '127.0.0.1'
+# IP of brainserver
+EXPLO_BRAINSERVER_IP = '208.66.31.59'
 
 # TagID => MuseID
 TAGS = {
@@ -48,6 +50,13 @@ TAGS = {
 # Muse Port numbers
 
 MUSE_PORTS = [
+    5001,
+    5002,
+    5003,
+    5004,
+    5005,
+    5006,
+    5007,
     5008,
     5009,
     5010,
@@ -55,7 +64,12 @@ MUSE_PORTS = [
     5012,
     5013,
     5014,
-    5015]
+    5015,
+    5016,
+    5017,
+    5018,
+    5019,
+    7777]
 
 # CoreID => Booth Name
 CORES = {
@@ -92,8 +106,10 @@ BOOTHS = {
 }
 
 # cassandra spacebrew subscriber name
-CASSANDRA_SPACEBREW_NAME = 'cassandra'
-CASSANDRA_SPACEBREW_IP = '104.236.15.197'
+SPACEBREW_CASSANDRA_NAME = 'cassandra'
+SPACEBREW_DATA_VIZ_NAME = 'data-visualization'
+SPACEBREW_CASSANDRA_IP = '104.236.15.197'
+SPACEBREW_BRAINSERVER_IP = '127.0.0.1'
 
 # IP address of cassandra cluster
 CASSANDRA_IP = '127.0.0.1'
@@ -134,3 +150,9 @@ CASSANDRA_METRICS = {
 
 
 
+# Metrics for data viz
+DATA_VIZ_METRICS = { "/muse/elements/delta_absolute": 4,
+    "/muse/elements/theta_absolute": 4,
+    "/muse/elements/alpha_absolute": 4,
+    "/muse/elements/beta_absolute": 4,
+    "/muse/elements/gamma_absolute": 4}

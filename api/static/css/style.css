@@ -1,5 +1,4 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,700,500);
-
 /*http://www.paulirish.com/2012/box-sizing-border-box-ftw/*/
 html {
   box-sizing: border-box;
@@ -7,29 +6,64 @@ html {
 *, *:before, *:after {
   box-sizing: inherit;
 }
-
-
 body {
-  background: rgba(0,0,0,1);
-  height: 750;
-  width:  1280;
+  background-color: rgba(0,0,0,1);
+  background-image: url('../img/bg.png');
+  height: 750px;
+  width:  1280px;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
   font-size: 15px;
   font-family: Roboto, arial, sans-serif;
   color: white;
-  max-height: 710px;
+  max-height: 720px;
   overflow: hidden;
-  max-width: 1024px;
+  max-width: 100%;
   margin: 0 auto;
+  overflow: hidden;
+  background-size: cover;
+  background: black;
 }
-
+main {
+  margin: 0 auto;
+  padding: 0;
+  max-width: 1280px;
+  overflow: hidden;
+  max-height: 100%;
+  height: 720px;
+}
+header {
+  display: block;
+  background: black;
+  height: 35px;
+  overflow: hidden;
+  width: 100%;
+}
+header .logo {
+  height: 30px;
+  margin: 3px 2px 2px;
+  float:left;
+}
+header h1 {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  margin-left: 5px;
+  float:left;
+  line-height: 36px;
+}
+header h2 {
+  font-size: 15px;
+  margin-left: 20px;
+  float: left;
+}
 .clearfix {
   overflow: auto;
+  clear: both;
 }
 .container {
-  max-width: 1024px;
-  width: 1280px; /*100%;*/
+  max-width: 100%;
+  width: 100%;
   margin: 0 auto;
 }
 h1.title {
@@ -54,7 +88,10 @@ h1.title {
 }
 .legends {
   height: 1.3em;
-  margin-top:10px;
+  margin-top:5px;
+  margin-right: 10px;
+  font-size: 14px;
+  padding-left: 320px;
 }
 .legends p {
   float: left;
@@ -72,10 +109,10 @@ h1.title {
   margin-right: 1em;
 }
 .legends .legend.live {
-  background: rgb(31, 119, 180);
+  background: rgb(174, 199, 232);
 }
 .legends .legend.avg {
-  background: rgb(174, 199, 232);
+  background: rgb(31, 119, 180);
 }
 #avg aside {
   display: block;
@@ -203,18 +240,46 @@ h1.title {
 }
 
 .radar {
-  height: 200px;
-  width: 200px;
+  background: black;
   float: left;
-  margin: 10px 0 0 0;
+  margin: 0;
+  height: 160px;
+  width: 229px;
+  margin-bottom: 3px;
+  margin-top: 3px;
+  margin-left: 13px;
+  margin-right: 13px;
+  border: 1px solid rgba(166, 161, 161, 0.7);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.53);
 }
-.radar p {
-  color: white;
-  font-size: 0.9em;
+.radar:nth-child(5n+1) {
+
+}
+.radar > svg {
+  margin-left: 15%;
 }
 .radar text {
   fill: white;
 }
-.radar-chart-serie1 {
+.radar .icon , svg.icon{
+  width: 18px;
+  float: left;
+  height: 18px;
+  margin-right: 11px;
+}
+.radar .icon path {
+  fill: red;
+}
+.radar p {
+  color: white;
+  font-size: 0.9em;
+  margin-bottom: 4px;
+  margin-top: 0;
+}
+.radar text {
+  fill: white;
+}
+.radar-chart-serie0 {
   fill: none !important;
 }

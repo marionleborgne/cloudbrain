@@ -14,13 +14,11 @@ from router.spacebrew_router import SpacebrewRouter
 
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
-sp_router = SpacebrewRouter(server=settings.CLOUDBRAIN_IP)
+sp_router = SpacebrewRouter(server=settings.EXPLO_BRAINSERVER_IP)
 sp_config_cache = {
     "subscriptions": {
-
     },
     "routes": {
-
     }
 }
 
@@ -30,7 +28,7 @@ def support_jsonp(f):
     def decorated_function(*args, **kwargs):
         callback = request.args.get('callback', False)
         if callback:
-            content = str(callback) + '(' + f() + ')'
+            content = str(callback) + '(' + str(f()) + ')'
             return current_app.response_class(content, mimetype='application/json')
         else:
             return f(*args, **kwargs)
@@ -48,6 +46,22 @@ def about():
 def explo():
     return render_template('cloudbrain.html'), 200
 
+@app.route('/average')
+def average():
+    return render_template('average.html'), 200
+
+@app.route('/radarcharts')
+def radarcharts():
+    return render_template('radar.html'), 200
+
+@app.route('/form')
+def consent_form():
+    return render_template('form.html'), 200
+
+@app.route('/thank-you')
+def thanks():
+    return render_template('thanks.html'), 200
+
 
 @app.route('/api-doc')
 def doc():
@@ -57,8 +71,41 @@ def doc():
 def spacebrew():
     return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
-# NOTE - I removed this from my branch because we're using /patch for the routing
+
+
+@app.route('/post', methods = ['POST'])
+def post():
+    # Get the parsed contents of the form data
+    json = request.json
+    print(json)
+
+
+@app.route("/set_tag", methods=['GET'])
+@support_jsonp
+def set_tag():
+    r = request.args.get('number', None)
+    return r, 200
+
+@app.route("/set_gender", methods=['GET'])
+@support_jsonp
+def set_gender():
+    r = request.args.get('gender', None)
+    return r, 200
+
+@app.route("/set_age", methods=['GET'])
+@support_jsonp
+def set_age():
+    r = request.args.get('age', None)
+    return r, 200
+
+@app.route("/approved", methods=['GET'])
+@support_jsonp
+def approved():
+    r = request.args.get('choice', None)
+    return r, 200
+
 @app.route("/link", methods=['GET'])
+@support_jsonp
 def link():
     publisher = request.args.get('publisher', None)
     subscriber = request.args.get('subscriber', None)
@@ -69,8 +116,9 @@ def link():
     response = sp_router.link(pub_metric, sub_metric, publisher, subscriber, pub_ip, sub_ip)
     return response, 200
 
-# NOTE - I removed this from my branch because we're using /patch for the routing
+
 @app.route("/unlink", methods=['GET'])
+@support_jsonp
 def unlink():
     publisher = request.args.get('publisher', None)
     subscriber = request.args.get('subscriber', None)
@@ -82,6 +130,7 @@ def unlink():
     return response, 200
 
 @app.route("/patch", methods=['POST'])
+@support_jsonp
 def patch():
     # Lookup Muse Headset by RFID Tag ID
     rfid = request.form["rfid"]

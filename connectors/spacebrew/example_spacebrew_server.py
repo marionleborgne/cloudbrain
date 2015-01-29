@@ -111,6 +111,8 @@ class SpacebrewServer(object):
 
 if __name__ == "__main__":
 
-    for muse_port in settings.MUSE_PORTS:
-        server = SpacebrewServer(muse_id=muse_port, server=settings.CLOUDBRAIN_IP)
+    #muse_ports = settings.MUSE_PORTS
+    muse_ports = [7777]
+    for muse_port in muse_ports:
+        server = SpacebrewServer(muse_id=muse_port, server=settings.EXPLO_BRAINSERVER_IP)
         server.start()
