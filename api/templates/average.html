@@ -14,9 +14,10 @@
 <body data-ng-app="cogtech.central">
 <main>
   <header ct-header>
-    <h2>Some EEG headsets in the room are sending data to CloudBrain. The data is averaged across all visitors.</h2>
   </header>
-  <div class="main-title"><p>Can you understand why some brainwaves are more prominent than others in this exhibit?</p></div>
+  <div class="main-title">
+      <p>Some EEG headsets in the room are sending data to CloudBrain. The data is averaged across all visitors.</p>
+      <p>Can you understand why some brainwaves are more prominent than others in this exhibit?</p></div>
   <section class="container" ng-controller="avgController as avg">
     <div id="avg" class="clearfix">
       <h1 class="title">Average Values Across <span data-ng-bind="avg.totalvisitors">&nbsp;</span> Visitors</h1>
