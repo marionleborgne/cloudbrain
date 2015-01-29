@@ -423,9 +423,9 @@ angular.module('cogtech.central',[])
   _this.data = {};
   _this.options = {
     name: 'data-visualization',
-    server : 'cloudbrain.rocks',
+    server : '208.66.31.59',
     description : 'Main dashboard in room',
-    cloudbrain: '208.66.31.59'
+    cloudbrain: '54.183.68.29'
   };
   _this.waves = [
     'alpha_absolute',
