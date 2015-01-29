@@ -52,7 +52,7 @@ class CassandraSpacebrewClient(object):
             values = csv_string.split(',')
 
             # numerical values
-            num_arguments = len(values)
+            num_arguments = len(values[:-2])
             numerical_columns = ''.join([", value_%s" % i for i in range(num_arguments)])
 
             # column values
