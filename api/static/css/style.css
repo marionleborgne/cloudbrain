@@ -311,8 +311,14 @@ body.main .container {
   overflow: hidden;
   margin-bottom: 20px;
 }
-body.main .container .legends {
-  font-size: 20px;
+body.main .legends {
+  font-size: 25px;
+  background: rgba(0, 0, 0, 0.36);
+  margin: 0;
+  padding-top: 6px;
+}
+body.main .legends p{
+  line-height: 25px;
 }
 body.main .container .radar {
   margin: 0;
