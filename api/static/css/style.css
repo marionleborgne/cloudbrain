@@ -99,7 +99,7 @@ h1.title {
   margin: 0;
   line-height: 12px;
 }
-.legends p:last-child {
+.legends > p:last-child {
   margin-left: 20px;
 }
 .legends .legend {
@@ -315,6 +315,7 @@ body.main .legends {
   font-size: 25px;
   background: rgba(0, 0, 0, 0.36);
   margin: 0;
+  padding: 0 1em;
   padding-top: 6px;
 }
 body.main .legends p{
@@ -350,4 +351,9 @@ body.main .radar-chart .axis .legend.right {
 body.main .container .radar:nth-child(5n+1) {
   /* margin-left: 0; */
 }
-
+body.main .othertext {
+  font-size: 20px;
+}
+body.main .othertext p{
+  margin: 1px 1em;
+}
