@@ -423,7 +423,7 @@ angular.module('cogtech.central',[])
   _this.data = {};
   _this.options = {
     name: 'data-visualization',
-    server : '208.66.31.59',
+    server : '107.170.205.177',//'208.66.31.59',
     description : 'Main dashboard in room',
     cloudbrain: '54.183.68.29'
   };
