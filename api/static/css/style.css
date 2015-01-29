@@ -114,6 +114,9 @@ h1.title {
 .legends .legend.avg {
   background: rgb(31, 119, 180);
 }
+.main-title  {
+    padding-left: 20px;
+}
 #avg aside, .main-title {
   display: block;
   width: 100%;
