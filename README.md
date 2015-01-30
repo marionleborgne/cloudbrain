@@ -11,7 +11,7 @@ CloudBrain enables you to:
 
 ## CloudBrain @ [The Exploratorium](http://www.exploratorium.edu) of San Francisco
 CloudBrain is the distributed system powering the exhibit called [*Cognitive Technology*](http://www.exploratorium.edu/press-office/press-releases/new-exhibition-understanding-influencing-brain-activity-opens). All the EEG headsets in the exhibit are sending data to CloudBrain. This data is being routed to booths where visitors can control different things with their brain. For visitors who are willing to share their data, CloudBrain computes aggregates and displays a baseline of the average brain. On the screen, visitors can see everyone else's live EEG data. Each radar chart shows the state of the main brainwaves (alpha, beta, theta, gamma, delta). This is particularly interesting to see how one's brain compares to others, or to understand how it reacts to different stimuli.
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/CloudBrain.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/master-viz.png)
 
 
 ##Getting started with CloudBrain
