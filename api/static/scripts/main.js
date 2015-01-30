@@ -343,21 +343,25 @@ angular.module('cogtech.central',[], function($locationProvider) {
           {axis: "Theta", value: 0},
           {axis: "Delta", value: 0},
         ];
+        _this.data[1].active = true;
         return;
       }
       angular.forEach(_this.data[0].axes, function (v, k) {
         _this.data[1].axes[k].value = ($spacebrew.getValue(_this.muse.id, _this.waves[k]) + 1 ) * 10;
       });
+      _this.data[1].active = $spacebrew.data[_this.muse.id].active;
       _this.reDraw();
     }, 1000);
   };
   f.scope = {
   };
   f.controllerAs = "radar";
-  f.template = "<p> "+
+  f.template = "<p>"+
     '<?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="icon" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve"><g>'+
     '<path ng-style="{fill: radar.muse.color}" d="M32.001,3.56C16.317,3.56,3.56,16.317,3.56,32c0,15.683,12.757,28.44,28.442,28.44                C47.683,60.44,60.44,47.683,60.44,32C60.44,16.317,47.683,3.56,32.001,3.56z M24.227,26.593l0.057-0.063                c0.232-0.168,0.345-0.432,0.303-0.708c-0.573-3.446-0.197-4.883-0.07-5.244c1.001-3.072,4.143-4.493,4.76-4.745                c0.131-0.052,0.374-0.125,0.62-0.163l0.073-0.017l0.505-0.027l0.004,0.031l0.117-0.011c0.104-0.011,0.204-0.025,0.329-0.051                l0.111-0.024c0.099,0.001,1.322,0.156,3.139,0.713l1.263,0.435c2.31,0.682,3.372,1.951,3.569,2.207                c1.85,2.095,1.354,5.259,0.896,6.958c-0.052,0.2-0.021,0.406,0.092,0.577l0.105,0.129c0.134,0.182,0.254,0.884-0.148,2.376                c-0.076,0.453-0.243,0.821-0.492,1.069c-0.092,0.101-0.156,0.229-0.179,0.374c-0.625,3.665-3.909,7.764-7.37,7.764                c-2.937,0-6.289-3.771-6.892-7.761c-0.023-0.149-0.085-0.28-0.188-0.393c-0.251-0.26-0.411-0.635-0.508-1.19                C24.029,27.785,24,26.944,24.227,26.593z M17.634,42.485c0.127-0.161,0.837-0.993,2.273-1.541c1.263-0.388,4.384-1.425,6.09-2.661                c0.08-0.044,0.159-0.127,0.224-0.194c0.158-0.17,0.399-0.429,0.685-0.694l0.159-0.151l0.162,0.152                c1.503,1.417,3.166,2.194,4.683,2.194c1.594,0,3.237-0.69,4.756-1.996l0.119-0.103l0.322,0.157                c0.288,0.264,0.786,0.626,1.018,0.736l0.296,0.145l-0.031,0.032l0.132,0.08c0.28,0.169,0.585,0.333,0.943,0.51                c0.361,0.159,0.663,0.277,0.976,0.379c0.264,0.086,1.668,0.558,3.265,1.296l0.305,0.092c1.562,0.598,2.256,1.429,2.325,1.516                c1.854,2.748,2.565,7.876,2.829,10.733c-4.843,3.933-10.935,6.098-17.162,6.098c-6.23,0-12.323-2.165-17.164-6.099                C15.098,50.316,15.803,45.204,17.634,42.485z"/></g></svg>'+
-    "Visitor #{{radar.muse.number}}</p>";
+    "Visitor #{{radar.muse.number}}</p>"+
+    "<div class='chart' ng-show='radar.data[1].active'></div>"+
+    "<div class='inactive' ng-show='!radar.data[1].active'></div>";
     // LINK!
     f.link = function(scope, element, attributes, controller) {
       $log.info(scope, element, attributes, controller);
@@ -385,7 +389,7 @@ angular.module('cogtech.central',[], function($locationProvider) {
         ExtraWidthY: 10,
         color: d3.scale.category20()
       });
-      svg = d3.select(element[0]).append('svg')
+      svg = d3.select(element[0].querySelector('.chart')).append('svg')
       .attr('width', 150)
       .attr('height', 150);
       svg.append('g').classed('focus', 1).datum(controller.data).call(chart);
@@ -420,8 +424,9 @@ angular.module('cogtech.central',[], function($locationProvider) {
   ];
 })
 .service('$spacebrew', function ($timeout, $log, $http, muses, $location, $window) {
-  var sb, _this, subscriber;
+  var sb, _this, subscriber, timeouts;
   _this = this;
+  timeouts = {};
   // http://localhost:3030/main.html#/?booth=monolith
   // Gotta use something like this or the retarded thing might not work
   // $location.search().booth  "monolith"
@@ -457,10 +462,12 @@ angular.module('cogtech.central',[], function($locationProvider) {
         beta_absolute:  [0,0,1,0],
         gamma_absolute:  [0,0,1,0],
         theta_absolute:  [0,0,1,0],
-        delta_absolute:  [0,0,1,0]
+        delta_absolute:  [0,0,1,0],
+        active : false
       };
     });
   });
+
   // object holds the data that comes from spacebrew
   // key is the muse-id, value is the array thing
   sb = function init () {
@@ -470,9 +477,19 @@ angular.module('cogtech.central',[], function($locationProvider) {
     );
     sb.extend(Spacebrew.Admin);
     sb.onStringMessage = function (name, value) {
+      var _id = name.replace(/.*_absolute-muse-/,'');
+      var _data = value.split(",");
       $log.info("message received", name, value);
       // TODO fix the shitty regex
-      _this.data[name.replace(/.*_absolute-muse-/,'')][name.replace(/-muse-.*/,'')] = value.split(",");
+      _this.data[_id][name.replace(/-muse-.*/,'')] = _data;
+      if(_data[3] === "0.0" || _data[4] === "0.0"){
+        timeouts[_id] = $timeout(function () {
+          _this.data[_id].active = false;
+        }, 3000);
+      } else {
+        $timeout.cancel(timeouts[_id]);
+        _this.data[_id].active = true;
+      }
     };
     sb.onOpen = function () {
       $log.info('connected to Spacebrew');
