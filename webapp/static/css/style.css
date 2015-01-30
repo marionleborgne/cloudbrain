@@ -1,0 +1,382 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,700,500);
+/*http://www.paulirish.com/2012/box-sizing-border-box-ftw/*/
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+body {
+  background-color: rgba(0,0,0,1);
+  background-image: url('../img/bg.png');
+  height: 750px;
+  width:  1280px;
+  padding: 0;
+  margin: 0 auto;
+  font-size: 15px;
+  font-family: Roboto, arial, sans-serif;
+  color: white;
+  max-height: 720px;
+  overflow: hidden;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  background-size: cover;
+  background: black;
+}
+main {
+  margin: 0 auto;
+  padding: 0;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+  height: 720px;
+}
+header {
+  display: block;
+  background: black;
+  height: 35px;
+  overflow: hidden;
+  width: 100%;
+}
+header .logo {
+  height: 30px;
+  margin: 3px 20px 2px;
+  float:left;
+
+}
+header h1 {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  margin-left: 5px;
+  float:left;
+  line-height: 36px;
+}
+header h2 {
+  font-size: 15px;
+  margin-left: 20px;
+  float: left;
+}
+.clearfix {
+  overflow: auto;
+  clear: both;
+}
+.container {
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+}
+h1.title {
+  color: white;
+  text-align:left;
+  margin: 0;
+  padding: 0;
+  font-size: 1.2em;
+}
+#avg {
+  width: 100%;
+  background: black;
+  padding: 1em;
+  margin: 0;
+  /* border-bottom: 1px solid white; */
+  color: white;
+}
+#avg aside {
+  float: left;
+  width: 400px;
+  /* margin-left: 20px; */
+}
+.legends {
+  height: 1.3em;
+  margin-top:5px;
+  margin-right: 10px;
+  font-size: 14px;
+  padding-left: 320px;
+}
+.legends p {
+  float: left;
+  margin: 0;
+  line-height: 12px;
+}
+.legends > p:last-child {
+  margin-left: 20px;
+}
+.legends .legend {
+  width: 1em;
+  height: 1em;
+  display: block;
+  float: left;
+  margin-right: 1em;
+  border: 1px solid white;
+}
+.legends .legend.live {
+  background: rgb(174, 199, 232);
+}
+.legends .legend.avg {
+  background: rgb(31, 119, 180);
+}
+.main-title  {
+    padding-left: 20px;
+}
+#avg aside, .main-title {
+  display: block;
+  width: 100%;
+  clear: both;
+  color: white;
+  font-size: 1.5em;
+}
+#avg aside dl {
+  margin: 0;
+}
+#avg aside dt {
+  font-weight: 700;
+  display: block;
+  float: left;
+  clear: both;
+}
+#avg aside dd {
+  display: inline;
+  margin-left: 0;
+}
+#avg .zero {
+  margin-top: 104px;
+  border-top: 1px dashed white;
+  height: 1px;
+}
+#avg .zero span {
+  display: block;
+  margin-top: -12px;
+  position: absolute;
+}
+#avg .graph {
+  width: 100%;
+  float: left;
+  height: 200px;
+  /* border: 1px solid red; */
+  border:none; /* 1px solid rgba(255, 255, 255, 0.69); */
+  border-right: none;
+  border-top: none;
+  margin: 0;
+}
+#avg .graph:after {
+  content: "";
+  display: block;
+  height: 1px;
+  width: 100%;
+  border-top: 1px dashed rgba(255, 255, 255, 0.69);
+  margin-top: 150px;
+  /* box-shadow: 1px 97px 0px rgba(255, 255, 255, 0.69); */
+  border: none;
+}
+#avg .graph .bar {
+  height: 205px;
+  position: relative;
+  width: 130px;
+  margin-left: 0;
+  float: left;
+  width: 18%;
+}
+#avg .graph .fill {
+  position: absolute;
+  width: 66px;
+  left: 50%;
+  margin-left: -25px;
+  /* border: 1px solid rgba(51, 51, 51, 0.52); */
+  border: 1px solid black;
+  border-right: none;
+  transition: height 5, bottom 5s, top 5s;
+  width: 100px;
+}
+#avg .graph .title {
+  position: absolute;
+  bottom: 90px;
+  font-size: 1em;
+  text-align: center;
+  width: 100%;
+  margin: 0;
+  z-index: 12;
+}
+#avg .graph .fill span {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  transition: bottom 5s;
+  overflow: visible;
+  white-space: nowrap;
+  margin-left: -2px;
+  line-height: 29px;
+}
+#avg .graph .red .fill {
+  background: rgb(247, 5, 5);
+  /* box-shadow: 1px -5px 2px rgba(255, 0, 0, 0.55); */
+  /* width: 89px; */
+  /* width: 93px; */
+}
+#avg .graph .orange .fill {
+  background: rgb(255, 138, 6);
+  /* box-shadow: 1px -5px 2px rgba(255, 116, 0, 0.55); */
+}
+#avg .graph .green .fill {
+  background: rgb(107, 255, 6);
+  /* box-shadow: 1px -5px 2px rgba(74, 255, 0, 0.55); */
+}
+#avg .graph .yellow .fill {
+  background: rgb(250, 255, 51);
+  /* box-shadow: 1px -5px 2px rgba(255, 246, 80, 0.65); */
+}
+#avg .graph .blue .fill {
+  background: rgb(6, 85, 255);
+  /* box-shadow: 1px -5px 2px rgba(75, 131, 232, 0.55); */
+}
+
+/* spider graphs */
+.axis line {
+  stroke: #FF;
+}
+
+.axis path {
+  fill: none;
+  stroke: #FFF;
+}
+
+.axis + .axis g text {
+  display: none;
+}
+
+.radar {
+  background: black;
+  float: left;
+  margin: 0;
+  height: 160px;
+  width: 229px;
+  margin-bottom: 3px;
+  margin-top: 3px;
+  margin-left: 13px;
+  margin-right: 13px;
+  border: 1px solid rgba(166, 161, 161, 0.7);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.53);
+}
+.radar:nth-child(5n+1) {
+
+}
+.radar > svg {
+  margin-left: 15%;
+}
+.radar text {
+  fill: white;
+}
+.radar .icon , svg.icon{
+  width: 25px;
+  float: left;
+  height: 25px;
+  margin-right: 11px;
+}
+.radar .icon path {
+  fill: red;
+}
+.radar p {
+  color: white;
+  font-size: 0.9em;
+  margin-bottom: 4px;
+  margin-top: 0;
+}
+.radar text {
+  fill: white;
+}
+.radar-chart-serie0 {
+  fill: none !important;
+}
+
+body.main {
+  font-size: 25px;
+  padding: 0;
+  padding-top: 510px;
+  width: 100%;
+  margin: 0;
+  min-height: 1500px;
+  height: auto;
+  max-height: 100%;
+  overflow:auto;
+  background-image: url(http://i.imgur.com/zdntmLz.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+body.main .container {
+  max-width: 1000px;
+  margin: auto;
+  max-height: 1000px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+body.main .legends {
+  font-size: 25px;
+  background: rgba(0, 0, 0, 0.36);
+  margin: 0;
+  padding: 0 1em;
+  padding-top: 6px;
+}
+body.main .legends p{
+  line-height: 25px;
+}
+body.main .container .radar {
+  margin: 0;
+  margin-bottom: 5px;
+  height: 180px;
+  width: 180px;
+  margin-left: 15px;
+  background: rgba(0, 0, 0, 0.71);
+  border: none;
+}
+body.main .container .radar text {
+  font-size: 15px !important;
+}
+body.main .container .radar p{
+  font-size: 1em;
+}
+body.main .container .radar .icon{
+  height: 25px;
+  width: 25px;
+  opacity: 0.8;
+}
+body.main .container .radar > svg{
+  margin-left: 7%;
+  overflow: visible;
+}
+body.main .radar-chart .axis .legend.right {
+  text-anchor: middle;
+}
+body.main .container .radar:nth-child(5n+1) {
+  /* margin-left: 0; */
+}
+body.main .othertext {
+  margin-top: 1em;
+  font-size: 25px;
+  background: rgba(0, 0, 0, 0.71);
+}
+body.main .othertext p{
+  margin: 1px 1em;
+}
+.radar .inactive {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 0, 0, 0.66);
+  margin: 15px 40px;
+  -webkit-animation: inactive 1s;
+  -webkit-animation-iteration-count: infinite;
+  animation: inactive 1s;
+  animation-iteration-count: infinite;
+}
+/* Standard syntax */
+@keyframes inactive {
+    from {height: 50px; width: 50px; margin-top: 40px; margin-left: 65px;}
+    to {height: 100px; width: 100px; margin-top: 15px; margin-left: 40px;}
+}
+
+@-webkit-keyframes inactive {
+    from {height: 50px; width: 50px; margin-top: 40px; margin-left: 65px;}
+    to {height: 100px; width: 100px; margin-top: 15px; margin-left: 40px;}
+}
