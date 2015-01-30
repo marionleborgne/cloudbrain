@@ -390,7 +390,7 @@ angular.module('cogtech.central',[], function($locationProvider) {
         color: d3.scale.category20()
       });
       svg = d3.select(element[0].querySelector('.chart')).append('svg')
-      .attr('width', 150)
+      .attr('width', 160)
       .attr('height', 150);
       svg.append('g').classed('focus', 1).datum(controller.data).call(chart);
       controller.reDraw = function reDraw () {

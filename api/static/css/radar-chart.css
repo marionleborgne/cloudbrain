@@ -1,3 +1,6 @@
+.chart{
+  padding: 0 10px;
+}
 .radar-chart .level {
   stroke: grey;
   stroke-width: 0.5;
