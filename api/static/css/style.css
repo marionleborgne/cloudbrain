@@ -352,7 +352,8 @@ body.main .container .radar:nth-child(5n+1) {
   /* margin-left: 0; */
 }
 body.main .othertext {
-  font-size: 20px;
+  margin-top: 1em;
+  font-size: 25px;
   background: rgba(0, 0, 0, 0.71);
 }
 body.main .othertext p{
