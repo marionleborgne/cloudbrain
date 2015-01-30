@@ -16,12 +16,8 @@ start = time.time()
 
 # todo: remove these lines line
 subscriber_name = SPACEBREW_DATA_VIZ_NAME
-#publisher_ip = '127.0.0.1'
 publisher_ip = '107.170.205.177'
-#subscriber_ip = '50.185.173.15'
-#subscriber_ip = '108.74.162.96'
 subscriber_ip = '10.0.0.245'
-#subscriber_ip = '208.66.31.59'
 spacebrew_server_ip = '107.170.205.177'
 
 # spacebrew router
