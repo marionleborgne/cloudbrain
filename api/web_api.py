@@ -54,6 +54,10 @@ def average():
 def radarcharts():
     return render_template('radar.html'), 200
 
+@app.route('/masterviz')
+def masterviz():
+    return render_template('main.html'), 200
+
 @app.route('/form')
 def consent_form():
     return render_template('form.html'), 200
