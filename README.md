@@ -3,6 +3,7 @@
 ##Overview
 CloudBrain is a platform for real-time EEG data analysis and visualization. [EEG](http://en.wikipedia.org/wiki/Electroencephalography) is the recording of electrical activity along the scalp. In other words, brainwaves.
 <br>
+<br>
 CloudBrain enables you to:
 - **Stream EEG data** into a central database.
 - **Detect patterns** by analyzing EEG data.
