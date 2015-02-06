@@ -452,7 +452,15 @@ angular.module('cogtech.central',[], function($locationProvider) {
   ];
   _this.channels = [];
   _this.getValue = function (muse_id, wave) {
-    return (parseFloat(_this.data[muse_id][wave][2], 2) + parseFloat(_this.data[muse_id][wave][3], 2 ) ) / 2;
+    return (
+        parseFloat(_this.data[muse_id][wave][0], 2) +
+        parseFloat(_this.data[muse_id][wave][1], 2) +
+        parseFloat(_this.data[muse_id][wave][2], 2) +
+        parseFloat(_this.data[muse_id][wave][3], 2 ) ) / 4;
+    //if(wave==='delta_absolute'){
+    //}else{
+    //    return (parseFloat(_this.data[muse_id][wave][2], 2) + parseFloat(_this.data[muse_id][wave][3], 2 ) ) / 2;
+    //}
   };
   angular.forEach(muses, function (client) {
     angular.forEach(_this.waves, function (wave) {
