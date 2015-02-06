@@ -36,6 +36,11 @@ def support_jsonp(f):
 
 @app.route('/')
 def index():
+    return redirect("http://github.com/marionleborgne/cloudbrain/blob/master/README.md")
+
+
+@app.route('/api')
+def api():
     return render_template('api-doc.html'), 200
 
 @app.route('/about')
