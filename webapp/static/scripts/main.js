@@ -390,7 +390,7 @@ angular.module('cogtech.central',[], function($locationProvider) {
         color: d3.scale.category20()
       });
       svg = d3.select(element[0].querySelector('.chart')).append('svg')
-      .attr('width', 160)
+      .attr('width', 150)
       .attr('height', 150);
       svg.append('g').classed('focus', 1).datum(controller.data).call(chart);
       controller.reDraw = function reDraw () {
@@ -453,14 +453,10 @@ angular.module('cogtech.central',[], function($locationProvider) {
   _this.channels = [];
   _this.getValue = function (muse_id, wave) {
     return (
-        parseFloat(_this.data[muse_id][wave][0], 2) +
-        parseFloat(_this.data[muse_id][wave][1], 2) +
-        parseFloat(_this.data[muse_id][wave][2], 2) +
-        parseFloat(_this.data[muse_id][wave][3], 2 ) ) / 4;
-    //if(wave==='delta_absolute'){
-    //}else{
-    //    return (parseFloat(_this.data[muse_id][wave][2], 2) + parseFloat(_this.data[muse_id][wave][3], 2 ) ) / 2;
-    //}
+      parseFloat(_this.data[muse_id][wave][0], 2) +
+      parseFloat(_this.data[muse_id][wave][1], 2) +
+      parseFloat(_this.data[muse_id][wave][2], 2) +
+      parseFloat(_this.data[muse_id][wave][3], 2 ) ) / 4;
   };
   angular.forEach(muses, function (client) {
     angular.forEach(_this.waves, function (wave) {

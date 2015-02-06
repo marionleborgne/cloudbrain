@@ -268,9 +268,9 @@ h1.title {
   fill: white;
 }
 .radar .icon , svg.icon{
-  width: 25px;
+  width: 18px;
   float: left;
-  height: 25px;
+  height: 18px;
   margin-right: 11px;
 }
 .radar .icon path {
