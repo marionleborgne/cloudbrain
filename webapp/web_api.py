@@ -36,7 +36,7 @@ def support_jsonp(f):
 
 @app.route('/')
 def index():
-    return redirect("http://github.com/marionleborgne/cloudbrain/blob/master/README.md")
+    return redirect("http://github.com/marionleborgne/cloudbrain")
 
 
 @app.route('/api')
