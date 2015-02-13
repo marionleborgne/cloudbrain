@@ -264,6 +264,9 @@ h1.title {
 .radar > svg {
   margin-left: 15%;
 }
+.radar svg {
+  overflow: visible;
+}
 .radar text {
   fill: white;
 }
@@ -369,6 +372,9 @@ body.main .othertext p{
   -webkit-animation-iteration-count: infinite;
   animation: inactive 1s;
   animation-iteration-count: infinite;
+}
+body.main .radar .chart > svg {
+  margin-left: 12px;
 }
 /* Standard syntax */
 @keyframes inactive {
