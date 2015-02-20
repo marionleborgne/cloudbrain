@@ -121,7 +121,7 @@ CASSANDRA_METRICS = {
     #"/muse/eeg/dropped_samples": 1,
     #"/muse/acc": 3,
     #"/muse/acc/dropped_samples": 1,
-    "/muse/batt": 4,
+    #"/muse/batt": 4,
     #"/muse/drlref": 2,
     #"/muse/elements/low_freqs_absolute": 4,
     "/muse/elements/delta_absolute": 4,

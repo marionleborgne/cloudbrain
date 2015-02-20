@@ -24,8 +24,7 @@ class CassandraSpacebrewClient(object):
         # configure cassandra cluster
         self.cluster = Cluster()
         self.session = self.cluster.connect('cloudbrain')
-
-
+        
         # configure the spacebrew client
         self.brew = SpacebrewApp(name, server=server)
         for path in CASSANDRA_METRICS:
@@ -50,9 +49,14 @@ class CassandraSpacebrewClient(object):
         def handle_value(csv_string):
 
             values = csv_string.split(',')
+            # For metric 'eeg', the two last values are "timestamp in s"
+            # and "timestamp remainder in ms". Those values are not in the
+            # cassandra schema so they are discarded.
+            if metric == 'eeg':
+                values = values[:-2]
 
             # numerical values
-            num_arguments = len(values[:-2])
+            num_arguments = len(values)
             numerical_columns = ''.join([", value_%s" % i for i in range(num_arguments)])
 
             # column values
@@ -65,9 +69,13 @@ class CassandraSpacebrewClient(object):
             insert_template = "INSERT INTO %s (muse_id, timestamp%s) VALUES (%s);"
             insert_values = insert_template % (metric, numerical_columns, column_values)
 
-            print insert_values
-            self.session.execute(insert_values)
-
+            try:
+                self.session.execute(insert_values)
+            except:
+                print "DEBUG: num_arguments: %s" %num_arguments
+                print "DEBUG: values: %s" %values
+                print "DEBUG: numerical_columns: %s" %numerical_columns
+                print "DEBUG: insert_values: %s" %insert_values
         return handle_value
 
     def start(self):
