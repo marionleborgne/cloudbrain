@@ -87,7 +87,7 @@ def post():
     consent = request.form['consent']
     gender = request.form['gender']
     headset = request.form['headset']
-    
+
     print(request.json)
 
 @app.route("/set_tag", methods=['GET'])
@@ -278,12 +278,11 @@ def nb_visitors():
 @support_jsonp
 def fft_aggregates():
 
-    # mock values
-    alpha = 0.5 - random()
-    beta = 0.5 - random()
-    gamma = 0.5 - random()
-    theta = 0.5 - random()
-    delta = 0.5 - random()
+    alpha = 0.6
+    beta = 0.5
+    gamma = 0.1
+    theta = 0.2
+    delta = -0.1
 
     mock_data = {
         "alpha": {'avg': alpha},
