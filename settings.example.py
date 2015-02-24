@@ -4,7 +4,7 @@ __author__ = 'marion'
 LOG_DIR = '/var/log/supervisor'
 
 # IP of brainserver
-EXPLO_BRAINSERVER_IP = '107.170.205.177'
+EXPLO_BRAINSERVER_IP = '127.0.0.1'
 
 # TagID => MuseID
 TAGS = {
@@ -90,25 +90,25 @@ CORES = {
 
 #Booth Name => {"ip" => IP Address}
 BOOTHS = {
-    "muse-manager": {"ip": "10.0.0.2"},
-    "booth-1": {"ip": "10.0.0.201"},
-    "booth-2": {"ip": "10.0.0.202"},
-    "booth-3": {"ip": "10.0.0.203"},
-    "booth-4": {"ip": "10.0.0.204"},
-    "booth-5": {"ip": "10.0.0.205"},
-    "booth-6": {"ip": "10.0.0.206"},
-    "booth-7": {"ip": "10.0.0.207"},
-    "booth-8": {"ip": "10.0.0.208"},
-    "booth-9": {"ip": "10.0.0.209"},
-    "booth-10": {"ip": "10.0.0.210"},
-    "booth-11": {"ip": "10.0.0.211"},
-    "booth-12": {"ip": "10.0.0.212"}
+    "muse-manager": {"ip": "127.0.0.1"},
+    "booth-1": {"ip": "127.0.0.1"},
+    "booth-2": {"ip": "127.0.0.1"},
+    "booth-3": {"ip": "127.0.0.1"},
+    "booth-4": {"ip": "127.0.0.1"},
+    "booth-5": {"ip": "127.0.0.1"},
+    "booth-6": {"ip": "127.0.0.1"},
+    "booth-7": {"ip": "127.0.0.1"},
+    "booth-8": {"ip": "127.0.0.1"},
+    "booth-9": {"ip": "127.0.0.1"},
+    "booth-10": {"ip": "127.0.0.1"},
+    "booth-11": {"ip": "127.0.0.1"},
+    "booth-12": {"ip": "127.0.0.1"}
 }
 
 # cassandra spacebrew subscriber name
 SPACEBREW_CASSANDRA_NAME = 'cassandra'
 SPACEBREW_DATA_VIZ_NAME = 'data-visualization'
-SPACEBREW_CASSANDRA_IP = '104.236.15.197'
+SPACEBREW_CASSANDRA_IP = '127.0.0.1'
 SPACEBREW_BRAINSERVER_IP = '127.0.0.1'
 
 # IP address of cassandra cluster
@@ -121,7 +121,7 @@ CASSANDRA_METRICS = {
     #"/muse/eeg/dropped_samples": 1,
     #"/muse/acc": 3,
     #"/muse/acc/dropped_samples": 1,
-    "/muse/batt": 4,
+    #"/muse/batt": 4,
     #"/muse/drlref": 2,
     #"/muse/elements/low_freqs_absolute": 4,
     "/muse/elements/delta_absolute": 4,

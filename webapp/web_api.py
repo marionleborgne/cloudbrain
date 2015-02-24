@@ -81,14 +81,15 @@ def spacebrew():
     return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
 @app.route('/form-content', methods = ['POST'])
-def post():
+def form_content():
     # Get the parsed contents of the form data
-    age = request.form['age']
-    consent = request.form['consent']
-    gender = request.form['gender']
-    headset = request.form['headset']
-    
-    print(request.json)
+    #age = request.form['age']
+    #consent = request.form['consent']
+    #gender = request.form['gender']
+    #headset = request.form['headset']
+
+    r  = json.dumps(request.form)
+    return r, 200
 
 @app.route("/set_tag", methods=['GET'])
 @support_jsonp
@@ -278,12 +279,11 @@ def nb_visitors():
 @support_jsonp
 def fft_aggregates():
 
-    # mock values
-    alpha = 0.5 - random()
-    beta = 0.5 - random()
-    gamma = 0.5 - random()
-    theta = 0.5 - random()
-    delta = 0.5 - random()
+    alpha = 0.6
+    beta = 0.5
+    gamma = 0.1
+    theta = 0.2
+    delta = -0.1
 
     mock_data = {
         "alpha": {'avg': alpha},
