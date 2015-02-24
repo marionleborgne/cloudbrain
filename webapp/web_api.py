@@ -80,14 +80,15 @@ def doc():
 def spacebrew():
     return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
-
-
-@app.route('/post', methods = ['POST'])
+@app.route('/form-content', methods = ['POST'])
 def post():
     # Get the parsed contents of the form data
-    json = request.json
-    print(json)
-
+    age = request.form['age']
+    consent = request.form['consent']
+    gender = request.form['gender']
+    headset = request.form['headset']
+    
+    print(request.json)
 
 @app.route("/set_tag", methods=['GET'])
 @support_jsonp
