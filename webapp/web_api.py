@@ -81,6 +81,7 @@ def spacebrew():
     return redirect("http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks")
 
 @app.route('/form-content', methods = ['POST'])
+@support_jsonp
 def post():
     # Get the parsed contents of the form data
     age = request.form['age']
