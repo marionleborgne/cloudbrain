@@ -89,7 +89,7 @@ def post():
     gender = request.form['gender']
     headset = request.form['headset']
 
-    print(request.json)
+    return request.json, 200
 
 @app.route("/set_tag", methods=['GET'])
 @support_jsonp
