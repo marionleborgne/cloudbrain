@@ -21,3 +21,7 @@ body, button, p, select {
   border: none;
   display: none;
 }
+select.select  {
+  margin-top: 6px;
+  margin-left: 16px;
+}
