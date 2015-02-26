@@ -7,7 +7,7 @@ from os.path import dirname, abspath
 
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 import time
-from spacebrew.spacebrew import SpacebrewApp
+from cloudbrain.spacebrew.spacebrew import SpacebrewApp
 
 
 class SpacebrewClient(object):

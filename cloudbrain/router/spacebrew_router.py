@@ -1,15 +1,16 @@
+from cloudbrain import settings
+
 __author__ = 'marion'
 
 from websocket import create_connection
 import json
 import time
-from pySpacebrew.spacebrew import Spacebrew
+from cloudbrain.router.pySpacebrew.spacebrew import Spacebrew
 
 # add the shared settings file to namespace
 import sys
 from os.path import dirname, abspath
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
-import settings
 
 
 class SpacebrewRouter(object):

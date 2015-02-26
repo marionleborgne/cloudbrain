@@ -15,9 +15,9 @@ CREATE KEYSPACE cloudbrain WITH  replication = {'class': 'SimpleStrategy', 'repl
 import sys
 from os.path import dirname, abspath
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
-from settings import CASSANDRA_METRICS
+from cloudbrain.settings import CASSANDRA_METRICS
 
-from spacebrew_utils import calculate_spacebrew_name
+from cloudbrain.database.spacebrew_utils import calculate_spacebrew_name
 
 # templates for column family creation
 create_column_family_template = "CREATE TABLE %s (muse_id text, timestamp timestamp, %s PRIMARY KEY (muse_id, timestamp)); \n"

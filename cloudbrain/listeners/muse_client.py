@@ -8,11 +8,11 @@ import json
 import sys
 import socket
 
-from database.old.cassandra_repository import CassandraRepository
-from database.old.cassandra_repository import convert_muse_data_to_cassandra_column
-from database.cassandra_settings import KEYSPACE
-from database.cassandra_settings import MUSE_COLUMN_FAMILY
-from database.cassandra_settings import BATCH_MAX_SIZE
+from src.database.old.cassandra_repository import CassandraRepository
+from src.database.old.cassandra_repository import convert_muse_data_to_cassandra_column
+from src.database.cassandra_settings import KEYSPACE
+from src.database.cassandra_settings import MUSE_COLUMN_FAMILY
+from src.database.cassandra_settings import BATCH_MAX_SIZE
 
 
 class MuseClient(object):

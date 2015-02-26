@@ -12,6 +12,7 @@ To start MuseIO, open a terminal or command prompt and type:
 muse-io --osc osc.udp://localhost:9090
 
 """
+from cloudbrain import settings
 
 __author__ = 'marion'
 
@@ -23,9 +24,8 @@ import sys
 from os.path import dirname, abspath
 
 sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
-import settings
 
-from spacebrew.spacebrew import SpacebrewApp
+from cloudbrain.spacebrew.spacebrew import SpacebrewApp
 
 import logging
 

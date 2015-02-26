@@ -4,12 +4,12 @@ __author__ = 'marion'
 import sys
 from os.path import dirname, abspath
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
-from settings import DATA_VIZ_METRICS
-from settings import MUSE_PORTS
-from settings import SPACEBREW_DATA_VIZ_NAME
-from router.spacebrew_router import SpacebrewRouter
+from cloudbrain.settings import DATA_VIZ_METRICS
+from cloudbrain.settings import MUSE_PORTS
+from cloudbrain.settings import SPACEBREW_DATA_VIZ_NAME
+from cloudbrain.router.spacebrew_router import SpacebrewRouter
 
-from spacebrew_utils import calculate_spacebrew_name
+from cloudbrain.spacebrew.spacebrew_utils import calculate_spacebrew_name
 import time
 
 start = time.time()

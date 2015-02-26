@@ -1,16 +1,25 @@
 #!flask/bin/python
-from flask import Flask, render_template, request, redirect, current_app
 import json
 from random import random
 from functools import wraps
 import re
 
+from flask import Flask, render_template, request, redirect, current_app
+
+
+
+
+
+
+
+
 # add the shared settings file to namespace
 import sys
 from os.path import dirname, abspath
+from cloudbrain import settings
+
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
-import settings
-from router.spacebrew_router import SpacebrewRouter
+from cloudbrain.router.spacebrew_router import SpacebrewRouter
 
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True

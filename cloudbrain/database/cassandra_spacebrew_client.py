@@ -6,13 +6,13 @@ from cassandra.cluster import Cluster
 import sys
 from os.path import dirname, abspath
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
-from settings import EXPLO_BRAINSERVER_IP
-from settings import CASSANDRA_METRICS
-from settings import MUSE_PORTS
-from settings import SPACEBREW_CASSANDRA_NAME
-from spacebrew.spacebrew import SpacebrewApp
+from cloudbrain.settings import EXPLO_BRAINSERVER_IP
+from cloudbrain.settings import CASSANDRA_METRICS
+from cloudbrain.settings import MUSE_PORTS
+from cloudbrain.settings import SPACEBREW_CASSANDRA_NAME
+from cloudbrain.spacebrew.spacebrew import SpacebrewApp
 
-from spacebrew_utils import calculate_spacebrew_name
+from cloudbrain.spacebrew.spacebrew_utils import calculate_spacebrew_name
 import time
 
 

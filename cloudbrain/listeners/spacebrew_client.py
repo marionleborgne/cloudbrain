@@ -1,32 +1,33 @@
-"""
-Spacebrew Server with mock data
-
-Note that Spacebrew is required.
-
-Spacebrew installation:
-* git clone https://github.com/Spacebrew/spacebrew
-* follow the readme instructions to install and start spacebrew
-"""
+from cloudbrain import settings
 
 __author__ = 'marion'
 
 # add the shared settings file to namespace
 import sys
 from os.path import dirname, abspath
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
 
-sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
-import settings
+from cloudbrain.spacebrew.spacebrew import SpacebrewApp
+from cloudbrain.database.old.cassandra_repository import CassandraRepository
+from cloudbrain.database.old.cassandra_repository import convert_muse_data_to_cassandra_column
+from cloudbrain.database.old.cassandra_settings import KEYSPACE
+from cloudbrain.database.old.cassandra_settings import MUSE_COLUMN_FAMILY
+from cloudbrain.database.old.cassandra_settings import BATCH_MAX_SIZE
 
-import json
-from websocket import create_connection
-import time
-import threading
 
-class SpacebrewServer(object):
-    def __init__(self, muse_id=5008, server='127.0.0.1', port=9000):
-        self.muse_id = muse_id
-        self.server = server
-        self.port = port
+class SpacebrewClient(object):
+
+    def __init__(self, name, server):
+        # get app name and server from query string
+        self.name = name
+        server = server
+
+        # configure the spacebrew client
+        self.brew = SpacebrewApp(name, server=server)
+
+        # cassandra
+        self.muse_cassandra_repo = CassandraRepository(KEYSPACE, MUSE_COLUMN_FAMILY)
+        self.batches = {}
         self.osc_paths = [
             {'address': "/muse/eeg", 'arguments': 4},
             {'address': "/muse/eeg/quantization", 'arguments': 4},
@@ -60,59 +61,36 @@ class SpacebrewServer(object):
             {'address': "/muse/elements/experimental/mellow", 'arguments': 1}
         ]
 
-        self.ws = create_connection("ws://%s:%s" % (self.server, self.port))
+        for path in self.osc_paths:
+            spacebrew_name = path['address'].split('/')[-1]
+            self.brew.add_subscriber(spacebrew_name, "string")
+            self.brew.subscribe(spacebrew_name, self.handle_value)
 
+    def handle_value(self, value):
+        path = value[0]
+        if path in self.paths:
+            row_key, column = convert_muse_data_to_cassandra_column(path, value)
 
-        config = {
-            'config': {
-                'name': 'muse-%s' % self.muse_id,
-                'publish': {
-                    'messages': [{'name': name['address'].split('/')[-1], 'type': 'string'} for name in
-                                 self.osc_paths]
-                }
-            }
-        }
+            if len(self.batches[path]) < BATCH_MAX_SIZE:
+                self.batches[path][row_key] = column
 
-        self.ws.send(json.dumps(config))
+                # time stats
+                timestamp = row_key.split('_')[1]
+                print "column added to batch for %s -- %s ms" % (path, timestamp)
 
-        self.threads = []
+            elif len(self.batches[path]) == BATCH_MAX_SIZE:
+                self.muse_cassandra_repo.add_batch(self.batches[path])
+                self.batches[path] = {}
+
+                # time stats
+                timestamp = row_key.split('_')[1]
+                print "column batch stored in cassandra for %s -- %s ms" % (path, timestamp)
 
     def start(self):
-        t = threading.Thread(target=self.send_data)
-        self.threads.append(t)
-        t.start()
+        self.brew.start()
 
-    def send_data(self):
-        while 1:
-            for path in self.osc_paths:
-                spacebrew_name = self.calculate_spacebrew_name(path['address'])
-                args = [0.1] * path['arguments']
-                value = ','.join([str(arg) for arg in args])
-
-                message = {"message": {
-                    "value": value,
-                    "type": "string", "name": spacebrew_name, "clientName": 'muse-%s' % self.muse_id}}
-
-                self.ws.send(json.dumps(message))
-                time.sleep(0.1)
-
-
-    def calculate_spacebrew_name(self, osc_path):
-        spacebrew_name = osc_path.split('/')[-1]
-        return self.disambiguate_name_collisions(spacebrew_name, osc_path)
-
-
-    def disambiguate_name_collisions(self, spacebrew_name, osc_path):
-        if spacebrew_name == 'dropped_samples':
-            return osc_path.split('/')[-2] + '_' + osc_path.split('/')[-1]
-        else:
-            return spacebrew_name
 
 
 if __name__ == "__main__":
-
-    #muse_ports = settings.MUSE_PORTS
-    muse_ports = [7777]
-    for muse_port in muse_ports:
-        server = SpacebrewServer(muse_id=muse_port, server=settings.EXPLO_BRAINSERVER_IP)
-        server.start()
+    sb_client = SpacebrewClient('cloudbrain', settings.EXPLO_BRAINSERVER_IP)
+    sb_client.start()
