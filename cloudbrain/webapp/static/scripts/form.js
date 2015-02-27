@@ -67,12 +67,13 @@ $(document).on('ready', function () {
   $('#submit').on('click', function (e) {
     e.preventDefault();
     $('.alert-danger').hide();
-    console.log('posting things');
     $(this)[0].blur();
     if (_data.headset<1) {
+      console.log('not posting because no headset');
       $('.alert.headset').show();
       return;
     }
+    console.log('posting things');
     $.post('/form-content', _data)
     .done(function () {
       window.location = '/thank-you';
