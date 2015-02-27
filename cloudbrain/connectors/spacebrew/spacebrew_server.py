@@ -23,7 +23,7 @@ import argparse
 import sys
 from os.path import dirname, abspath
 
-sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
+sys.path.insert(0, dirname(dirname(dirname(dirname(abspath(__file__))))))
 
 from cloudbrain.spacebrew.spacebrew import SpacebrewApp
 

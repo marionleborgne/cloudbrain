@@ -5,7 +5,7 @@ import sys
 import argparse
 from os.path import dirname, abspath
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 import time
 from cloudbrain.spacebrew.spacebrew import SpacebrewApp
 

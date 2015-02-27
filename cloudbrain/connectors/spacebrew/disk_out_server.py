@@ -21,7 +21,7 @@ import time
 import sys
 from os.path import dirname, abspath
 
-sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
+sys.path.insert(0, dirname(dirname(dirname(dirname(abspath(__file__))))))
 
 
 class DiskOutServer(ServerThread):

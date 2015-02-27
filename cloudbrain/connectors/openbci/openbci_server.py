@@ -327,7 +327,7 @@ if __name__ == "__main__":
         help='Enable mock. Will send mock data without an openBCI board connected.')
 
     args = parser.parse_args()
-    sys.path.insert(0, dirname(dirname(abspath(__file__))))
+    sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
     obci = OpenBCIBoard()
     if args.filter_data:
         obci.filter_data = True

@@ -10,7 +10,7 @@ from cloudbrain.router.pySpacebrew.spacebrew import Spacebrew
 # add the shared settings file to namespace
 import sys
 from os.path import dirname, abspath
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 
 
 class SpacebrewRouter(object):

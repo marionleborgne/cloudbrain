@@ -14,7 +14,7 @@ CREATE KEYSPACE cloudbrain WITH  replication = {'class': 'SimpleStrategy', 'repl
 # add the shared settings file to namespace
 import sys
 from os.path import dirname, abspath
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from cloudbrain.settings import CASSANDRA_METRICS
 
 from cloudbrain.database.spacebrew_utils import calculate_spacebrew_name
