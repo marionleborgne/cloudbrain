@@ -41,4 +41,11 @@ for path in CASSANDRA_METRICS:
     f.write(create_column_family)
 
 
+f.write("""
+DROP KEYSPACE users;
+CREATE KEYSPACE users WITH  replication = {'class': 'SimpleStrategy', 'replication_factor': 3 };
+USE users;
+CREATE TABLE consent (muse_id text, timestamp timestamp, consent text, age double, gender text,  PRIMARY KEY (muse_id, timestamp));
+""")
+
 f.close()

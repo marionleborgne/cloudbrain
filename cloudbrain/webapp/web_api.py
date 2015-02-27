@@ -3,33 +3,32 @@ import json
 from random import random
 from functools import wraps
 import re
+import time
 
+from cassandra.cluster import Cluster
 from flask import Flask, render_template, request, redirect, current_app
-
-
-
-
-
-
-
 
 # add the shared settings file to namespace
 import sys
 from os.path import dirname, abspath
-from cloudbrain import settings
-
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
+from cloudbrain.settings import EXPLO_BRAINSERVER_IP
+
 from cloudbrain.router.spacebrew_router import SpacebrewRouter
 
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
-sp_router = SpacebrewRouter(server=settings.EXPLO_BRAINSERVER_IP)
+sp_router = SpacebrewRouter(server=EXPLO_BRAINSERVER_IP)
 sp_config_cache = {
     "subscriptions": {
     },
     "routes": {
     }
 }
+
+# configure cassandra cluster
+cluster = Cluster()
+session = cluster.connect('users')
 
 def support_jsonp(f):
     """Wraps JSONified output for JSONP"""
@@ -92,12 +91,24 @@ def spacebrew():
 @app.route('/form-content', methods = ['POST'])
 def form_content():
     # Get the parsed contents of the form data
-    #age = request.form['age']
-    #consent = request.form['consent']
-    #gender = request.form['gender']
-    #headset = request.form['headset']
+    age = request.form['age']
+    consent = request.form['consent']
+    gender = request.form['gender']
+    headset_number = request.form['headset']
+    muse_id = 'muse-%s' % headset_number
+    timestamp = int(time.time() * 1000)
+
+    insert_template = "INSERT INTO consent (muse_id, timestamp, consent, age, gender) VALUES ('%s', %s, '%s', %s, '%s');"
+    insert_values = insert_template % (muse_id, timestamp, consent, age, gender)
+
+    try:
+        session.execute(insert_values)
+    except:
+        print "DEBUG: %s" % insert_values
 
     r  = json.dumps(request.form)
+
+
     return r, 200
 
 @app.route("/set_tag", methods=['GET'])
@@ -254,7 +265,6 @@ def aggregates():
     metric = request.args.get('metric', None)
     aggregateType = request.args.get('aggregateType', None)
 
-    # mock data. will be replaced by real data soon
     if metric == 'eeg':
         value = ['/muse/eeg', random() * 100, random() * 100, random() * 100, random() * 100]
     elif metric == 'acc':
