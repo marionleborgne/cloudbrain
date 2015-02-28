@@ -1,40 +1,48 @@
 <!DOCTYPE html>
 <head>
-  <title>Equalizer</title>
-  <script src="/static/scripts/angular.js"></script>
-  <script src="/static/scripts/sb-1.4.1.js"></script>
-  <script src="/static/scripts/sb-admin-0.1.4.js"></script>
-  <script src="/static/scripts/d3.js"></script>
-  <script src="/static/scripts/radar-chart.js"></script>
+    <title>Average</title>
+    <script src="/static/scripts/angular.js"></script>
+    <script src="/static/scripts/sb-1.4.1.js"></script>
+    <script src="/static/scripts/sb-admin-0.1.4.js"></script>
+    <script src="/static/scripts/d3.js"></script>
+
     <script src="/static/scripts/main.js"></script>
-  <link rel="stylesheet" href="/static/css/reset.css" type="text/css" media="screen" charset="utf-8">
-  <link rel="stylesheet" href="/static/css/radar-chart.css" type="text/css" media="screen" charset="utf-8">
-  <link rel="stylesheet" href="/static/css/style.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="/static/css/reset.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css" media="screen" charset="utf-8">
 </head>
 <body data-ng-app="cogtech.central">
 <main>
-  <header ct-header>
-  </header>
-  <section class="container" ng-controller="avgController as avg">
-    <div id="avg" class="clearfix">
-      <h1 class="title">Some EEG headsets in the room are sending data to CloudBrain. The data is averaged across all visitors.</h1>
-      <div class="graph">
-        <div data-ct-bar data-title="Alpha" data-color="red" data-value="avg.c.alpha"></div>
-        <div data-ct-bar data-title="Beta" data-color="orange" data-value="avg.c.beta"></div>
-        <div data-ct-bar data-title="Gamma" data-color="yellow" data-value="avg.c.gamma"></div>
-        <div data-ct-bar data-title="Theta" data-color="green" data-value="avg.c.theta"></div>
-        <div data-ct-bar data-title="Delta" data-color="blue" data-value="avg.c.delta"></div>
-        <div class="zero"><span>&nbsp;</span></div>
-      </div>
-      <aside>
-          <p><strong>Delta (0-4 Hz)</strong> waves are associated with very deep relaxation.</p>
-          <p><strong>Theta (4-7 Hz)</strong> waves are associated with deep relaxation and calmness.</p>
-          <p><strong>Alpha (7-13 Hz)</strong> waves occur when we are in a state of wakeful relaxation with closed eyes.</p>
-          <p><strong>Beta (13-30 Hz)</strong> waves are emitted when we feel alert, agitated, tense, or afraid.</p>
-          <p><strong>Gamma (30-70 Hz)</strong> waves are involved in cognitive processing and consolidation of information.</p>
-      </aside>
-    </div>
-  </section>
+    <section class="container" ng-controller="avgController as avg">
+        <div id="avg" class="clearfix">
+            <aside>
+                <p><img src="/static/img/brain.png" alt="CloudBrain" height="42" width="42"><strong  style="font-size: 40px">     CloudBrain</strong></p>
+                <p>Some EEG headsets in the room are sending data to CloudBrain. The data is averaged across
+                    all visitors.</p>
+
+                <div class="graph">
+                    <div data-ct-bar data-title="Alpha" data-color="red" data-value="avg.c.alpha"></div>
+                    <div data-ct-bar data-title="Beta" data-color="orange" data-value="avg.c.beta"></div>
+                    <div data-ct-bar data-title="Gamma" data-color="yellow" data-value="avg.c.gamma"></div>
+                    <div data-ct-bar data-title="Theta" data-color="green" data-value="avg.c.theta"></div>
+                    <div data-ct-bar data-title="Delta" data-color="blue" data-value="avg.c.delta"></div>
+                    <div class="zero"><span>&nbsp;</span></div>
+                </div>
+
+                <p><strong>Delta (0-4 Hz)</strong> waves are associated with very deep relaxation.</p>
+
+                <p><strong>Theta (4-7 Hz)</strong> waves are associated with deep relaxation and calmness.</p>
+
+                <p><strong>Alpha (7-13 Hz)</strong> waves occur when we are in a state of wakeful relaxation with closed
+                    eyes.</p>
+
+                <p><strong>Beta (13-30 Hz)</strong> waves are emitted when we feel alert, agitated, tense, or afraid.
+                </p>
+
+                <p><strong>Gamma (30-70 Hz)</strong> waves are involved in cognitive processing and consolidation of
+                    information.</p>
+            </aside>
+        </div>
+    </section>
 </main>
 </body>
 
