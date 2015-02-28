@@ -96,7 +96,7 @@ class SpacebrewServer(object):
                     "type": "string", "name": spacebrew_name, "clientName": 'muse-%s' % self.muse_id}}
 
                 self.ws.send(json.dumps(message))
-                print message
+                #print message
                 time.sleep(0.1)
 
 

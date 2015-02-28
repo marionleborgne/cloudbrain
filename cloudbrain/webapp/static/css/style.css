@@ -302,7 +302,7 @@ body.main {
   height: auto;
   max-height: 100%;
   overflow:auto;
-  background-image: url(http://i.imgur.com/zdntmLz.jpg);
+  background-image: url(/static/img/stars.jpg);
   background-size: cover;
   background-repeat: no-repeat;
 }
