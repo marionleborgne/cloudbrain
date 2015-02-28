@@ -11,15 +11,15 @@ CloudBrain enables you to:
 
 
 ## CloudBrain @ [The Exploratorium](http://www.exploratorium.edu) of San Francisco
-CloudBrain is currently in use at the Exploratorium as part of the Exhibit called [*Cognitive Technologies*](http://www.exploratorium.edu/press-office/press-releases/new-exhibition-understanding-influencing-brain-activity-opens). All the EEG headsets in the exhibit are sending data to CloudBrain. This data is being routed to booths where visitors can control different things with their brain. For visitors who are willing to share their data, CloudBrain computes aggregates and displays a baseline of the average brain. On the screen, visitors can see everyone else's live EEG data. Each radar chart shows the state of the main brainwaves (alpha, beta, theta, gamma, delta). This is particularly interesting to see how one's brain compares to others, or to understand how it reacts to different stimuli.
+CloudBrain is currently in use at the Exploratorium as part of the Exhibit called [*Cognitive Technologies*](http://www.exploratorium.edu/press-office/press-releases/new-exhibition-understanding-influencing-brain-activity-opens). All the EEG headsets in the exhibit are sending data to CloudBrain. This data is being routed to booths where visitors can control different things with their brain. For visitors who are willing to share their data, CloudBrain computes aggregates and displays a baseline of the average brain. On the central screen, visitors can see everyone else's live EEG data. Each radar chart shows the state of the main brainwaves (alpha, beta, theta, gamma, delta). This is particularly interesting to see how one's brain compares to others, or to understand how it reacts to different stimuli.
 
 ## Visualizations
 
-### Aggregated Data
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/data-aggregates.png)
-
 ### Live EEG Data
 ![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/radar-charts.png)
+
+### Aggregated Data
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/data-aggregates.png)
 
 
 ##Getting started with CloudBrain
