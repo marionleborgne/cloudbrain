@@ -15,11 +15,11 @@ CloudBrain is currently in use at the Exploratorium as part of the Exhibit calle
 
 ## Visualizations
 
-### Live EEG Data
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/radar-charts.png)
-
 ### Aggregated Data
 ![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/data-aggregates.png)
+
+### Live EEG Data
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/radar-charts.png)
 
 
 ##Getting started with CloudBrain
