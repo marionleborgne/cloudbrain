@@ -21,6 +21,8 @@ CloudBrain is currently in use at the Exploratorium as part of the Exhibit calle
 ### Live EEG Data
 ![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/radar-charts.png)
 
+### Timeserie Data
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/timeserie-data.png)
 
 ##Getting started with CloudBrain
 - An instance of CloudBrain is currently running at `cloudbrain.rocks`.
