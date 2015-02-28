@@ -13,9 +13,9 @@ CloudBrain enables you to:
 
 ## CloudBrain @ [The Exploratorium](http://www.exploratorium.edu) of San Francisco
 CloudBrain is currently in use at the Exploratorium as part of the Exhibit called [*Cognitive Technologies*](http://www.exploratorium.edu/press-office/press-releases/new-exhibition-understanding-influencing-brain-activity-opens). All the EEG headsets in the exhibit are sending data to CloudBrain. This data is being routed to booths where visitors can control different things with their brain. For visitors who are willing to share their data, CloudBrain computes aggregates and displays a baseline of the average brain. On the screen, visitors can see everyone else's live EEG data. Each radar chart shows the state of the main brainwaves (alpha, beta, theta, gamma, delta). This is particularly interesting to see how one's brain compares to others, or to understand how it reacts to different stimuli.
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/master-viz.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/radar-charts.png)
 
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain-viz-2.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/data-aggregates.png)
 
 
 ##Getting started with CloudBrain
@@ -55,7 +55,8 @@ CloudBrain is currently in use at the Exploratorium as part of the Exhibit calle
 - The last command will register your booth to cloudbrain’s spacebrew
 - Check if you booth is in the column “subscridbers” of the [SpaceBrew interface](http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks).
 
-## Infrastructure @ The Exploratorium
-Infrastructure v2.0 for the [Exploratorium of San Francisco](http://www.exploratorium.edu/). The exhibit is called [*Cognitive Technology*](http://www.exploratorium.edu/press-office/press-releases/new-exhibition-understanding-influencing-brain-activity-opens) and starts on February 2015.
+## Infrastructure @ [The Exploratorium](http://www.exploratorium.edu/)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/exploratorium-exhibit-overview.png)
 
+Infrastructure v2.0 
 ![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/infra.png)
