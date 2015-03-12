@@ -59,6 +59,10 @@ def about():
 def explo():
     return render_template('cloudbrain.html'), 200
 
+@app.route('/grok')
+def grok():
+    return render_template('grok.html'), 200
+
 @app.route('/average')
 def average():
     return render_template('average.html'), 200
@@ -318,3 +322,4 @@ def fft_aggregates():
 
 if __name__ == '__main__':
     app.run('0.0.0.0', 8080)
+
