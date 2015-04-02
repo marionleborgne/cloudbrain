@@ -35,12 +35,12 @@ from nupic.frameworks.opf.modelfactory import ModelFactory
 from cloudbrain.analyzer.htm.example import nupic_anomaly_output
 
 
-METRIC_NAME = "muse"
+METRIC_NAME = "openbci"
 DATA_DIR = "."
 MODEL_PARAMS_DIR = "./model_params"
 # '7/2/10 0:00'
 DATE_FORMAT = "%m/%d/%Y %H:%M:%S:%f"
-# Muse Client
+# BCI Server info
 IP = 'localhost'
 PORT = 5555
 
@@ -105,10 +105,13 @@ def runIoThroughNupic(ip, port, model, metric_name, plot):
       print "Read %i lines..." % counter
 
     data = json.loads(client.recv(1024))
-    metric_value = float(data[1])
+    print data
+    # data in nano-volts (10E9)
+    metric_value = float(data['channel_values'][0] * 10E8)
     result = model.run({
       "metric_value": metric_value
     })
+    #print metric_value
 
     if plot:
       result = shifter.shift(result)
