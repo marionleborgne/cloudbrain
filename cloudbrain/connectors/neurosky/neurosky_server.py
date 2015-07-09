@@ -1,4 +1,4 @@
-__author__ = 'marion'
+
 
 from consider import Consider
 import time
