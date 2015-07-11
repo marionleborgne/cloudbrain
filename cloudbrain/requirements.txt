@@ -1,1 +1,4 @@
+cassandra-driver
+blist
 pika
+flask

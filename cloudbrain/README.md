@@ -1,19 +1,11 @@
 # CloudBrain
 
-### Dependencies
-* rabbit.js
-* cassandra-driver
-* pika
-* flask
-
-### Install
+### Install 
 * Install RabbitMQ
 * Install Cassandra
 * Install `node` and `npm`
 * `npm install rabbit.js`
-* `sudo pip install cassandra-driver`
-* `sudo pip install pika`
-* `sudo pip install flask`
+* `sudo pip install requirements.txt`
 
 ### Run the App
 
@@ -23,7 +15,7 @@
 * Start RabbitMQ: `sh sbin/rabbit-server start`
 
 #### Start the Connector
-* [TODO]
+* [TODO] Describe how to start the various connectors.
 
 #### Start Cassandra
 * Get Cassandra.
@@ -34,10 +26,10 @@
 
 
 #### Run MetricStore
-* `python listener/metric_store.py`
+* Start listening and storing data with `python database/metric_store.py`
 
 #### Start the REST API
 * Run `python api/web_api.py`
 
 #### Start the UI
-* Open `ui/chart.html` in your browser. You should see a live chart with real-time anomalies.
+* Open `ui/chart.html` in your browser.
