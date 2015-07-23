@@ -103,6 +103,11 @@ DEVICE_METADATA = [
           'metric_description': None
         },
         {
+          'metric_name': 'alpha_absolute',
+          'num_channels': 4,
+          'metric_description': None
+        },
+        {
           'metric_name': 'gamma_absolute',
           'num_channels': 4,
           'metric_description': None
@@ -119,6 +124,11 @@ DEVICE_METADATA = [
         },
         {
           'metric_name': 'beta_relative',
+          'num_channels': 4,
+          'metric_description': None
+        },
+        {
+          'metric_name': 'alpha_relative',
           'num_channels': 4,
           'metric_description': None
         },
