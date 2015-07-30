@@ -5,9 +5,14 @@ var _GREEN = '#5cb85c';
 var _RED = '#d9534f';
 var _ORANGE = 'orange';
 var _BLUE = "#337ab7";
+var _PURPLE = "#800080";
 var _HIGH_ANOMALY_AMPLITUDE = 6;
 var _MEDIUM_ANOMALY_AMPLITUDE = 3;
 var _LOW_ANOMALY_AMPLITUDE = 2;
+var _POWER_BANDS = ['alpha', 'beta', 'gamma', 'theta', 'delta']
+var _MUSE_METRICS = ['channel_0', 'channel_1', 'channel_2', 'channel_3']
+var _OBCI_METRICS = ['channel_0', 'channel_1', 'channel_2', 'channel_3',
+					'channel_4', 'channel_5', 'channel_6', 'channel_7']
 
 
 
@@ -18,34 +23,10 @@ var app = angular.module('cloudbrain', ["ui.bootstrap", "highcharts-ng"]);
 // Main Screen Controller
 app.controller('mainScreenController', ['$scope', '$interval', function ($scope, $interval) {
 
-  // TODO: change that. hack to for the scope to refresh
-  $interval(function () {}, 500);
-
-  /*-------------*
-
-    PYTHON
-
-  *--------------*/
-
-  
-    var path = require('path');
-
-    // call python
-    var cmd = path.join(__dirname, 'python', 'dist', 'mock_connector', 'mock_connector');
-    var child = require('child_process').execFile(cmd, [""], function(err, stdout,stderr){
-    });
-
-    console.log('Executed cmd: ' + cmd);
+	// TODO: change that. hack to for the scope to refresh
+	$interval(function () {}, 500);
 
 
-    // use event hooks to provide a callback to execute when data are available: 
-    child.stdout.on('data', function(data) {
-      var record = JSON.parse(data);
-      $scope.chartSeries['metricValue'].data.shift();
-      $scope.chartSeries['metricValue'].data.push(record['channel_0']['eeg']['value']);
-
-
-    });
 
 
 	
@@ -53,27 +34,94 @@ app.controller('mainScreenController', ['$scope', '$interval', function ($scope,
 
 	/*-------------*
 
-	  FILES
+	  METRICS
 
 	*--------------*/
 
-
+	// All metrics must have an ID
 	$scope.files = [
+			{
+				name: 'Muse',
+				metrics: {
+					0: 'channel_0', 
+					1:'channel_1', 
+					2:'channel_2', 
+					3: 'channel_3'
+				}
+			},
+			{
+				name: 'OpenBCI',
+				metrics: {
+					4: 'channel_0', 
+					5: 'channel_1', 
+					6: 'channel_2', 
+					7: 'channel_3', 
+					8: 'channel_4', 
+					9: 'channel_5', 
+					10: 'channel_6', 
+					11: 'channel_7'}
+			}
+		]
+
+
+	/*-------------*
+
+	  CHART CONFIG
+
+	*--------------*/
+
+	
+	var powerBandSeriesInit = {
+		'alpha': 
 		{
-			name: 'Headset 1',
-			metrics: {0: 'Channel 1', 1:'Channel 2', 2:'Channel 3'}
+			type: 'column',
+			name:'Alpha',
+			color: _GREEN,
+			data: [0]
 		},
+		'beta': 
 		{
-			name: 'Headset 2',
-			metrics: {3:'Channel 1', 4:'Channel 2', 5:'Channel 3'}
+			type: 'column',
+			name:'Beta',
+			color: _ORANGE,
+			data: [0]
+		},  
+		'gamma':               
+		{
+			type: 'column',
+			name:'Gamma',
+			color: _RED,
+			data: [0]
 		},
+		'theta': 
 		{
-			name: 'Headset 3',
-			metrics: {6:'Channel 1', 7:'Channel 2', 8:'Channel 3'}
+			type: 'column',
+			name: 'Theta',
+			color: _BLUE,
+			data: [0]
+		},
+		'delta': 
+		{
+			type: 'column',
+			name: 'Delta',
+			color: _PURPLE,
+			data: [0]
 		}
-	];
+	}
 
 
+	$scope.powerBandSeries = {'Muse': {}, 'OpenBCI': {}};
+
+	for (var i in _MUSE_METRICS){
+		var metric = _MUSE_METRICS[i];
+		$scope.powerBandSeries['Muse'][metric] = powerBandSeriesInit; 
+	};
+	for (var i in _OBCI_METRICS){
+		var metric = _OBCI_METRICS[i];
+		$scope.powerBandSeries['OpenBCI'][metric] = powerBandSeriesInit; 
+	};	
+
+	console.log($scope.powerBandSeries);
 
 
 	/*-------------*
@@ -82,10 +130,7 @@ app.controller('mainScreenController', ['$scope', '$interval', function ($scope,
 
 	*--------------*/
 
-	// keep track of the charts we're showing
-	$scope.chartsToShow = {};
-
-	/*
+		/*
 	Example of how chartsToShow will be populated. Keys are the metric ID from above ˆˆˆ
 
 		$scope.chartsToShow = {
@@ -103,6 +148,8 @@ app.controller('mainScreenController', ['$scope', '$interval', function ($scope,
 
 
 
+	// keep track of the charts we're showing
+	$scope.chartsToShow = {};
 
 
 	// add or remove chart from chartsToShow, depending of wether the chart is laready being displayed or not.
@@ -122,71 +169,41 @@ app.controller('mainScreenController', ['$scope', '$interval', function ($scope,
 
 	/*-------------*
 
-	  DRAW CHARTS
+	  CHARTS CONFIG
 
 	*--------------*/
 
 
-	$scope.chartSeries =  {
-		'lowAnomaly': 
-		{
-			type: 'column',
-			name:'Low Anomaly',
-			color: _GREEN,
-			data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-		},
-		'mediumAnomaly': 
-		{
-			type: 'column',
-			name:'Medium Anomaly',
-			color: _ORANGE,
-			data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-		},  
-		'highAnomaly':               
-		{
-			type: 'column',
-			name:'High Anomaly',
-			color: _RED,
-			data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-		},
-		'metricValue': 
-		{
-			type: 'spline',
-			name: 'Metric Value',
-			data: [1,2,3,4,5,6,7,8,9,1,1,2,3,4,5,6,7,8,9,1],
-			color: _BLUE
-		}
-	};
 
-
-
-
-	$scope.chartConfig = function(fileName, metricName) {
+	$scope.powerBandsConfig = function(fileName, metricName) {
 
 		return {
 
-			series: $scope.chartSeries,
+			series: $scope.powerBandSeries[fileName][metricName],
 			title: {
 				text: null,
 			},
-			c_REDits: {
+			credits: {
 				enabled: false
 			},
 			loading: false,
 			options:
 			{
-				c_REDits: false,
-				title:{
-					//text: null
+
+				chart: {
+					polar: true,
+					type: 'line'
 				},
+
 				tooltip:{
-					enabled: false,
-					animation: false
+					enabled: true,
+					animation: true
 				},
-				plotOptions: {
-					series: {
-						stacking: 'normal'
-					}
+				xAxis:{
+					labels:{
+						enabled: false
+					},
+
 				},
 				yAxis:{
 					lineWidth:0,
@@ -195,7 +212,7 @@ app.controller('mainScreenController', ['$scope', '$interval', function ($scope,
 					max:15,
 					min:0,
 					labels:{
-						enabled:false
+						enabled: false
 					},
 					title: ''
 				},
@@ -208,35 +225,50 @@ app.controller('mainScreenController', ['$scope', '$interval', function ($scope,
 
 	};
 
-	/*
-	$interval(function () {
 
-		//var x = (new Date()).getTime();
-		var anomalyLikelihood = Math.random() * 10;
-		var metricValue = Math.random() * 10 ;
 
-		var highAnomalyValue = 0;
-		var mediumAnomalyValue = 0;
-		var lowAnomalyValue = 0;
-		if (anomalyLikelihood >= 8) {
-			highAnomalyValue = _HIGH_ANOMALY_AMPLITUDE;
-		} else if ((5<=anomalyLikelihood) && (anomalyLikelihood<8)) {
-			mediumAnomalyValue = _MEDIUM_ANOMALY_AMPLITUDE;
-		} else {
-			lowAnomalyValue = _LOW_ANOMALY_AMPLITUDE;
-		}
+	/*-------------*
 
-		$scope.chartSeries['lowAnomaly'].data.shift();
-		$scope.chartSeries['lowAnomaly'].data.push(lowAnomalyValue);
-		$scope.chartSeries['mediumAnomaly'].data.shift();
-		$scope.chartSeries['mediumAnomaly'].data.push(mediumAnomalyValue);
-		$scope.chartSeries['highAnomaly'].data.shift();
-		$scope.chartSeries['highAnomaly'].data.push(highAnomalyValue);
-		$scope.chartSeries['metricValue'].data.shift();
-		$scope.chartSeries['metricValue'].data.push(metricValue);
+	PYTHON
 
-	}, 200);
-*/
+	*--------------*/
+
+
+	var path = require('path');
+
+	// call python
+	var cmd = path.join(__dirname, 'python', 'dist', 'mock_connector', 'mock_connector');
+	var child = require('child_process').execFile(cmd, [""], function(err, stdout,stderr){
+	});
+
+	console.log('Executed cmd: ' + cmd);
+
+
+	// use event hooks to provide a callback to execute when data are available: 
+	child.stdout.on('data', function(data) {
+		var record = JSON.parse(data);
+
+		for (var k in _MUSE_METRICS){
+			var metric = _MUSE_METRICS[k];
+			for (var i in _POWER_BANDS){
+				var powerBand = _POWER_BANDS[i];
+				$scope.powerBandSeries['Muse'][metric][powerBand].data.shift();
+				$scope.powerBandSeries['Muse'][metric][powerBand].data.push(record[metric][powerBand]['value']);
+			};
+		};
+
+
+		for (var k in _OBCI_METRICS){
+			var metric = _OBCI_METRICS[k];
+			for (var i in _POWER_BANDS){
+				var powerBand = _POWER_BANDS[i];
+				$scope.powerBandSeries['OpenBCI'][metric][powerBand].data.shift();
+				console.log(record[metric] + " : "+record[metric]['alpha']);
+				$scope.powerBandSeries['OpenBCI'][metric][powerBand].data.push(record[metric][powerBand]['value']);
+			};
+		};
+
+	});
 
 }]);
 

@@ -14,7 +14,7 @@
 * Change to your RabbitMQ directory. 
 * Start RabbitMQ: `sh sbin/rabbit-server start`
 
-#### Start the Connector
+#### Start the Publisher
 * [TODO] Describe how to start the various connectors.
 
 #### Start Cassandra

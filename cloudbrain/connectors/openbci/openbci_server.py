@@ -10,11 +10,18 @@ logging.basicConfig()
 
 from openbci_v3 import OpenBCIBoard
 
+_DEVICE_NAME = 'openbci'
+_DEVICE_ID = 'openbci_mock'
+_HOST = 'localhost'
+_EXCHANGE_TYPE = 'direct'
+
+
 connection = pika.BlockingConnection(pika.ConnectionParameters(
-        host='localhost'))
+        host=_HOST))
 channel = connection.channel()
 
-channel.queue_declare(queue='openbci', durable=True)
+channel.exchange_declare(exchange=_DEVICE_NAME,
+                         type=_EXCHANGE_TYPE)
   
 count = 0
 messages = []
@@ -27,8 +34,8 @@ def handle_sample(sample):
   message['timestamp'] = int(time.time() * 1000)
   
   if count % 100 == 0:
-    channel.basic_publish(exchange='openbci',
-                      routing_key='openbci',
+    channel.basic_publish(exchange=_DEVICE_NAME,
+                      routing_key=_DEVICE_ID,
                       body=json.dumps(messages),
                       properties=pika.BasicProperties(
                          delivery_mode = 2, # make message persistent
@@ -40,19 +47,9 @@ def handle_sample(sample):
   count += 1
   
 
-  '''
-  
-  channel.basic_publish(exchange='openbci',
-                      routing_key='openbci',
-                      body=message,
-                      properties=pika.BasicProperties(
-                         delivery_mode = 2, # make message persistent
-                      ))
-                      
-  '''
 
 
-board = OpenBCIBoard(port='/dev/tty.usbserial-DN0094CZ')
+board = OpenBCIBoard(port='/dev/tty.OpenBCI-DN0094CZ')
 
 try:
   board.start(handle_sample)
