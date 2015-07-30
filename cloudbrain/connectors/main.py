@@ -1,8 +1,8 @@
-from openbci_connector import OpenBCIConnector as Connector
+from muse_connector import MuseConnector as Connector
 from pika_publisher import PikaPublisher as Publisher
 
-_DEVICE_ID = "mock_device"
-_DEVICE_NAME = "openbci"
+_DEVICE_ID = "my_device"
+_DEVICE_NAME = "muse"
 _HOST = "localhost"
 _BUFFER_SIZE = 100
 
