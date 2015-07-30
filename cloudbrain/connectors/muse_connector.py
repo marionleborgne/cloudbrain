@@ -2,6 +2,7 @@ from connector import Connector
 from cloudbrain.connectors.muse.muse_server import MuseServer
 import time
 import sys
+import json
 
 """
 To start MuseIO, open a terminal or command prompt and type:
@@ -27,7 +28,10 @@ class MuseConnector(Connector):
     :return:
     """
     
-    callback_functions = { 'eeg' : self._eeg_callback}
+    callback_functions = { 'eeg' : self._eeg_callback,
+                           'concentration': self._do_nothing,
+                           'mellow': self._do_nothing,
+                           'horseshoe': self._do_nothing}
 
     
     self.device = MuseServer(self.device_port, callback_functions)
@@ -41,18 +45,20 @@ class MuseConnector(Connector):
         sys.exit()
     
     
-  def _eeg_callback(self, sample):
+  def _eeg_callback(self, raw_sample):
     """
     Callback function handling Muse samples
     :return:
     """
+    sample = json.loads(raw_sample)
+    path = sample[0]
+    data = sample[1]
     
-    message = {"channel_%s" % i: sample[i] for i in xrange(4)}
+    message = {"channel_%s" % i: data[i] for i in xrange(4)}
     message['timestamp'] = int(time.time() * 1000)
     
     self.buffer.write(message)
       
       
-
-
-
+  def _do_nothing(self, sample):
+    pass
