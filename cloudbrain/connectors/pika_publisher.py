@@ -25,6 +25,8 @@ class PikaPublisher(Publisher):
   def __init__(self, device_name, device_id, host):
     
     super(PikaPublisher, self).__init__(device_name, device_id, host)
+    self.connection = None
+    self.channel = None
 
 
   def publish(self, buffer_content):

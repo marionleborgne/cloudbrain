@@ -13,8 +13,7 @@ class Publisher(object):
     self.device_name = device_name
     self.device_id = device_id
     self.host = host
-    self.connection = None
-    self.channel = None
+  
     
     
   @abstractmethod
