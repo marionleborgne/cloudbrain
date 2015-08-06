@@ -58,7 +58,7 @@ SensorTag.discover(function(sensorTag) {
 				z = raw[2]-256*(raw[2]>127);
 
 				g = Math.sqrt((x*x)+(y*y)+(z*z));
-				pubAcc.write(JSON.stringify({x: x, y:y, z:z}), 'utf8');
+						pubAcc.write(JSON.stringify({x: x, y:y, z:z}), 'utf8');
 
 				timestamp = new Date().getTime();
 				fileLine = timestamp + ',' +  x + ',' + y + ',' + z + ',' + g + ',' + raw[0] + ',' + raw[1] + ',' + raw[2] + '\n';

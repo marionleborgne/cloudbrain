@@ -1,17 +1,17 @@
 from connector import Connector
-from cloudbrain.connectors.openbci.openbci_v3 import OpenBCIBoard
+from connectors.openbci.openbci_v3 import OpenBCIBoard
 import time
 
 
 class OpenBCIConnector(Connector):
   
   
-  def __init__(self, publisherInstance, buffer_size, device_port='/dev/tty.OpenBCI-DN0094CZ'):
+  def __init__(self, publisherInstance, buffer_size, device_type='openbci', device_port='/dev/tty.OpenBCI-DN0094CZ'):
     """
     
     :return:
     """
-    super(OpenBCIConnector, self).__init__(publisherInstance, buffer_size, 'openbci', device_port)
+    super(OpenBCIConnector, self).__init__(publisherInstance, buffer_size, device_type, device_port)
 
 
 

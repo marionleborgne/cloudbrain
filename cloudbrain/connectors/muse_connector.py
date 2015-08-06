@@ -1,5 +1,5 @@
 from connector import Connector
-from cloudbrain.connectors.muse.muse_server import MuseServer
+from connectors.muse.muse_server import MuseServer
 import time
 import sys
 import json
@@ -13,12 +13,12 @@ muse-io --osc osc.udp://localhost:9090
 class MuseConnector(Connector):
   
   
-  def __init__(self, publisherInstance, buffer_size, device_port='9090'):
+  def __init__(self, publisherInstance, buffer_size, device_type='muse', device_port='9090'):
     """
     
     :return:
     """
-    super(MuseConnector, self).__init__(publisherInstance, buffer_size, 'muse', device_port)
+    super(MuseConnector, self).__init__(publisherInstance, buffer_size, device_type, device_port)
 
 
 
@@ -53,12 +53,25 @@ class MuseConnector(Connector):
     sample = json.loads(raw_sample)
     path = sample[0]
     data = sample[1]
-    
     message = {"channel_%s" % i: data[i] for i in xrange(4)}
-    message['timestamp'] = int(time.time() * 1000)
+    message['timestamp'] = int(time.time() * 1000000)
     
+    self.buffer.write(message)
+    
+  def _mellow_callback(self, raw_sample):
+    """
+    Callback function handling Muse samples
+    :return:
+    """
+    sample = json.loads(raw_sample)
+    path = sample[0]
+    data = sample[1]
+    message = {"mellow": data[0], 'timestamp': int(time.time() * 1000000)}
+
     self.buffer.write(message)
       
       
   def _do_nothing(self, sample):
     pass
+
+  

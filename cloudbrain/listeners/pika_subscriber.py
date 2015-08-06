@@ -39,20 +39,25 @@ class PikaSubscriber(Subscriber):
   def consume_messages(self, callback):
     self.channel.basic_consume(callback,
                       queue=self.queue_name,
+                      exclusive=True,
                       no_ack=True)
 
     self.channel.start_consuming()
     
 
+  def get_one_message(self):
+    for method, properties, body in self.channel.consume(self.queue_name, exclusive=True, no_ack=True):
+      return body
 
 def _print_message(ch, method, properties, body):
   print body
+
     
 if __name__ == "__main__":
   subscriber = PikaSubscriber(_DEVICE_NAME, _DEVICE_ID, _HOST)
   subscriber.connect()
-  subscriber.consume_messages(_print_message)
-
+  #subscriber.consume_messages(_print_message)
+  print subscriber.get_one_message()
 
 
 
