@@ -1,0 +1,27 @@
+.bs-example{
+  margin: 20px;
+}
+
+.label-as-badge {
+    border-radius: 1em;
+    font-size: 90%;
+}
+
+body {
+    margin:50px; 
+    background-image: url("../images/pattern-white.png")
+}
+
+
+accordion .accordion-toggle {
+    outline: none;
+}
+
+
+.panel-danger > .panel-heading {
+  color: #FFF;
+  background-color: #ec971f;
+}
+
+
+
