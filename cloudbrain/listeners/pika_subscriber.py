@@ -22,13 +22,13 @@ class PikaSubscriber(Subscriber):
       host=self.host))
     self.channel = self.connection.channel()
 
-    self.channel.exchange_declare(exchange=self.device_name,
+    self.channel.exchange_declare(exchange=self.device_id,
                                   type='direct')
 
     self.queue_name = self.channel.queue_declare(exclusive=True).method.queue
     
     
-    self.channel.queue_bind(exchange=self.device_name,
+    self.channel.queue_bind(exchange=self.device_id,
                    queue=self.queue_name,
                    routing_key=self.device_id)
 

@@ -23,7 +23,7 @@ class PikaPublisher(Publisher):
 
 
   def publish(self, buffer_content):
-    self.channel.basic_publish(exchange=self.device_name,
+    self.channel.basic_publish(exchange=self.device_id,
                                routing_key=self.device_id,
                                body=json.dumps(buffer_content),
                                properties=pika.BasicProperties(
@@ -37,7 +37,7 @@ class PikaPublisher(Publisher):
       host=self.host, credentials=credentials))
     self.channel = self.connection.channel()
 
-    self.channel.exchange_declare(exchange=self.device_name,
+    self.channel.exchange_declare(exchange=self.device_id,
                                   type='direct')
 
   def disconnect(self):

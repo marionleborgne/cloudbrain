@@ -10,8 +10,8 @@ def parse_args():
 
   parser = argparse.ArgumentParser()
 
-  parser.add_argument('--userId', required=True,
-                      help="Your unique user ID. For example: 'octopicorn2015'")
+  parser.add_argument('--deviceId', required=True,
+                      help="A unique ID to identify the device you are sending data from. For example: 'octopicorn2015'")
   parser.add_argument('--mock', action='store_true', required=False,
                       help="Use this flag to generate mock data for a supported device name %s" % _SUPPORTED_DEVICES)
   parser.add_argument('--deviceName', required=True,
@@ -32,7 +32,7 @@ def main():
   opts = parse_args()
   mock_data_enabled = opts.mock
   device_name = opts.deviceName
-  user_id = opts.userId
+  device_id = opts.deviceId
   cloudbrain_address = opts.cloudbrain
   buffer_size = opts.bufferSize
 
@@ -46,7 +46,7 @@ def main():
   if mock_data_enabled:
     from cloudbrain.connectors.mock_connector import MockConnector as Connector
 
-  publisher = Publisher(device_name, user_id, cloudbrain_address)
+  publisher = Publisher(device_name, device_id, cloudbrain_address)
   publisher.connect()
   connector = Connector(publisher, buffer_size, device_name)
   connector.connectDevice()
