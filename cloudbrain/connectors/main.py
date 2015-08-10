@@ -25,7 +25,7 @@ def parse_args():
   parser.add_argument('--devicePort', help="Port used for OpenBCI Device.")
   opts = parser.parse_args()
   if opts.deviceName == "openbci" and opts.devicePort not in opts:
-    parser.error("you have to specify a port for the OpenBCI device!")
+    parser.error("You have to specify a port for the OpenBCI device!")
   return opts
 
 
