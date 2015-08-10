@@ -2,19 +2,12 @@ __author__ = 'marion'
 
 import json
 import pika
-import sys
-import time
 
 import logging
 
 logging.basicConfig()
 
 from publisher import Publisher
-
-_DEVICE_NAME = 'openbci'
-_DEVICE_ID = 'openbci_mock'
-_HOST = 'localhost'
-_EXCHANGE_TYPE = 'direct'
 
 
 class PikaPublisher(Publisher):
@@ -38,8 +31,10 @@ class PikaPublisher(Publisher):
                                ))
 
   def connect(self):
+    credentials = pika.PlainCredentials('cloudbrain', 'cloudbrain')
+
     self.connection = pika.BlockingConnection(pika.ConnectionParameters(
-      host=self.host))
+      host=self.host, credentials=credentials))
     self.channel = self.connection.channel()
 
     self.channel.exchange_declare(exchange=self.device_name,
