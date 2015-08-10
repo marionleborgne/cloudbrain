@@ -6,20 +6,14 @@ import pika
 import json
 import importlib
 
-from nupic.frameworks.opf.modelfactory import ModelFactory
-
-# to get the anomaly likelihood
-from nupic.algorithms import anomaly_likelihood 
-anomalyLikelihood = anomaly_likelihood.AnomalyLikelihood()
-
-SENSOR = 'acc'
-METRICS = ['x', 'y', 'z']
-COLUMNS = ['metric_value', 'prediction', 'anomaly_score', 'anomaly_likelihood']
-SENSOR_ID = '869102e418344394a63ee6e00a989c36'
+SENSOR = 'muse'
+METRICS = ['egg']
+COLUMNS = ['channel_0', 'channel_1', 'channel_2', 'channel_3']
+SENSOR_ID = 'my_muse'
 
 # configure cassandra cluster
 cluster = Cluster()
-session = cluster.connect('sensordata')
+session = cluster.connect('cloudbrain')
 
 # configure and connect RabbitMQ
 connection = pika.BlockingConnection(pika.ConnectionParameters(
@@ -45,28 +39,8 @@ def getModelParamsFromName(metric_name):
 def callback(ch, method, properties, body):
   timestamp = int(time.time() * 1000)
   data = json.loads(body)
-  for metric in METRICS:
-    metric_value = data[metric]
-    (metric_value, prediction, anomalyScore, anomalyLikelihood) = run_model(metric, metric_value)
-    store_data(timestamp, metric, metric_value, prediction, anomalyScore, anomalyLikelihood)
+  store_data(timestamp, metric, metric_value, prediction, anomalyScore, anomalyLikelihood)
 
-
-def run_model(timestamp, metric_value):
-  metric_value = float(metric_value)
-  result = model.run({
-    "metric_value": metric_value
-  })
-
-  prediction = result.inferences["multiStepBestPredictions"][1]
-  anomalyScore = result.inferences["anomalyScore"]
-  
-  likelihood = anomalyLikelihood.anomalyProbability(
-     metric_value, anomalyScore
-  )
-  return metric_value, prediction, anomalyScore, likelihood
-
-
-      
 
 def store_data(timestamp, metric, metric_value, prediction, anomalyScore, anomalyLikelihood):
   column_values = "'%s', %s, %s, %s, %s, %s" % (SENSOR_ID, timestamp, metric_value, prediction, anomalyScore, anomalyLikelihood)
@@ -78,16 +52,10 @@ def store_data(timestamp, metric, metric_value, prediction, anomalyScore, anomal
 
   try:
     session.execute(cql_insert)
-    #print cql_insert
   except:
     print "DEBUG: CQL insert: %s" % cql_insert
       
 
-  
-
-# configure nupic model
-model = ModelFactory.create(getModelParamsFromName(SENSOR))
-model.enableInference({"predictedField": "metric_value"})
 
 channel.basic_consume(callback,
                       queue=queue_name,

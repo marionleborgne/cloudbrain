@@ -10,7 +10,7 @@ To create the schema, run: ./cqlsh -f <path_to_file>/cassandra_schema.cql
 import sys
 from os.path import dirname, abspath, realpath
 sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
-from cloudbrain.settings import DEVICE_METADATA
+from settings import DEVICE_METADATA
 
 
 # template for keyspace creation  
