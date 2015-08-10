@@ -1,5 +1,6 @@
 from connector import Connector
-from connectors.muse.muse_server import MuseServer
+from cloudbrain.connectors.muse.muse_server import MuseServer
+from cloudbrain.connectors.pika_publisher import PikaPublisher
 import time
 import sys
 import json
@@ -74,4 +75,15 @@ class MuseConnector(Connector):
   def _do_nothing(self, sample):
     pass
 
-  
+if __name__ == "__main__":
+
+  _DEVICE_ID = "my_device"
+  _DEVICE_NAME = "openbci"
+  _HOST = "localhost"
+  _BUFFER_SIZE = 10
+
+  publisher = PikaPublisher(_DEVICE_NAME, _DEVICE_ID, _HOST)
+  publisher.connect()
+  connector = MuseConnector(publisher, _BUFFER_SIZE, _DEVICE_NAME)
+  connector.connectDevice()
+  connector.start()

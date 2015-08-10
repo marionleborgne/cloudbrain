@@ -1,5 +1,5 @@
-from connectors.muse_connector import MuseConnector as Connector
-from connectors.pika_publisher import PikaPublisher as Publisher
+from cloudbrain.connectors.muse_connector import MuseConnector as Connector
+from cloudbrain.connectors.pika_publisher import PikaPublisher as Publisher
 
 _DEVICE_ID = "my_device"
 _DEVICE_NAME = "openbci"
