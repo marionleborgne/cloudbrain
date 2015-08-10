@@ -1,3 +1,4 @@
+#!/usr/bin/python2.7
 from cloudbrain.connectors.pika_publisher import PikaPublisher as Publisher
 from cloudbrain.settings import DEVICE_METADATA
 import argparse
@@ -11,6 +12,8 @@ def parse_args():
 
   parser.add_argument('--userId', required=True,
                       help="Your unique user ID. For example: 'octopicorn2015'")
+  parser.add_argument('--mock', action='store_true', required=False,
+                      help="Use this flag to generate mock data for a supported device name %s" % _SUPPORTED_DEVICES)
   parser.add_argument('--deviceName', required=True,
                       help="The name of the device your are sending data from. Supported devices are: %s" %_SUPPORTED_DEVICES)
   parser.add_argument('--cloudbrain', default='cloudbrain.rocks',
@@ -27,8 +30,9 @@ def parse_args():
 def main():
 
   opts = parse_args()
+  mock_data_enabled = opts.mock
   device_name = opts.deviceName
-  device_id = opts.userId
+  user_id = opts.userId
   cloudbrain_address = opts.cloudbrain
   buffer_size = opts.bufferSize
 
@@ -36,12 +40,13 @@ def main():
     from cloudbrain.connectors.muse_connector import MuseConnector as Connector
   elif device_name == 'openbci':
     from cloudbrain.connectors.openbci_connector import OpenBCIConnector as Connector
-  elif device_name == 'mock':
-    from cloudbrain.connectors.mock_connector import MockConnector as Connector
   else:
-    raise Exception("Device type '%s' not supported. Suported devices are:%s" %(device_name, _SUPPORTED_DEVICES))
+    raise Exception("Device type '%s' not supported. Supported devices are:%s" %(device_name, _SUPPORTED_DEVICES))
 
-  publisher = Publisher(device_name, device_id, cloudbrain_address)
+  if mock_data_enabled:
+    from cloudbrain.connectors.mock_connector import MockConnector as Connector
+
+  publisher = Publisher(device_name, user_id, cloudbrain_address)
   publisher.connect()
   connector = Connector(publisher, buffer_size, device_name)
   connector.connectDevice()
