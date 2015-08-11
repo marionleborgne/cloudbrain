@@ -1,21 +1,22 @@
 from connector import Connector
 from cloudbrain.connectors.openbci.openbci_v3 import OpenBCIBoard
 import time
+from cloudbrain.utils.metadata_info import map_metric_to_num_channels
 
 
 class OpenBCIConnector(Connector):
 
 
-  def __init__(self, publisherInstance, buffer_size, device_type='openbci', device_port='/dev/tty.OpenBCI-DN0094CZ'):
+  def __init__(self, publishers, buffer_size, device_type='openbci', device_port='/dev/tty.OpenBCI-DN0094CZ'):
     """
 
     :return:
     """
-    super(OpenBCIConnector, self).__init__(publisherInstance, buffer_size, device_type, device_port)
+    super(OpenBCIConnector, self).__init__(publishers, buffer_size, device_type, device_port)
 
 
 
-  def connectDevice(self):
+  def connect_device(self):
     """
 
     :return:
@@ -24,21 +25,30 @@ class OpenBCIConnector(Connector):
     self.device = OpenBCIBoard(port=self.device_port)
 
   def start(self):
-    self.device.start(self._handle_sample)
+
+    # callback functions to handle the sample for that metric (each metric has a specific number of channels)
+    metric_to_num_channels = map_metric_to_num_channels(self.device_name)
+    cb_functions = {metric: self.callback_factory(metric, metric_to_num_channels[metric]) for metric in self.metrics}
+
+    self.device.start(cb_functions)
 
 
-  def _handle_sample(self, sample):
+  def callback_factory(self, metric_name, num_args):
     """
-    Callback function handling OpenBCI samples
-    :return:
+    Callback function generator for OpenBCI metrics
+    :return: callback function
     """
+    def callback(sample):
+      """
+      Handle OpenBCI samples for that metric
+      :param sample: the sample to handle
+      """
+      message = {"channel_%s" % i: sample.channel_data[i] for i in xrange(num_args)}
+      message['timestamp'] = int(time.time() * 1000)
 
-    message = {"channel_%s" % i: sample.channel_data[i] for i in xrange(8)}
-    message['timestamp'] = int(time.time() * 1000)
+      self.buffers[metric_name].write(message)
 
-    self.buffer.write(message)
-
-
+    return callback
 
 
 

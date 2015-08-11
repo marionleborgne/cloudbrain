@@ -64,12 +64,12 @@ class OpenBCIBoard(object):
     while self.streaming:
       print(struct.unpack('B',self.ser.read())[0]);
 
-  def start(self, callback):
+  def start(self, callback_functions):
     """
     Start handling streaming data from the board. Call a provided callback
     for every single sample that is processed.
 
-    :param callback: A callback function that will receive a single argument of the
+    :param callback_functions: callback functions that will receive a single argument of the
           OpenBCISample object captured.
     """
     if not self.streaming:
@@ -78,7 +78,8 @@ class OpenBCIBoard(object):
 
     while self.streaming:
       sample = self._read_serial_binary()
-      callback(sample)
+      for callback_function in callback_functions:
+        callback_function(sample)
 
 
   def stop(self):

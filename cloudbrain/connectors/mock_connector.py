@@ -1,55 +1,49 @@
 from connector import Connector
 import time
 import random
+from cloudbrain.utils.metadata_info import map_metric_to_num_channels
 
 
 class MockConnector(Connector):
   
   
-  def __init__(self, publisherInstance, buffer_size, device_name, device_port='mock_port'):
+  def __init__(self, publishers, buffer_size, device_name, device_port='mock_port'):
     """
     
     :return:
     """
-    super(MockConnector, self).__init__(publisherInstance, buffer_size, device_name, device_port)
-    self.mock_generators = {'openbci': self._generate_OpenBCI_data,
-                       'muse': self._generate_Muse_data}
+    super(MockConnector, self).__init__(publishers, buffer_size, device_name, device_port)
+    metric_to_num_channels = map_metric_to_num_channels(self.device_name)
+    self.data_generators = [self.data_generator_factory(metric, metric_to_num_channels[metric]) for metric in self.metrics]
     
     
-  def connectDevice(self):
+  def connect_device(self):
     """
     Mock connector so actually, don't do anything there :-)  
     :return:
     """
-    
     pass
   
     
   def start(self):
     
     while 1:
-      self._generate_data()
+      for data_generator in self.data_generators:
+        data_generator()
+      time.sleep(0.1)
+
+
+  def data_generator_factory(self, metric_name, num_channels):
+
+    def data_generator():
+
+      message = {"channel_%s" % i: random.random() * 10 for i in xrange(num_channels)}
+      message['timestamp'] = int(time.time() * 1000)
+
+      self.buffers[metric_name].write(message)
+
+    return data_generator
     
-   
-  def _generate_OpenBCI_data(self):
-    message = {"channel_%s" % i: random.random() * 10 for i in xrange(8)}
-    message['timestamp'] = int(time.time() * 1000)
-    return message
-  
-  
-  def _generate_Muse_data(self):
-    message = {"channel_%s" % i: random.random() * 10 for i in xrange(4)}
-    message['timestamp'] = int(time.time() * 1000)
-    return message
-     
-    
-    
-  def _generate_data(self):
-    """
-    Just generate data
-    :return:
-    """
-  
-    self.buffer.write(self.mock_generators[self.device_name]())
+
       
       

@@ -1,46 +1,58 @@
 from connector import Connector
 from cloudbrain.connectors.muse.muse_server import MuseServer
+from cloudbrain.utils.metadata_info import map_metric_to_num_channels
 import time
 import sys
 import json
+import subprocess
 
 
-class _unable_to_start_museIO(Exception):
-  pass
+
+class UnableToStartMuseIO(Exception):
+    pass
+
+
+def connect_muse(port=9090):
+    """
+    Starts muse-io to pair with a muse.
+    @param port (int)
+        Port used to pair the Muse.
+
+    """
+    cmd = ["muse-io", "--osc", "osc.udp://localhost:%s" %port]
+
+    print "\nRunning command: %s" %" ".join(cmd)
+
+    try:
+      muse_process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+    except OSError:
+      raise UnableToStartMuseIO("No able to start muse-io." + \
+            "Muse-io is not installed. Go to http://choosemuse.com for more info.")
+
+    while True: # look for museIO running keywords
+      line = muse_process.stdout.readline()
+      if line != '':
+        if "OSC messages will be emitted" in line:
+          break
+      else:
+        # muse-io not not running or installed
+        raise UnableToStartMuseIO("No able to start muse-io. Go to http://choosemuse.com for more info.")
+    print "Success: MuseIO is running!"
 
 
 class MuseConnector(Connector):
-  def __init__(self, publisherInstance, buffer_size, device_type='muse', device_port='9090'):
-    """
-    
-    :return:
-    """
-    super(MuseConnector, self).__init__(publisherInstance, buffer_size, device_type, device_port)
+  def __init__(self, publishers, buffer_size, device_name='muse', device_port='9090'):
+    super(MuseConnector, self).__init__(publishers, buffer_size, device_name, device_port)
 
+  def connect_device(self):
 
-  def connectDevice(self):
-    """
-    
-    :return:
-    """
+    connect_muse(port=self.device_port)
 
-    # Start museIO
-    try:
-      pass # read: http://stackoverflow.com/questions/89228/calling-an-external-command-in-python
-      # TODO: run the command muse-io --osc osc.udp://localhost:9090
-    except Exception:
-      # TODO: replace Exception by better exception
-      raise _unable_to_start_museIO(
-        "Unable to start MuseIO. Make sure it is installed or not already running.\n "
-        "Read the Muse docs: https://sites.google.com/a/interaxon.ca/muse-developer-site/museio"
-      )
+    # callback functions to handle the sample for that metric (each metric has a specific number of channels)
+    metric_to_num_channels = map_metric_to_num_channels(self.device_name)
+    cb_functions = {metric: self.callback_factory(metric, metric_to_num_channels[metric]) for metric in self.metrics}
 
-    callback_functions = {'eeg': self._eeg_callback,
-                          'concentration': self._do_nothing,
-                          'mellow': self._do_nothing,
-                          'horseshoe': self._do_nothing}
-
-    self.device = MuseServer(self.device_port, callback_functions)
+    self.device = MuseServer(self.device_port, cb_functions)
 
   def start(self):
     try:
@@ -51,33 +63,23 @@ class MuseConnector(Connector):
       sys.exit()
 
 
-  def _eeg_callback(self, raw_sample):
+  def callback_factory(self, metric_name, num_args):
     """
-    Callback function handling Muse samples
-    :return:
+    Callback function generator for Muse metrics
+    :return: callback function
     """
-    sample = json.loads(raw_sample)
-    path = sample[0]
-    data = sample[1]
-    message = {"channel_%s" % i: data[i] for i in xrange(4)}
-    message['timestamp'] = int(time.time() * 1000000)
+    def callback(raw_sample):
+      """
+      Handle muse samples for that metrics
+      :param raw_sample: the muse sample to handle
+      """
+      sample = json.loads(raw_sample)
+      data = sample[1]
+      message = {"channel_%s" % i: data[i] for i in xrange(num_args)}
+      message['timestamp'] = int(time.time() * 1000000)
 
-    self.buffer.write(message)
+      self.buffers[metric_name].write(message)
 
-  def _mellow_callback(self, raw_sample):
-    """
-    Callback function handling Muse samples
-    :return:
-    """
-    sample = json.loads(raw_sample)
-    path = sample[0]
-    data = sample[1]
-    message = {"mellow": data[0], 'timestamp': int(time.time() * 1000000)}
-
-    self.buffer.write(message)
-
-
-  def _do_nothing(self, sample):
-    pass
+    return callback
 
 

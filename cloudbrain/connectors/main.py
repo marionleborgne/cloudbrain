@@ -2,6 +2,7 @@
 from cloudbrain.connectors.pika_publisher import PikaPublisher as Publisher
 from cloudbrain.settings import DEVICE_METADATA
 import argparse
+from cloudbrain.utils.metadata_info import get_metrics_names
 
 _SUPPORTED_DEVICES = [device['device_name'] for device in DEVICE_METADATA]
 
@@ -39,6 +40,21 @@ def main():
   buffer_size = opts.bufferSize
   device_port = opts.devicePort
 
+  run(device_name,
+      mock_data_enabled,
+      device_id,
+      cloudbrain_address,
+      buffer_size,
+      device_port)
+  
+
+def run(device_name='muse',
+         mock_data_enabled=True,
+         device_id='test',
+         cloudbrain_address='cloudbrain.rocks',
+         buffer_size=10,
+         device_port='/dev/tty.OpenBCI-DN0094CZ'):
+
   if device_name == 'muse':
     from cloudbrain.connectors.muse_connector import MuseConnector as Connector
   elif device_name == 'openbci':
@@ -49,16 +65,17 @@ def main():
   if mock_data_enabled:
     from cloudbrain.connectors.mock_connector import MockConnector as Connector
 
-  publisher = Publisher(device_name, device_id, cloudbrain_address)
-  publisher.connect()
+  metrics = get_metrics_names(device_name)
+  publishers = {metric: Publisher(device_name, device_id, cloudbrain_address, metric) for metric in metrics}
+  for publisher in publishers.values():
+    publisher.connect()
   if device_name == 'openbci':
-    connector = Connector(publisher, buffer_size, device_name, device_port)
+    connector = Connector(publishers, buffer_size, device_name, device_port)
   else:
-    connector = Connector(publisher, buffer_size, device_name)
-  connector.connectDevice()
+    connector = Connector(publishers, buffer_size, device_name)
+  connector.connect_device()
   connector.start()
 
-
-
 if __name__ == "__main__":
-  main()
+  #main()
+  run()
