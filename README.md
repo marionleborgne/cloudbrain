@@ -9,7 +9,6 @@ CloudBrain enables you to:
 - **Analyze EEG data** by computing aggregates.
 - **Visualize EEG data** and patterns in real-time.
 
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain-building-blocks.png)
 # Getting started with Cloudbrain
 
 ## Option 1: Quick-start!
