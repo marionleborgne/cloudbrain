@@ -77,5 +77,5 @@ def run(device_name='muse',
   connector.start()
 
 if __name__ == "__main__":
-  #main()
-  run()
+  main()
+  #run()
