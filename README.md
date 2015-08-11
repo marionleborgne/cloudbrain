@@ -72,13 +72,7 @@ This makes use of the demo version of cloudbrain running at `http://cloudbrain.r
 CloudBrain was in use at the Exploratorium as part of the Exhibit called [*Cognitive Technologies*](http://www.exploratorium.edu/press-office/press-releases/new-exhibition-understanding-influencing-brain-activity-opens). 
 All the EEG headsets in the exhibit are sending data to CloudBrain. This data is being routed to booths where visitors can control different things with their brain. For visitors who are willing to share their data, CloudBrain computes aggregates and displays a baseline of the average brain. On the central screen, visitors can see everyone else's live EEG data. Each radar chart shows the state of the main brainwaves (alpha, beta, theta, gamma, delta). This is particularly interesting to see how one's brain compares to others, or to understand how it reacts to different stimuli.
 
-## Infrastructure @ [The Exploratorium](http://www.exploratorium.edu/)
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/exploratorium-exhibit-overview.png)
-
-Infrastructure v2.0 
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/infra.png)
-
-## Visualizations
+## Cloudbrain's data visualizations
 
 ### Aggregated data (bar charts)
 ![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/data-aggregates.png)
