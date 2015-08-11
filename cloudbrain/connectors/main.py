@@ -49,7 +49,7 @@ def main():
   publisher = Publisher(device_name, device_id, cloudbrain_address)
   publisher.connect()
   connector = Connector(publisher, buffer_size, device_name)
-  connector.connectDevice()
+  connector.connect_device()
   connector.start()
 
 

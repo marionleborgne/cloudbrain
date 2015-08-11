@@ -15,7 +15,7 @@ class OpenBCIConnector(Connector):
 
 
 
-  def connectDevice(self):
+  def connect_device(self):
     """
 
     :return:

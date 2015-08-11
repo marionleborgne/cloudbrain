@@ -6,28 +6,21 @@ class Connector(object):
   
     __metaclass__ = ABCMeta
   
-    def __init__(self, publisherInstance, buffer_size, device_name, device_port):
+    def __init__(self, publisher_instance, buffer_size, device_name, device_port):
           
       self.device = None
       self.device_port = device_port
-      #TODO: we want to have multiple publishers at some point
-      self.buffer = ConnectorBuffer(buffer_size, publisherInstance.publish) 
-      self.publisherInstance = publisherInstance
+      self.buffer = ConnectorBuffer(buffer_size, publisher_instance.publish)
+      self.publisherInstance = publisher_instance
       self.device_name = device_name
     
       
     @abstractmethod
-    def connectDevice(self):
+    def connect_device(self):
       """
       
       :return:
       """
     
-    #TODO: maybe implement that :-p
-    #@abstractmethod
-    #def registerPublisher(self):
-    #  """
-      
-    #  :return:
-    #  """
+
       

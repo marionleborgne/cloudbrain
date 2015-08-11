@@ -16,7 +16,7 @@ class MockConnector(Connector):
                        'muse': self._generate_Muse_data}
     
     
-  def connectDevice(self):
+  def connect_device(self):
     """
     Mock connector so actually, don't do anything there :-)  
     :return:
