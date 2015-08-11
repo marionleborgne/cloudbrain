@@ -22,8 +22,10 @@ def parse_args():
                            "Otherwise use 'localhost' if running CloudBrain locally")
   parser.add_argument('--bufferSize', default=10,
                       help='Size of the buffer ')
+  parser.add_argument('--devicePort', help="Port used for OpenBCI Device.")
   opts = parser.parse_args()
-
+  if opts.deviceName == "openbci" and opts.devicePort not in opts:
+    parser.error("You have to specify a port for the OpenBCI device!")
   return opts
 
 
@@ -35,6 +37,7 @@ def main():
   device_id = opts.deviceId
   cloudbrain_address = opts.cloudbrain
   buffer_size = opts.bufferSize
+  device_port = opts.devicePort
 
   if device_name == 'muse':
     from cloudbrain.connectors.muse_connector import MuseConnector as Connector
@@ -48,7 +51,10 @@ def main():
 
   publisher = Publisher(device_name, device_id, cloudbrain_address)
   publisher.connect()
-  connector = Connector(publisher, buffer_size, device_name)
+  if device_name == 'openbci':
+    connector = Connector(publisher, buffer_size, device_name, device_port)
+  else:
+    connector = Connector(publisher, buffer_size, device_name)
   connector.connectDevice()
   connector.start()
 
