@@ -1,6 +1,6 @@
 from connector import Connector
 from cloudbrain.connectors.muse.muse_server import MuseServer
-from cloudbrain.utils.map_metric_names import map_metric_to_num_channels
+from cloudbrain.utils.metadata_info import map_metric_to_num_channels
 import time
 import sys
 import json
@@ -33,28 +33,26 @@ def connect_muse(port=9090):
       line = muse_process.stdout.readline()
       if line != '':
         if "OSC messages will be emitted" in line:
-          print "Success: MuseIO is running!"
           break
       else:
         # muse-io not not running or installed
         raise UnableToStartMuseIO("No able to start muse-io. Go to http://choosemuse.com for more info.")
-
-
+    print "Success: MuseIO is running!"
 
 
 class MuseConnector(Connector):
-  def __init__(self, publisher_instance, buffer_size, metric_name, device_name='muse', device_port='9090'):
-    super(MuseConnector, self).__init__(publisher_instance, buffer_size, device_name, device_port)
-    metric_names_to_num_channels = map_metric_to_num_channels(device_name)
-    self.metric_name = metric_name
-    self.num_channels = metric_names_to_num_channels[metric_name]
+  def __init__(self, publishers, buffer_size, device_name='muse', device_port='9090'):
+    super(MuseConnector, self).__init__(publishers, buffer_size, device_name, device_port)
 
   def connect_device(self):
 
     connect_muse(port=self.device_port)
-    # callback function to handle the sample for that metric (each metric has a specific number of channels)
-    callback_function = self.callback_factory(self.num_channels)
-    self.device = MuseServer(self.device_port, callback_function)
+
+    # callback functions to handle the sample for that metric (each metric has a specific number of channels)
+    metric_to_num_channels = map_metric_to_num_channels(self.device_name)
+    cb_functions = {metric: self.callback_factory(metric, metric_to_num_channels[metric]) for metric in self.metrics}
+
+    self.device = MuseServer(self.device_port, cb_functions)
 
   def start(self):
     try:
@@ -65,52 +63,7 @@ class MuseConnector(Connector):
       sys.exit()
 
 
-  '''
-  def _eeg_callback(self, raw_sample):
-    """
-    Callback function handling Muse samples
-    :return:
-    """
-    sample = json.loads(raw_sample)
-    data = sample[1]
-    message = {"channel_%s" % i: data[i] for i in xrange(4)}
-    message['timestamp'] = int(time.time() * 1000000)
-
-    self.buffer.write(message)
-
-  def _hosrseshoe_callback(self, raw_sample):
-    """
-    Callback function handling Muse samples
-    :return:
-    """
-    sample = json.loads(raw_sample)
-    data = sample[1]
-    message = {"channel_%s" % i: data[i] for i in xrange(4)}
-    message['timestamp'] = int(time.time() * 1000000)
-
-    self.buffer.write(message)
-
-  def _one_arg_callback(self, raw_sample):
-    """
-    Callback function handling Muse samples
-    :return:
-    """
-    sample = json.loads(raw_sample)
-    data = sample[1]
-    message = {"channel_0": data[0], 'timestamp': int(time.time() * 1000000)}
-
-    self.buffer.write(message)
-
-  '''
-
-  def _do_nothing(self, sample):
-    """
-    A dummy callback function that does nothing.
-    :param sample: the Muse OSC sample to handle
-    """
-    pass
-
-  def callback_factory(self, num_args):
+  def callback_factory(self, metric_name, num_args):
     """
     Callback function generator for Muse metrics
     :return: callback function
@@ -125,7 +78,7 @@ class MuseConnector(Connector):
       message = {"channel_%s" % i: data[i] for i in xrange(num_args)}
       message['timestamp'] = int(time.time() * 1000000)
 
-      self.buffer.write(message)
+      self.buffers[metric_name].write(message)
 
     return callback
 

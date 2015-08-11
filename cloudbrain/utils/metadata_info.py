@@ -12,3 +12,16 @@ def map_metric_to_num_channels(device_name):
     metric_name_to_num_channels[metric['metric_name']] = metric['num_channels']
 
   return metric_name_to_num_channels
+
+def get_metrics_names(device_name):
+  """
+  Get metric names for a specific device name.
+  :return: list of metric names
+  """
+  metadata = [metadata for metadata in DEVICE_METADATA if metadata['device_name'] == device_name][0]
+
+  metric_names = []
+  for metric in metadata['metrics']:
+    metric_names.append(metric['metric_name'])
+
+  return metric_names

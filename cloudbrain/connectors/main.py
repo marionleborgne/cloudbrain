@@ -2,6 +2,7 @@
 from cloudbrain.connectors.pika_publisher import PikaPublisher as Publisher
 from cloudbrain.settings import DEVICE_METADATA
 import argparse
+from cloudbrain.utils.metadata_info import get_metrics_names
 
 _SUPPORTED_DEVICES = [device['device_name'] for device in DEVICE_METADATA]
 
@@ -22,8 +23,10 @@ def parse_args():
                            "Otherwise use 'localhost' if running CloudBrain locally")
   parser.add_argument('--bufferSize', default=10,
                       help='Size of the buffer ')
+  parser.add_argument('--devicePort', help="Port used for OpenBCI Device.")
   opts = parser.parse_args()
-
+  if opts.deviceName == "openbci" and opts.devicePort not in opts:
+    parser.error("You have to specify a port for the OpenBCI device!")
   return opts
 
 
@@ -35,6 +38,22 @@ def main():
   device_id = opts.deviceId
   cloudbrain_address = opts.cloudbrain
   buffer_size = opts.bufferSize
+  device_port = opts.devicePort
+
+  run(device_name,
+      mock_data_enabled,
+      device_id,
+      cloudbrain_address,
+      buffer_size,
+      device_port)
+  
+
+def run(device_name='muse',
+         mock_data_enabled=True,
+         device_id='test',
+         cloudbrain_address='cloudbrain.rocks',
+         buffer_size=10,
+         device_port='/dev/tty.OpenBCI-DN0094CZ'):
 
   if device_name == 'muse':
     from cloudbrain.connectors.muse_connector import MuseConnector as Connector
@@ -46,13 +65,17 @@ def main():
   if mock_data_enabled:
     from cloudbrain.connectors.mock_connector import MockConnector as Connector
 
-  publisher = Publisher(device_name, device_id, cloudbrain_address)
-  publisher.connect()
-  connector = Connector(publisher, buffer_size, device_name)
+  metrics = get_metrics_names(device_name)
+  publishers = {metric: Publisher(device_name, device_id, cloudbrain_address, metric) for metric in metrics}
+  for publisher in publishers.values():
+    publisher.connect()
+  if device_name == 'openbci':
+    connector = Connector(publishers, buffer_size, device_name, device_port)
+  else:
+    connector = Connector(publishers, buffer_size, device_name)
   connector.connect_device()
   connector.start()
 
-
-
 if __name__ == "__main__":
-  main()
+  #main()
+  run()
