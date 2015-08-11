@@ -1,11 +1,44 @@
-# CloudBrain
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/webapp/static/images/cb-logo-low-res.png)
 
-### Install 
+##Overview
+CloudBrain is a platform for real-time EEG data analysis and visualization. [EEG](http://en.wikipedia.org/wiki/Electroencephalography) is the recording of electrical activity along the scalp. In other words, brainwaves.
+<br>
+<br>
+CloudBrain enables you to:
+- **Stream EEG data** into a central database.
+- **Analyze EEG data** by computing aggregates.
+- **Visualize EEG data** and patterns in real-time.
+
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain-building-blocks.png)
+# Getting started with Cloudbrain
+
+## Option 1: Quick-start!
+This makes use of the demo version of cloudbrain running at `http://cloudbrain.rocks`. Let's send and get data from Cloudbrain using the command line.
+
+### Publishers: send data to cloudbrain
+* On OSX, run `./cloudbrain/publishers/bin/osx/main`
+* On Ubuntu, run `./cloudbrain/publishers/bin/ubuntu/main`
+* Use `--help` to get more info about how to use the publishers. For example, `./cloudbrain/publishers/bin/osx/main --help`
+
+### Subscribers: get data from cloudbrain
+* On OSX, run `./cloudbrain/subscribers/bin/osx/main`
+* On Ubuntu, run `./cloudbrain/subscribers/bin/ubuntu/main`
+* Use `--help` to get more info about how to use the subscribers. For example, `./cloudbrain/subscribers/bin/osx/main --help`
+
+### PyInstaller
+* Cloudbrain's binaries were generated with PyInstaller
+* `pip install pyinstaller`
+* `pyinstaller --clean --onefile -y <python_file>`
+
+
+## Option 2: Install Cloudbrain from scratch 
+
+### Dependencies 
 * Install RabbitMQ
 * Install Cassandra
 * Install `node` and `npm`
 * `npm install rabbit.js`
-* `sudo pip install requirements.txt`
+* `pip install requirements.txt`
 
 ### Run the App
 
@@ -15,7 +48,7 @@
 * Start RabbitMQ: `sh sbin/rabbit-server start`
 
 #### Start the Publisher
-* [TODO] Describe how to start the various connectors.
+* Run `python cloudbrain/publishers/main.py`
 
 #### Start Cassandra
 * Get Cassandra.
@@ -33,3 +66,27 @@
 
 #### Start the UI
 * Open `ui/chart.html` in your browser.
+
+# About Cloudbrain
+
+## CloudBrain @ [The Exploratorium](http://www.exploratorium.edu) of San Francisco
+CloudBrain was in use at the Exploratorium as part of the Exhibit called [*Cognitive Technologies*](http://www.exploratorium.edu/press-office/press-releases/new-exhibition-understanding-influencing-brain-activity-opens). 
+All the EEG headsets in the exhibit are sending data to CloudBrain. This data is being routed to booths where visitors can control different things with their brain. For visitors who are willing to share their data, CloudBrain computes aggregates and displays a baseline of the average brain. On the central screen, visitors can see everyone else's live EEG data. Each radar chart shows the state of the main brainwaves (alpha, beta, theta, gamma, delta). This is particularly interesting to see how one's brain compares to others, or to understand how it reacts to different stimuli.
+
+## Infrastructure @ [The Exploratorium](http://www.exploratorium.edu/)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/exploratorium-exhibit-overview.png)
+
+Infrastructure v2.0 
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/infra.png)
+
+## Visualizations
+
+### Aggregated data (bar charts)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/data-aggregates.png)
+
+### Live EEG data (radar charts)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/radar-charts.png)
+
+### Live EEG data (line charts)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/timeserie-data.png)
+
