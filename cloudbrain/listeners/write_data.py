@@ -1,5 +1,5 @@
-from listeners.pika_subscriber import PikaSubscriber
-from listeners.dataset_writer import DatasetWriter
+from cloudbrain.listeners.pika_subscriber import PikaSubscriber
+from cloudbrain.listeners.dataset_writer import DatasetWriter
 
 
 class TrainingSetGenerator(object):

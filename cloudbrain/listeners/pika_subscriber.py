@@ -1,36 +1,36 @@
 #!/usr/bin/env python
 import pika
+import json
 from subscriber import Subscriber
+from cloudbrain.utils.metadata_info import get_metrics_names
 
-
-_DEVICE_ID = "my_device"
-_DEVICE_NAME = "muse"
-_HOST = "localhost"
-_BUFFER_SIZE = 100
 
 class PikaSubscriber(Subscriber):
   
-  def __init__(self, device_name, device_id, host):
+  def __init__(self, device_name, device_id, host, metric_name):
     super(PikaSubscriber, self).__init__(device_name, device_id, host)
     self.connection = None
     self.channel = None
     self.queue_name = None
+    self.metric_name = metric_name
     
     
   def connect(self):
+    credentials = pika.PlainCredentials('cloudbrain', 'cloudbrain')
     self.connection = pika.BlockingConnection(pika.ConnectionParameters(
-      host=self.host))
+      host=self.host, credentials=credentials))
     self.channel = self.connection.channel()
 
-    self.channel.exchange_declare(exchange=self.device_id,
+    key = "%s:%s:%s" %(self.device_id,self.device_name, self.metric_name)
+    self.channel.exchange_declare(exchange=key,
                                   type='direct')
 
     self.queue_name = self.channel.queue_declare(exclusive=True).method.queue
     
     
-    self.channel.queue_bind(exchange=self.device_id,
+    self.channel.queue_bind(exchange=key,
                    queue=self.queue_name,
-                   routing_key=self.device_id)
+                   routing_key=key)
 
   def disconnect(self):
     self.connection.close()
@@ -54,10 +54,24 @@ def _print_message(ch, method, properties, body):
 
     
 if __name__ == "__main__":
-  subscriber = PikaSubscriber(_DEVICE_NAME, _DEVICE_ID, _HOST)
-  subscriber.connect()
-  #subscriber.consume_messages(_print_message)
-  print subscriber.get_one_message()
+
+  device_id = "test"
+  device_name = "muse"
+  host = "cloudbrain.rocks"
+  buffer_size = 100
+
+  metric_names = get_metrics_names(device_name)
+  metric_names = ['eeg', 'mellow', 'concentration']
+
+  while 1:
+    for metric in metric_names:
+      print metric
+      subscriber = PikaSubscriber(device_name, device_id, host, metric)
+      subscriber.connect()
+      #subscriber.consume_messages(_print_message)
+      buffer = json.loads(subscriber.get_one_message())
+      for record in buffer:
+        print record
 
 
 

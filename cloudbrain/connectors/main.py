@@ -49,7 +49,7 @@ def main():
   
 
 def run(device_name='muse',
-         mock_data_enabled=True,
+         mock_data_enabled=False,
          device_id='test',
          cloudbrain_address='cloudbrain.rocks',
          buffer_size=10,
