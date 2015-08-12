@@ -1,7 +1,6 @@
-#!/usr/bin/env python
 import pika
 import json
-from subscriber import Subscriber
+from cloudbrain.subscribers.SubscriberInterface import Subscriber
 from cloudbrain.utils.metadata_info import get_metrics_names
 
 
@@ -33,7 +32,7 @@ class PikaSubscriber(Subscriber):
                    routing_key=key)
 
   def disconnect(self):
-    self.connection.close()
+    self.connection.close_file()
     
     
   def consume_messages(self, callback):
