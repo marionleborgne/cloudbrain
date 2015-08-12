@@ -1,5 +1,5 @@
 from cloudbrain.subscribers.pika_subscriber import PikaSubscriber
-from cloudbrain.utils.metadata_info import map_metric_to_num_channels, get_supported_metrics, get_supported_devices
+from cloudbrain.utils.metadata_info import map_device_name_to_num_channels, get_supported_metrics, get_supported_devices
 import csv
 import json
 import os
@@ -35,7 +35,7 @@ class FileWriter(object):
     :return: CSV headers
     """
 
-    metric_to_num_channels = map_metric_to_num_channels(self.device_name)
+    metric_to_num_channels = map_device_name_to_num_channels(self.device_name)
     num_channels = metric_to_num_channels[self.metric]
     headers = ['timestamp'] + ['channel_%s' % i for i in xrange(num_channels)]
     return headers

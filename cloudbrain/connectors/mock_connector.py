@@ -2,7 +2,7 @@ import time
 import random
 
 from cloudbrain.connectors.ConnectorInterface import Connector
-from cloudbrain.utils.metadata_info import map_metric_to_num_channels
+from cloudbrain.utils.metadata_info import map_device_name_to_num_channels
 
 
 class MockConnector(Connector):
@@ -14,7 +14,7 @@ class MockConnector(Connector):
     :return:
     """
     super(MockConnector, self).__init__(publishers, buffer_size, device_name, device_port)
-    metric_to_num_channels = map_metric_to_num_channels(self.device_name)
+    metric_to_num_channels = map_device_name_to_num_channels(self.device_name)
     self.data_generators = [self.data_generator_factory(metric, metric_to_num_channels[metric]) for metric in self.metrics]
     
     

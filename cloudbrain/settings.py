@@ -1,50 +1,6 @@
-# Metric metadata of all wearable devices accepted by CloudBrain.
-# The format is the following:
-# 
-# DEVICE_METADATA = 
-# [
-#   {
-#   'device_name': <string>,
-#    'device_type': <'eeg_headset' | 'heart_rate_monitor'>,
-#    'metrics': 
-#      [
-#        {
-#            'metric_name': <string>,
-#            'num_channels': <int>,
-#            'metrics_description' : <string>
-#         },
-#            ...
-#            ...
-#        {
-#            'metric_name': <string>,
-#            'num_channels': <int>,
-#            'metrics_description' : <string>
-#         }
-#      ]
-#   }
-#      ...
-#      ...
-#   {
-#    'device_name': <string>,
-#    'device_type': <'eeg_headset' | 'heart_rate_monitor'>,
-#    'metrics': 
-#      [
-#        {
-#            'metric_name': <string>,
-#            'num_channels': <int>,
-#            'metrics_description' : <string>
-#         },
-#            ...
-#            ...
-#        {
-#            'metric_name': <string>,
-#            'num_channels': <int>,
-#            'metrics_description' : <string>
-#         }
-#      ]
-#   }
-# ]
+DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
+# Metric metadata of all wearable devices accepted by CloudBrain.
 DEVICE_METADATA = [
   {'device_name': 'openbci',
    'device_type': 'eeg_headset',
