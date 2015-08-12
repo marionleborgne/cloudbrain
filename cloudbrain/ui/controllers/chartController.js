@@ -3,11 +3,23 @@
 
 	angular.module('cloudbrain')
 
-		.controller('chartController', ['$scope', function($scope){
+		.controller('chartController', ['$scope', '$http', function($scope, $http){
 
-			$scope.reflow = function (){
-				$scope.$broadcast('highchartsng.reflow');
-			};
+			$scope.getData = function (device) {
+				$scope.chartConfig.title.text = device.name + ' ' + device.id;
+
+				// url = 'cloudbrain.rocks/api/' + device.name + '/' + device.id;
+				// $interval(function () {
+				// 	$http.get(url)
+				// 		.success(function(response){
+				//
+				// 		})
+				// 		.error(function(response){
+				//
+				// 		});
+				// }, 100);
+
+			}
 
 			$scope.chartConfig =
 					   {
