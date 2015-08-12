@@ -9,13 +9,70 @@ CloudBrain enables you to:
 - **Analyze EEG data** by computing aggregates.
 - **Visualize EEG data** and patterns in real-time.
 
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain-building-blocks.png)
+# Getting started with Cloudbrain
 
+## Option 1: Quick-start!
+This makes use of the demo version of cloudbrain running at `http://cloudbrain.rocks`. Let's send and get data using prebuilt binaries.
+
+### Publishers: send data to cloudbrain
+* On OSX, run `./cloudbrain/publishers/bin/osx/main`
+* On Ubuntu, run `./cloudbrain/publishers/bin/ubuntu/main`
+* Use `--help` to get more info about how to use the publishers. For example, `./cloudbrain/publishers/bin/osx/main --help`
+
+### Subscribers: get data from cloudbrain and write to a file
+* On OSX, run `./cloudbrain/subscribers/bin/osx/file_writer`
+* On Ubuntu, run `./cloudbrain/subscribers/bin/ubuntu/file_writer`
+* Use `--help` to get more info about how to use the subscribers. For example, `./cloudbrain/subscribers/bin/osx/file_writer --help`
+
+### PyInstaller
+* Cloudbrain's binaries were generated with PyInstaller
+* `pip install pyinstaller`
+* `pyinstaller --clean --onefile -y <python_file>`
+
+
+## Option 2: Install Cloudbrain from scratch 
+
+### Dependencies 
+* Install RabbitMQ
+* Install Cassandra
+* Install `node` and `npm`
+* `npm install rabbit.js`
+* `pip install requirements.txt`
+
+### Run the App
+
+#### Start RabbitMQ
+* Get RabbitMQ.
+* Change to your RabbitMQ directory. 
+* Start RabbitMQ: `sh sbin/rabbit-server start`
+
+#### Start the Publisher
+* Run `python cloudbrain/publishers/main.py`
+
+#### Start Cassandra
+* Get Cassandra.
+* Change to your Cassandra directory.
+* Start Cassandra: `sh bin/cassandra start`
+* Generate Cassandra schema: `python database/generate_cassandra_schema.py`
+* Execute schema: `bin/cqlsh -f <path_to_cassandra_schema>/cassandra_schema.cql`
+
+
+#### Run MetricStore
+* Start listening and storing data with `python database/metric_store.py`
+
+#### Start the REST API
+* Run `python api/web_api.py`
+
+#### Start the UI
+* Open `ui/chart.html` in your browser.
+
+# About Cloudbrain
 
 ## CloudBrain @ [The Exploratorium](http://www.exploratorium.edu) of San Francisco
-CloudBrain is currently in use at the Exploratorium as part of the Exhibit called [*Cognitive Technologies*](http://www.exploratorium.edu/press-office/press-releases/new-exhibition-understanding-influencing-brain-activity-opens). All the EEG headsets in the exhibit are sending data to CloudBrain. This data is being routed to booths where visitors can control different things with their brain. For visitors who are willing to share their data, CloudBrain computes aggregates and displays a baseline of the average brain. On the central screen, visitors can see everyone else's live EEG data. Each radar chart shows the state of the main brainwaves (alpha, beta, theta, gamma, delta). This is particularly interesting to see how one's brain compares to others, or to understand how it reacts to different stimuli.
+CloudBrain was in use at the Exploratorium as part of the Exhibit called [*Cognitive Technologies*](http://www.exploratorium.edu/press-office/press-releases/new-exhibition-understanding-influencing-brain-activity-opens). 
+All the EEG headsets in the exhibit are sending data to CloudBrain. This data is being routed to booths where visitors can control different things with their brain. For visitors who are willing to share their data, CloudBrain computes aggregates and displays a baseline of the average brain. On the central screen, visitors can see everyone else's live EEG data. Each radar chart shows the state of the main brainwaves (alpha, beta, theta, gamma, delta). This is particularly interesting to see how one's brain compares to others, or to understand how it reacts to different stimuli.
 
-## Visualizations
+## Cloudbrain's data visualizations
 
 ### Aggregated data (bar charts)
 ![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/data-aggregates.png)
@@ -26,45 +83,3 @@ CloudBrain is currently in use at the Exploratorium as part of the Exhibit calle
 ### Live EEG data (line charts)
 ![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/timeserie-data.png)
 
-##Getting started with CloudBrain
-- An instance of CloudBrain is currently running at `cloudbrain.rocks`.
-- The packages that you want to use are `connectors` and `listeners`. Connectors will allow you to send live data to CloudBrain. Listeners will allow you to read live data from CloudBrain.
-- Routing of live data is done via SpaceBrew (currently running on the CloudBrain server). To visualize how the data is being routed you can go to [this interface](http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks).
-
-##CloudBrain's Architecture
-- `connectors`: connectors for [OpenBCI](http://openbci.com), [Muse](http://www.choosemuse.com/), [Neurosky](http://neurosky.com/) and [Spacebrew](https://github.com/Spacebrew/spacebrew) sending data to CloudBrain
-- `listeners`: CloudBrain Listeners to get the live data data for [OpenBCI](http://openbci.com),[Muse](http://www.choosemuse.com/), [Neurosky](http://neurosky.com/) and [Spacebrew](https://github.com/Spacebrew/spacebrew)
-- `webapp`: contains the UI & web API to retrieve the history of data, route live data, or retrieve data aggregated data (see [cloudbrain.rocks/api](http://cloudbrain.rocks/api) for the API documentation)
-- `router`: router to update spacebrew routes (for the [Exploratorium](http://www.exploratorium.edu/) exhibition)
-- `spacebrew`: python websocket wrapper to interface with [Spacebrew](https://github.com/Spacebrew/spacebrew)
-- `database` : python wrapper to read and write data to cassandra
-
-##Sending data to CloudBrain
-- Install the [MuseIO SDK](http://www.choosemuse.com/developer-kit/)
-- Pair your Muse via Bluetooth.
-- Start MuseIO: open a terminal or command prompt and run: `muse-io --osc osc.udp://localhost:9090`
-- Open a new terminal tab and run:
-<br>
-`git clone https://github.com/marionleborgne/cloudbrain`
-<br>
-`cd cloudbrain/connectors/spacebrew`
-<br>
-`pip install websocket-client`
-`python spacebrew_server.py --name=YOUR_NAME_HERE`
-- The last command will register your muse to CloudBrain's Spacebrew
-- Check if you muse is in the column “publishers” of the [SpaceBrew interface](http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks).
-
-##Reading data from CloudBrain
-- Open a new terminal tab and run:
-<br>
-`cd cloudbrain/listeners`
-<br>
-`python example_spacebrew_client.py --name=YOUR_NAME_HERE`
-- The last command will register your booth to cloudbrain’s spacebrew
-- Check if you booth is in the column “subscridbers” of the [SpaceBrew interface](http://spacebrew.github.io/spacebrew/admin/admin.html?server=cloudbrain.rocks).
-
-## Infrastructure @ [The Exploratorium](http://www.exploratorium.edu/)
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/exploratorium-exhibit-overview.png)
-
-Infrastructure v2.0 
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/infra.png)

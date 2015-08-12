@@ -12,65 +12,64 @@ __author__ = 'marion'
 from liblo import ServerThread, ServerError, make_method
 import sys
 import time
-import socket
 import json
 
 
 class MuseServer(ServerThread):
+  def __init__(self, muse_port, callback_functions):
+    ServerThread.__init__(self, muse_port)
+    self.callback_functions = callback_functions
 
-    def __init__(self, muse_port, client_ip, client_port):
-        ServerThread.__init__(self, muse_port)
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.client_ip = client_ip
-        self.client_port = client_port
+  # receive EEG data
+  @make_method('/muse/eeg', 'ffff')
+  def eeg_callback(self, path, args):
+    self.callback_functions['eeg'](json.dumps([path,args]))
 
+  # receive horseshoe data
+  @make_method("/muse/elements/horseshoe", 'ffff')
+  def horseshoe_callback(self, path, args):
+    self.callback_functions['horseshoe'](json.dumps([path,args]))
 
-    # receive EEG data
-    @make_method('/muse/eeg', 'ffff')
-    def eeg_callback(self, path, args):
-        self.sock.sendto(json.dumps(args), (self.client_ip, self.client_port))
-        print path, args
+  # receive concentration data
+  @make_method('/muse/elements/experimental/concentration', 'f')
+  def concentration_callback(self, path, args):
+    self.callback_functions['concentration'](json.dumps([path,args]))
 
+  # receive meditation data
+  @make_method('/muse/elements/experimental/mellow', 'f')
+  def mellow_callback(self, path, args):
+    self.callback_functions['mellow'](json.dumps([path,args]))
 
-    # receive horseshoe data
-    @make_method("/muse/elements/horseshoe", 'ffff')
-    def horseshoe_callback(self, path, args):
-        pass  # do nothing for now
-        print path, args
-
-
-    #receive concentration data
-    @make_method('/muse/elements/experimental/concentration', 'f')
-    def concentration_callback(self, path, args):
-        pass  # do nothing for now
-        #print path, args
-
-    #receive meditation data
-    @make_method('/muse/elements/experimental/mellow', 'f')
-    def mellow_callback(self, path, args):
-        pass  # do nothing for now
-        #print path, args
+  # handle unexpected messages
+  @make_method(None, None)
+  def fallback(self, path, args, types, src):
+    pass  # do nothing for now
 
 
-    #handle unexpected messages
-    @make_method(None, None)
-    def fallback(self, path, args, types, src):
-        pass  # do nothing for now
-        #print path, args
-
-
+def _print_callback(sample):
+  """
+  Callback function handling Muse samples
+  :return:
+  """
+  
+  print sample
 
 if __name__ == "__main__":
+  
+  callbacks = {'eeg': _print_callback,
+               'concentration': _print_callback,
+               'mellow': _print_callback,
+               'horseshoe': _print_callback}
 
-    try:
-        server = MuseServer(9090, 'localhost', 5555)
-    except ServerError, err:
-        print str(err)
-        sys.exit()
+  try:
+    server = MuseServer(9090, callbacks)
+  except ServerError, err:
+    print str(err)
+    sys.exit()
 
-    try:
-        server.start()
-        while 1:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        sys.exit()
+  try:
+    server.start()
+    while 1:
+      time.sleep(1)
+  except KeyboardInterrupt:
+    sys.exit()

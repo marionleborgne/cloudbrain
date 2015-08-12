@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.css">
+    <link rel="stylesheet" href="css/index.css">
+  </head>
+
+  <body ng-app="cloudbrain">
+
+      <nav class="navbar navbar-inverse">
+        <div class="navbar-header">
+          <div class="container">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand" href="#">
+              <img src="images/brain-white.png" alt="cloudbrain" class="logo" />
+              <span>Cloudbrain</span>
+            </a>
+          </div>
+        </div>
+      </nav>
+
+    <div class="container">
+    	<div ng-controller="chartController">
+	    	<div class="row">
+          <ng-form name="deviceIdForm" role="form">
+
+  	    		<div class="col-md-4"><!--DeviceId-->
+      				<div class="form-group">
+      					<label for="deviceId">DeviceId:</label>
+      					<input ng-model="device.id" class="form-control" id="deviceId">
+      				</div>
+  	    		</div><!--DeviceId -->
+
+  	    		<div class="col-md-6"><!--DeviceName-->
+  	    			<label for="deviceName">Device Name</label>
+  	    			<select ng-model='device.name' id="deviceName" class="form-control">
+  	    				<option>Device Name</option>
+  	    				<option>OpenBCI</option>
+  	    				<option>Muse</option>
+  	    				<option>Mock</option>
+  	    			</select>
+  	    		</div><!--DeviceName -->
+            <div class="col-md-2">
+              <label></label>
+              <button type="submit" ng-click="getData(device)" class="btn btn-default">Submit</button>
+            </div>
+          </ng-form>
+	    	</div>
+
+	    	<highchart id="chart1" config="chartConfig"></highchart>
+
+    	</div><!--chartController-->
+    </div><!--Container-->
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="http://code.highcharts.com/adapters/standalone-framework.js"></script>
+    <script src="bower_components/highcharts/highcharts.src.js"></script>
+    <script src="bower_components/highcharts-ng/src/highcharts-ng.js"></script>
+    <script src="app.js"></script>
+    <script src="controllers/chartController.js"></script>
+
+  </body>
+
+
+</html>
