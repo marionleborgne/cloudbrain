@@ -1,6 +1,7 @@
-from connector import Connector
 import time
 import random
+
+from cloudbrain.connectors.ConnectorInterface import Connector
 from cloudbrain.utils.metadata_info import map_metric_to_num_channels
 
 
@@ -26,7 +27,7 @@ class MockConnector(Connector):
   
     
   def start(self):
-    
+
     while 1:
       for data_generator in self.data_generators:
         data_generator()
