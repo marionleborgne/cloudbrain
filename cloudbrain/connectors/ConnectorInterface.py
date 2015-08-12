@@ -1,6 +1,7 @@
-from cloudbrain.utils.metadata_info import get_metrics_names
-from connector_buffer import ConnectorBuffer
 from abc import ABCMeta, abstractmethod
+
+from cloudbrain.utils.metadata_info import get_metrics_names
+from cloudbrain.connectors.connector_buffer import ConnectorBuffer
 
 
 class Connector(object):
