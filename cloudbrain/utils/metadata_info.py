@@ -5,7 +5,7 @@ class _DeviceNameNotFound(Exception):
   pass
 
 
-def map_metric_to_num_channels(device_name):
+def map_device_name_to_num_channels(device_name):
   """
   Map wearable metric names to the number of channels of this metric.
   :return: dict {metric_name: num_channels}

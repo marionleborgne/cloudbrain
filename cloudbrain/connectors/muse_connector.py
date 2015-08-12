@@ -1,6 +1,6 @@
 from ConnectorInterface import Connector
 from cloudbrain.connectors.muse.muse_server import MuseServer
-from cloudbrain.utils.metadata_info import map_metric_to_num_channels
+from cloudbrain.utils.metadata_info import map_device_name_to_num_channels
 import time
 import sys
 import json
@@ -48,7 +48,7 @@ class MuseConnector(Connector):
     connect_muse(port=self.device_port)
 
     # callback functions to handle the sample for that metric (each metric has a specific number of channels)
-    metric_to_num_channels = map_metric_to_num_channels(self.device_name)
+    metric_to_num_channels = map_device_name_to_num_channels(self.device_name)
     cb_functions = {metric: self.callback_factory(metric, metric_to_num_channels[metric]) for metric in self.metrics}
 
     self.device = MuseServer(self.device_port, cb_functions)
