@@ -1,6 +1,7 @@
-from connector import Connector
-from cloudbrain.connectors.openbci.openbci_v3 import OpenBCIBoard
 import time
+
+from cloudbrain.connectors.ConnectorInterface import Connector
+from cloudbrain.connectors.openbci.openbci_v3 import OpenBCIBoard
 from cloudbrain.utils.metadata_info import map_metric_to_num_channels
 
 
