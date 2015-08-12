@@ -191,7 +191,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
 
         // prevSeriesOptions is maintained by processSeries
         var prevSeriesOptions = {};
-        debugger
+
         var processSeries = function(series) {
           var i;
           var ids = [];
@@ -260,13 +260,12 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           if (chart) chart.destroy();
           prevSeriesOptions = {};
           var config = scope.config || {};
-          debugger
           var mergedOptions = getMergedOptions(scope, element, config);
           var func = config.func || undefined;
           var chartType = getChartType(scope);
 
           chart = new Highcharts[chartType](mergedOptions, func);
-          debugger
+
           for (var i = 0; i < axisNames.length; i++) {
             if (config[axisNames[i]]) {
               processExtremes(chart, config[axisNames[i]], axisNames[i]);
@@ -278,9 +277,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
           config.getHighcharts = function() {
             return chart;
           };
-          debugger
+
         };
-        debugger
         initChart();
 
 
@@ -329,7 +327,6 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
 
         scope.$watch(getChartType, function (chartType, oldChartType) {
           if (chartType === oldChartType) return;
-          debugger
           initChart();
         });
 
@@ -363,7 +360,6 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
         scope.$watch('config.options', function (newOptions, oldOptions, scope) {
           //do nothing when called on registration
           if (newOptions === oldOptions) return;
-          debugger
           initChart();
           processSeries(scope.config.series);
           chart.redraw();

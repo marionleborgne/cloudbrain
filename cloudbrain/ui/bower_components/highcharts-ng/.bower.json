@@ -17,6 +17,5 @@
   },
   "_source": "git://github.com/pablojim/highcharts-ng.git",
   "_target": "~0.0.8",
-  "_originalSource": "highcharts-ng",
-  "_direct": true
+  "_originalSource": "highcharts-ng"
 }
