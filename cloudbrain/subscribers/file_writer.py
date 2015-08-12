@@ -1,8 +1,12 @@
-from cloudbrain.listeners.pika_subscriber import PikaSubscriber
-from cloudbrain.listeners.dataset_writer import DatasetWriter
+from cloudbrain.subscribers.pika_subscriber import PikaSubscriber
+from cloudbrain.subscribers.dataset_writer import DatasetWriter
 
 
-class TrainingSetGenerator(object):
+class FileWriter(object):
+
+  """
+  Subscribes and writes data to a file
+  """
   
   def __init__(self, device_name, device_id, host, headers, file_path='training_set.csv'):
     self.subscriber = PikaSubscriber(device_name, device_id, host)
@@ -37,6 +41,6 @@ if __name__ == "__main__":
   headers = ['timestamp'] + _CSV_HEADERS
 
   print "Collecting data ... Ctl-C to stop :-P" 
-  generator = TrainingSetGenerator(_DEVICE_NAME, _DEVICE_ID, _HOST, headers)
+  generator = FileWriter(_DEVICE_NAME, _DEVICE_ID, _HOST, headers)
   generator.start()
 

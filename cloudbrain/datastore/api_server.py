@@ -7,8 +7,6 @@ from flask import Flask, request, current_app
 from functools import wraps
 from cassandra.cluster import Cluster
 
-from settings import SENSOR_ID, METRICS, ANOMALY_LIKELIHOOD_THRESHOLD, DATE_FORMAT
-
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 

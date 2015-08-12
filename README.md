@@ -12,7 +12,7 @@ CloudBrain enables you to:
 # Getting started with Cloudbrain
 
 ## Option 1: Quick-start!
-This makes use of the demo version of cloudbrain running at `http://cloudbrain.rocks`. Let's send and get data from Cloudbrain using the command line.
+This makes use of the demo version of cloudbrain running at `http://cloudbrain.rocks`. Let's send and get data using prebuilt binaries.
 
 ### Publishers: send data to cloudbrain
 * On OSX, run `./cloudbrain/publishers/bin/osx/main`

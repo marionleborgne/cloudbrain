@@ -1,16 +1,5 @@
-__author__ = 'marion'
-
-
-"""
-To create the schema, run: ./cqlsh -f <path_to_file>/cassandra_schema.cql
-"""
-
-
-# add the shared settings file to namespace
-import sys
-from os.path import dirname, abspath, realpath
-sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
-from settings import DEVICE_METADATA
+from os.path import realpath
+from cloudbrain.settings import DEVICE_METADATA
 
 
 # template for keyspace creation  
@@ -58,7 +47,7 @@ CREATE TABLE consent (user_id text, timestamp timestamp, consent text, age doubl
 """)
 
 schema_path = realpath('cassandra_schema.cql')
-print "Schema generated. Run: ./cqlsh -f %s" % schema_path
+print "\nSUCCESS: Schema generated. Now run: cqlsh -f %s" % schema_path
 
 f.close()
 

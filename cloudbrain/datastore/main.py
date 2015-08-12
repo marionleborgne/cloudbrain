@@ -6,10 +6,9 @@ import pika
 import json
 import importlib
 
-SENSOR = 'muse'
-METRICS = ['egg']
-COLUMNS = ['channel_0', 'channel_1', 'channel_2', 'channel_3']
-SENSOR_ID = 'my_muse'
+"""
+Subscribes to rabbitMQ and stores data in cassandra
+"""
 
 # configure cassandra cluster
 cluster = Cluster()

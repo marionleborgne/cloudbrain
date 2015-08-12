@@ -14,10 +14,12 @@ CREATE TABLE acc (user_id text, timestamp timestamp, value_0 double, value_1 dou
 CREATE TABLE delta_absolute (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
 CREATE TABLE theta_absolute (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
 CREATE TABLE beta_absolute (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
+CREATE TABLE alpha_absolute (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
 CREATE TABLE gamma_absolute (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
 CREATE TABLE delta_relative (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
 CREATE TABLE theta_relative (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
 CREATE TABLE beta_relative (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
+CREATE TABLE alpha_relative (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
 CREATE TABLE gamma_relative (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
 CREATE TABLE is_good (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
 CREATE TABLE blink (user_id text, timestamp timestamp, value_0 double,  PRIMARY KEY (user_id, timestamp)); 
@@ -40,7 +42,3 @@ DROP KEYSPACE users;
 CREATE KEYSPACE users WITH  replication = {'class': 'SimpleStrategy', 'replication_factor': 3 };
 USE users;
 CREATE TABLE consent (user_id text, timestamp timestamp, consent text, age double, gender text,  PRIMARY KEY (user_id, timestamp));
-
-
-USE openbci;
-SELECT * from eeg;
