@@ -19,10 +19,10 @@ This makes use of the demo version of cloudbrain running at `http://cloudbrain.r
 * On Ubuntu, run `./cloudbrain/publishers/bin/ubuntu/main`
 * Use `--help` to get more info about how to use the publishers. For example, `./cloudbrain/publishers/bin/osx/main --help`
 
-### Subscribers: get data from cloudbrain
-* On OSX, run `./cloudbrain/subscribers/bin/osx/main`
-* On Ubuntu, run `./cloudbrain/subscribers/bin/ubuntu/main`
-* Use `--help` to get more info about how to use the subscribers. For example, `./cloudbrain/subscribers/bin/osx/main --help`
+### Subscribers: get data from cloudbrain and write to a file
+* On OSX, run `./cloudbrain/subscribers/bin/osx/file_writer`
+* On Ubuntu, run `./cloudbrain/subscribers/bin/ubuntu/file_writer`
+* Use `--help` to get more info about how to use the subscribers. For example, `./cloudbrain/subscribers/bin/osx/file_writer --help`
 
 ### PyInstaller
 * Cloudbrain's binaries were generated with PyInstaller

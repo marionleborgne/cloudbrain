@@ -1,11 +1,10 @@
-from connector import Connector
+from ConnectorInterface import Connector
 from cloudbrain.connectors.muse.muse_server import MuseServer
 from cloudbrain.utils.metadata_info import map_metric_to_num_channels
 import time
 import sys
 import json
 import subprocess
-
 
 
 class UnableToStartMuseIO(Exception):
@@ -37,7 +36,7 @@ def connect_muse(port=9090):
       else:
         # muse-io not not running or installed
         raise UnableToStartMuseIO("No able to start muse-io. Go to http://choosemuse.com for more info.")
-    print "Success: MuseIO is running!"
+    print "SUCCESS: MuseIO is running!"
 
 
 class MuseConnector(Connector):

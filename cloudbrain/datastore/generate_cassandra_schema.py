@@ -1,8 +1,7 @@
 from os.path import realpath
 from cloudbrain.settings import DEVICE_METADATA
 
-
-# template for keyspace creation  
+# template for keyspace creation
 create_keyspace_template = """DROP KEYSPACE %s;
 CREATE KEYSPACE %s WITH  replication = {'class': 'SimpleStrategy', 'replication_factor': 3 };
 USE %s;

@@ -1,14 +1,7 @@
-__author__ = 'marion'
-
 import json
-import logging
-
 import pika
 
-
-logging.basicConfig()
-
-from cloudbrain.publishers.publisher import Publisher
+from cloudbrain.publishers.PublisherInterface import Publisher
 
 
 class PikaPublisher(Publisher):
@@ -45,4 +38,4 @@ class PikaPublisher(Publisher):
                                   type='direct')
 
   def disconnect(self):
-    self.connection.close()
+    self.connection.close_file()
