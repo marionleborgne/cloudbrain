@@ -1,0 +1,22 @@
+{
+  "name": "highcharts-ng",
+  "version": "0.0.8",
+  "main": "dist/highcharts-ng.js",
+  "dependencies": {},
+  "devDependencies": {
+    "angular": "latest",
+    "angular-mocks": "latest",
+    "jquery": "latest"
+  },
+  "homepage": "https://github.com/pablojim/highcharts-ng",
+  "_release": "0.0.8",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.0.8",
+    "commit": "d0b1382c0f7f761ef7fcfdf9fa88566ac5b042e9"
+  },
+  "_source": "git://github.com/pablojim/highcharts-ng.git",
+  "_target": "~0.0.8",
+  "_originalSource": "highcharts-ng",
+  "_direct": true
+}
