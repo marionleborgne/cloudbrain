@@ -1,4 +1,4 @@
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/webapp/static/images/cb-logo-low-res.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cb-logo-low-res.png)
 
 ##Overview
 CloudBrain is a platform for real-time EEG data analysis and visualization. [EEG](http://en.wikipedia.org/wiki/Electroencephalography) is the recording of electrical activity along the scalp. In other words, brainwaves.
