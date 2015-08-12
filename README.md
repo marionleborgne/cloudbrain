@@ -1,13 +1,13 @@
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/webapp/static/images/cb-logo-low-res.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cb-logo-low-res.png)
 
 ##Overview
-CloudBrain is a platform for real-time EEG data analysis and visualization. [EEG](http://en.wikipedia.org/wiki/Electroencephalography) is the recording of electrical activity along the scalp. In other words, brainwaves.
+CloudBrain is a platform for real-time sensor data analysis and visualization. For example, [EEG](http://en.wikipedia.org/wiki/Electroencephalography) data is the recording of electrical activity along the scalp. In other words, brainwaves.
 <br>
 <br>
 CloudBrain enables you to:
-- **Stream EEG data** into a central database.
-- **Analyze EEG data** by computing aggregates.
-- **Visualize EEG data** and patterns in real-time.
+- **Stream Sensor data** into a central database.
+- **Analyze Sensor data** by computing aggregates.
+- **Visualize Sensor data** and patterns in real-time.
 
 # Getting started with Cloudbrain
 
