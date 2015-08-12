@@ -1,49 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
+  <head>
     <meta charset="utf-8">
     <title></title>
 
     <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.css">
     <link rel="stylesheet" href="css/index.css">
+  </head>
 
+  <body ng-app="cloudbrain">
 
-    </head>
+      <nav class="navbar navbar-default">
+        <div class="navbar-header">
+          <div class="container">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
 
-    <body ng-app="cloudbrain">
+            <a class="navbar-brand" href="#">Cloudbrain</a>
+          </div>
+        </div>
+      </nav>
+
     <div class="container">
     	<div ng-controller="chartController">
 	    	<div class="row">
-	    		<div class="col-md-6"><!--DeviceId-->
-	    			<form role="form">
-	    				<div class="form-group">
-	    					<label for="deviceId">DeviceId:</label>
-	    					<input type="deviceId" class="form-control" id="deviceId">
-	    				</div>
-	    				<button type="submit" class="btn btn-default">Submit</button>
-	    			</form>
+          <ng-form name="deviceIdForm" role="form">
 
-	    		</div><!--DeviceId -->
+  	    		<div class="col-md-4"><!--DeviceId-->
+      				<div class="form-group">
+      					<label for="deviceId">DeviceId:</label>
+      					<input ng-model="device.id" class="form-control" id="deviceId">
+      				</div>
+  	    		</div><!--DeviceId -->
 
-	    		<div class="col-md-6"><!--DeviceName-->
-	    			<label for="deviceName">Device Name</label>
-	    			<select id="deviceName" class="form-control">
-	    				<option>Device Name</option>
-	    				<option>OpenBCI</option>
-	    				<option>Muse</option>
-	    				<option>Mock</option>
-	    			</select>
-
-	    		</div><!--DeviceName -->
-
+  	    		<div class="col-md-6"><!--DeviceName-->
+  	    			<label for="deviceName">Device Name</label>
+  	    			<select ng-model='device.name' id="deviceName" class="form-control">
+  	    				<option>Device Name</option>
+  	    				<option>OpenBCI</option>
+  	    				<option>Muse</option>
+  	    				<option>Mock</option>
+  	    			</select>
+  	    		</div><!--DeviceName -->
+            <div class="col-md-2">
+              <label></label>
+              <button type="submit" ng-click="getData(device)" class="btn btn-default">Submit</button>
+            </div>
+          </ng-form>
 	    	</div>
-
+        
 	    	<highchart id="chart1" config="chartConfig"></highchart>
 
     	</div><!--chartController-->
     </div><!--Container-->
-
 
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
@@ -53,7 +67,7 @@
     <script src="app.js"></script>
     <script src="controllers/chartController.js"></script>
 
-    </body>
+  </body>
 
 
 </html>
