@@ -56,7 +56,11 @@
           </ng-form>
 	    	</div>
 
-	    	<highchart id="chart1" config="chartConfig"></highchart>
+	    	
+        
+        <highchart id="chart1" config="chartConfig"></highchart>
+        <highchart id="chart2" config="chartPolar"></highchart>
+        <highchart id="chart3" config="barChart"></highchart>
 
     	</div><!--chartController-->
     </div><!--Container-->
@@ -65,7 +69,9 @@
     <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="http://code.highcharts.com/adapters/standalone-framework.js"></script>
     <script src="bower_components/highcharts/highcharts.src.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script> 
     <script src="bower_components/highcharts-ng/src/highcharts-ng.js"></script>
+
     <script src="app.js"></script>
     <script src="controllers/chartController.js"></script>
 
