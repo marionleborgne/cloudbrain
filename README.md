@@ -1,4 +1,4 @@
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/ui/images/cb-logo-low-res.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/ui/images/cb-logo-low-res.png)
 
 ##Overview
 Cloudbrain is a platform for real-time sensor data analysis and visualization. 
