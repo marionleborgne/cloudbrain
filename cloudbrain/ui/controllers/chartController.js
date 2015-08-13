@@ -5,11 +5,13 @@
 
 		.controller('chartController', ['$scope', '$http', function($scope, $http){
 
+            
+
 			$scope.getData = function (device) {
 				$scope.chartConfig.title.text = device.name + ' ' + device.id;
-                if (device.name.toLowerCase() == 'openbci'){
+                if (device.name.toLowerCase() === 'openbci'){
                     $scope.num_channels = 8;
-                } else if (device.name.toLowerCase() == 'muse'){
+                } else if (device.name.toLowerCase() === 'muse'){
                     $scope.num_channels = 4;
                 } else {
                     $scope.num_channels = 0;
