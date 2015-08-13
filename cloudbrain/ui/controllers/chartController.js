@@ -8,9 +8,9 @@
            
             
       $scope.changeColor = function() {
-        $scope.chartConfig.options.chart.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-        $scope.chartPolar.options.chart.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-        $scope.chartBar.options.chart.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+        $scope.chartConfig.options.chart.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+        $scope.chartPolar.options.chart.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+        $scope.chartBar.options.chart.backgroundColor = 'rgba(255, 255, 255, 0.8)';
       }
 			$scope.getData = function (device) {
 				$scope.chartConfig.title.text = device.name + ' ' + device.id;
