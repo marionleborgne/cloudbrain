@@ -85,4 +85,5 @@ def run(device_name='muse',
   connector.start()
 
 if __name__ == "__main__":
-  run('muse', False, 'marion', RABBITMQ_ADDRESS)
+  main()
+  #run('muse', False, 'marion', RABBITMQ_ADDRESS)
