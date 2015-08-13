@@ -3,4 +3,7 @@ cloudbrain/subscribers/bin/osx
 cloudbrain/subscribers/bin/ubuntu
 cloudbrain/publishers/bin/osx
 cloudbrain/publishers/bin/ubuntu
+dist/
+build/
+cloudbrain.egg-info/
 *.spec
