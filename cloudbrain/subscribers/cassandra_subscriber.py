@@ -67,7 +67,7 @@ def parse_args():
                            "Supported devices are: %s" % _SUPPORTED_DEVICES)
   parser.add_argument('-c', '--cloudbrain', default=RABBITMQ_ADDRESS,
                       help="The address of the CloudBrain instance you are sending data to.\n"
-                           "Use " + RABBITMQ_ADDRESS + " to send data to our hosted service. \n" 
+                           "Use " + RABBITMQ_ADDRESS + " to send data to our hosted service. \n"
                            "Otherwise use 'localhost' if running CloudBrain locally")
   parser.add_argument('-m', '--metric_name', required=True,
                       help="Name of the metric for which you want to record data.\n"
