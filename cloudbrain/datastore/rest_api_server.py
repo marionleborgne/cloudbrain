@@ -1,4 +1,5 @@
 import time
+import json
 import random
 from flask import Flask, request, current_app
 from functools import wraps
@@ -6,7 +7,7 @@ from cloudbrain.utils.metadata_info import map_metric_name_to_num_channels
 from cloudbrain.datastore.CassandraDAL import CassandraDAL
 from cloudbrain.settings import WEBSERVER_PORT
 
-_MOCK_ENABLED = False
+_MOCK_ENABLED = None
 
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
@@ -37,7 +38,7 @@ def data():
   :return:
   """
 
-  default_start_timestamp = time.time() - 5 # return last 5s if start not specified.
+  default_start_timestamp = int(time.time() - 5)# return last 5s if start not specified.
   device_id = request.args.get('device_id', None)
   device_name = request.args.get('device_name', None)
   metric = request.args.get('metric', None)
@@ -56,14 +57,14 @@ def data():
 
     data_records = dao.get_data(device_name, device_id, metric, start)
 
-  return data_records
+  return json.dumps(data_records)
 
 def get_mock_data(device_name, metric, start):
 
   metric_to_num_channels = map_metric_name_to_num_channels(device_name)
   num_channels = metric_to_num_channels[metric]
 
-  now = int(time.time() * 1000) # in ms
+  now = int(time.time())
 
   data_records = []
   for i in xrange(now - start):
@@ -76,4 +77,5 @@ def get_mock_data(device_name, metric, start):
   return data_records
 
 if __name__ == "__main__":
+  _MOCK_ENABLED = True
   app.run(host="0.0.0.0", port=WEBSERVER_PORT)
