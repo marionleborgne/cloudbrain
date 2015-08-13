@@ -10,6 +10,8 @@
 
 			$scope.getData = function (device) {
 				$scope.chartConfig.title.text = device.name + ' ' + device.id;
+        $scope.chartPolar.title.text = device.name + ' ' + device.id;
+        $scope.chartBar.title.text = device.name + ' ' + device.id;
                 if (device.name.toLowerCase() === 'openbci'){
                     $scope.num_channels = 8;
                 } else if (device.name.toLowerCase() === 'muse'){
@@ -125,7 +127,7 @@
       },
 
       title: {
-          text: 'Budget vs spending ddd',
+          text: 'EEG',
           x: -80
       },
       
@@ -156,7 +158,7 @@
 
   };
 
-  $scope.barChart = {
+  $scope.chartBar = {
     options: {
             chart: {
                 
@@ -179,7 +181,7 @@
       },
 
       title: {
-          text: 'Budget vs spending ddd',
+          text: 'EEG',
           x: -80
       },
       
