@@ -19,14 +19,12 @@ This makes use of the demo version of Cloudbrain running at `http://cloudbrain.r
 * Subscribers receive data from Cloudbrain.
 
 ### Publishers: send data to Cloudbrain
-* On OSX, run `./cloudbrain/publishers/bin/osx/sensor_publisher`
-* On Ubuntu, run `./cloudbrain/publishers/bin/ubuntu/sensor_publisher`
-* Use `--help` to get more info about how to use the publishers. For example, `./cloudbrain/publishers/bin/osx/sensor_publisher --help`
+* Run `python cloudbrain/publishers/sensor_publisher.py`
+* Use the `--help` flag for the docs.
 
 ### Subscribers: get data from Cloudbrain
-* On OSX, run `./cloudbrain/subscribers/bin/osx/file_writer_subscriber`
-* On Ubuntu, run `./cloudbrain/subscribers/bin/ubuntu/file_writer_subscriber`
-* Use `--help` to get more info about how to use the subscribers. For example, `./cloudbrain/subscribers/bin/osx/file_writer_subscriber --help`
+* Write data to a file: `python cloudbrain/subscribers/file_writer_subscriber.py`
+* Use the `--help` flag for the docs.
 
 ## Option 2: Install Cloudbrain from scratch 
 
