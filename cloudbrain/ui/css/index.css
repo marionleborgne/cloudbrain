@@ -11,3 +11,6 @@
   font-size: 22px;
   color: white;
 }
+body {
+	background-image: url(../images/stars.jpg);
+}
