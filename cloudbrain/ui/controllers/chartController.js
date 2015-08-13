@@ -7,7 +7,11 @@
 
            
             
-
+      $scope.changeColor = function() {
+        $scope.chartConfig.options.chart.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+        $scope.chartPolar.options.chart.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+        $scope.chartBar.options.chart.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+      }
 			$scope.getData = function (device) {
 				$scope.chartConfig.title.text = device.name + ' ' + device.id;
         $scope.chartPolar.title.text = device.name + ' ' + device.id;
@@ -43,7 +47,8 @@
 		{
         options:{
             chart: {
-                    type: "spline"
+                    type: "spline",
+                    /*backgroundColor: 'rgba(255, 255, 255, 0.2)'*/
                     }
         },
         title: {
@@ -108,7 +113,9 @@
     options: {
             chart: {
                 polar: true,
-                type: 'spline'
+                type: 'spline',
+                
+                margin: [50, 50, 50, 50]
             },
              pane: {
               size: '80%'
@@ -121,7 +128,7 @@
             legend: {
                 align: 'right',
                 verticalAlign: 'top',
-                y: 70,
+                
                 layout: 'vertical'
             }
       },
@@ -161,7 +168,7 @@
   $scope.chartBar = {
     options: {
             chart: {
-                
+                margin: [50, 50, 50, 50],
                 type: 'column'
             },
              pane: {

@@ -11,13 +11,19 @@
   font-size: 22px;
   color: white;
 }
+
 body {
 	background-image: url(../images/stars.jpg);
 }
+
 #bot_charts {
 	padding-top: 10px;
 }
-#form_button {
-	padding-top: 27px;
-	margin-bottom: 1px;
+.nav_button {
+	padding-top: 25.5px;
+	
+}
+
+label {
+  color: white;
 }
