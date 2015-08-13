@@ -32,9 +32,15 @@ This makes use of the demo version of Cloudbrain running at `http://cloudbrain.r
 ## Option 2: Install Cloudbrain from scratch 
 
 ### Dependencies 
-* Install RabbitMQ and start it.
+
 * Install Cassandra and start it.
 * `python setup.py install`
+
+#### RabbitMQ
+
+* Install RabbitMQ and start it
+* Create cloudbrain user: `rabbitmqctl add_user cloudbrain cloudbrain`
+* Grant permissions: `rabbitmqctl set_permissions cloudbrain ".*" ".*" ".*"`
 
 ### Send data to Cloudbrain
 * Run `python cloudbrain/publishers/sensor_publisher.py`
