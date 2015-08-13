@@ -3,14 +3,14 @@ import random
 from flask import Flask, request, current_app
 from functools import wraps
 from cloudbrain.utils.metadata_info import map_metric_name_to_num_channels
-from cloudbrain.datastore.CassandraDAO import CassandraDAO
+from cloudbrain.datastore.CassandraDAL import CassandraDAL
 from cloudbrain.settings import WEBSERVER_PORT
 
 _MOCK_ENABLED = False
 
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
-dao = CassandraDAO()
+dao = CassandraDAL()
 dao.connect()
 
 
