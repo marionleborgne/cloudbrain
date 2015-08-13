@@ -82,11 +82,11 @@ All the EEG headsets in the exhibit are sending data to CloudBrain. This data is
 ## Cloudbrain's data visualizations
 
 ### Aggregated data (bar charts)
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/ui/images/data-aggregates.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/ui/images/data-aggregates.png)
 
 ### Live EEG data (radar charts)
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/ui/images/radar-charts.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/ui/images/radar-charts.png)
 
 ### Live EEG data (line charts)
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/ui/images/timeserie-data.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/ui/images/timeserie-data.png)
 
