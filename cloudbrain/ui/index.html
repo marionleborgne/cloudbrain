@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/index.css">
   </head>
 
-  <body ng-app="cloudbrain">
+  <body ng-app="cloudbrain" ng-controller="chartController">
 
       <nav class="navbar navbar-inverse">
         <div class="navbar-header">
@@ -25,36 +25,37 @@
               <img src="images/brain-white.png" alt="cloudbrain" class="logo" />
               <span>Cloudbrain</span>
             </a>
-          </div>
-        </div>
-      </nav>
+            <ng-form name="deviceIdForm" role="form">
 
-    <div class="container">
-    	<div ng-controller="chartController">
-	    	<div class="row">
-          <ng-form name="deviceIdForm" role="form">
+            <div class="col-md-4"><!--DeviceId-->
+              <div class="form-group">
+                <label for="deviceId">DeviceId:</label>
+                <input ng-model="device.id" class="form-control" id="deviceId">
+              </div>
+            </div><!--DeviceId -->
 
-  	    		<div class="col-md-4"><!--DeviceId-->
-      				<div class="form-group">
-      					<label for="deviceId">DeviceId:</label>
-      					<input ng-model="device.id" class="form-control" id="deviceId">
-      				</div>
-  	    		</div><!--DeviceId -->
-
-  	    		<div class="col-md-6"><!--DeviceName-->
-  	    			<label for="deviceName">Device Name</label>
-  	    			<select ng-model='device.name' id="deviceName" class="form-control">
-  	    				<option>Device Name</option>
-  	    				<option>OpenBCI</option>
-  	    				<option>Muse</option>
-  	    			</select>
-  	    		</div><!--DeviceName -->
+            <div class="col-md-6"><!--DeviceName-->
+              <label for="deviceName">Device Name</label>
+              <select ng-model='device.name' id="deviceName" class="form-control">
+                <option>Device Name</option>
+                <option>OpenBCI</option>
+                <option>Muse</option>
+              </select>
+            </div><!--DeviceName -->
             <div class="col-md-2">
               <label></label>
               <button type="submit" ng-click="getData(device)" class="btn btn-default">Submit</button>
             </div>
           </ng-form>
-	    	</div>
+        </div>
+          </div>
+        </div>
+      </nav>
+
+    <div class="container">
+    	<!--<div ng-controller="chartController"> -->
+	    	<div class="row">
+          
       <div class="row">
 	     <highchart id="chart3" config="chartConfig"></highchart>
      </div>
@@ -69,7 +70,7 @@
       </div>
         
 
-    	</div><!--chartController-->
+    	<!--</div><!--chartController--> -->
     </div><!--Container-->
 
     <script src="bower_components/angular/angular.js"></script>
