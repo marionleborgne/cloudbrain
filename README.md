@@ -18,6 +18,9 @@ This makes use of the demo version of Cloudbrain running at `http://cloudbrain.r
 * Publishers send data to Cloudbrain.
 * Subscribers receive data from Cloudbrain.
 
+### Install
+* `python setup.py install`
+
 ### Publishers: send data to Cloudbrain
 * Run `python cloudbrain/publishers/sensor_publisher.py`
 * Use the `--help` flag for the docs.
@@ -31,7 +34,7 @@ This makes use of the demo version of Cloudbrain running at `http://cloudbrain.r
 ### Dependencies 
 * Install RabbitMQ and start it.
 * Install Cassandra and start it.
-* `pip install requirements.txt`
+* `python setup.py install`
 
 ### Send data to Cloudbrain
 * Run `python cloudbrain/publishers/sensor_publisher.py`
