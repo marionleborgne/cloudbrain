@@ -1,5 +1,5 @@
 from ConnectorInterface import Connector
-from cloudbrain.connectors.muse.MuseServer import MuseServer
+from cloudbrain.connectors.muse.MuseOSC import MuseOSC
 from cloudbrain.utils.metadata_info import get_num_channels
 import time
 import sys
@@ -51,7 +51,7 @@ class MuseConnector(Connector):
     cb_functions = {metric: self.callback_factory(metric, get_num_channels(self.device_name, metric))
                     for metric in self.metrics}
 
-    self.device = MuseServer(self.device_port, cb_functions)
+    self.device = MuseOSC(self.device_port, cb_functions)
 
   def start(self):
     try:

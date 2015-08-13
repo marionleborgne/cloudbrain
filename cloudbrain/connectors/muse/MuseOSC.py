@@ -4,9 +4,9 @@ import time
 import json
 
 
-class MuseServer(ServerThread):
+class MuseOSC(ServerThread):
   """
-  Muse Connector
+  Getting OSC messages from the Muse
   """
 
   def __init__(self, muse_port, callback_functions):
@@ -59,7 +59,7 @@ if __name__ == "__main__":
          "muse-io --osc osc.udp://localhost:9090")
 
   try:
-    server = MuseConnector(9090, callbacks)
+    server = MuseOSC(9090, callbacks)
   except ServerError, err:
     print str(err)
     sys.exit()

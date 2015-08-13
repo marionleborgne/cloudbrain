@@ -4,7 +4,7 @@ import json
 import socket
 
 
-class NeuroskyConnector():
+class NeuroskyServer():
 
     def __init__(self, sender_ip, sender_port, receiver_ip, receiver_port, user):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -27,4 +27,4 @@ class NeuroskyConnector():
                 self.sock.sendto(packet, (self.receiver_ip, self.receiver_port))
 
 if __name__ == "__main__":
-    NeuroskyConnector.run()
+    NeuroskyServer.run()
