@@ -21,7 +21,7 @@ def parse_args():
                            "Supported devices are: %s" % _SUPPORTED_DEVICES)
   parser.add_argument('-c', '--cloudbrain', default=RABBITMQ_ADDRESS,
                       help="The address of the CloudBrain instance you are sending data to.\n"
-                           "Use 'cloudbrain.rocks' to send data to our hosted service. \n"
+                           "Use " + RABBITMQ_ADDRESS + " to send data to our hosted service. \n"
                            "Otherwise use 'localhost' if running CloudBrain locally")
   parser.add_argument('-b', '--buffer_size', default=10,
                       help='Size of the buffer ')
@@ -85,4 +85,4 @@ def run(device_name='muse',
   connector.start()
 
 if __name__ == "__main__":
-  main()
+  run('muse', False, 'marion', RABBITMQ_ADDRESS)
