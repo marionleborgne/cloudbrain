@@ -5,7 +5,13 @@
 
 		.controller('chartController', ['$scope', '$http', function($scope, $http){
 
-            
+            $scope.test = function() {
+                $http.get(url){
+                    .then(function(response){
+                        $scope.data = response.data;
+                    })
+                }
+            }
 
 			$scope.getData = function (device) {
 				$scope.chartConfig.title.text = device.name + ' ' + device.id;
