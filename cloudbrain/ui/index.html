@@ -25,42 +25,51 @@
               <img src="images/brain-white.png" alt="cloudbrain" class="logo" />
               <span>Cloudbrain</span>
             </a>
+            <ng-form name="deviceIdForm" role="form">
+
+            <div class="col-md-4"><!--DeviceId-->
+              <div class="form-group">
+                <label for="deviceId">DeviceId:</label>
+                <input ng-model="device.id" class="form-control" id="deviceId">
+              </div>
+            </div><!--DeviceId -->
+
+            <div class="col-md-4"><!--DeviceName-->
+              <label for="deviceName">Device Name</label>
+              <select ng-model='device.name' id="deviceName" class="form-control">
+                <option>Device Name</option>
+                <option>OpenBCI</option>
+                <option>Muse</option>
+              </select>
+            </div><!--DeviceName -->
+            <div id="form_button" class="col-md-2">
+              <label></label>
+              <button type="submit" ng-click="getData(device)" class="btn btn-default">Submit</button>
+            </div>
+          </ng-form>
           </div>
+
         </div>
       </nav>
 
     <div class="container">
     	<div ng-controller="chartController">
 	    	<div class="row">
-          <ng-form name="deviceIdForm" role="form">
-
-  	    		<div class="col-md-4"><!--DeviceId-->
-      				<div class="form-group">
-      					<label for="deviceId">DeviceId:</label>
-      					<input ng-model="device.id" class="form-control" id="deviceId">
-      				</div>
-  	    		</div><!--DeviceId -->
-
-  	    		<div class="col-md-6"><!--DeviceName-->
-  	    			<label for="deviceName">Device Name</label>
-  	    			<select ng-model='device.name' id="deviceName" class="form-control">
-  	    				<option>Device Name</option>
-  	    				<option>OpenBCI</option>
-  	    				<option>Muse</option>
-  	    			</select>
-  	    		</div><!--DeviceName -->
-            <div class="col-md-2">
-              <label></label>
-              <button type="submit" ng-click="getData(device)" class="btn btn-default">Submit</button>
-            </div>
-          </ng-form>
+          
 	    	</div>
+      <div class="row">
+	     <highchart id="chart3" config="chartConfig"></highchart>
+     </div>
 
-	    	
+      <div id="bot_charts" class="row">
+        <div class="col-md-8">
+        <highchart id="chart1" config="chartBar"></highchart>
+      </div>
+        <div class="col-md-4">
+          <highchart id="chart2" config="chartPolar"></highchart>
+        </div>
+      </div>
         
-        <highchart id="chart1" config="chartConfig"></highchart>
-        <highchart id="chart2" config="chartPolar"></highchart>
-        <highchart id="chart3" config="chartBar"></highchart>
 
     	</div><!--chartController-->
     </div><!--Container-->
