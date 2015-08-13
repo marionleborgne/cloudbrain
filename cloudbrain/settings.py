@@ -5,7 +5,7 @@ SENSOR_DATA_KEYSPACE = "sensor_data"
 CASSANDRA_ADDRESS = 'cassandra.cloudbrain.rocks'
 RABBITMQ_ADDRESS = 'rabbitmq.cloudbrain.rocks'
 WEBSERVER_ADDRESS = 'webserver.cloudbrain.rocks'
-WEBSERVER_PORT = 6000
+WEBSERVER_PORT = 8080
 
 MOCK_DEVICE_ID = "mock"
 
