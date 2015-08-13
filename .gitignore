@@ -1,2 +1,6 @@
 *.pyc
-
+cloudbrain/publishers/bin/osx
+cloudbrain/publishers/bin/ubuntu
+cloudbrain/subscribers/bin/osx
+cloudbrain/subscribers/bin/ubuntu
+*.spec

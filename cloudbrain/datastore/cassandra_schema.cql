@@ -1,41 +1,33 @@
-DROP KEYSPACE openbci;
-CREATE KEYSPACE openbci WITH  replication = {'class': 'SimpleStrategy', 'replication_factor': 3 };
-USE openbci;
-CREATE TABLE eeg (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double, value_4 double, value_5 double, value_6 double, value_7 double,  PRIMARY KEY (user_id, timestamp)); 
+DROP KEYSPACE sensor_data;
+CREATE KEYSPACE sensor_data WITH  replication = {'class': 'SimpleStrategy', 'replication_factor': 3 };
+USE sensor_data;
 
-DROP KEYSPACE muse;
-CREATE KEYSPACE muse WITH  replication = {'class': 'SimpleStrategy', 'replication_factor': 3 };
-USE muse;
-CREATE TABLE eeg (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE horseshoe (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE concentration (user_id text, timestamp timestamp, value_0 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE mellow (user_id text, timestamp timestamp, value_0 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE acc (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE delta_absolute (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE theta_absolute (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE beta_absolute (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE alpha_absolute (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE gamma_absolute (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE delta_relative (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE theta_relative (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE beta_relative (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE alpha_relative (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE gamma_relative (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE is_good (user_id text, timestamp timestamp, value_0 double, value_1 double, value_2 double, value_3 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE blink (user_id text, timestamp timestamp, value_0 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE jaw_clench (user_id text, timestamp timestamp, value_0 double,  PRIMARY KEY (user_id, timestamp)); 
+CREATE TABLE openbci_eeg (device_id text, timestamp timestamp, channel_0 double, channel_1 double, channel_2 double, channel_3 double, channel_4 double, channel_5 double, channel_6 double, channel_7 double,  PRIMARY KEY (device_id, timestamp)); 
 
-DROP KEYSPACE neurosky;
-CREATE KEYSPACE neurosky WITH  replication = {'class': 'SimpleStrategy', 'replication_factor': 3 };
-USE neurosky;
-CREATE TABLE concentration (user_id text, timestamp timestamp, value_0 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE meditation (user_id text, timestamp timestamp, value_0 double,  PRIMARY KEY (user_id, timestamp)); 
-CREATE TABLE signal_strength (user_id text, timestamp timestamp, value_0 double,  PRIMARY KEY (user_id, timestamp)); 
+CREATE TABLE muse_eeg (device_id text, timestamp timestamp, channel_0 double, channel_1 double, channel_2 double, channel_3 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE muse_horseshoe (device_id text, timestamp timestamp, channel_0 double, channel_1 double, channel_2 double, channel_3 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE muse_concentration (device_id text, timestamp timestamp, channel_0 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE muse_mellow (device_id text, timestamp timestamp, channel_0 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE muse_acc (device_id text, timestamp timestamp, channel_0 double, channel_1 double, channel_2 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE muse_delta_absolute (device_id text, timestamp timestamp, channel_0 double, channel_1 double, channel_2 double, channel_3 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE muse_theta_absolute (device_id text, timestamp timestamp, channel_0 double, channel_1 double, channel_2 double, channel_3 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE muse_beta_absolute (device_id text, timestamp timestamp, channel_0 double, channel_1 double, channel_2 double, channel_3 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE muse_alpha_absolute (device_id text, timestamp timestamp, channel_0 double, channel_1 double, channel_2 double, channel_3 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE muse_gamma_absolute (device_id text, timestamp timestamp, channel_0 double, channel_1 double, channel_2 double, channel_3 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE muse_delta_relative (device_id text, timestamp timestamp, channel_0 double, channel_1 double, channel_2 double, channel_3 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE muse_theta_relative (device_id text, timestamp timestamp, channel_0 double, channel_1 double, channel_2 double, channel_3 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE muse_beta_relative (device_id text, timestamp timestamp, channel_0 double, channel_1 double, channel_2 double, channel_3 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE muse_alpha_relative (device_id text, timestamp timestamp, channel_0 double, channel_1 double, channel_2 double, channel_3 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE muse_gamma_relative (device_id text, timestamp timestamp, channel_0 double, channel_1 double, channel_2 double, channel_3 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE muse_is_good (device_id text, timestamp timestamp, channel_0 double, channel_1 double, channel_2 double, channel_3 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE muse_blink (device_id text, timestamp timestamp, channel_0 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE muse_jaw_clench (device_id text, timestamp timestamp, channel_0 double,  PRIMARY KEY (device_id, timestamp)); 
 
-DROP KEYSPACE pulsesensor;
-CREATE KEYSPACE pulsesensor WITH  replication = {'class': 'SimpleStrategy', 'replication_factor': 3 };
-USE pulsesensor;
-CREATE TABLE raw (user_id text, timestamp timestamp, value_0 double,  PRIMARY KEY (user_id, timestamp)); 
+CREATE TABLE neurosky_concentration (device_id text, timestamp timestamp, channel_0 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE neurosky_meditation (device_id text, timestamp timestamp, channel_0 double,  PRIMARY KEY (device_id, timestamp)); 
+CREATE TABLE neurosky_signal_strength (device_id text, timestamp timestamp, channel_0 double,  PRIMARY KEY (device_id, timestamp)); 
+
+CREATE TABLE pulsesensor_raw (device_id text, timestamp timestamp, channel_0 double,  PRIMARY KEY (device_id, timestamp)); 
 
 
 DROP KEYSPACE users;

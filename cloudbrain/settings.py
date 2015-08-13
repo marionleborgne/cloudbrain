@@ -1,5 +1,14 @@
 DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
+SENSOR_DATA_KEYSPACE = "sensor_data"
+
+CASSANDRA_ADDRESS = 'cassandra.cloudbrain.rocks'
+RABBITMQ_ADDRESS = 'rabbitmq.cloudbrain.rocks'
+WEBSERVER_ADDRESS = 'webserver.cloudbrain.rocks'
+WEBSERVER_PORT = 6000
+
+MOCK_DEVICE_ID = "mock"
+
 # Metric metadata of all wearable devices accepted by CloudBrain.
 DEVICE_METADATA = [
   {'device_name': 'openbci',

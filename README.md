@@ -1,70 +1,71 @@
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cb-logo-low-res.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/ui/images/cb-logo-low-res.png)
 
 ##Overview
-CloudBrain is a platform for real-time sensor data analysis and visualization. For example, [EEG](http://en.wikipedia.org/wiki/Electroencephalography) data is the recording of electrical activity along the scalp. In other words, brainwaves.
+Cloudbrain is a platform for real-time sensor data analysis and visualization. 
+<br>
+One type of sensor data that works well with Cloudbrain is EEG data. [EEG](http://en.wikipedia.org/wiki/Electroencephalography) is the recording of electrical activity along the scalp. In other words, brainwaves.
 <br>
 <br>
-CloudBrain enables you to:
-- **Stream Sensor data** into a central database.
-- **Analyze Sensor data** by computing aggregates.
-- **Visualize Sensor data** and patterns in real-time.
+Cloudbrain enables you to:
+- **Stream sensor data** into a central database.
+- **Analyze sensor data** to find spatial and temporal patterns.
+- **Visualize sensor data** and patterns in real-time.
 
 # Getting started with Cloudbrain
 
 ## Option 1: Quick-start!
-This makes use of the demo version of cloudbrain running at `http://cloudbrain.rocks`. Let's send and get data using prebuilt binaries.
+This makes use of the demo version of Cloudbrain running at `http://cloudbrain.rocks`.
+* Publishers send data to Cloudbrain.
+* Subscribers receive data from Cloudbrain.
 
-### Publishers: send data to cloudbrain
-* On OSX, run `./cloudbrain/publishers/bin/osx/main`
-* On Ubuntu, run `./cloudbrain/publishers/bin/ubuntu/main`
-* Use `--help` to get more info about how to use the publishers. For example, `./cloudbrain/publishers/bin/osx/main --help`
+### Publishers: send data to Cloudbrain
+* On OSX, run `./cloudbrain/publishers/bin/osx/sensor_publisher`
+* On Ubuntu, run `./cloudbrain/publishers/bin/ubuntu/sensor_publisher`
+* Use `--help` to get more info about how to use the publishers. For example, `./cloudbrain/publishers/bin/osx/sensor_publisher --help`
 
-### Subscribers: get data from cloudbrain and write to a file
-* On OSX, run `./cloudbrain/subscribers/bin/osx/file_writer`
-* On Ubuntu, run `./cloudbrain/subscribers/bin/ubuntu/file_writer`
-* Use `--help` to get more info about how to use the subscribers. For example, `./cloudbrain/subscribers/bin/osx/file_writer --help`
-
-### PyInstaller
-* Cloudbrain's binaries were generated with PyInstaller
-* `pip install pyinstaller`
-* `pyinstaller --clean --onefile -y <python_file>`
-
+### Subscribers: get data from Cloudbrain
+* On OSX, run `./cloudbrain/subscribers/bin/osx/file_writer_subscriber`
+* On Ubuntu, run `./cloudbrain/subscribers/bin/ubuntu/file_writer_subscriber`
+* Use `--help` to get more info about how to use the subscribers. For example, `./cloudbrain/subscribers/bin/osx/file_writer_subscriber --help`
 
 ## Option 2: Install Cloudbrain from scratch 
 
 ### Dependencies 
-* Install RabbitMQ
-* Install Cassandra
-* Install `node` and `npm`
-* `npm install rabbit.js`
+* Install RabbitMQ and start it.
+* Install Cassandra and start it.
 * `pip install requirements.txt`
 
-### Run the App
+### Send data to Cloudbrain
+* Run `python cloudbrain/publishers/sensor_publisher.py`
+* Use the `--help` flag for the docs.
 
-#### Start RabbitMQ
-* Get RabbitMQ.
-* Change to your RabbitMQ directory. 
-* Start RabbitMQ: `sh sbin/rabbit-server start`
+### Get data from Cloudbrain
+* Write data to a file: `python cloudbrain/subscribers/file_writer_subscriber.py`
+* Use the `--help` flag for the docs.
 
-#### Start the Publisher
-* Run `python cloudbrain/publishers/main.py`
-
-#### Start Cassandra
-* Get Cassandra.
-* Change to your Cassandra directory.
-* Start Cassandra: `sh bin/cassandra start`
-* Generate Cassandra schema: `python database/generate_cassandra_schema.py`
+### Store data 
+* `cd cloudbrain/datastore`
+* Generate Cassandra schema: `python generate_cassandra_schema.py`
 * Execute schema: `bin/cqlsh -f <path_to_cassandra_schema>/cassandra_schema.cql`
+* Start storing data: `python cloudbrain/subscribers/cassandra_pika_subscriber.py`
 
+### Visualize data
+* `cd cloudbrain/ui`
+* `npm install`
+* `bower install`
+* Start the REST API server `python cloudbrain/datastore/rest_api_server.py`
+* Open `ui/index.html` in your browser.
 
-#### Run MetricStore
-* Start listening and storing data with `python database/metric_store.py`
-
-#### Start the REST API
-* Run `python api/web_api.py`
-
-#### Start the UI
-* Open `ui/chart.html` in your browser.
+### [Optional] Generate binaries
+* Install PyInstaller `pip install pyinstaller`
+* For the publishers: `cd cloudbrain/publishers/bin/`
+* Make the scripts executable `chmod +x *.sh`
+* On OSX, generate OSX binaries: `sh package_publisher_osx.sh`
+* On Ubuntu,  generate Ubuntu binaries: `sh package_publisher_ubuntu.sh`
+* For the Subscribers `cd cloudbrain/subscribers/bin/`
+* Make the scripts executable `chmod +x *.sh`
+* On OSX, generate OSX binaries: `sh package_subscriber_osx.sh`
+* On Ubuntu,  generate Ubuntu binaries: `sh package_subscriber_ubuntu.sh`
 
 # About Cloudbrain
 
@@ -75,11 +76,11 @@ All the EEG headsets in the exhibit are sending data to CloudBrain. This data is
 ## Cloudbrain's data visualizations
 
 ### Aggregated data (bar charts)
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/data-aggregates.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/ui/images/data-aggregates.png)
 
 ### Live EEG data (radar charts)
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/radar-charts.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/ui/images/radar-charts.png)
 
 ### Live EEG data (line charts)
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/timeserie-data.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/ui/images/timeserie-data.png)
 
