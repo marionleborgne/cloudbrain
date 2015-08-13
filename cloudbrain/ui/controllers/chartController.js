@@ -7,6 +7,14 @@
 
 			$scope.getData = function (device) {
 				$scope.chartConfig.title.text = device.name + ' ' + device.id;
+                if (device.name.toLowerCase() == 'openbci'){
+                    $scope.num_channels = 8;
+                } else if (device.name.toLowerCase() == 'muse'){
+                    $scope.num_channels = 4;
+                } else {
+                    $scope.num_channels = 0;
+                }
+
 
 				// url = 'cloudbrain.rocks/api/' + device.name + '/' + device.id;
 				// $interval(function () {
@@ -22,10 +30,12 @@
 			};
 
 			$scope.chartConfig =
-		{options:{
-        chart: {
-            type: "spline"
-        }},
+		{
+        options:{
+            chart: {
+                    type: "spline"
+                    }
+        },
         title: {
             text: 'EEG',
             x: -20 //center
