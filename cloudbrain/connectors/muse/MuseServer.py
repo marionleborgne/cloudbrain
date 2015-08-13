@@ -4,7 +4,7 @@ import time
 import json
 
 
-class MuseConnector(ServerThread):
+class MuseServer(ServerThread):
   """
   Muse Connector
   """
