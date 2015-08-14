@@ -56,7 +56,7 @@ def data():
   else:
     data_records = dao.get_data(device_name, device_id, metric, start)
 
-  return json.dumps(data_records), 200
+  return json.dumps(data_records)
 
 def _get_mock_data(device_name, metric, start):
 
@@ -73,7 +73,7 @@ def _get_mock_data(device_name, metric, start):
       record[channel_name] = random.random() * 10
     data_records.append(record)
 
-  return data_records, 200
+  return data_records
 
 @app.route('/devices', methods=['GET'])
 @support_jsonp
