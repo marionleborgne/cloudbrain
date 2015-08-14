@@ -13,16 +13,13 @@
 }
 
 body {
-	background-image: url(../images/neurons.jpg);
+	/*background-image: url(../images/neurons.jpg);*/
 }
 
 #bot_charts {
 	padding-top: 10px;
 }
-.nav_button {
-	padding-top: 25.5px;
-	
-}
+
 
 label {
   color: white;

@@ -30,17 +30,13 @@
 
               <div class="col-md-3"><!--DeviceId-->
                 <div class="form-group">
-                  <label for="deviceId">DeviceId:</label>
-                  <input ng-model="device.id" class="form-control" id="deviceId">
+                  <input ng-model="device.id" class="form-control" id="deviceId" placeholder="Device Id">
                 </div>
               </div><!--DeviceId -->
 
               <div class="col-md-3"><!--DeviceName-->
-                <label for="deviceName">Device Name</label>
-                <select ng-model='device.name' id="deviceName" class="form-control">
-                  <option>Device Name</option>
-                  <option>OpenBCI</option>
-                  <option>Muse</option>
+                  <select ng-model='device.name' id="deviceName" class="form-control">
+                  <option ng-repeat="device_name in device_names">{{device_name}}</option>
                 </select>
               </div><!--DeviceName -->
               <div  class="col-md-1 nav_button">
