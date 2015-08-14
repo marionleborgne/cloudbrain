@@ -56,7 +56,7 @@ def data():
   else:
     data_records = dao.get_data(device_name, device_id, metric, start)
 
-  return json.dumps(data_records), 200
+  return json.dumps(data_records)
 
 def _get_mock_data(device_name, metric, start):
 
