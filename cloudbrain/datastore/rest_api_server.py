@@ -3,7 +3,7 @@ import json
 import random
 from flask import Flask, request, current_app
 from functools import wraps
-from cloudbrain.utils.metadata_info import map_metric_name_to_num_channels
+from cloudbrain.utils.metadata_info import map_metric_name_to_num_channels, get_supported_devices
 from cloudbrain.datastore.CassandraDAL import CassandraDAL
 from cloudbrain.settings import WEBSERVER_PORT
 
@@ -52,14 +52,13 @@ def data():
     return "missing param: device_id", 500
 
   if _MOCK_ENABLED:
-    data_records = get_mock_data(device_name, metric, start)
+    data_records = _get_mock_data(device_name, metric, start)
   else:
-
     data_records = dao.get_data(device_name, device_id, metric, start)
 
   return json.dumps(data_records)
 
-def get_mock_data(device_name, metric, start):
+def _get_mock_data(device_name, metric, start):
 
   metric_to_num_channels = map_metric_name_to_num_channels(device_name)
   num_channels = metric_to_num_channels[metric]
@@ -75,6 +74,12 @@ def get_mock_data(device_name, metric, start):
     data_records.append(record)
 
   return data_records
+
+@app.route('/devices', methods=['GET'])
+@support_jsonp
+def get_available_devices():
+  return json.dumps(get_supported_devices())
+
 
 if __name__ == "__main__":
   _MOCK_ENABLED = True
