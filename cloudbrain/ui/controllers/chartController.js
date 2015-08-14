@@ -22,7 +22,7 @@
                           console.log(data);
                           console.log(status);
                           console.log('pass');
-                          $scope.device_names = data;
+                          $scope.device_names = data.filter(function(name){return name !== '';});
                           console.log($scope.device_names);
                           
                         }).
@@ -48,19 +48,26 @@
                 }
 
 
-			
+			 $scope.url = 'http://datastore.cloudbrain.rocks/data?device_name=muse&metric=eeg&device_id=marion';
+
 
 				$interval(function() {
                     
-                    $scope.url = 'http://datastore.cloudbrain.rocks/data?device_name=muse&metric=eeg&device_id=marion';
-                    $http.get($scope.url)
-                        .then(function(response){ //response if request succeeds
-                            $scope.re = response;
-                            console.log($scope.re);
-                            console.log('pass');
-                            
-                        }, function(response){  //response if request failed
-                            console.log('fail');
+                    $http({method: 'GET', url: $scope.url, responseType: 'json'}).
+                        success(function(data, status, headers) {
+                          console.log(data);
+                          console.log(status);
+                          console.log('pass');
+                          $scope.data = data;
+                          console.log($scope.data);
+                          
+                        }).
+                        error(function(data, status, headers) {
+                          console.log(data);
+                          console.log(status);
+                          console.log(headers);
+                          console.log('fail')
+                          
                         });
                     
                 }, 1000);
