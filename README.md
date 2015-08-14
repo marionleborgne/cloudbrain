@@ -3,7 +3,7 @@
 ##Overview
 Cloudbrain is a platform for real-time sensor data analysis and visualization. 
 <br>
-One type of sensor data that works well with Cloudbrain is EEG data. [EEG](http://en.wikipedia.org/wiki/Electroencephalography) is the recording of electrical activity along the scalp. In other words, brainwaves.
+One type of sensor data that works well with cloudbrain is EEG data. [EEG](http://en.wikipedia.org/wiki/Electroencephalography) is the recording of electrical activity along the scalp. In other words, brainwaves.
 <br>
 <br>
 Cloudbrain enables you to:
@@ -11,27 +11,27 @@ Cloudbrain enables you to:
 - **Analyze sensor data** to find spatial and temporal patterns.
 - **Visualize sensor data** and patterns in real-time.
 
-# Getting started with Cloudbrain
+# Getting started with cloudbrain
 
 ## Option 1: Quick-start!
-This makes use of the demo version of Cloudbrain running at `http://cloudbrain.rocks`.
-* Publishers send data to Cloudbrain.
-* Subscribers receive data from Cloudbrain.
+This makes use of the demo version of cloudbrain running at `http://cloudbrain.rocks`.
+* Publishers send data to cloudbrain.
+* Subscribers receive data from cloudbrain.
 
 ### Install
 * `python setup.py install`
 
-### Publishers: send data to Cloudbrain
+### Publishers: send data to cloudbrain
 * Run `python cloudbrain/publishers/sensor_publisher.py`
 * Use the `--help` flag for the docs.
 
-### Subscribers: get data from Cloudbrain
+### Subscribers: get data from cloudbrain
 * Write data to a file: `python cloudbrain/subscribers/file_writer_subscriber.py`
 * Use the `--help` flag for the docs.
 
-## Option 2: Install Cloudbrain from scratch 
+## Option 2: Install cloudbrain from scratch 
 
-### Dependencies 
+### Setup 
 * `python setup.py install`
 
 #### RabbitMQ
@@ -40,11 +40,11 @@ This makes use of the demo version of Cloudbrain running at `http://cloudbrain.r
 * Create cloudbrain user: `rabbitmqctl add_user cloudbrain cloudbrain`
 * Grant permissions: `rabbitmqctl set_permissions cloudbrain ".*" ".*" ".*"`
 
-### Send data to Cloudbrain
+### Send data to cloudbrain
 * Run `python cloudbrain/publishers/sensor_publisher.py`
 * Use the `--help` flag for the docs.
 
-### Get data from Cloudbrain
+### Get data from cloudbrain
 * Write data to a file: `python cloudbrain/subscribers/file_writer_subscriber.py`
 * Use the `--help` flag for the docs.
 
@@ -73,9 +73,9 @@ This makes use of the demo version of Cloudbrain running at `http://cloudbrain.r
 * On OSX, generate OSX binaries: `sh package_subscriber_osx.sh`
 * On Ubuntu,  generate Ubuntu binaries: `sh package_subscriber_ubuntu.sh`
 
-# About Cloudbrain
+# About cloudbrain
 
-## CloudBrain @ [The Exploratorium](http://www.exploratorium.edu) of San Francisco
+## Cloudbrain @ [The Exploratorium](http://www.exploratorium.edu) of San Francisco
 CloudBrain was in use at the Exploratorium as part of the Exhibit called [*Cognitive Technologies*](http://www.exploratorium.edu/press-office/press-releases/new-exhibition-understanding-influencing-brain-activity-opens). 
 All the EEG headsets in the exhibit are sending data to CloudBrain. This data is being routed to booths where visitors can control different things with their brain. For visitors who are willing to share their data, CloudBrain computes aggregates and displays a baseline of the average brain. On the central screen, visitors can see everyone else's live EEG data. Each radar chart shows the state of the main brainwaves (alpha, beta, theta, gamma, delta). This is particularly interesting to see how one's brain compares to others, or to understand how it reacts to different stimuli.
 
