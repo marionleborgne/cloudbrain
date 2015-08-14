@@ -53,7 +53,7 @@ class CassandraDAL(object):
         record[channel_name] = row[2 + i]
 
       data.append(record)
-    return json.dumps(data)
+    return data
 
   def store_data(self, timestamp, device_id, device_name, metric_name, channel_data):
     """
