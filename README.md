@@ -1,5 +1,7 @@
 ![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/ui/images/cb-logo-low-res.png)
 
+#Overview
+
 Cloudbrain is a platform for real-time sensor data analysis and visualization. 
 <br>
 One type of sensor data that works well with cloudbrain is EEG data. [EEG](http://en.wikipedia.org/wiki/Electroencephalography) is the recording of electrical activity along the scalp. In other words, brainwaves.
