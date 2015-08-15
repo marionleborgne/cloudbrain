@@ -29,7 +29,7 @@
       });
       $scope.getDevices();
       
-      $scope.url = 'http://datastore.cloudbrain.rocks/data?device_name=muse&metric=eeg&device_id=marion?callback=JSON_CALLBACK';
+      $scope.url = 'http://datastore.cloudbrain.rocks/data?device_name=muse&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
       
       $http({method: 'GET', url: $scope.url, responseType: "json"})
           .then(function(response){
