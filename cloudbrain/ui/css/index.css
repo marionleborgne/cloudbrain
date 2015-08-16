@@ -11,3 +11,16 @@
   font-size: 22px;
   color: white;
 }
+
+body {
+	/*background-image: url(../images/neurons.jpg);*/
+}
+
+#bot_charts {
+	padding-top: 10px;
+}
+
+
+label {
+  color: white;
+}
