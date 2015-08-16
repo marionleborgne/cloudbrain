@@ -77,7 +77,7 @@ This makes use of the demo version of cloudbrain running at `http://cloudbrain.r
 # About cloudbrain
 
 ## Cloudbrain @ [The Exploratorium](http://www.exploratorium.edu) of San Francisco
-CloudBrain was in use at the Exploratorium as part of the Exhibit called [*Cognitive Technologies*](http://www.exploratorium.edu/press-office/press-releases/new-exhibition-understanding-influencing-brain-activity-opens). 
+CloudBrain was in use at the Exploratorium as part of the Exhibit called [Cognitive Technologies](http://www.exploratorium.edu/press-office/press-releases/new-exhibition-understanding-influencing-brain-activity-opens). 
 
 [William](http://github.com/flysonic10) wrote an [*excellent post about our work for the the Exploratorium Exhibit*](http://willmakesthings.com/cognitive-technologies-the-exploratorium).
 
