@@ -2,8 +2,7 @@
 Cassandra Data Access Layer
 """
 from cassandra.cluster import Cluster
-from cloudbrain.settings import DATE_FORMAT, SENSOR_DATA_KEYSPACE
-import json
+from cloudbrain.settings import DATE_FORMAT, SENSOR_DATA_KEYSPACE, REGISTERED_DEVICES_TABLE_NAME
 import datetime
 import time
 from cloudbrain.utils.metadata_info import get_num_channels
@@ -33,13 +32,7 @@ class CassandraDAL(object):
     table_name = "%s_%s" %(device_name, metric_name)
     cql_select = "SELECT * FROM %s WHERE device_id='%s' AND timestamp>'%s';" % (table_name, device_id, start_date)
 
-    # TODO: remove try / except
-    try:
-      rows = self.session.execute(cql_select)
-      print "[SUCCESS] CQL select: %s" % cql_select
-    except:
-      print "[ERROR] wrong CQL statement: %s" % cql_select
-
+    rows = self.session.execute(cql_select)
     data = []
     for row in rows:
       device_id = row[0]
@@ -77,11 +70,30 @@ class CassandraDAL(object):
     columns = "device_id, timestamp, %s" %','.join(channel_names)
     cql_insert = "INSERT INTO %s (%s) VALUES (%s);" % (column_family, columns, column_values)
 
-    # TODO: remove try / except
-    try:
-      self.session.execute(cql_insert)
-      #print "[SUCCESS] CQL insert: %s" % cql_insert
-    except:
-      print "[ERROR] CQL insert: %s" % cql_insert
+    self.session.execute(cql_insert)
+
+  def get_registered_devices(self):
+    """
+    Get the available device ids
+    :return:
+    """
+
+    table_name = REGISTERED_DEVICES_TABLE_NAME
+    cql_select = "SELECT * FROM %s;" % table_name
+
+    rows = self.session.execute(cql_select)
+    registered_device_ids = []
+    for row in rows:
+      registered_device_ids.append(row[0])
+
+    return registered_device_ids
 
 
+  def store_registered_device(self, device_id, device_name):
+    """
+    Store the device metadata
+    :return:
+    """
+
+    cql_insert = "INSERT INTO %s (%s) VALUES (%s, %s);" % (REGISTERED_DEVICES_TABLE_NAME, device_id, device_name)
+    self.session.execute(cql_insert)
