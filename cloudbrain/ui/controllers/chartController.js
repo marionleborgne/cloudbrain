@@ -179,7 +179,8 @@
                 type: 'all',
                 text: 'All'
             }],
-            selected: 0
+            selected: 0,
+            inputEnabled: false
         },
             
             navigator: {
