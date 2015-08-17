@@ -43,7 +43,8 @@
             enabled: false,
             symbol: 'circle'
           }});
-          $log.log($scope.chartConfig.series.length);
+          $scope.chartStock.series.push({name: channel_numbers[obj], data: [], id: obj});
+          //$log.log($scope.chartConfig.series.length);
         };
       });
 
@@ -80,6 +81,7 @@
         $scope.chartConfig.title.text = device.name + ' ' + device.id;
         $scope.chartPolar.title.text = device.name + ' ' + device.id;
         $scope.chartBar.title.text = device.name + ' ' + device.id;
+        $scope.chartStock.title.text = device.name + ' ' + device.id;
 
         $interval(function () {
           $http.jsonp($scope.url)
@@ -98,7 +100,8 @@
                   //$log.log("data." + prop + "= " + $scope.data[obj][prop]);
                   //$log.log(count);
                   $scope.chartConfig.series[count].data.push($scope.data[obj][prop]);
-                  $log.log($scope.chartConfig.series[count].id);
+                  $scope.chartStock.series[count].data.push($scope.data[obj][prop]);
+                  //$log.log($scope.chartConfig.series[count].id);
                   //$log.log($scope.chartConfig.series);
                   count++
               //$log.log($scope.chartConfig.series[0].data);
@@ -109,7 +112,7 @@
       function(response){
         $log.log('fail');
       });
-        }, 1000, 5);
+        }, 100, 500);
       };
 
       $scope.chartConfig =
@@ -153,8 +156,34 @@
         },
         series: [
         
-        ]
+        ],
+        useHighStocks: true
       };
+
+      $scope.chartStock = {
+        options: {
+            chart: {
+                zoomType: 'x',
+                type: 'spline'
+            },
+            rangeSelector: {
+                enabled: true
+            },
+            navigator: {
+                enabled: true
+            }
+        },
+        series: [],
+        title: {
+            text: 'Hello'
+        },
+        useHighStocks: true
+    };
+
+    
+
+
+
       $scope.chartPolar = {
         options: {
           chart: {
