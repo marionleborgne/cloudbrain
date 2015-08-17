@@ -26,22 +26,30 @@
       
       $scope.url = 'http://datastore.cloudbrain.rocks/data?device_name=muse&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
       
+      $scope.getChannelNames = (function(data){
+        var keys = Object.keys(data[0]);
+        var key_length = keys.length;
+        var channel_numbers = [];
+        for (var obj of keys){
+          if (obj != 'timestamp'){
+            channel_numbers.push(obj);
+            //$log.log(channel_numbers);
+          };
+        };
+        return channel_numbers
+      });
+
+
       $http.jsonp($scope.url)
       .then(function(response){
         $scope.data = response.data;
         $scope.keys = Object.keys($scope.data[0]);
         $scope.key_length = $scope.keys.length;
-        $scope.channel_numbers = [];
-        for (var obj of $scope.keys){
-          if (obj != 'timestamp'){
-            $scope.channel_numbers.push(obj);
-            $log.log($scope.channel_numbers);
-          }
-        }
+        $scope.channel_numbers = $scope.getChannelNames($scope.data);
         for (var obj in $scope.data){
+          $log.log(obj);
           for (var prop in $scope.data[obj]){
-            //$log.log("data." + prop + "= " + $scope.data[obj][prop]);
-                  //$log.log(prop);
+            $log.log("data." + prop + "= " + $scope.data[obj][prop]);
                 };
               };
             },
@@ -50,9 +58,6 @@
             });
 
 
-      function logArrayElements(element, index, array) {
-        console.log('a[' + index + '] = ' + element);
-      }     
 
       $scope.getData = function (device) {
         $scope.chartConfig.title.text = device.name + ' ' + device.id;
