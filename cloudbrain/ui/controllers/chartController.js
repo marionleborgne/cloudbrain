@@ -167,15 +167,28 @@
                 type: 'spline'
             },
             rangeSelector: {
-                enabled: true
-            },
+            buttons: [{
+                count: 50,
+                type: 'millisecond',
+                text: '5S'
+            }, {
+                count: 300,
+                type: 'millisecond',
+                text: '30S'
+            }, {
+                type: 'all',
+                text: 'All'
+            }],
+            selected: 0
+        },
+            
             navigator: {
                 enabled: true
             }
         },
         series: [],
         title: {
-            text: 'Hello'
+            text: 'EEG'
         },
         useHighStocks: true
     };
