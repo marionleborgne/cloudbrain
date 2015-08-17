@@ -36,11 +36,10 @@
             //$log.log(channel_numbers);
           };
         };
-        $log.log(channel_numbers);
+        //$log.log(channel_numbers);
         for (var obj in channel_numbers){
-          //$log.log(obj);
-          $scope.chartConfig.series[obj].name=channel_numbers[obj];
-          $scope.chartConfig.series[obj].data = [];
+          //$log.log('object' +obj);
+          $scope.chartConfig.series.push({name: channel_numbers[obj], data: [], id: obj});
         };
       });
 
@@ -53,14 +52,14 @@
         $scope.setChannelSeries($scope.data);
         //$log.log($scope.chartConfig.series[0]);
         for (var obj in $scope.data){
-          $log.log(obj);
+          //$log.log(obj);
           var count = 0;
           for (var prop in $scope.data[obj]){
             if (prop != 'timestamp'){
               //$log.log("data." + prop + "= " + $scope.data[obj][prop]);
-              $log.log(count);
+              //$log.log(count);
               $scope.chartConfig.series[count].data.push($scope.data[obj][prop]);
-              $log.log($scope.chartConfig.series);
+              //$log.log($scope.chartConfig.series);
               count++
               //$log.log($scope.chartConfig.series[0].data);
             };
@@ -77,7 +76,7 @@
         $scope.chartConfig.title.text = device.name + ' ' + device.id;
         $scope.chartPolar.title.text = device.name + ' ' + device.id;
         $scope.chartBar.title.text = device.name + ' ' + device.id;
-        
+        var setup = true
 
         $interval(function () {
           $http.jsonp($scope.url)
@@ -85,17 +84,22 @@
             $scope.data = response.data;
             $scope.keys = Object.keys($scope.data[0]);
             $scope.key_length = $scope.keys.length;
+
+            if (setup = true){
             $scope.setChannelSeries($scope.data);
+            setup = false
+          };
         //$log.log($scope.chartConfig.series[0]);
             for (var obj in $scope.data){
-              $log.log(obj);
+              //$log.log(obj);
               var count = 0;
               for (var prop in $scope.data[obj]){
                 if (prop != 'timestamp'){
                   //$log.log("data." + prop + "= " + $scope.data[obj][prop]);
-                  $log.log(count);
+                  //$log.log(count);
                   $scope.chartConfig.series[count].data.push($scope.data[obj][prop]);
-                  $log.log($scope.chartConfig.series);
+                  $log.log($scope.chartConfig.series[count].id);
+                  //$log.log($scope.chartConfig.series);
                   count++
               //$log.log($scope.chartConfig.series[0].data);
             };
@@ -105,7 +109,7 @@
       function(response){
         $log.log('fail');
       });
-        }, 1000);
+        }, 1000, 5);
       };
 
       $scope.chartConfig =
