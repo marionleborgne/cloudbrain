@@ -4,7 +4,8 @@
     '$scope',
     '$http',
     '$interval',
-    function ($scope, $http, $interval) {
+    '$log',
+    function ($scope, $http, $interval, $log) {
       $scope.changeColor = function () {
         var color_val = 'rgba(255, 255, 255, 0.8)'
         $scope.chartConfig.options.chart.backgroundColor = color_val;
@@ -14,58 +15,63 @@
       $scope.getDevices = (function () {
         var url = 'http://datastore.cloudbrain.rocks/devices?callback=JSON_CALLBACK';
         $http.jsonp(url).success(function (data, status, headers) {
-          //console.log(data);
-          //console.log(status);
-          //console.log('pass');
           $scope.device_names = data.filter(function (name) {
             return name !== '';
           });
-          //console.log($scope.device_names);
         }).error(function (data, status, headers) {
-          //console.log(data);
-          //console.log(status);
-          //console.log(headers);
+          $log.log('Failed to Get Devices')
         });
       });
       $scope.getDevices();
       
-      $scope.url = 'http://datastore.cloudbrain.rocks/data?device_name=muse&metric=eeg&device_id=marion?callback=JSON_CALLBACK';
+      $scope.url = 'http://datastore.cloudbrain.rocks/data?device_name=muse&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
       
-      $http({method: 'GET', url: $scope.url, responseType: "json"})
-          .then(function(response){
-            console.log(response);
-            $scope.data = response.data;
-          },
-          function(response){
-            console.log('fail');
-            console.log(response.data);
-          });
+      $http.jsonp($scope.url)
+      .then(function(response){
+        $scope.data = response.data;
+        $scope.keys = Object.keys($scope.data[0]);
+        $scope.key_length = $scope.keys.length;
+        $scope.channel_numbers = [];
+        for (var obj of $scope.keys){
+          if (obj != 'timestamp'){
+            $scope.channel_numbers.push(obj);
+            $log.log($scope.channel_numbers);
+          }
+        }
+        for (var obj in $scope.data){
+          for (var prop in $scope.data[obj]){
+            //$log.log("data." + prop + "= " + $scope.data[obj][prop]);
+                  //$log.log(prop);
+                };
+              };
+            },
+            function(response){
+              $log.log('fail');
+            });
 
+
+      function logArrayElements(element, index, array) {
+        console.log('a[' + index + '] = ' + element);
+      }     
 
       $scope.getData = function (device) {
         $scope.chartConfig.title.text = device.name + ' ' + device.id;
         $scope.chartPolar.title.text = device.name + ' ' + device.id;
         $scope.chartBar.title.text = device.name + ' ' + device.id;
-        if (device.name.toLowerCase() === 'openbci') {
-          $scope.num_channels = 8;
-        } else if (device.name.toLowerCase() === 'muse') {
-          $scope.num_channels = 4;
-        } else {
-          $scope.num_channels = 0;
-        }
+        
 
         $interval(function () {
-          $http({
-            method: 'GET',
-            url: $scope.url,
-            responseType: 'json'
-          }).success(function (data, status, headers) {
+          $http.jsonp($scope.url)
+          .then(function (response) {
             console.log(data);
             console.log(status);
             console.log('pass');
             $scope.data = data;
+            $scope.test = $scope.data;
+
             console.log($scope.data);
-          }).error(function (data, status, headers) {
+          }, 
+          function (response) {
             console.log(data);
             console.log(status);
             console.log(headers);
@@ -73,6 +79,7 @@
           });
         }, 1000);
       };
+
       $scope.chartConfig =
       {
         options: {
