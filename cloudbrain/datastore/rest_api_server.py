@@ -75,10 +75,25 @@ def _get_mock_data(device_name, metric, start):
 
   return data_records
 
-@app.route('/devices', methods=['GET'])
+@app.route('/devices_names', methods=['GET'])
 @support_jsonp
-def get_available_devices():
+def get_device_names():
+  """
+  Returns the device names from the metadata file
+  :return:
+  """
   return json.dumps(get_supported_devices())
+
+
+@app.route('/registered_devices', methods=['GET'])
+@support_jsonp
+def get_device_ids():
+  """
+  Get the registered devices metadata
+  :return:
+  """
+  registered_devices = dao.get_registered_devices()
+  return json.dumps(registered_devices)
 
 
 if __name__ == "__main__":
