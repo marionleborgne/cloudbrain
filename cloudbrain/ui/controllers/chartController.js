@@ -39,7 +39,11 @@
         //$log.log(channel_numbers);
         for (var obj in channel_numbers){
           //$log.log('object' +obj);
-          $scope.chartConfig.series.push({name: channel_numbers[obj], data: [], id: obj});
+          $scope.chartConfig.series.push({name: channel_numbers[obj], data: [], id: obj, marker: {
+            enabled: false,
+            symbol: 'circle'
+          }});
+          $log.log($scope.chartConfig.series.length);
         };
       });
 
@@ -76,7 +80,6 @@
         $scope.chartConfig.title.text = device.name + ' ' + device.id;
         $scope.chartPolar.title.text = device.name + ' ' + device.id;
         $scope.chartBar.title.text = device.name + ' ' + device.id;
-        var setup = true
 
         $interval(function () {
           $http.jsonp($scope.url)
@@ -85,10 +88,7 @@
             $scope.keys = Object.keys($scope.data[0]);
             $scope.key_length = $scope.keys.length;
 
-            if (setup = true){
-            $scope.setChannelSeries($scope.data);
-            setup = false
-          };
+           
         //$log.log($scope.chartConfig.series[0]);
             for (var obj in $scope.data){
               //$log.log(obj);
@@ -152,46 +152,7 @@
           borderWidth: 0
         },
         series: [
-        {
-          name: 'Channel 1',
-          data: [
-          
-          ],
-          marker: {
-            enabled: false,
-            symbol: 'circle'
-          }
-        },
-        {
-          name: 'Channel 2',
-          data: [
-          
-          ],
-          marker: {
-            enabled: false,
-            symbol: 'circle'
-          }
-        },
-        {
-          name: 'Channel 3',
-          data: [
-
-          ],
-          marker: {
-            enabled: false,
-            symbol: 'circle'
-          }
-        },
-        {
-          name: 'Channel 4',
-          data: [
-          
-          ],
-          marker: {
-            enabled: false,
-            symbol: 'circle'
-          }
-        }
+        
         ]
       };
       $scope.chartPolar = {
