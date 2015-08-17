@@ -26,7 +26,7 @@
       
       $scope.url = 'http://datastore.cloudbrain.rocks/data?device_name=muse&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
       
-      $scope.getChannelNames = (function(data){
+      $scope.setChannelSeries = (function(data){
         var keys = Object.keys(data[0]);
         var key_length = keys.length;
         var channel_numbers = [];
@@ -36,7 +36,12 @@
             //$log.log(channel_numbers);
           };
         };
-        return channel_numbers
+        $log.log(channel_numbers);
+        for (var obj in channel_numbers){
+          //$log.log(obj);
+          $scope.chartConfig.series[obj].name=channel_numbers[obj];
+          $scope.chartConfig.series[obj].data = [];
+        };
       });
 
 
@@ -45,17 +50,26 @@
         $scope.data = response.data;
         $scope.keys = Object.keys($scope.data[0]);
         $scope.key_length = $scope.keys.length;
-        $scope.channel_numbers = $scope.getChannelNames($scope.data);
+        $scope.setChannelSeries($scope.data);
+        //$log.log($scope.chartConfig.series[0]);
         for (var obj in $scope.data){
           $log.log(obj);
+          var count = 0;
           for (var prop in $scope.data[obj]){
-            $log.log("data." + prop + "= " + $scope.data[obj][prop]);
-                };
-              };
-            },
-            function(response){
-              $log.log('fail');
-            });
+            if (prop != 'timestamp'){
+              //$log.log("data." + prop + "= " + $scope.data[obj][prop]);
+              $log.log(count);
+              $scope.chartConfig.series[count].data.push($scope.data[obj][prop]);
+              $log.log($scope.chartConfig.series);
+              count++
+              //$log.log($scope.chartConfig.series[0].data);
+            };
+          };
+        };
+      },
+      function(response){
+        $log.log('fail');
+      });
 
 
 
@@ -67,21 +81,30 @@
 
         $interval(function () {
           $http.jsonp($scope.url)
-          .then(function (response) {
-            console.log(data);
-            console.log(status);
-            console.log('pass');
-            $scope.data = data;
-            $scope.test = $scope.data;
-
-            console.log($scope.data);
-          }, 
-          function (response) {
-            console.log(data);
-            console.log(status);
-            console.log(headers);
-            console.log('fail')
-          });
+          .then(function(response){
+            $scope.data = response.data;
+            $scope.keys = Object.keys($scope.data[0]);
+            $scope.key_length = $scope.keys.length;
+            $scope.setChannelSeries($scope.data);
+        //$log.log($scope.chartConfig.series[0]);
+            for (var obj in $scope.data){
+              $log.log(obj);
+              var count = 0;
+              for (var prop in $scope.data[obj]){
+                if (prop != 'timestamp'){
+                  //$log.log("data." + prop + "= " + $scope.data[obj][prop]);
+                  $log.log(count);
+                  $scope.chartConfig.series[count].data.push($scope.data[obj][prop]);
+                  $log.log($scope.chartConfig.series);
+                  count++
+              //$log.log($scope.chartConfig.series[0].data);
+            };
+          };
+        };
+      },
+      function(response){
+        $log.log('fail');
+      });
         }, 1000);
       };
 
@@ -128,18 +151,7 @@
         {
           name: 'Channel 1',
           data: [
-          7,
-          6.9,
-          9.5,
-          14.5,
-          18.2,
-          21.5,
-          25.2,
-          26.5,
-          23.3,
-          18.3,
-          13.9,
-          9.6
+          
           ],
           marker: {
             enabled: false,
@@ -149,18 +161,7 @@
         {
           name: 'Channel 2',
           data: [
-          - 0.2,
-          0.8,
-          5.7,
-          11.3,
-          17,
-          22,
-          24.8,
-          24.1,
-          20.1,
-          14.1,
-          8.6,
-          2.5
+          
           ],
           marker: {
             enabled: false,
@@ -170,18 +171,7 @@
         {
           name: 'Channel 3',
           data: [
-          - 0.9,
-          0.6,
-          3.5,
-          8.4,
-          13.5,
-          17,
-          18.6,
-          17.9,
-          14.3,
-          9,
-          3.9,
-          1
+
           ],
           marker: {
             enabled: false,
@@ -191,18 +181,7 @@
         {
           name: 'Channel 4',
           data: [
-          3.9,
-          4.2,
-          5.7,
-          8.5,
-          11.9,
-          15.2,
-          17,
-          16.6,
-          14.2,
-          10.3,
-          6.6,
-          4.8
+          
           ],
           marker: {
             enabled: false,
