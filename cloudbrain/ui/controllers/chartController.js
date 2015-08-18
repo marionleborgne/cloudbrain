@@ -6,7 +6,9 @@
     '$interval',
     '$log',
     function ($scope, $http, $interval, $log) {
-      $scope.changeColor = function () {
+      
+
+    $scope.changeColor = function () {
         var color_val = 'rgba(255, 255, 255, 0.8)'
         $scope.chartConfig.options.chart.backgroundColor = color_val;
         $scope.chartPolar.options.chart.backgroundColor = color_val;
@@ -24,7 +26,6 @@
       });
       $scope.getDevices();
       
-      $scope.url = 'http://datastore.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
       
       $scope.setChannelSeries = (function(data){
         var keys = Object.keys(data[0]);
@@ -49,50 +50,30 @@
       });
 
 
-      $http.jsonp($scope.url)
-      .then(function(response){
-        $scope.data = response.data;
-        $scope.keys = Object.keys($scope.data[0]);
-        $scope.key_length = $scope.keys.length;
-        $scope.setChannelSeries($scope.data);
-        //$log.log($scope.chartConfig.series[0]);
-        for (var obj in $scope.data){
-          //$log.log(obj);
-          var count = 0;
-          for (var prop in $scope.data[obj]){
-            if (prop != 'timestamp'){
-              //$log.log("data." + prop + "= " + $scope.data[obj][prop]);
-              //$log.log(count);
-              $scope.chartConfig.series[count].data.push($scope.data[obj][prop]);
-              //$log.log($scope.chartConfig.series);
-              count++
-              //$log.log($scope.chartConfig.series[0].data);
-            };
-          };
-        };
-      },
-      function(response){
-        $log.log('fail');
-      });
 
 
-
-      $scope.getData = function (device) {
-        $scope.chartConfig.title.text = device.name + ' ' + device.id;
-        $scope.chartPolar.title.text = device.name + ' ' + device.id;
-        $scope.chartBar.title.text = device.name + ' ' + device.id;
-        $scope.chartStock.title.text = device.name + ' ' + device.id;
+$scope.url = 'http://datastore.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
+$scope.getData = function (device) {
+  $scope.chartConfig.title.text = device.name + ' ' + device.id;
+  $scope.chartPolar.title.text = device.name + ' ' + device.id;
+  $scope.chartBar.title.text = device.name + ' ' + device.id;
+  $scope.chartStock.title.text = device.name + ' ' + device.id;
+        //initialize series data for charts
+        $http.jsonp($scope.url)
+        .then(function(response){
+          $scope.data = response.data;
+          $scope.setChannelSeries($scope.data);
+        },
+        function(response){
+          $log.log('fail');
+        });
 
         $interval(function () {
           $http.jsonp($scope.url)
           .then(function(response){
             $scope.data = response.data;
-            $scope.keys = Object.keys($scope.data[0]);
-            $scope.key_length = $scope.keys.length;
-
-           
         //$log.log($scope.chartConfig.series[0]);
-            for (var obj in $scope.data){
+        for (var obj in $scope.data){
               //$log.log(obj);
               var count = 0;
               for (var prop in $scope.data[obj]){
@@ -112,7 +93,7 @@
       function(response){
         $log.log('fail');
       });
-        }, 100, 500);
+        }, 100, 50);
       };
 
       $scope.chartConfig =
@@ -162,42 +143,42 @@
 
       $scope.chartStock = {
         options: {
-            chart: {
-                zoomType: 'x',
-                type: 'spline'
-            },
-            legend: {
-              enabled: true
-            },
-            rangeSelector: {
+          chart: {
+            zoomType: 'x',
+            type: 'spline'
+          },
+          legend: {
+            enabled: true
+          },
+          rangeSelector: {
             buttons: [{
-                count: 50,
-                type: 'millisecond',
-                text: '5S'
+              count: 50,
+              type: 'millisecond',
+              text: '5S'
             }, {
-                count: 300,
-                type: 'millisecond',
-                text: '30S'
+              count: 300,
+              type: 'millisecond',
+              text: '30S'
             }, {
-                type: 'all',
-                text: 'All'
+              type: 'all',
+              text: 'All'
             }],
             selected: 0,
             inputEnabled: false
-        },
-            
-            navigator: {
-                enabled: true
-            }
+          },
+
+          navigator: {
+            enabled: true
+          }
         },
         series: [],
         title: {
-            text: 'EEG'
+          text: 'EEG'
         },
         useHighStocks: true
-    };
+      };
 
-    
+
 
 
 
