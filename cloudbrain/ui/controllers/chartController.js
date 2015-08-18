@@ -164,7 +164,10 @@
         options: {
             chart: {
                 zoomType: 'x',
-                type: 'spline'
+                type: 'line'
+            },
+            legend: {
+              enabled: true
             },
             rangeSelector: {
             buttons: [{
