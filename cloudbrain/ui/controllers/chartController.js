@@ -24,7 +24,7 @@
       });
       $scope.getDevices();
       
-      $scope.url = 'http://datastore.cloudbrain.rocks/data?device_name=muse&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
+      $scope.url = 'http://datastore.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
       
       $scope.setChannelSeries = (function(data){
         var keys = Object.keys(data[0]);
@@ -164,7 +164,7 @@
         options: {
             chart: {
                 zoomType: 'x',
-                type: 'line'
+                type: 'spline'
             },
             legend: {
               enabled: true
