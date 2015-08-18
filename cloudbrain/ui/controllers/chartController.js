@@ -58,8 +58,10 @@ $scope.getData = function (device) {
   $scope.chartPolar.title.text = device.name + ' ' + device.id;
   $scope.chartBar.title.text = device.name + ' ' + device.id;
   $scope.chartStock.title.text = device.name + ' ' + device.id;
+  var metric = 'eeg';
+  var cloudbrain = 'http://datastore.cloudbrain.rocks/data?device_name='+device.name+'&metric='+metric+'&device_id='+device.id+'&callback=JSON_CALLBACK';
         //initialize series data for charts
-        $http.jsonp($scope.url)
+        $http.jsonp(cloudbrain)
         .then(function(response){
           $scope.data = response.data;
           $scope.setChannelSeries($scope.data);
