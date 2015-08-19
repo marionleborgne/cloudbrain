@@ -78,10 +78,10 @@ This makes use of the demo version of cloudbrain running at `http://cloudbrain.r
 For this example, let's use the mock server `mock.cloudbrain.rocks`, the device name `muse` and the user id `octopicorn`.
 
 ## Raw Data
-* [Raw EEG](http://mock.cloudbrain.rocks/power_bands?device_name=openbci&metric=eeg&device_id=octopicorn) for the OpenBCI: `GET http://mock.cloudbrain.rocks/power_bands?device_name=openbci&metric=eeg&device_id=octopicorn`
-* [Raw EEG](http://mock.cloudbrain.rocks/power_bands?device_name=muse&metric=eeg&device_id=octopicorn) for the Muse: `GET http://mock.cloudbrain.rocks/power_bands?device_name=muse&metric=eeg&device_id=octopicorn`
-* [Mellow](http://mock.cloudbrain.rocks/power_bands?device_name=muse&metric=mellow&device_id=octopicorn) metric for the Muse:  `GET http://mock.cloudbrain.rocks/power_bands?device_name=muse&metric=mellow&device_id=octopicorn`
-* [Concentration](http://mock.cloudbrain.rocks/power_bands?device_name=muse&metric=concentration&device_id=octopicorn) metric for the Muse: `GET http://mock.cloudbrain.rocks/power_bands?device_name=muse&metric=concentration&device_id=octopicorn`
+* [Raw EEG](http://mock.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=octopicorn) for the OpenBCI: `GET http://mock.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=octopicorn`
+* [Raw EEG](http://mock.cloudbrain.rocks/data?device_name=muse&metric=eeg&device_id=octopicorn) for the Muse: `GET http://mock.cloudbrain.rocks/data?device_name=muse&metric=eeg&device_id=octopicorn`
+* [Mellow](http://mock.cloudbrain.rocks/data?device_name=muse&metric=mellow&device_id=octopicorn) metric for the Muse:  `GET http://mock.cloudbrain.rocks/data?device_name=muse&metric=mellow&device_id=octopicorn`
+* [Concentration](http://mock.cloudbrain.rocks/data?device_name=muse&metric=concentration&device_id=octopicorn) metric for the Muse: `GET http://mock.cloudbrain.rocks/data?device_name=muse&metric=concentration&device_id=octopicorn`
 * Etc...
 
 ## Power bands
