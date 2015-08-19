@@ -44,7 +44,7 @@ class OpenBCIConnector(Connector):
       :param sample: the sample to handle
       """
       message = {"channel_%s" % i: sample.channel_data[i] for i in xrange(num_args)}
-      message['timestamp'] = int(time.time() * 1000)
+      message['timestamp'] = int(time.time() * 1000000) # micro seconds
 
       self.buffers[metric_name].write(message)
 

@@ -75,7 +75,7 @@ class MuseConnector(Connector):
       sample = json.loads(raw_sample)
       data = sample[1]
       message = {"channel_%s" % i: data[i] for i in xrange(num_args)}
-      message['timestamp'] = int(time.time() * 1000000)
+      message['timestamp'] = int(time.time() * 1000000) # micro seconds
 
       self.buffers[metric_name].write(message)
 

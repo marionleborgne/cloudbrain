@@ -4,15 +4,18 @@ import random
 from flask import Flask, request, current_app
 from functools import wraps
 from cloudbrain.utils.metadata_info import map_metric_name_to_num_channels, get_supported_devices
-from cloudbrain.datastore.CassandraDAL import CassandraDAL
 from cloudbrain.settings import WEBSERVER_PORT
 
-_MOCK_ENABLED = None
+_MOCK_ENABLED = True
+
 
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
-dao = CassandraDAL()
-dao.connect()
+
+if not _MOCK_ENABLED:
+  from cloudbrain.datastore.CassandraDAL import CassandraDAL
+  dao = CassandraDAL()
+  dao.connect()
 
 
 def support_jsonp(f):
@@ -34,11 +37,11 @@ def support_jsonp(f):
 @support_jsonp
 def data():
   """
-  GET the data for a specific device_name
+  GET metric data
   :return:
   """
 
-  default_start_timestamp = int(time.time() - 5)# return last 5s if start not specified.
+  default_start_timestamp = int(time.time() * 1000000 - 5)# return last 5 microseconds if start not specified.
   device_id = request.args.get('device_id', None)
   device_name = request.args.get('device_name', None)
   metric = request.args.get('metric', None)
@@ -52,22 +55,50 @@ def data():
     return "missing param: device_id", 500
 
   if _MOCK_ENABLED:
-    data_records = _get_mock_data(device_name, metric, start)
+    data_records = _get_mock_data(device_name, metric)
   else:
     data_records = dao.get_data(device_name, device_id, metric, start)
 
   return json.dumps(data_records)
 
-def _get_mock_data(device_name, metric, start):
+
+@app.route('/power_bands', methods=['GET'])
+@support_jsonp
+def power_bands():
+  """
+  GET the power bands data
+  :return:
+  """
+
+  default_start_timestamp = int(time.time() * 1000000 - 5)# return last 5 microseconds if start not specified.
+  device_id = request.args.get('device_id', None)
+  device_name = request.args.get('device_name', None)
+  start = int(request.args.get('start', default_start_timestamp))
+
+  if not device_name:
+    return "missing param: device_name", 500
+  if not device_id:
+    return "missing param: device_id", 500
+
+  if _MOCK_ENABLED:
+    data_records = _get_power_bands_mock_data()
+  else:
+    data_records = dao.get_power_band_data(device_name, device_id, start)
+
+  return json.dumps(data_records)
+
+
+
+def _get_mock_data(device_name, metric):
 
   metric_to_num_channels = map_metric_name_to_num_channels(device_name)
   num_channels = metric_to_num_channels[metric]
 
-  now = int(time.time())
+  now = int(time.time() * 1000000 - 5) # micro seconds
 
   data_records = []
-  for i in xrange(now - start):
-    record = {'timestamp': start + i}
+  for i in xrange(5):
+    record = {'timestamp': now + i}
     for j in xrange(num_channels):
       channel_name = 'channel_%s' %j
       record[channel_name] = random.random() * 10
@@ -75,7 +106,25 @@ def _get_mock_data(device_name, metric, start):
 
   return data_records
 
-@app.route('/devices_names', methods=['GET'])
+
+def _get_power_bands_mock_data():
+
+  now = int(time.time() * 1000000 - 5) # micro seconds
+
+  data_records = []
+  for i in xrange(5):
+    record = {'timestamp': now + i,
+              "alpha": random.random() * 10,
+              "beta": random.random() * 10,
+              "gamma": random.random() * 10,
+              "theta": random.random() * 10,
+              "delta": random.random() * 10}
+    data_records.append(record)
+
+  return data_records
+
+
+@app.route('/device_names', methods=['GET'])
 @support_jsonp
 def get_device_names():
   """
@@ -87,15 +136,17 @@ def get_device_names():
 
 @app.route('/registered_devices', methods=['GET'])
 @support_jsonp
-def get_device_ids():
+def get_registered_devices():
   """
-  Get the registered devices metadata
+  Get the registered devices IDs
   :return:
   """
-  registered_devices = dao.get_registered_devices()
+  if _MOCK_ENABLED:
+    registered_devices = ['octopicorn'] # mock ID
+  else:
+    registered_devices = dao.get_registered_devices()
   return json.dumps(registered_devices)
 
 
 if __name__ == "__main__":
-  _MOCK_ENABLED = True
   app.run(host="0.0.0.0", port=WEBSERVER_PORT)
