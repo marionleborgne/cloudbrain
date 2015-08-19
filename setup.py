@@ -16,4 +16,5 @@ setup(name="cloudbrain",
       version="0.0",
       description="CloudBrain",
       packages=find_packages(),
+      install_requires=['pika'],
       long_description=read("README.md"))
