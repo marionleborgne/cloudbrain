@@ -28,22 +28,22 @@
         <div class="row">
           <ng-form name="deviceIdForm" role="form">
 
-          <div class="col-md-3"><!--DeviceId-->
+          <div class="col-md-3 top-bar"><!--DeviceId-->
             <div class="form-group">
               <input ng-model="device.id" class="form-control" id="deviceId" placeholder="Device Id">
             </div>
           </div><!--DeviceId -->
 
-          <div class="col-md-3"><!--DeviceName-->
+          <div class="col-md-3 top-bar"><!--DeviceName-->
             <select ng-model='device.name' id="deviceName" class="form-control">
               <option selected="selected">--Select Device--</option>
               <option ng-repeat="device_name in device_names">{{device_name}}</option>
             </select>
           </div><!--DeviceName -->
-          <div  class="col-md-1 nav_button">
-            <button type="submit" ng-click="getData(device)" class="btn btn-default">Submit</button>
+          <div  class="col-md-1 nav_button top-bar">
+            <button type="submit" ng-click="getData(device)" class="btn btn-default">Connect</button>
           </div>
-          <div class="col-md-1 nav_button" ng-click="changeColor()"><button type="button" class="btn btn-default">Transparent</button></div>
+          <!--<div class="col-md-1 nav_button top-bar" ng-click="changeColor()"><button type="button" class="btn btn-default">Transparent</button></div>-->
         </ng-form>
 
 

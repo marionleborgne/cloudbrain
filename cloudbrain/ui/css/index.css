@@ -19,7 +19,10 @@ body {
 #bot_charts {
 	padding-top: 10px;
 }
-
+.top-bar{
+  padding-top: 10px;
+ 
+}
 
 label {
   color: white;
