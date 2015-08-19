@@ -38,7 +38,7 @@ class MockConnector(Connector):
     def data_generator():
 
       message = {"channel_%s" % i: random.random() * 10 for i in xrange(num_channels)}
-      message['timestamp'] = int(time.time() * 1000)
+      message['timestamp'] = int(time.time() * 1000000) # micro seconds
 
       self.buffers[metric_name].write(message)
 

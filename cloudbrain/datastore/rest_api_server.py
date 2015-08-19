@@ -63,7 +63,7 @@ def _get_mock_data(device_name, metric, start):
   metric_to_num_channels = map_metric_name_to_num_channels(device_name)
   num_channels = metric_to_num_channels[metric]
 
-  now = int(time.time())
+  now = int(time.time() * 1000000) # micro seconds
 
   data_records = []
   for i in xrange(now - start):
