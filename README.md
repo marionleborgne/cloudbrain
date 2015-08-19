@@ -89,8 +89,7 @@ For this example, let's use the mock server `mock.cloudbrain.rocks`, the device 
 * All [Power Bands](http://mock.cloudbrain.rocks/power_bands?device_name=muse&device_id=octopicorn) for the Muse: `GET http://mock.cloudbrain.rocks/power_bands?device_name=muse&device_id=octopicorn`
 
 ## Registered devices
-* Get the list of device IDs that are publishing to cloudbrain
-* [`GET http://mock.cloudbrain.rocks/registered_devices`](http://mock.cloudbrain.rocks/registered_devices)
+* Get the list of [device IDs](http://mock.cloudbrain.rocks/registered_devices) that are publishing to cloudbrain: `GET http://mock.cloudbrain.rocks/registered_devices`
 
 ## Device metadata
 * Get the list of device IDs that are publishing to cloudbrain
