@@ -6,93 +6,83 @@
     '$interval',
     '$log',
     function ($scope, $http, $interval, $log) {
-      
+
 
     $scope.changeColor = function () {
-        var color_val = 'rgba(255, 255, 255, 0.8)'
+        var color_val = 'rgba(255, 255, 255, 0.8)';
         $scope.chartPolar.options.chart.backgroundColor = color_val;
         $scope.chartBar.options.chart.backgroundColor = color_val;
-      }
-      $scope.getDevices = (function () {
-        var url = 'http://datastore.cloudbrain.rocks/devices?callback=JSON_CALLBACK';
+      };
+
+    $scope.getDevices = function () {
+        var url = 'http://mock.cloudbrain.rocks/device_names?callback=JSON_CALLBACK';
         $http.jsonp(url).success(function (data, status, headers) {
+
           $scope.device_names = data.filter(function (name) {
             return name !== '';
           });
         }).error(function (data, status, headers) {
-          $log.log('Failed to Get Devices')
+          $log.log('Failed to Get Devices');
         });
-      });
+      };
       $scope.getDevices();
-      
-      
-      $scope.setChannelSeries = (function(data){
+
+
+      var setChannelSeries = function(data){
         var keys = Object.keys(data[0]);
-        var key_length = keys.length;
-        var channel_numbers = [];
-        for (var obj of keys){
-          if (obj != 'timestamp'){
-            channel_numbers.push(obj);
-            //$log.log(channel_numbers);
-          };
-        };
-        //$log.log(channel_numbers);
-        for (var obj in channel_numbers){
-          //$log.log('object' +obj);
-          $scope.chartStock.series.push({name: channel_numbers[obj], data: [], id: obj});
-          //$log.log($scope.chartConfig.series.length);
-        };
-      });
 
+        keys.forEach(function(key){
+          if (key != 'timestamp'){
+            for (var a=[],i=0;i<500;++i) a[i]=0;
+            $scope.chartStock.series.push({name: key, data: a, id: key});
+          }
+        });
+      };
 
+      $scope.url = 'http://mock.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
 
+      $scope.getData = function (device) {
+        $scope.chartPolar.title.text = device.name + ' ' + device.id;
+        $scope.chartBar.title.text = device.name + ' ' + device.id;
+        $scope.chartStock.title.text = device.name + ' ' + device.id;
+        var metric = 'eeg';
+        $scope.lastTimestamp = Date.now() * 1000; //microseconds
+        $scope.cloudbrain = 'http://mock.cloudbrain.rocks/data?device_name='+device.name+'&metric='+metric+'&device_id='+device.id+'&callback=JSON_CALLBACK&start='+$scope.lastTimestamp;
+        $scope.chart3 = $scope.chartStock.getHighcharts();
 
-$scope.url = 'http://datastore.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
-$scope.getData = function (device) {
-  $scope.chartPolar.title.text = device.name + ' ' + device.id;
-  $scope.chartBar.title.text = device.name + ' ' + device.id;
-  $scope.chartStock.title.text = device.name + ' ' + device.id;
-  var metric = 'eeg';
-  $scope.cloudbrain = 'http://datastore.cloudbrain.rocks/data?device_name='+device.name+'&metric='+metric+'&device_id='+device.id+'&callback=JSON_CALLBACK';
         //initialize series data for charts
         $http.jsonp($scope.cloudbrain)
-        .then(function(response){
-          $scope.data = response.data;
-          $scope.setChannelSeries($scope.data);
-        },
-        function(response){
-          $log.log('fail');
+          .then(function(response){
+            setChannelSeries(response.data);
+          }, function(response){
+            $log.log('fail');
         });
 
         $interval(function () {
           $http.jsonp($scope.cloudbrain)
           .then(function(response){
-            $scope.data = response.data;
-        //$log.log($scope.chartConfig.series[0]);
-        for (var obj in $scope.data){
-              //$log.log(obj);
-              var count = 0;
-              for (var prop in $scope.data[obj]){
-                if (prop != 'timestamp'){
-                  //$log.log("data." + prop + "= " + $scope.data[obj][prop]);
-                  //$log.log(count);
-                  //$scope.chartStock.series[count].addPoint($scope.data[obj][prop], true, true);
-                 $scope.chartStock.series[count].data.push($scope.data[obj][prop]);
-                  //$log.log($scope.chartConfig.series[count].id);
-                  //$log.log($scope.chartConfig.series);
-                  count++
-              //$log.log($scope.chartConfig.series[0].data);
-            };
-          };
-        };
-      },
-      function(response){
-        $log.log('fail');
-      });
+            $scope.lastTimestamp = response.data[response.data.length - 1].timestamp;
+
+            response.data.forEach(function (dataPoints) {
+              delete dataPoints.timestamp;
+
+              for(var channel in dataPoints){
+                $scope.chartStock.series[channel.split('_')[1]].data.push(dataPoints[channel]);
+                if($scope.chartStock.series[channel.split('_')[1]].data.length > 300){
+                  $scope.chartStock.series[channel.split('_')[1]].data.shift();
+                }
+              }
+
+            });
+
+          },
+          function(response){
+            $log.log('fail');
+          });
         }, 100);
       };
 
-     
+
 
       $scope.chartStock = {
         options: {
@@ -108,9 +98,9 @@ $scope.getData = function (device) {
           },
           rangeSelector: {
             buttons: [{
-              count: 50,
+              count: 100,
               type: 'millisecond',
-              text: '5S'
+              text: '2S'
             }, {
               count: 300,
               type: 'millisecond',
@@ -133,10 +123,6 @@ $scope.getData = function (device) {
         },
         useHighStocks: true
       };
-
-
-
-
 
       $scope.chartPolar = {
         options: {
@@ -266,4 +252,4 @@ $scope.getData = function (device) {
       };
     }
     ]);
-}) ();
+})();
