@@ -1,6 +1,9 @@
 .navbar {
   border-radius: 0;
 }
+.navbar-header {
+  padding-top: 4px;
+}
 .logo {
   float: left;
   width: 30px;
@@ -19,7 +22,10 @@ body {
 #bot_charts {
 	padding-top: 10px;
 }
+.top-bar{
+  padding-top: 10px;
 
+}
 
 label {
   color: white;
