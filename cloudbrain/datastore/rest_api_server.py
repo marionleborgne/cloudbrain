@@ -75,7 +75,7 @@ def _get_mock_data(device_name, metric, start):
 
   return data_records
 
-@app.route('/devices_names', methods=['GET'])
+@app.route('/device_names', methods=['GET'])
 @support_jsonp
 def get_device_names():
   """
