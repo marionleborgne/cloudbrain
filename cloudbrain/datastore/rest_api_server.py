@@ -38,7 +38,7 @@ def data():
   :return:
   """
 
-  default_start_timestamp = int(time.time() - 5)# return last 5s if start not specified.
+  default_start_timestamp = int(time.time() * 1000000 - 5)# return last 5 microseconds if start not specified.
   device_id = request.args.get('device_id', None)
   device_name = request.args.get('device_name', None)
   metric = request.args.get('metric', None)
