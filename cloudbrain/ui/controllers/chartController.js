@@ -27,6 +27,19 @@
       };
       $scope.getDevices();
 
+    $scope.getRegisteredDevices = function () {
+        var url = 'http://mock.cloudbrain.rocks/registered_devices?callback=JSON_CALLBACK';
+        $http.jsonp(url).success(function (data, status, headers) {
+
+          $scope.registered_devices = data.filter(function (name) {
+            return name !== '';
+          });
+        }).error(function (data, status, headers) {
+          $log.log('Failed to Get Devices');
+        });
+      };
+      $scope.getRegisteredDevices();
+
 
       var setChannelSeries = function(data){
         var keys = Object.keys(data[0]);
