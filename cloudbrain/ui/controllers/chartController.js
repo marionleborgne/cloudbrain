@@ -4,201 +4,126 @@
     '$scope',
     '$http',
     '$interval',
-    function ($scope, $http, $interval) {
-      $scope.changeColor = function () {
-        var color_val = 'rgba(255, 255, 255, 0.8)'
-        $scope.chartConfig.options.chart.backgroundColor = color_val;
+    '$log',
+    function ($scope, $http, $interval, $log) {
+
+
+    $scope.changeColor = function () {
+        var color_val = 'rgba(255, 255, 255, 0.8)';
         $scope.chartPolar.options.chart.backgroundColor = color_val;
         $scope.chartBar.options.chart.backgroundColor = color_val;
-      }
-      $scope.getDevices = (function () {
-        var url = 'http://datastore.cloudbrain.rocks/devices?callback=JSON_CALLBACK';
+      };
+
+    $scope.getDevices = function () {
+        var url = 'http://mock.cloudbrain.rocks/device_names?callback=JSON_CALLBACK';
         $http.jsonp(url).success(function (data, status, headers) {
-          //console.log(data);
-          //console.log(status);
-          //console.log('pass');
+
           $scope.device_names = data.filter(function (name) {
             return name !== '';
           });
-          //console.log($scope.device_names);
         }).error(function (data, status, headers) {
-          //console.log(data);
-          //console.log(status);
-          //console.log(headers);
+          $log.log('Failed to Get Devices');
         });
-      });
+      };
       $scope.getDevices();
-      
-      $scope.url = 'http://datastore.cloudbrain.rocks/data?device_name=muse&metric=eeg&device_id=marion';
-      
-      $http({method: 'GET', url: $scope.url, responseType: "json"})
-          .then(function(response){
-            console.log(response);
-            $scope.data = response.data;
-          },
-          function(response){
-            console.log('fail');
-            console.log(response.data);
-          });
 
+
+      var setChannelSeries = function(data){
+        var keys = Object.keys(data[0]);
+
+        keys.forEach(function(key){
+          if (key != 'timestamp'){
+            for (var a=[],i=0;i<500;++i) a[i]=0;
+            $scope.chartStock.series.push({name: key, data: a, id: key});
+          }
+        });
+      };
+
+      $scope.url = 'http://mock.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
 
       $scope.getData = function (device) {
-        $scope.chartConfig.title.text = device.name + ' ' + device.id;
         $scope.chartPolar.title.text = device.name + ' ' + device.id;
         $scope.chartBar.title.text = device.name + ' ' + device.id;
-        if (device.name.toLowerCase() === 'openbci') {
-          $scope.num_channels = 8;
-        } else if (device.name.toLowerCase() === 'muse') {
-          $scope.num_channels = 4;
-        } else {
-          $scope.num_channels = 0;
-        }
+        $scope.chartStock.title.text = device.name + ' ' + device.id;
+        var metric = 'eeg';
+        $scope.lastTimestamp = Date.now() * 1000; //microseconds
+        $scope.cloudbrain = 'http://mock.cloudbrain.rocks/data?device_name='+device.name+'&metric='+metric+'&device_id='+device.id+'&callback=JSON_CALLBACK&start='+$scope.lastTimestamp;
+        $scope.chart3 = $scope.chartStock.getHighcharts();
+
+        //initialize series data for charts
+        $http.jsonp($scope.cloudbrain)
+          .then(function(response){
+            setChannelSeries(response.data);
+          }, function(response){
+            $log.log('fail');
+        });
 
         $interval(function () {
-          $http({
-            method: 'GET',
-            url: $scope.url,
-            responseType: 'json'
-          }).success(function (data, status, headers) {
-            console.log(data);
-            console.log(status);
-            console.log('pass');
-            $scope.data = data;
-            console.log($scope.data);
-          }).error(function (data, status, headers) {
-            console.log(data);
-            console.log(status);
-            console.log(headers);
-            console.log('fail')
+          $http.jsonp($scope.cloudbrain)
+          .then(function(response){
+            $scope.lastTimestamp = response.data[response.data.length - 1].timestamp;
+
+            response.data.forEach(function (dataPoints) {
+              delete dataPoints.timestamp;
+
+              for(var channel in dataPoints){
+                $scope.chartStock.series[channel.split('_')[1]].data.push(dataPoints[channel]);
+                if($scope.chartStock.series[channel.split('_')[1]].data.length > 300){
+                  $scope.chartStock.series[channel.split('_')[1]].data.shift();
+                }
+              }
+
+            });
+
+          },
+          function(response){
+            $log.log('fail');
           });
-        }, 1000);
+        }, 100);
       };
-      $scope.chartConfig =
-      {
+
+
+
+      $scope.chartStock = {
         options: {
           chart: {
-            type: 'spline',
-            /*backgroundColor: 'rgba(255, 255, 255, 0.2)'*/
-          }
-        },
-        title: {
-          text: 'EEG',
-          x: - 20 //center
-        },
-        subtitle: {
-          text: 'Source: cloudbrain.rocks',
-          x: - 20
-        },
-        xAxis: {
-          categories: [
-          'time'
-          ]
-        },
-        yAxis: {
-          title: {
-            text: 'uV'
+            zoomType: 'x',
+            type: 'spline'
           },
-          plotLines: [
-          {
-            value: 0,
-            width: 1,
-            color: '#808080'
-          }
-          ]
-        },
-        legend: {
-          layout: 'vertical',
-          align: 'right',
-          verticalAlign: 'middle',
-          borderWidth: 0
-        },
-        series: [
-        {
-          name: 'Channel 1',
-          data: [
-          7,
-          6.9,
-          9.5,
-          14.5,
-          18.2,
-          21.5,
-          25.2,
-          26.5,
-          23.3,
-          18.3,
-          13.9,
-          9.6
-          ],
-          marker: {
-            enabled: false,
-            symbol: 'circle'
+          tooltip: {
+            enabled: false
+          },
+          legend: {
+            enabled: true
+          },
+          rangeSelector: {
+            buttons: [{
+              count: 100,
+              type: 'millisecond',
+              text: '2S'
+            }, {
+              count: 300,
+              type: 'millisecond',
+              text: '30S'
+            }, {
+              type: 'all',
+              text: 'All'
+            }],
+            selected: 0,
+            inputEnabled: false
+          },
+
+          navigator: {
+            enabled: true
           }
         },
-        {
-          name: 'Channel 2',
-          data: [
-          - 0.2,
-          0.8,
-          5.7,
-          11.3,
-          17,
-          22,
-          24.8,
-          24.1,
-          20.1,
-          14.1,
-          8.6,
-          2.5
-          ],
-          marker: {
-            enabled: false,
-            symbol: 'circle'
-          }
+        series: [],
+        title: {
+          text: 'EEG'
         },
-        {
-          name: 'Channel 3',
-          data: [
-          - 0.9,
-          0.6,
-          3.5,
-          8.4,
-          13.5,
-          17,
-          18.6,
-          17.9,
-          14.3,
-          9,
-          3.9,
-          1
-          ],
-          marker: {
-            enabled: false,
-            symbol: 'circle'
-          }
-        },
-        {
-          name: 'Channel 4',
-          data: [
-          3.9,
-          4.2,
-          5.7,
-          8.5,
-          11.9,
-          15.2,
-          17,
-          16.6,
-          14.2,
-          10.3,
-          6.6,
-          4.8
-          ],
-          marker: {
-            enabled: false,
-            symbol: 'circle'
-          }
-        }
-        ]
+        useHighStocks: true
       };
+
       $scope.chartPolar = {
         options: {
           chart: {
@@ -327,4 +252,4 @@
       };
     }
     ]);
-}) ();
+})();

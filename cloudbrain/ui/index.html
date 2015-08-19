@@ -1,69 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="utf-8">
-    <title></title>
+<head>
+  <meta charset="utf-8">
+  <title></title>
 
-    <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.css">
-    <link rel="stylesheet" href="css/index.css">
-  </head>
+  <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.css">
+  <link rel="stylesheet" href="css/index.css">
+</head>
 
-  <body ng-app="cloudbrain" ng-controller="chartController">
+<body ng-app="cloudbrain" ng-controller="chartController">
 
-      <nav class="navbar navbar-inverse">
-        <div class="navbar-header">
-          <div class="container">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
+  <nav class="navbar navbar-inverse">
+    <div class="navbar-header">
+      <div class="container">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
 
-            <a class="navbar-brand" href="#">
-              <img src="images/brain-white.png" alt="cloudbrain" class="logo" />
-              <span>Cloudbrain</span>
-            </a>
-            <div class="row">
-              <ng-form name="deviceIdForm" role="form">
+        <a class="navbar-brand" href="#">
+          <img src="images/brain-white.png" alt="cloudbrain" class="logo" />
+          <span>Cloudbrain</span>
+        </a>
+        <div class="row">
+          <ng-form name="deviceIdForm" role="form">
 
-              <div class="col-md-3"><!--DeviceId-->
-                <div class="form-group">
-                  <input ng-model="device.id" class="form-control" id="deviceId" placeholder="Device Id">
-                </div>
-              </div><!--DeviceId -->
+          <div class="col-md-3"><!--DeviceId-->
+            <div class="form-group">
+              <input ng-model="device.id" class="form-control" id="deviceId" placeholder="Device Id">
+            </div>
+          </div><!--DeviceId -->
 
-              <div class="col-md-3"><!--DeviceName-->
-                  <select ng-model='device.name' id="deviceName" class="form-control">
-                  <option selected="selected">--Select Device--</option>
-                  <option ng-repeat="device_name in device_names">{{device_name}}</option>
-                </select>
-              </div><!--DeviceName -->
-              <div  class="col-md-1 nav_button">
-                <button type="submit" ng-click="getData(device)" class="btn btn-default">Submit</button>
-              </div>
-              <div class="col-md-1 nav_button" ng-click="changeColor()"><button type="button" class="btn btn-default">Transparent</button></div>
-            </ng-form>
-    
-            
-           
+          <div class="col-md-3"><!--DeviceName-->
+            <select ng-model='device.name' id="deviceName" class="form-control">
+              <option selected="selected">--Select Device--</option>
+              <option ng-repeat="device_name in device_names">{{device_name}}</option>
+            </select>
+          </div><!--DeviceName -->
+          <div  class="col-md-1 nav_button">
+            <button type="submit" ng-click="getData(device)" class="btn btn-default">Submit</button>
           </div>
-          
-        </div>
-          </div>
-        </div>
-      </nav>
+          <div class="col-md-1 nav_button" ng-click="changeColor()"><button type="button" class="btn btn-default">Transparent</button></div>
+        </ng-form>
 
-    <div class="container-fluid">
-    	<!--<div ng-controller="chartController"> -->
-	    	<div class="row">
-          
-      <div class="row">
-	     <highchart id="chart3" config="chartConfig"></highchart>
-     </div>
 
-      <div id="bot_charts"class="row">
+
+      </div>
+
+    </div>
+  </div>
+</div>
+</nav>
+
+<div class="container-fluid">
+ <!--<div ng-controller="chartController"> -->
+ <div class = "row">
+  <div class="col-md-12">
+    <highchart id="chart3" config="chartStock"></highchart>
+  </div>
+</div>
+<div class="row">
+ <div id="bot_charts"class="row">
         <div class="col-md-8">
         <highchart id="chart1" config="chartBar"></highchart>
       </div>
@@ -71,22 +71,27 @@
           <highchart id="chart2" config="chartPolar"></highchart>
         </div>
       </div>
-        
+    </div>
 
-    	<!--</div><!--chartController--> -->
-    </div><!--Container-->
 
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-    <script src="http://code.highcharts.com/adapters/standalone-framework.js"></script>
-    <script src="bower_components/highcharts/highcharts.src.js"></script>
-    <script src="http://code.highcharts.com/highcharts-more.js"></script> 
-    <script src="bower_components/highcharts-ng/src/highcharts-ng.js"></script>
 
-    <script src="app.js"></script>
-    <script src="controllers/chartController.js"></script>
+
+
+<!--</div><!--chartController--> 
+</div><!--Container-->
+
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script src="http://code.highcharts.com/adapters/standalone-framework.js"></script>
+<script src="http://code.highcharts.com/stock/highstock.src.js"></script>
+    <!--<script src="bower_components/highcharts/highcharts.src.js"></script>-->
+<script src="http://code.highcharts.com/highcharts-more.js"></script> 
+<script src="bower_components/highcharts-ng/src/highcharts-ng.js"></script>
+
+<script src="app.js"></script>
+<script src="controllers/chartController.js"></script>
 
   </body>
 
 
-</html>
+  </html>
