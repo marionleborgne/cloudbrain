@@ -74,6 +74,28 @@ This makes use of the demo version of cloudbrain running at `http://cloudbrain.r
 * On OSX, generate OSX binaries: `sh package_subscriber_osx.sh`
 * On Ubuntu,  generate Ubuntu binaries: `sh package_subscriber_ubuntu.sh`
 
+# API Documentation
+For this example, let's use the mock server `mock.cloudbrain.rocks`, the device name `muse` and the user id `octopicorn`.
+
+## Raw Data
+* [Raw EEG](http://mock.cloudbrain.rocks/power_bands?device_name=openbci&metric=eeg&device_id=octopicorn) for the OpenBCI: `GET http://mock.cloudbrain.rocks/power_bands?device_name=openbci&metric=eeg&device_id=octopicorn`
+* [Raw EEG](http://mock.cloudbrain.rocks/power_bands?device_name=muse&metric=eeg&device_id=octopicorn) for the Muse: `GET http://mock.cloudbrain.rocks/power_bands?device_name=muse&metric=eeg&device_id=octopicorn`
+* [Mellow](http://mock.cloudbrain.rocks/power_bands?device_name=muse&metric=mellow&device_id=octopicorn) metric for the Muse: `GET http://mock.cloudbrain.rocks/power_bands?device_name=muse&metric=mellow&device_id=octopicorn`
+* [Concentration](http://mock.cloudbrain.rocks/power_bands?device_name=muse&metric=concentration&device_id=octopicorn) metric for the Muse: `GET http://mock.cloudbrain.rocks/power_bands?device_name=muse&metric=concentration&device_id=octopicorn`
+* etc...
+
+## Power bands
+* Get alpha, beta, gamma, theta, delta values all at once, for the same timestamp.
+* All [Power Bands](http://mock.cloudbrain.rocks/power_bands?device_name=muse&device_id=octopicorn) for the Muse: `GET http://mock.cloudbrain.rocks/power_bands?device_name=muse&device_id=octopicorn`
+
+## Registered devices
+* Get the list of device IDs that are publishing to cloudbrain
+* [`GET http://mock.cloudbrain.rocks/registered_devices`](http://mock.cloudbrain.rocks/registered_devices)
+
+## Device metadata
+* Get the list of device IDs that are publishing to cloudbrain
+* [Device names](http://mock.cloudbrain.rocks/device_names): `GET http://mock.cloudbrain.rocks/device_names`
+
 # About cloudbrain
 
 ## Cloudbrain @ [The Exploratorium](http://www.exploratorium.edu) of San Francisco
