@@ -25,7 +25,10 @@
 
           <div class="col-xs-3 col-xs-offset-1 col-md-3 col-md-offset-2 top-bar"><!--DeviceId-->
             <div class="form-group">
-              <input ng-model="device.id" class="form-control" id="deviceId" placeholder="Device Id">
+              <select ng-model='device.id' id="registeredDevices" class="form-control">
+              <option selected="selected">--Select ID--</option>
+              <option ng-repeat="registered_device in registered_devices">{{registered_device}}</option>
+            </select>
             </div>
           </div><!--DeviceId -->
 
