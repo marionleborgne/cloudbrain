@@ -13,9 +13,22 @@
         $scope.chartPolar.options.chart.backgroundColor = color_val;
         $scope.chartBar.options.chart.backgroundColor = color_val;
       };
+    $scope.getURL = function (url) {
+        if (url === 'demo') {
+          $scope.baseURL = 'http://mock.cloudbrain.rocks';
+          $log.log('demo works' + $scope.baseURL);
+
+        } else {
+        $scope.baseURL = 'http://datastore.cloudbrain.rocks';
+        $log.log('no demo' + $scope.baseURL);
+
+        }
+        $scope.getRegisteredDevices();
+        $scope.getDevices();
+      };
 
     $scope.getDevices = function () {
-        var url = 'http://mock.cloudbrain.rocks/device_names?callback=JSON_CALLBACK';
+        var url = $scope.baseURL+'/device_names?callback=JSON_CALLBACK';
         $http.jsonp(url).success(function (data, status, headers) {
 
           $scope.device_names = data.filter(function (name) {
@@ -25,10 +38,10 @@
           $log.log('Failed to Get Devices');
         });
       };
-      $scope.getDevices();
+      //$scope.getDevices();
 
     $scope.getRegisteredDevices = function () {
-        var url = 'http://mock.cloudbrain.rocks/registered_devices?callback=JSON_CALLBACK';
+        var url = $scope.baseURL+'/registered_devices?callback=JSON_CALLBACK';
         $http.jsonp(url).success(function (data, status, headers) {
 
           $scope.registered_devices = data.filter(function (name) {
@@ -38,7 +51,7 @@
           $log.log('Failed to Get Devices');
         });
       };
-      $scope.getRegisteredDevices();
+      //$scope.getRegisteredDevices();
 
 
       var setChannelSeries = function(data){
@@ -52,15 +65,15 @@
         });
       };
 
-      $scope.url = 'http://mock.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
+      //$scope.url = 'http://mock.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
 
-      $scope.getData = function (device) {
+      $scope.getData = function (device, url) {
         $scope.chartPolar.title.text = device.name + ' ' + device.id;
         $scope.chartBar.title.text = device.name + ' ' + device.id;
         $scope.chartStock.title.text = device.name + ' ' + device.id;
         var metric = 'eeg';
         $scope.lastTimestamp = Date.now() * 1000; //microseconds
-        $scope.cloudbrain = 'http://mock.cloudbrain.rocks/data?device_name='+device.name+'&metric='+metric+'&device_id='+device.id+'&callback=JSON_CALLBACK&start='+$scope.lastTimestamp;
+        $scope.cloudbrain = $scope.baseURL + '/data?device_name='+device.name+'&metric='+metric+'&device_id='+device.id+'&callback=JSON_CALLBACK&start='+$scope.lastTimestamp;
         $scope.chart3 = $scope.chartStock.getHighcharts();
 
         //initialize series data for charts
