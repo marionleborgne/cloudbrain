@@ -14,33 +14,28 @@
   <nav class="navbar navbar-inverse">
     <div class="navbar-header">
       <div class="container">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
+        <div class="row">
 
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand col-md-3" href="#">
           <img src="images/brain-white.png" alt="cloudbrain" class="logo" />
           <span>Cloudbrain</span>
         </a>
-        <div class="row">
+
           <ng-form name="deviceIdForm" role="form">
 
-          <div class="col-md-3 top-bar"><!--DeviceId-->
+          <div class="col-xs-3 col-xs-offset-1 col-md-3 col-md-offset-2 top-bar"><!--DeviceId-->
             <div class="form-group">
               <input ng-model="device.id" class="form-control" id="deviceId" placeholder="Device Id">
             </div>
           </div><!--DeviceId -->
 
-          <div class="col-md-3 top-bar"><!--DeviceName-->
+          <div class="col-xs-3 col-md-3 top-bar"><!--DeviceName-->
             <select ng-model='device.name' id="deviceName" class="form-control">
               <option selected="selected">--Select Device--</option>
               <option ng-repeat="device_name in device_names">{{device_name}}</option>
             </select>
           </div><!--DeviceName -->
-          <div  class="col-md-1 nav_button top-bar">
+          <div  class="col-xs-1 col-md-1 nav_button top-bar">
             <button type="submit" ng-click="getData(device)" class="btn btn-default">Connect</button>
           </div>
           <!--<div class="col-md-1 nav_button top-bar" ng-click="changeColor()"><button type="button" class="btn btn-default">Transparent</button></div>-->
@@ -77,7 +72,7 @@
 
 
 
-<!--</div><!--chartController--> 
+<!--</div><!--chartController-->
 </div><!--Container-->
 
 <script src="bower_components/angular/angular.js"></script>
@@ -85,7 +80,7 @@
 <script src="http://code.highcharts.com/adapters/standalone-framework.js"></script>
 <script src="http://code.highcharts.com/stock/highstock.src.js"></script>
     <!--<script src="bower_components/highcharts/highcharts.src.js"></script>-->
-<script src="http://code.highcharts.com/highcharts-more.js"></script> 
+<script src="http://code.highcharts.com/highcharts-more.js"></script>
 <script src="bower_components/highcharts-ng/src/highcharts-ng.js"></script>
 
 <script src="app.js"></script>
