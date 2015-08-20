@@ -21,6 +21,7 @@ This makes use of the demo version of cloudbrain running at `http://cloudbrain.r
 
 ### Clone
 * `git clone https://github.com/marionleborgne/cloudbrain.git`
+* `cd cloudbrain`
 
 ### Install
 * `python setup.py install`
