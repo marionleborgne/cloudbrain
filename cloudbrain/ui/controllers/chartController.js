@@ -1,3 +1,5 @@
+
+var baseURL = 'http://demo.datastore.cloudbrain.rocks';
 (function () {
   'use strict';
   angular.module('cloudbrain').controller('chartController', [
@@ -14,8 +16,9 @@
         $scope.chartBar.options.chart.backgroundColor = color_val;
       };
 
+
     $scope.getDevices = function () {
-        var url = 'http://mock.cloudbrain.rocks/device_names?callback=JSON_CALLBACK';
+        var url = baseURL+'/device_names?callback=JSON_CALLBACK';
         $http.jsonp(url).success(function (data, status, headers) {
 
           $scope.device_names = data.filter(function (name) {
@@ -28,7 +31,7 @@
       $scope.getDevices();
 
     $scope.getRegisteredDevices = function () {
-        var url = 'http://mock.cloudbrain.rocks/registered_devices?callback=JSON_CALLBACK';
+        var url = baseURL+'/registered_devices?callback=JSON_CALLBACK';
         $http.jsonp(url).success(function (data, status, headers) {
 
           $scope.registered_devices = data.filter(function (name) {
@@ -52,15 +55,15 @@
         });
       };
 
-      $scope.url = 'http://mock.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
+      //$scope.url = 'http://mock.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
 
-      $scope.getData = function (device) {
+      $scope.getData = function (device, url) {
         $scope.chartPolar.title.text = device.name + ' ' + device.id;
         $scope.chartBar.title.text = device.name + ' ' + device.id;
         $scope.chartStock.title.text = device.name + ' ' + device.id;
         var metric = 'eeg';
         $scope.lastTimestamp = Date.now() * 1000; //microseconds
-        $scope.cloudbrain = 'http://mock.cloudbrain.rocks/data?device_name='+device.name+'&metric='+metric+'&device_id='+device.id+'&callback=JSON_CALLBACK&start='+$scope.lastTimestamp;
+        $scope.cloudbrain = baseURL + '/data?device_name='+device.name+'&metric='+metric+'&device_id='+device.id+'&callback=JSON_CALLBACK&start='+$scope.lastTimestamp;
         $scope.chart3 = $scope.chartStock.getHighcharts();
 
         //initialize series data for charts
