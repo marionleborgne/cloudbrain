@@ -40,7 +40,7 @@ You can stream some Muse mock data using:
 * Use the `--help` flag for the docs.
 
 For the mock data streamed above, the command would be:
-* `python cloudbrain/subscribers/file_writer_subscriber.py -i hello -n muse -m octopicorn`
+* `python cloudbrain/subscribers/file_writer_subscriber.py -i octopicorn -n muse -m eeg`
 
 ## Option 2: Install cloudbrain from scratch 
 
