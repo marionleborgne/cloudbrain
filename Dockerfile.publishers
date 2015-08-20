@@ -1,0 +1,20 @@
+FROM ubuntu:14.04
+
+MAINTAINER William Wnekowicz - william.wnekowicz@gmail.com
+
+RUN apt-get update -yy && apt-get install -yy python-setuptools liblo0-dev pyliblo-utils wget
+
+RUN wget https://bootstrap.pypa.io/ez_setup.py -O - | python
+
+RUN easy_install pip && pip install pika
+
+VOLUME ["/cloudbrain"]
+
+WORKDIR /cloudbrain/cloudbrain/publishers
+
+ENTRYPOINT ["python", "sensor_publisher.py"]
+
+CMD ["--mock", "-n", "muse", "-i", "octopicorn"]
+
+
+
