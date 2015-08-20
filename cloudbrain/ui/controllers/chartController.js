@@ -56,11 +56,16 @@ var baseURL = 'http://demo.apiserver.cloudbrain.rocks';
       };
 
       //$scope.url = 'http://mock.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
-
+      $scope.showClick = false;
+      $scope.chartMuse = false;
       $scope.getData = function (device, url) {
         $scope.chartPolar.title.text = device.name + ' ' + device.id;
         $scope.chartBar.title.text = device.name + ' ' + device.id;
         $scope.chartStock.title.text = device.name + ' ' + device.id;
+        $scope.showClick=true;
+        if ('muse' === device.name){
+          $scope.chartMuse = true;
+        }
         var metric = 'eeg';
         $scope.lastTimestamp = Date.now() * 1000; //microseconds
         $scope.cloudbrain = baseURL + '/data?device_name='+device.name+'&metric='+metric+'&device_id='+device.id+'&callback=JSON_CALLBACK&start='+$scope.lastTimestamp;
