@@ -15,7 +15,7 @@ Cloudbrain enables you to:
 # Getting started with cloudbrain
 
 ## Option 1: Quick-start!
-This makes use of the demo version of cloudbrain running at `http://cloudbrain.rocks`.
+This makes use of the demo version of cloudbrain running at [`demo.cloudbrain.rocks`](http://demo.cloudbrain.rocks).
 * Publishers send data to cloudbrain.
 * Subscribers receive data from cloudbrain.
 
