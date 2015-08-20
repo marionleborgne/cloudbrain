@@ -1,5 +1,5 @@
 
-var baseURL = 'http://demo.datastore.cloudbrain.rocks';
+var baseURL = 'http://demo.apiserver.cloudbrain.rocks';
 (function () {
   'use strict';
   angular.module('cloudbrain').controller('chartController', [

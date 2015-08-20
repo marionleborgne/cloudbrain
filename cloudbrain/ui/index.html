@@ -26,15 +26,15 @@
           <div class="col-xs-2 col-xs-offset-1 col-md-2 col-md-offset-4 top-bar"><!--DeviceId-->
             <div class="form-group">
               <select ng-model='device.id' id="registeredDevices" class="form-control">
-              <option selected="selected">--Select ID--</option>
+              <option selected="selected" value="">Select Device ID</option>
               <option ng-repeat="registered_device in registered_devices">{{registered_device}}</option>
             </select>
             </div>
           </div><!--DeviceId -->
 
-          <div class="col-xs-2 col-md-2 top-bar"><!--DeviceName-->
+          <div class="col-xs-2 col-md-2 top-bar" style="padding-right: 10px;"><!--DeviceName-->
             <select ng-model='device.name' id="deviceName" class="form-control">
-              <option selected="selected">--Select Device--</option>
+              <option selected="selected" value="">Select Device Name</option>
               <option ng-repeat="device_name in device_names">{{device_name}}</option>
             </select>
           </div><!--DeviceName -->
