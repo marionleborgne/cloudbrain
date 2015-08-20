@@ -19,6 +19,16 @@ This makes use of the demo version of cloudbrain running at `http://cloudbrain.r
 * Publishers send data to cloudbrain.
 * Subscribers receive data from cloudbrain.
 
+### Install liblo
+
+On Linux, install the liblo package. 
+
+If you're on OSX, you can get it from the [liblo website](http://sourceforge.net/projects/liblo/). 
+Then go into the liblo folder and run these:
+* `./configure`
+* `make`
+* `make install`
+
 ### Clone
 * `git clone https://github.com/marionleborgne/cloudbrain.git`
 * `cd cloudbrain`
