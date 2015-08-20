@@ -19,6 +19,9 @@ This makes use of the demo version of cloudbrain running at `http://cloudbrain.r
 * Publishers send data to cloudbrain.
 * Subscribers receive data from cloudbrain.
 
+### Clone
+* `git clone https://github.com/marionleborgne/cloudbrain.git`
+
 ### Install
 * `python setup.py install`
 
