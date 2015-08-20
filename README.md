@@ -26,13 +26,21 @@ This makes use of the demo version of cloudbrain running at `http://cloudbrain.r
 ### Install
 * `python setup.py install`
 
+You may have to add `sudo` in front (`sudo python setup.py install`) if it says "Permission denied".
+
 ### Publishers: send data to cloudbrain
 * Run `python cloudbrain/publishers/sensor_publisher.py`
 * Use the `--help` flag for the docs.
 
+You can stream some Muse mock data using:
+* `python cloudbrain/publishers/sensor_publisher.py --mock -n muse -i octopicorn`
+
 ### Subscribers: get data from cloudbrain
 * Write data to a file: `python cloudbrain/subscribers/file_writer_subscriber.py`
 * Use the `--help` flag for the docs.
+
+For the mock data streamed above, the command would be:
+* `python cloudbrain/subscribers/file_writer_subscriber.py -i hello -n muse -m eeg`
 
 ## Option 2: Install cloudbrain from scratch 
 
