@@ -19,16 +19,38 @@ This makes use of the demo version of cloudbrain running at `http://cloudbrain.r
 * Publishers send data to cloudbrain.
 * Subscribers receive data from cloudbrain.
 
+### Install liblo
+
+On Linux, install the liblo package. 
+
+If you're on OSX, you can get it from the [liblo website](http://sourceforge.net/projects/liblo/). 
+Then go into the liblo folder and run these:
+* `./configure`
+* `make`
+* `make install`
+
+### Clone
+* `git clone https://github.com/marionleborgne/cloudbrain.git`
+* `cd cloudbrain`
+
 ### Install
 * `python setup.py install`
+
+You may have to add `sudo` in front (`sudo python setup.py install`) if it says "Permission denied".
 
 ### Publishers: send data to cloudbrain
 * Run `python cloudbrain/publishers/sensor_publisher.py`
 * Use the `--help` flag for the docs.
 
+You can stream some Muse mock data using:
+* `python cloudbrain/publishers/sensor_publisher.py --mock -n muse -i octopicorn`
+
 ### Subscribers: get data from cloudbrain
 * Write data to a file: `python cloudbrain/subscribers/file_writer_subscriber.py`
 * Use the `--help` flag for the docs.
+
+For the mock data streamed above, the command would be:
+* `python cloudbrain/subscribers/file_writer_subscriber.py -i octopicorn -n muse -m eeg`
 
 ## Option 2: Install cloudbrain from scratch 
 
