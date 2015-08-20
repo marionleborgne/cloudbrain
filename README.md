@@ -23,11 +23,9 @@ This makes use of the demo version of cloudbrain running at [`demo.cloudbrain.ro
 
 On Linux, install the liblo package. 
 
-If you're on OSX, you can get it from the [liblo website](http://sourceforge.net/projects/liblo/). 
-Then go into the liblo folder and run these:
-* `./configure`
-* `make`
-* `make install`
+If you're on OSX, make sure you have [homebrew](http://brew.sh/) and the OSX command line utilities installed
+Then install liblo through brew
+* `brew install liblo`
 
 ### Clone
 * `git clone https://github.com/marionleborgne/cloudbrain.git`
