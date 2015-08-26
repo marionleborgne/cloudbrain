@@ -23,11 +23,9 @@ This makes use of the demo version of cloudbrain running at [`demo.cloudbrain.ro
 
 On Linux, install the liblo package. 
 
-If you're on OSX, you can get it from the [liblo website](http://sourceforge.net/projects/liblo/). 
-Then go into the liblo folder and run these:
-* `./configure`
-* `make`
-* `make install`
+If you're on OSX, make sure you have [homebrew](http://brew.sh/) and the OSX command line utilities installed
+Then install liblo through brew
+* `brew install liblo`
 
 ### Clone
 * `git clone https://github.com/marionleborgne/cloudbrain.git`
@@ -97,26 +95,26 @@ For the mock data streamed above, the command would be:
 * On Ubuntu,  generate Ubuntu binaries: `sh package_subscriber_ubuntu.sh`
 
 # API Documentation
-For this example, let's use the mock server `mock.cloudbrain.rocks`, the device name `muse` and the user id `octopicorn`.
+For this example, let's use the demo API server `demo.apiserver.cloudbrain.rocks`, the device name `muse` and the device id `octopicorn`.
 
 ## Raw Data
-* [Raw EEG](http://mock.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=octopicorn) for the OpenBCI: `GET http://mock.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=octopicorn`
-* [Raw EEG](http://mock.cloudbrain.rocks/data?device_name=muse&metric=eeg&device_id=octopicorn) for the Muse: `GET http://mock.cloudbrain.rocks/data?device_name=muse&metric=eeg&device_id=octopicorn`
-* [Mellow](http://mock.cloudbrain.rocks/data?device_name=muse&metric=mellow&device_id=octopicorn) metric for the Muse:  `GET http://mock.cloudbrain.rocks/data?device_name=muse&metric=mellow&device_id=octopicorn`
-* [Concentration](http://mock.cloudbrain.rocks/data?device_name=muse&metric=concentration&device_id=octopicorn) metric for the Muse: `GET http://mock.cloudbrain.rocks/data?device_name=muse&metric=concentration&device_id=octopicorn`
+* [Raw EEG](http://demo.apiserver.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=octopicorn) for the OpenBCI: `GET http://demo.apiserver.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=octopicorn`
+* [Raw EEG](http://demo.apiserver.cloudbrain.rocks/data?device_name=muse&metric=eeg&device_id=octopicorn) for the Muse: `GET http://demo.apiserver.cloudbrain.rocks/data?device_name=muse&metric=eeg&device_id=octopicorn`
+* [Mellow](http://demo.apiserver.cloudbrain.rocks/data?device_name=muse&metric=mellow&device_id=octopicorn) metric for the Muse:  `GET http://demo.apiserver.cloudbrain.rocks/data?device_name=muse&metric=mellow&device_id=octopicorn`
+* [Concentration](http://demo.apiserver.cloudbrain.rocks/data?device_name=muse&metric=concentration&device_id=octopicorn) metric for the Muse: `GET http://demo.apiserver.cloudbrain.rocks/data?device_name=muse&metric=concentration&device_id=octopicorn`
 * Etc...
 
 ## Power bands
-[Power Bands](http://mock.cloudbrain.rocks/power_bands?device_name=muse&device_id=octopicorn) for the Muse. Get alpha, beta, gamma, theta, delta values all at once, for the same timestamp.
-* `GET http://mock.cloudbrain.rocks/power_bands?device_name=muse&device_id=octopicorn`
+[Power Bands](http://demo.apiserver.cloudbrain.rocks/power_bands?device_name=muse&device_id=octopicorn) for the Muse. Get alpha, beta, gamma, theta, delta values all at once, for the same timestamp.
+* `GET http://demo.apiserver.cloudbrain.rocks/power_bands?device_name=muse&device_id=octopicorn`
 
 ## Registered devices
- Get the list of [device IDs](http://mock.cloudbrain.rocks/registered_devices) IDs that are publishing to cloudbrain
-* `GET http://mock.cloudbrain.rocks/registered_devices`
+ Get the list of [device IDs](http://demo.apiserver.cloudbrain.rocks/registered_devices) IDs that are publishing to cloudbrain
+* `GET http://demo.apiserver.cloudbrain.rocks/registered_devices`
 
 ## Device metadata
-Get the list of [device names](http://mock.cloudbrain.rocks/device_names) supported by cloudbrain
-*  `GET http://mock.cloudbrain.rocks/device_names`
+Get the list of [device names](http://demo.apiserver.cloudbrain.rocks/device_names) supported by cloudbrain
+*  `GET http://demo.apiserver.cloudbrain.rocks/device_names`
 
 # About cloudbrain
 

@@ -14,6 +14,9 @@
   font-size: 22px;
   color: white;
 }
+#logo {
+  padding-left: 15px;
+}
 
 body {
 	/*background-image: url(../images/neurons.jpg);*/
@@ -22,10 +25,7 @@ body {
 #bot_charts {
 	padding-top: 10px;
 }
-.top-bar{
-  padding-top: 10px;
 
-}
 
 label {
   color: white;

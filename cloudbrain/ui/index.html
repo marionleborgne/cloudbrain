@@ -12,59 +12,70 @@
 <body ng-app="cloudbrain" ng-controller="chartController">
 
   <nav class="navbar navbar-inverse">
-    <div class="navbar-header">
-      <div class="container">
-        <div class="row">
+    <div class="container-fluid">
 
-        <a class="navbar-brand col-md-3" href="#">
+      <div id='logo' class="navbar-header">
+      <div class='row'>
+        <a class="navbar-brand" href="https://github.com/marionleborgne/cloudbrain" target="_blank">
           <img src="images/brain-white.png" alt="cloudbrain" class="logo" />
           <span>Cloudbrain</span>
         </a>
+      </div>
 
-          <ng-form name="deviceIdForm" role="form">
+      </div>
+        <ng-form name="deviceIdForm" role="form">
 
-          <div class="col-xs-2 col-xs-offset-1 col-md-2 col-md-offset-4 top-bar"><!--DeviceId-->
+        <div  class="nav_button navbar-form navbar-right">
+            <button type="submit" ng-click="getData(device)" class="btn btn-success">Connect</button>
+          </div>
+          <div class="navbar-form navbar-right" style="padding-right: 10px;"><!--DeviceName-->
+            <select ng-model='device.name' id="deviceName" class="form-control">
+              <option selected="selected" value="">Select Device Name</option>
+              <option ng-repeat="device_name in device_names">{{device_name}}</option>
+            </select>
+          </div><!--DeviceName -->
+          <div class="navbar-form navbar-right"><!--DeviceId-->
             <div class="form-group">
               <select ng-model='device.id' id="registeredDevices" class="form-control">
-              <option selected="selected">--Select ID--</option>
+              <option selected="selected" value="">Select Device ID</option>
               <option ng-repeat="registered_device in registered_devices">{{registered_device}}</option>
             </select>
             </div>
           </div><!--DeviceId -->
 
-          <div class="col-xs-2 col-md-2 top-bar"><!--DeviceName-->
-            <select ng-model='device.name' id="deviceName" class="form-control">
-              <option selected="selected">--Select Device--</option>
-              <option ng-repeat="device_name in device_names">{{device_name}}</option>
-            </select>
-          </div><!--DeviceName -->
           
           
-          <div  class="col-xs-1 col-md-1 nav_button top-bar">
-            <button type="submit" ng-click="getData(device)" class="btn btn-success">Connect</button>
-          </div>
+          
+          
 
 
         </ng-form>
 
-
-
-      </div>
+    
 
     </div>
   </div>
-</div>
 </nav>
 
 <div class="container-fluid">
  <!--<div ng-controller="chartController"> -->
+ <div ng-hide='showClick'>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-2">
+  <h2>Welcome to Cloudbrain!</h2>
+  <h4>Please select <strong>Device ID</strong> and <strong>Device Name.</strong></h4>
+    </div>
+  </div>
+</div>
+
+ <div ng-show='showClick'>
  <div class = "row">
   <div class="col-md-12">
     <highchart id="chart3" config="chartStock"></highchart>
   </div>
 </div>
 <div class="row">
- <div id="bot_charts"class="row">
+ <div id="bot_charts"class="row" ng-show='chartMuse'>
         <div class="col-md-8">
         <highchart id="chart1" config="chartBar"></highchart>
       </div>
@@ -73,6 +84,7 @@
         </div>
       </div>
     </div>
+  </div>
 
 
 
