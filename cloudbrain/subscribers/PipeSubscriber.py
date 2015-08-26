@@ -29,7 +29,6 @@ class PipeSubscriber(Subscriber):
         return # EOF
 
       ## TODO: figure out what ch, method, and properties are
-      print(line)
       data = json.loads(line)
       body = data['body']
       callback(None, None, None, json.dumps(body))
