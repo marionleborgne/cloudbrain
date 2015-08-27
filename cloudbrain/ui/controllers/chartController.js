@@ -10,8 +10,8 @@ angular.module('cloudbrain')
 function   ( $scope , $http , $interval , $log , apiService , dataService ) {
 
     $scope.model = {
-      deviceIds: ['opticorn'],
-      deviceNames: ['muse'],
+      deviceIds: [],
+      deviceNames: [],
     };
 
     $scope.changeColor = function () {
@@ -41,19 +41,26 @@ function   ( $scope , $http , $interval , $log , apiService , dataService ) {
         });
       };
 
+      // FIXME: considering only the first point right now...
+      function updatePowerBandGraph(graphName, data) {
+          if (data.length) {
+              $scope[graphName].series[0].data.length = 0;
+              $scope[graphName].series[0].data.push(data[0].gamma);
+              $scope[graphName].series[0].data.push(data[0].delta);
+              $scope[graphName].series[0].data.push(data[0].theta);
+              $scope[graphName].series[0].data.push(data[0].beta);
+              $scope[graphName].series[0].data.push(data[0].alfa);
+          }
+      }
+
       //$scope.url = 'http://mock.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
       $scope.showClick = false;
       $scope.chartMuse = false;
       $scope.getData = function (device, url) {
 
         dataService.startPowerBand(device.name, device.id, function(data) {
-          // FIXME: considering only the first point right now...
-          $scope.chartPolar.series[0].data.length = 0;
-          $scope.chartPolar.series[0].data.push(data[0].gamma);
-          $scope.chartPolar.series[0].data.push(data[0].delta);
-          $scope.chartPolar.series[0].data.push(data[0].theta);
-          $scope.chartPolar.series[0].data.push(data[0].beta);
-          $scope.chartPolar.series[0].data.push(data[0].alfa);
+          updatePowerBandGraph('chartPolar', data);
+          updatePowerBandGraph('chartBar', data);
         });
 
         $scope.chartPolar.title.text = device.name + ' ' + device.id;
