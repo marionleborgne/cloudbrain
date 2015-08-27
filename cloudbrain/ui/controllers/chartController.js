@@ -6,12 +6,12 @@ var baseURL = 'http://demo.apiserver.cloudbrain.rocks';
 angular.module('cloudbrain')
 
 .controller('chartController',
-           ['$scope','$http','$interval','$log','apiService',
-function   ( $scope , $http , $interval , $log , apiService ) {
+           ['$scope','$http','$interval','$log','apiService','dataService',
+function   ( $scope , $http , $interval , $log , apiService , dataService ) {
 
     $scope.model = {
-      deviceIds: [],
-      deviceNames: [],
+      deviceIds: ['opticorn'],
+      deviceNames: ['muse'],
     };
 
     $scope.changeColor = function () {
@@ -45,6 +45,17 @@ function   ( $scope , $http , $interval , $log , apiService ) {
       $scope.showClick = false;
       $scope.chartMuse = false;
       $scope.getData = function (device, url) {
+
+        dataService.startPowerBand(device.name, device.id, function(data) {
+          // FIXME: considering only the first point right now...
+          $scope.chartPolar.series[0].data.length = 0;
+          $scope.chartPolar.series[0].data.push(data[0].gamma);
+          $scope.chartPolar.series[0].data.push(data[0].delta);
+          $scope.chartPolar.series[0].data.push(data[0].theta);
+          $scope.chartPolar.series[0].data.push(data[0].beta);
+          $scope.chartPolar.series[0].data.push(data[0].alfa);
+        });
+
         $scope.chartPolar.title.text = device.name + ' ' + device.id;
         $scope.chartBar.title.text = device.name + ' ' + device.id;
         $scope.chartStock.title.text = device.name + ' ' + device.id;
