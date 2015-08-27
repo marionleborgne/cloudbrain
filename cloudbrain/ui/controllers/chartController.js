@@ -3,13 +3,13 @@
 
 var baseURL = 'http://demo.apiserver.cloudbrain.rocks';
 
-  angular.module('cloudbrain').controller('chartController', [
-    '$scope',
-    '$http',
-    '$interval',
-    '$log',
-    function ($scope, $http, $interval, $log) {
+angular.module('cloudbrain')
 
+.controller('chartController',
+           ['$scope','$http','$interval','$log','apiService',
+function   ( $scope , $http , $interval , $log , apiService ) {
+
+    $scope.device_names = [];
 
     $scope.changeColor = function () {
         var color_val = 'rgba(255, 255, 255, 0.8)';
@@ -18,18 +18,9 @@ var baseURL = 'http://demo.apiserver.cloudbrain.rocks';
       };
 
 
-    $scope.getDevices = function () {
-        var url = baseURL+'/device_names?callback=JSON_CALLBACK';
-        $http.jsonp(url).success(function (data, status, headers) {
-
-          $scope.device_names = data.filter(function (name) {
-            return name !== '';
-          });
-        }).error(function (data, status, headers) {
-          $log.log('Failed to Get Devices');
-        });
-      };
-      $scope.getDevices();
+    apiService.refreshDeviceNames().then(function(response) {
+      angular.copy(response.data, $scope.device_names);
+    });
 
     $scope.getRegisteredDevices = function () {
         var url = baseURL+'/registered_devices?callback=JSON_CALLBACK';
