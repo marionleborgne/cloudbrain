@@ -10,7 +10,7 @@ from threading import Lock
 
 class PipePublisher(Publisher):
   """
-  Publisher implementation for RabbitMQ via the Pika client
+  Publisher implementation for writing data to pipe
   """
   PIPE_WRITING_LOCKS = dict()
 
