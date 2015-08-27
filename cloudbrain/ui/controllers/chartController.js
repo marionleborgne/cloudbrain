@@ -1,41 +1,27 @@
+/* global angular */
+(function () { 'use strict';
 
 var baseURL = 'http://demo.apiserver.cloudbrain.rocks';
-(function () {
-  'use strict';
-  angular.module('cloudbrain').controller('chartController', [
-    '$scope',
-    '$http',
-    '$interval',
-    '$log',
-    function ($scope, $http, $interval, $log) {
+
+angular.module('cloudbrain')
+
+.controller('chartController',
+           ['$scope','$http','$interval','$log','apiService','dataService',
+function   ( $scope , $http , $interval , $log , apiService , dataService ) {
+
+    $scope.model = {
+      deviceIds: [],
+      deviceNames: [],
+    };
 
 
+    apiService.refreshDeviceIds().then(function(response) {
+      angular.copy(response.data, $scope.model.deviceIds);
+    });
 
-    $scope.getDevices = function () {
-        var url = baseURL+'/device_names?callback=JSON_CALLBACK';
-        $http.jsonp(url).success(function (data, status, headers) {
-
-          $scope.device_names = data.filter(function (name) {
-            return name !== '';
-          });
-        }).error(function (data, status, headers) {
-          $log.log('Failed to Get Devices');
-        });
-      };
-      $scope.getDevices();
-
-    $scope.getRegisteredDevices = function () {
-        var url = baseURL+'/registered_devices?callback=JSON_CALLBACK';
-        $http.jsonp(url).success(function (data, status, headers) {
-
-          $scope.registered_devices = data.filter(function (name) {
-            return name !== '';
-          });
-        }).error(function (data, status, headers) {
-          $log.log('Failed to Get Devices');
-        });
-      };
-      $scope.getRegisteredDevices();
+    apiService.refreshPhysicalDeviceNames().then(function(response) {
+      angular.copy(response.data, $scope.model.deviceNames);
+    });
 
 
       var setChannelSeries = function(data){
@@ -49,10 +35,28 @@ var baseURL = 'http://demo.apiserver.cloudbrain.rocks';
         });
       };
 
+      // FIXME: considering only the first point right now...
+      function updatePowerBandGraph(graphName, data) {
+          if (data.length) {
+              $scope[graphName].series[0].data.length = 0;
+              $scope[graphName].series[0].data.push(data[0].gamma);
+              $scope[graphName].series[0].data.push(data[0].delta);
+              $scope[graphName].series[0].data.push(data[0].theta);
+              $scope[graphName].series[0].data.push(data[0].beta);
+              $scope[graphName].series[0].data.push(data[0].alfa);
+          }
+      }
+
       //$scope.url = 'http://mock.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
       $scope.showClick = false;
       $scope.chartMuse = false;
       $scope.getData = function (device, url) {
+
+        dataService.startPowerBand(device.name, device.id, function(data) {
+          updatePowerBandGraph('chartPolar', data);
+          updatePowerBandGraph('chartBar', data);
+        });
+
         $scope.chartPolar.title.text = device.name + ' ' + device.id;
         $scope.chartBar.title.text = device.name + ' ' + device.id;
         $scope.chartStock.title.text = device.name + ' ' + device.id;
@@ -94,7 +98,7 @@ var baseURL = 'http://demo.apiserver.cloudbrain.rocks';
           function(response){
             $log.log('fail');
           });
-        }, 100);
+        }, 500);
       };
 
 
@@ -266,5 +270,8 @@ var baseURL = 'http://demo.apiserver.cloudbrain.rocks';
         ]
       };
     }
-    ]);
+    ])
+
+;
+
 })();
