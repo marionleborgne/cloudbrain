@@ -104,7 +104,7 @@ function   ( $scope , $http , $interval , $log , apiService , dataService ) {
           function(response){
             $log.log('fail');
           });
-        }, 100);
+        }, 500);
       };
 
 
