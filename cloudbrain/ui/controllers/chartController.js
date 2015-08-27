@@ -1,7 +1,8 @@
+/* global angular */
+(function () { 'use strict';
 
 var baseURL = 'http://demo.apiserver.cloudbrain.rocks';
-(function () {
-  'use strict';
+
   angular.module('cloudbrain').controller('chartController', [
     '$scope',
     '$http',
@@ -272,5 +273,8 @@ var baseURL = 'http://demo.apiserver.cloudbrain.rocks';
         ]
       };
     }
-    ]);
+    ])
+
+;
+
 })();
