@@ -121,7 +121,7 @@ def parse_args():
   
 
   opts = parser.parse_args()
-  if opts.device_name == "openbci" and opts.device_port not in opts:
+  if opts.device_name == "openbci" and opts.device_port is not None:
     parser.error("You have to specify a port for the OpenBCI device!")
   return opts
 
