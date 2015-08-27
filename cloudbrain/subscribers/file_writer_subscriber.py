@@ -114,7 +114,7 @@ def parse_args():
   parser.add_argument('-m', '--metric_name', required=True,
                       help="Name of the metric for which you want to record data.\n"
                            "Supported metrics are %s" % _SUPPORTED_METRICS)
-  parser.add_argument('-s', '--subscriber', default="pika",
+  parser.add_argument('-S', '--subscriber', default="pika",
                       help="The subscriber to use to get the data.\n"
                       "Possible options are pika, pipe.\n"
                       "The default is pika.")
