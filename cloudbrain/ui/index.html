@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="css/index.css">
 </head>
 
-<body ng-app="cloudbrain" ng-controller="chartController">
+<body ng-app="cloudbrain" ng-cloak ng-controller="chartController">
 
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -31,14 +31,14 @@
           <div class="navbar-form navbar-right" style="padding-right: 10px;"><!--DeviceName-->
             <select ng-model='device.name' id="deviceName" class="form-control">
               <option selected="selected" value="">Select Device Name</option>
-              <option ng-repeat="device_name in device_names">{{device_name}}</option>
+              <option ng-repeat="deviceName in model.deviceNames">{{deviceName}}</option>
             </select>
           </div><!--DeviceName -->
           <div class="navbar-form navbar-right"><!--DeviceId-->
             <div class="form-group">
               <select ng-model='device.id' id="registeredDevices" class="form-control">
               <option selected="selected" value="">Select Device ID</option>
-              <option ng-repeat="registered_device in registered_devices">{{registered_device}}</option>
+              <option ng-repeat="deviceId in model.deviceIds">{{deviceId}}</option>
             </select>
             </div>
           </div><!--DeviceId -->
