@@ -36,11 +36,13 @@ class PipePublisher(Publisher):
     lock.release()
     
   def publish(self, buffer_content):
-    self.lock()
-
     key = "%s:%s:%s" % (self.device_id, self.device_name, self.metric_name)
     out = {"key": key, 'body': buffer_content}
-    self.pipe.write(json.dumps(out))
+    to_write = json.dumps(out)
+
+    self.lock()
+
+    self.pipe.write(to_write)
     self.pipe.write("\n")
     self.pipe.flush()
 
