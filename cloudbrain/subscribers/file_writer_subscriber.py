@@ -19,7 +19,7 @@ class FileWriterSubscriber(object):
 
   def __init__(self, device_name, device_id,  metric, subscriber_type="pika", rabbitmq_address=None, pipe_name=None):
     if subscriber_type == "pika" and rabbitmq_address is None:
-      raise Exception("Pika subscriber needs to have a rabbitmq address!")
+      raise ValueError("Pika subscriber needs to have a rabbitmq address!")
 
     if subscriber_type == "pika":
       self.subscriber = PikaSubscriber(device_name=device_name,
@@ -32,7 +32,7 @@ class FileWriterSubscriber(object):
                                        metric_name=metric,
                                        pipe_name=pipe_name)
     else:
-      raise Exception("'%s' is not a valid subscriber type. Valid types are %s." % (subscriber_type, "pika, pipe"))
+      raise ValueError("'%s' is not a valid subscriber type. Valid types are %s." % (subscriber_type, "pika, pipe"))
     self.metric = metric
     self.device_name = device_name
     self.device_id = device_id

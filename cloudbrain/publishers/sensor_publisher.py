@@ -79,14 +79,14 @@ def run(device_name='muse',
   elif device_name == 'openbci':
     from cloudbrain.connectors.OpenBCIConnector import OpenBCIConnector as Connector
   else:
-    raise Exception("Device type '%s' not supported. Supported devices are:%s" % (device_name, _SUPPORTED_DEVICES))
+    raise ValueError("Device type '%s' not supported. Supported devices are:%s" % (device_name, _SUPPORTED_DEVICES))
 
   if mock_data_enabled:
     from cloudbrain.connectors.MockConnector import MockConnector as Connector
 
   
   if publisher_type not in ['pika', 'pipe']:
-    raise Exception("'%s' is not a valid publisher type. Valid types are %s." % (publisher_type, "pika, pipe"))
+    raise ValueError("'%s' is not a valid publisher type. Valid types are %s." % (publisher_type, "pika, pipe"))
 
   metrics = get_metrics_names(device_name)
 
