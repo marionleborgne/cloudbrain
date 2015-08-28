@@ -132,14 +132,6 @@ Many thanks to my teamates:
 * [James](https://github.com/cyb3rnetic)
 * [David](https://github.com/dvidsilva)
 
-## Cloudbrain architecture
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/ui/images/architecture.png)
-
-The architecture is composed of 3 main components:
-- connector: specifies how to read data from a device
-- publisher: specifies where to stream this data to
-- subscriber: listens to data streamed by publisher
-
 ## Cloudbrain's data visualizations
 
 ### Aggregated data (bar charts)
