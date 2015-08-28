@@ -14,12 +14,6 @@ function   ( $scope , $http , $interval , $log , apiService , dataService ) {
       deviceNames: [],
     };
 
-    $scope.changeColor = function () {
-        var color_val = 'rgba(255, 255, 255, 0.8)';
-        $scope.chartPolar.options.chart.backgroundColor = color_val;
-        $scope.chartBar.options.chart.backgroundColor = color_val;
-      };
-
 
     apiService.refreshDeviceIds().then(function(response) {
       angular.copy(response.data, $scope.model.deviceIds);
