@@ -1,0 +1,83 @@
+{
+  "name": "kyper-matter",
+  "version": "0.0.1",
+  "description": "Library to provide simple application functionality like authentication and local/session/token storage.",
+  "main": "dist/matter.js",
+  "jsnext:main": "dist/matter.js",
+  "scripts": {
+    "test": "gulp",
+    "test-browser": "gulp test-browser",
+    "build": "gulp build",
+    "coverage": "gulp coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kypertech/matter.git"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "keywords": [
+    "matter",
+    "tessellate",
+    "kyper",
+    "authentication",
+    "user management",
+    "application management"
+  ],
+  "author": "Prescott Prue <sprue.dev@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kypertech/matter/issues"
+  },
+  "homepage": "https://github.com/kypertech/matter",
+  "devDependencies": {
+    "babel-core": "^5.2.17",
+    "babel-eslint": "^4.0.5",
+    "babelify": "^6.0.0",
+    "browserify": "^11.0.1",
+    "chai": "^3.2.0",
+    "del": "^1.1.1",
+    "glob": "^5.0.14",
+    "gulp": "^3.8.10",
+    "gulp-awspublish": "^3.0.0",
+    "gulp-babel": "^5.0.0",
+    "gulp-eslint": "^1.0.0",
+    "gulp-file": "^0.2.0",
+    "gulp-filter": "^3.0.0",
+    "gulp-istanbul": "^0.10.0",
+    "gulp-jscs": "^2.0.0",
+    "gulp-livereload": "^3.4.0",
+    "gulp-load-plugins": "^0.10.0",
+    "gulp-mocha": "^2.0.0",
+    "gulp-notify": "^2.1.0",
+    "gulp-plumber": "^1.0.1",
+    "gulp-rename": "^1.2.0",
+    "gulp-s3": "^0.3.0",
+    "gulp-sourcemaps": "^1.3.0",
+    "gulp-uglify": "^1.2.0",
+    "isparta": "^3.0.3",
+    "mocha": "^2.1.0",
+    "rollup": "^0.14.1",
+    "run-sequence": "^1.0.2",
+    "sinon": "^1.12.2",
+    "sinon-chai": "^2.7.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.0.0",
+    "watchify": "^3.3.1"
+  },
+  "babelBoilerplateOptions": {
+    "entryFileName": "src/matter.js",
+    "mainVarName": "Matter",
+    "mochaGlobals": [
+      "stub",
+      "spy",
+      "expect"
+    ]
+  },
+  "dependencies": {
+    "superagent": "^1.3.0",
+    "underscore": "^1.8.3"
+  }
+}

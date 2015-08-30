@@ -21,7 +21,8 @@
     "angular": "~1.4.3",
     "angular-bootstrap": "~0.13.3",
     "bootstrap-css-only": "~3.3.4",
+    "highcharts": "~4.1.7",
     "highcharts-ng": "~0.0.8",
-    "highcharts": "~4.1.7"
+    "kyper-matter": "~0.0.2"
   }
 }
