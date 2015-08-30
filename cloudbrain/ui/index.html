@@ -20,69 +20,33 @@
           </a>
         </div>
       </div>
-      <ng-form name="deviceIdForm" role="form">
-        <div class="nav_button navbar-form navbar-right">
-          <button type="submit" ng-click="getData(device)" class="btn btn-success">Connect</button>
-        </div>
-        <div class="navbar-form navbar-right" style="padding-right: 10px;"><!--DeviceName-->
-          <select ng-model='device.name' id="deviceName" class="form-control">
-            <option selected="selected" value="">Select Device Name</option>
-            <option ng-repeat="deviceName in model.deviceNames">{{deviceName}}</option>
-          </select>
-        </div><!--DeviceName -->
-        <div class="navbar-form navbar-right"><!--DeviceId-->
-          <div class="form-group">
-            <select ng-model='device.id' id="registeredDevices" class="form-control">
-            <option selected="selected" value="">Select Device ID</option>
-            <option ng-repeat="deviceId in model.deviceIds">{{deviceId}}</option>
-          </select>
-          </div>
-        </div><!--DeviceId -->
-      </ng-form>
     </div>
   </nav>
   <!-- Page Content -->
-  <div class="container-fluid">
-    <div ng-hide='showClick'>
-      <div class="row">
-        <div class="col-md-6 col-md-offset-2">
-        <h2>Welcome to Cloudbrain!</h2>
-        <h4>Please select <strong>Device ID</strong> and <strong>Device Name.</strong></h4>
-        </div>
-      </div>
-    </div>
-    <div ng-show='showClick'>
-      <div class = "row">
-        <div class="col-md-12">
-          <highchart id="chart3" config="chartStock"></highchart>
-        </div>
-      </div>
-      <div class="row">
-        <div id="bot_charts"class="row" ng-show='chartMuse'>
-          <div class="col-md-8">
-            <highchart id="chart1" config="chartBar"></highchart>
-          </div>
-          <div class="col-md-4">
-            <highchart id="chart2" config="chartPolar"></highchart>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div><!--Container-->
-
+  <div ui-view class="container-fluid"></div>
+  <!-- Library Scripts -->
   <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
   <script src="http://code.highcharts.com/adapters/standalone-framework.js"></script>
   <script src="http://code.highcharts.com/stock/highstock.src.js"></script>
-      <!--<script src="bower_components/highcharts/highcharts.src.js"></script>-->
+  <!--<script src="bower_components/highcharts/highcharts.src.js"></script>-->
   <script src="http://code.highcharts.com/highcharts-more.js"></script>
   <script src="bower_components/highcharts-ng/src/highcharts-ng.js"></script>
   <script src="bower_components/kyper-matter/dist/matter.bundle.js"></script>
-
+  
+  <!-- Application Scripts -->
   <script src="app.js"></script>
+  <script src="app.controller.js"></script>
+  <script src="app-routes.js"></script>
+  <script src="account/account.module.js"></script>
+  <script src="account/account.controller.js"></script>
   <script src="chart/chart.module.js"></script>
   <script src="chart/chart.controller.js"></script>
   <script src="chart/chart.service.js"></script>
-
+  
+  <!-- Live Reload Script -->
+  <script type='text/javascript' id="__bs_script__">//<![CDATA[document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.2.8.2.js'><\/script>".replace("HOST", location.hostname));
+  //]]></script>
 </body>
 </html>

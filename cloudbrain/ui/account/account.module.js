@@ -1,4 +1,4 @@
 (function () { 
 	'use strict';
-	angular.module('cloudbrain')
+	angular.module('cloudbrain.account', [])
 })();

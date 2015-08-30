@@ -2,6 +2,7 @@
 	'use strict';
 
 	var chartMod = angular.module('cloudbrain.chart')
+  chartMod.value('API_URL', 'http://demo.apiserver.cloudbrain.rocks');
 
 	chartMod.factory('apiService', ['$http','$q', 'API_URL', function ($http , $q, API_URL) {
  		// Public service interface

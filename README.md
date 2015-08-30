@@ -80,8 +80,9 @@ For the mock data streamed above, the command would be:
 * `cd cloudbrain/ui`
 * `npm install`
 * `bower install`
-* Start the REST API server `python cloudbrain/datastore/rest_api_server.py`
-* Open `ui/index.html` in your browser.
+* Start the REST API server `python cloudbrain/datastore/rest_api_server.py` (Hosted version will be used if not started)
+* Run `gulp` to start live-reloading local ui server.
+* Use the cloud brain ui in the browser window that opens.
 
 ### [Optional] Generate binaries
 * Install PyInstaller `pip install pyinstaller`
