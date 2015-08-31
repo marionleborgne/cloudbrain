@@ -10,19 +10,27 @@ angular.module('cloudbrain')
 function   ( $scope , $http , $interval , $log , apiService , dataService ) {
 
     $scope.model = {
+      device: {
+        id: undefined,
+        name: undefined,
+      },
       deviceIds: [],
       deviceNames: [],
+      connected: false,
     };
 
 
-    apiService.refreshDeviceIds().then(function(response) {
-      angular.copy(response.data, $scope.model.deviceIds);
-    });
+    // apiService.refreshDeviceIds().then(function(response) {
+    //   angular.copy(response.data, $scope.model.deviceIds);
+    // });
+    $scope.model.deviceIds = [ 'Demo' ];
+    $scope.model.device.id = $scope.model.deviceIds[0];
 
-    apiService.refreshPhysicalDeviceNames().then(function(response) {
-      angular.copy(response.data, $scope.model.deviceNames);
-    });
-
+    // apiService.refreshPhysicalDeviceNames().then(function(response) {
+    //   angular.copy(response.data, $scope.model.deviceNames);
+    // });
+    $scope.model.deviceNames = [ 'muse', 'openbci' ];
+    $scope.model.device.name = $scope.model.deviceNames[0];
 
       var setChannelSeries = function(data){
         var keys = Object.keys(data[0]);
@@ -177,14 +185,10 @@ function   ( $scope , $http , $interval , $log , apiService , dataService ) {
             size: '80%'
           },
           tooltip: {
+            enabled: false,
             shared: true,
             pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
           },
-          legend: {
-            align: 'right',
-            verticalAlign: 'top',
-            layout: 'vertical'
-          }
         },
         title: {
           text: 'EEG',
@@ -204,7 +208,8 @@ function   ( $scope , $http , $interval , $log , apiService , dataService ) {
         yAxis: {
           gridLineInterpolation: 'polygon',
           lineWidth: 0,
-          min: 0
+          min: 0,
+          max: 10,
         },
         series: [
         {
@@ -239,15 +244,10 @@ function   ( $scope , $http , $interval , $log , apiService , dataService ) {
             size: '80%'
           },
           tooltip: {
+            enabled: false,
             shared: true,
             pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
           },
-          legend: {
-            align: 'right',
-            verticalAlign: 'top',
-            y: 70,
-            layout: 'vertical'
-          }
         },
         title: {
           text: 'EEG',
@@ -267,7 +267,8 @@ function   ( $scope , $http , $interval , $log , apiService , dataService ) {
         yAxis: {
           gridLineInterpolation: 'polygon',
           lineWidth: 0,
-          min: 0
+          min: 0,
+          max: 10,
         },
         series: [
         {
