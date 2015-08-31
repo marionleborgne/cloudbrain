@@ -50,6 +50,7 @@ function   ( $scope , $http , $interval , $log , apiService , dataService ) {
       //$scope.url = 'http://mock.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
       $scope.showClick = false;
       $scope.chartMuse = false;
+      $scope.button = 'Connect';
       $scope.getData = function (device, url) {
 
         dataService.startPowerBand(device.name, device.id, function(data) {
@@ -60,6 +61,7 @@ function   ( $scope , $http , $interval , $log , apiService , dataService ) {
         $scope.chartPolar.title.text = device.name + ' ' + device.id;
         $scope.chartBar.title.text = device.name + ' ' + device.id;
         $scope.chartStock.title.text = device.name + ' ' + device.id;
+        $scope.button = 'Connected';
         $scope.showClick=true;
         if ('muse' === device.name){
           $scope.chartMuse = true;

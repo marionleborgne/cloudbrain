@@ -26,7 +26,7 @@
         <ng-form name="deviceIdForm" role="form">
 
         <div  class="nav_button navbar-form navbar-right">
-            <button type="submit" ng-click="getData(device)" class="btn btn-success" ng-disabled="deviceIdForm.$invalid">Connect</button>
+            <button type="submit" ng-click="getData(device)" class="btn btn-success" ng-disabled="deviceIdForm.$invalid">{{button}}</button>
           </div>
           <div class="navbar-form navbar-right" style="padding-right: 10px;"><!--DeviceName-->
             <select ng-model='device.name' id="deviceName" class="form-control" required>
