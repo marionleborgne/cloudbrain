@@ -4,6 +4,8 @@ cloudbrain/subscribers/bin/ubuntu
 cloudbrain/publishers/bin/osx
 cloudbrain/publishers/bin/ubuntu
 build/
+dist/
+!cloudbrain/ui/bower_componenents/highcharts-ng/dist/
 cloudbrain.egg-info/
 cloudbrain/datastore/cassandra_schema.cql
 *.spec
