@@ -14,12 +14,6 @@ function   ( $scope , $http , $interval , $log , apiService , dataService ) {
       deviceNames: [],
     };
 
-    $scope.changeColor = function () {
-        var color_val = 'rgba(255, 255, 255, 0.8)';
-        $scope.chartPolar.options.chart.backgroundColor = color_val;
-        $scope.chartBar.options.chart.backgroundColor = color_val;
-      };
-
 
     apiService.refreshDeviceIds().then(function(response) {
       angular.copy(response.data, $scope.model.deviceIds);
@@ -56,7 +50,25 @@ function   ( $scope , $http , $interval , $log , apiService , dataService ) {
       //$scope.url = 'http://mock.cloudbrain.rocks/data?device_name=openbci&metric=eeg&device_id=marion&callback=JSON_CALLBACK';
       $scope.showClick = false;
       $scope.chartMuse = false;
+      $scope.button = 'Connect';
+      $scope.disableButton = function () {
+        if ($scope.deviceIdForm.$invalid || $scope.deviceIdForm.$pristine) {
+            return true;
+        } else if ($scope.deviceIdForm.$valid && $scope.deviceIdForm.$dirty) {
+            $scope.button = 'Connect';
+            return false
+        } else {
+          $scope.button = 'Connected';
+          return false
+        }
+      }
+
       $scope.getData = function (device, url) {
+
+        //Button UI Logic
+        $scope.deviceIdForm.$setPristine();
+        $scope.button = 'Connected';
+
 
         dataService.startPowerBand(device.name, device.id, function(data) {
           updatePowerBandGraph('chartPolar', data);
