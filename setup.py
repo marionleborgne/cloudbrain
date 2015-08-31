@@ -13,7 +13,7 @@ def read(fname):
 
 
 setup(name="cloudbrain",
-      version="0.0",
+      version="0.2.0",
       description="Platform for real-time sensor data analysis and visualization.",
       packages=find_packages(),
       install_requires=['pika', 'pyliblo'],
