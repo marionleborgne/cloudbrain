@@ -28,20 +28,20 @@
         <div  class="nav_button navbar-form navbar-right">
             <button type="submit" ng-click="getData(model.device)" class="btn btn-success" ng-disabled="disabledButton()">Connect</button>
           </div>
-          <div class="navbar-form navbar-right" style="padding-right: 10px;"><!--DeviceName-->
+          <div class="navbar-form navbar-right" style="padding-right: 10px;">
             <select ng-model='model.device.name' id="deviceName" name="deviceName" class="form-control" required>
               <option selected="selected" value="">Select Device Name</option>
               <option ng-repeat="deviceName in model.deviceNames">{{deviceName}}</option>
             </select>
-          </div><!--DeviceName -->
-          <div class="navbar-form navbar-right"><!--DeviceId-->
+          </div>
+          <!-- <div class="navbar-form navbar-right">
             <div class="form-group">
               <select ng-model='model.device.id' name="registeredDevices" id="registeredDevices" class="form-control" required>
               <option selected="selected" value="">Select Device ID</option>
               <option ng-repeat="deviceId in model.deviceIds">{{deviceId}}</option>
             </select>
             </div>
-          </div><!--DeviceId -->
+          </div> -->
 
           
           
