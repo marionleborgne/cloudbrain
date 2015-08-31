@@ -1,0 +1,4 @@
+-e git+git@github.com:marionleborgne/cloudbrain.git@01629005fda226b36dfe8d91f97cb821c72b739a#egg=cloudbrain-make-buildable
+pika==0.9.14
+pyliblo==0.9.2
+wheel==0.24.0
