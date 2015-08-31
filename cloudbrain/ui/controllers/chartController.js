@@ -10,19 +10,27 @@ angular.module('cloudbrain')
 function   ( $scope , $http , $interval , $log , apiService , dataService ) {
 
     $scope.model = {
+      device: {
+        id: undefined,
+        name: undefined,
+      },
       deviceIds: [],
       deviceNames: [],
+      connected: false,
     };
 
 
-    apiService.refreshDeviceIds().then(function(response) {
-      angular.copy(response.data, $scope.model.deviceIds);
-    });
+    // apiService.refreshDeviceIds().then(function(response) {
+    //   angular.copy(response.data, $scope.model.deviceIds);
+    // });
+    $scope.model.deviceIds = [ 'Demo' ];
+    $scope.model.device.id = $scope.model.deviceIds[0];
 
-    apiService.refreshPhysicalDeviceNames().then(function(response) {
-      angular.copy(response.data, $scope.model.deviceNames);
-    });
-
+    // apiService.refreshPhysicalDeviceNames().then(function(response) {
+    //   angular.copy(response.data, $scope.model.deviceNames);
+    // });
+    $scope.model.deviceNames = [ 'muse', 'openbci' ];
+    $scope.model.device.name = $scope.model.deviceNames[0];
 
       var setChannelSeries = function(data){
         var keys = Object.keys(data[0]);
