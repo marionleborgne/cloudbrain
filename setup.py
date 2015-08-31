@@ -14,7 +14,17 @@ def read(fname):
 
 setup(name="cloudbrain",
       version="0.0",
-      description="CloudBrain",
+      description="Platform for real-time sensor data analysis and visualization.",
       packages=find_packages(),
       install_requires=['pika', 'pyliblo'],
-      long_description=read("README.md"))
+      include_package_data=True,
+      long_description=read("README.md"),
+      license='GNU Affero General Public License v3',
+      classifiers=[
+          'License :: OSI Approved :: GNU Affero General Public License v3'
+      ],
+      entry_points = {
+        'console_scripts': [
+            'cloudbrain = cloudbrain.run:main'
+        ]
+      })
