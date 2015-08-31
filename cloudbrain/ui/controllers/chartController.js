@@ -43,7 +43,7 @@ function   ( $scope , $http , $interval , $log , apiService , dataService ) {
               $scope[graphName].series[0].data.push(data[0].delta);
               $scope[graphName].series[0].data.push(data[0].theta);
               $scope[graphName].series[0].data.push(data[0].beta);
-              $scope[graphName].series[0].data.push(data[0].alfa);
+              $scope[graphName].series[0].data.push(data[0].alpha);
           }
       }
 
