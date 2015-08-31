@@ -51,7 +51,25 @@ function   ( $scope , $http , $interval , $log , apiService , dataService ) {
       $scope.showClick = false;
       $scope.chartMuse = false;
       $scope.button = 'Connect';
+      $scope.disableButton = function () {
+        if ($scope.deviceIdForm.$invalid || $scope.deviceIdForm.$pristine) {
+            return true;
+        } if ($scope.deviceIdForm.$valid && $scope.deviceIdForm.$dirty) {
+            $scope.button = 'Connect';
+            return false
+        } 
+        else {
+          $scope.button = 'Connected';
+          return false
+        }
+      }
+
       $scope.getData = function (device, url) {
+
+        //Button UI Logic
+        $scope.deviceIdForm.$setPristine();
+        $scope.button = 'Connected';
+
 
         dataService.startPowerBand(device.name, device.id, function(data) {
           updatePowerBandGraph('chartPolar', data);
@@ -61,7 +79,6 @@ function   ( $scope , $http , $interval , $log , apiService , dataService ) {
         $scope.chartPolar.title.text = device.name + ' ' + device.id;
         $scope.chartBar.title.text = device.name + ' ' + device.id;
         $scope.chartStock.title.text = device.name + ' ' + device.id;
-        $scope.button = 'Connected';
         $scope.showClick=true;
         if ('muse' === device.name){
           $scope.chartMuse = true;
