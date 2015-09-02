@@ -11,3 +11,5 @@ cloudbrain/datastore/cassandra_schema.cql
 *.spec
 node_modules/
 /data/
+.idea/
+
