@@ -13,10 +13,10 @@ def read(fname):
 
 
 setup(name="cloudbrain",
-      version="0.2.0",
+      version="0.2.1",
       description="Platform for real-time sensor data analysis and visualization.",
       packages=find_packages(),
-      install_requires=['pika', 'pyliblo'],
+      install_requires=['pika', 'pyliblo', 'pyserial'],
       include_package_data=True,
       long_description=read("README.md"),
       license='GNU Affero General Public License v3',
