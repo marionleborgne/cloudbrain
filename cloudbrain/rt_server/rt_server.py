@@ -58,13 +58,14 @@ class RtStreamConnection(sockjs.tornado.SockJSConnection):
         if self.subscriber is not None:
             self.subscriber.disconnect()
             self.subscriber = None
-        # self.timeout.stop()
+        #self.timeout.stop()
         self.clients.remove(self)
 
     def send_probe(self, ch, method, properties, body):
+        #logging.info("GOT: " + body)
         buffer_content = json.loads(body)
         for record in buffer_content:
-            self.send(json.dumps(record.__dict__))
+            self.send(json.dumps(record))
 
     def send_heartbeat(self):
         self.broadcast(self.clients, 'message')
