@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from cloudbrain.settings import RABBITMQ_ADDRESS
-from cloudbrain.subscribers.PikaSubscriber import PikaSubscriber
+
+import pika
 
 import json
 
@@ -10,6 +11,7 @@ import sockjs.tornado
 import tornado.ioloop
 import tornado.web
 
+from cloudbrain.subscribers.SubscriberInterface import Subscriber
 
 class RtStreamConnection(sockjs.tornado.SockJSConnection):
     """RtStreamConnection connection implementation"""
@@ -47,12 +49,18 @@ class RtStreamConnection(sockjs.tornado.SockJSConnection):
             self.subscriber.disconnect()
             self.subscriber = None
 
-        self.subscriber = PikaSubscriber(device_name=device_name,
+        self.subscriber = TornadoSubscriber(callback=self.send_probe,
+                                         device_name=device_name,
                                          device_id=device_id,
                                          rabbitmq_address=RABBITMQ_ADDRESS,
                                          metric_name=metric)
         self.subscriber.connect()
-        self.subscriber.consume_messages(self.send_probe)
+
+    def send_probe(self, body):
+        #logging.info("GOT: " + body)
+        buffer_content = json.loads(body)
+        for record in buffer_content:
+            self.send(json.dumps(record))
 
     def on_close(self):
         if self.subscriber is not None:
@@ -60,12 +68,6 @@ class RtStreamConnection(sockjs.tornado.SockJSConnection):
             self.subscriber = None
         #self.timeout.stop()
         self.clients.remove(self)
-
-    def send_probe(self, ch, method, properties, body):
-        #logging.info("GOT: " + body)
-        buffer_content = json.loads(body)
-        for record in buffer_content:
-            self.send(json.dumps(record))
 
     def send_heartbeat(self):
         self.broadcast(self.clients, 'message')
@@ -75,6 +77,86 @@ class MockHandler(tornado.web.RequestHandler):
     """Just a mock page to test it out..."""
     def get(self):
         self.render('mock.html')
+
+
+# Based on: https://pika.readthedocs.org/en/0.9.14/examples/tornado_consumer.html
+class TornadoSubscriber(object):
+
+    QUEUE = 'test'
+
+    def __init__(self, callback, device_name, device_id, rabbitmq_address, metric_name):
+        self.callback = callback
+        self.device_name = device_name
+        self.device_id = device_id
+        self.metric_name = metric_name
+
+        self.connection = None
+        self.channel = None
+        self.host = RABBITMQ_ADDRESS
+        self.queue_name = None
+
+    def connect(self):
+        credentials = pika.PlainCredentials('cloudbrain', 'cloudbrain')
+        self.connection = pika.adapters.tornado_connection.TornadoConnection(pika.ConnectionParameters(
+                                        host=self.host, credentials=credentials),
+                                        self.on_connected,
+                                        stop_ioloop_on_close=False,
+                                        custom_ioloop=tornado.ioloop.IOLoop.instance())
+
+    def disconnect(self):
+        self.connection.close()
+
+    def on_connected(self, connection):
+        self.connection = connection
+        self.connection.add_on_close_callback(self.on_connection_closed)
+        self.open_channel()
+
+    def on_connection_closed(self, connection, reply_code, reply_text):
+        self.connection = None
+        self.channel = None
+
+    def open_channel(self):
+        self.connection.channel(self.on_channel_open)
+
+    def on_channel_open(self, channel):
+        self.channel = channel
+        self.channel.add_on_close_callback(self.on_channel_closed)
+        # self.setup_exchange(self.EXCHANGE)
+        # self.channel.confirm_delivery(self.on_delivery_confirmation)
+        key = "%s:%s:%s" % (self.device_id, self.device_name, self.metric_name)
+        self.channel.exchange_declare(self.on_exchange_declareok,
+                                      exchange=key,
+                                      type='direct')
+        # self.queue_name = self.channel.queue_declare(exclusive=True).method.queue
+
+    def on_channel_closed(self, channel, reply_code, reply_text):
+        self.connection.close()
+
+    def on_exchange_declareok(self, unused_frame):
+        self.channel.queue_declare(self.on_queue_declareok, self.QUEUE)
+
+    def on_queue_declareok(self, unused_frame):
+        key = "%s:%s:%s" %(self.device_id,self.device_name, self.metric_name)
+        self.channel.queue_bind(
+                       self.on_bindok,
+                       exchange=key,
+                       queue=self.QUEUE,
+                       routing_key=key)
+
+    def on_bindok(self, unused_frame):
+        self.channel.add_on_cancel_callback(self.on_consumer_cancelled)
+        self.consumer_tag = self.channel.basic_consume(self.on_message, self.QUEUE)
+
+    def on_consumer_cancelled(self, method_frame):
+        if self.channel:
+            self.channel.close()
+
+    def on_message(self, unused_channel, basic_deliver, properties, body):
+        self.acknowledge_message(basic_deliver.delivery_tag)
+        self.callback(body)
+
+    def acknowledge_message(self, delivery_tag):
+        self.channel.basic_ack(delivery_tag)
 
 if __name__ == "__main__":
     import logging
