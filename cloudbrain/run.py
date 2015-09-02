@@ -2,14 +2,34 @@ import argparse
 import subprocess
 import sys
 
-import cloudbrain.publishers.sensor_publisher
+from cloudbrain.publishers.sensor_publisher import get_args_parser, run
+
 
 def publish(args):
-    sys.argv = args or ['-h']
-    cloudbrain.publishers.sensor_publisher.main()
+  parser = get_args_parser()
 
-def subscribe(args):
-    return NotImplemented
+  opts = parser.parse_args(args)
+
+  mock_data_enabled = opts.mock
+  device_name = opts.device_name
+  device_id = opts.device_id
+  cloudbrain_address = opts.cloudbrain
+  buffer_size = opts.buffer_size
+  device_port = opts.device_port
+  pipe_name = opts.output
+  publisher = opts.publisher
+
+  run(device_name,
+   mock_data_enabled,
+   device_id,
+   cloudbrain_address,
+   buffer_size,
+   device_port,
+   pipe_name,
+   publisher)
+
+def subscribe():
+  raise NotImplemented("Subscribe is not implemented")
 
 def parse_args():
   parser = argparse.ArgumentParser()
@@ -23,11 +43,11 @@ def parse_args():
                       help="Subscribe to data stream - For example: cloudbrain subscribe -n muse -i octopicorn")
   subscribe_parser.set_defaults(func=subscribe)
 
-  args, unknown = parser.parse_known_args()
-  args.func(unknown)
+  args, remaining_args = parser.parse_known_args()
+  args.func(remaining_args)
 
 def main():
-    parse_args()
+  parse_args()
 
 if __name__ == "__main__":
   main()
