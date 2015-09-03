@@ -4,7 +4,7 @@
 
   angular.module('cloudbrain.chart')
 
-  .controller('chartController', ['$scope','$http','$interval','$log','apiService','dataService', 'API_URL',
+  .controller('ChartCtrl', ['$scope','$http','$interval','$log','apiService','dataService', 'API_URL',
   function ($scope , $http , $interval , $log , apiService , dataService, API_URL) {
 
     $scope.model = {

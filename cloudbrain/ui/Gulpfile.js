@@ -8,7 +8,7 @@ var pkg = require('./package.json');
 */
 gulp.task('serve:ui', function() {
   browserSync.init({
-    port:4000,
+    port:5000,
     server: {
       baseDir: './'
     }
