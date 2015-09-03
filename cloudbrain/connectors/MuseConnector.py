@@ -11,7 +11,7 @@ class UnableToStartMuseIO(Exception):
     pass
 
 
-def connect_muse(port=9090):
+def connect_muse(port=9090, mac=None):
     """
     Starts muse-io to pair with a muse.
     @param port (int)
@@ -19,6 +19,8 @@ def connect_muse(port=9090):
 
     """
     cmd = ["muse-io", "--osc", "osc.udp://localhost:%s" %port]
+    if mac != None:
+        cmd.extend(["--device", mac])
 
     print "\nRunning command: %s" %" ".join(cmd)
 
@@ -40,12 +42,12 @@ def connect_muse(port=9090):
 
 
 class MuseConnector(Connector):
-  def __init__(self, publishers, buffer_size, device_name='muse', device_port='9090'):
-    super(MuseConnector, self).__init__(publishers, buffer_size, device_name, device_port)
+  def __init__(self, publishers, buffer_size, device_name='muse', device_port='9090', device_mac=None):
+    super(MuseConnector, self).__init__(publishers, buffer_size, device_name, device_port, device_mac)
 
   def connect_device(self):
 
-    connect_muse(port=self.device_port)
+    connect_muse(port=self.device_port, mac=self.device_mac)
 
     # callback functions to handle the sample for that metric (each metric has a specific number of channels)
     cb_functions = {metric: self.callback_factory(metric, get_num_channels(self.device_name, metric))
