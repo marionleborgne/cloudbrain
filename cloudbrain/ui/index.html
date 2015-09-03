@@ -10,7 +10,7 @@
 
 </head>
 
-<body ng-app="cloudbrain" ng-cloak ng-controller="chartController">
+<body ng-app="cloudbrain" ng-cloak ng-controller="AppCtrl">
   <!-- Navbar -->
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -22,13 +22,41 @@
           </a>
         </div>
       </div>
-      <div class="container-fluid pull-right">
+      <div class="container-fluid pull-right" ng-hide="isLoggedIn()">
         <button type="submit" ui-sref="signup" class="btn btn-primary account-buttons">
           Signup
         </button>
         <button type="submit" ui-sref="login" class="btn btn-primary account-buttons">
           Log in
         </button>
+      </div>
+
+      <div class="container-fluid pull-right" ng-show="isLoggedIn()">
+<!--         <button type="submit" ui-sref="signup" class="btn btn-primary account-buttons">
+          {{currentUser.username}}
+        </button> -->
+        <ul class="nav navbar-nav navbar-right">
+
+          <li dropdown style="account-dropdown">
+            <div class="navbar-header">
+              <div class='row'>
+                <a href id="simple-dropdown" dropdown-toggle class="account-dropdown-label">
+                  <span class="username">{{currentUser.username}}</span>
+                  <span class="glyphicon glyphicon-triangle-bottom"></span>
+                </a>
+              </div>
+            </div>
+            <ul class="dropdown-menu" aria-labelledby="simple-dropdown">
+              <li>
+                <a href ui-sref="profile">Profile</a>
+              </li>
+              <li>
+                <a href ng-click="logout()">Logout</a>
+              </li>
+
+            </ul>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>

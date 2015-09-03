@@ -1,6 +1,12 @@
 /* global angular */
 (function () { 'use strict';
 
-  angular.module('cloudbrain', ['ui.bootstrap', 'ui.router', 'highcharts-ng', 'cloudbrain.chart', 'cloudbrain.account'])
-
+  var app = angular.module('cloudbrain', ['ui.bootstrap', 'ui.router', 'highcharts-ng', 'cloudbrain.chart', 'cloudbrain.account'])
+  app.service('$matter', ['$log', '$window', '$rootScope', function ($log, $window, $rootScope){
+  	var matter = new $window.Matter('cloudbrain');
+  	$log.log('Matter created:', matter);
+  	$rootScope.matter = matter;
+  	$rootScope.currentUser = matter.currentUser;
+  	return matter;
+  }])
 })();

@@ -5,3 +5,21 @@
 	margin-top: 20px;
 	margin-bottom:20px;
 }
+.account-dropdown {
+	height:100%;
+	color:white !important;
+	line-height:100%;
+	margin-right:25px;
+}
+
+.account-dropdown:hover{
+	color:white
+}
+.account-dropdown-label:hover{
+	color:#337ab7;
+}
+.account-dropdown-label .username {
+	font-size:1.6em;
+	margin-top:50%;
+	display:inline;
+}

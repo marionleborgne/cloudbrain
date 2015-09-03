@@ -23,6 +23,10 @@
       templateUrl:'account/account-login.html',
       controller:'AccountCtrl'
     })
+    .state('dashboard', {
+      url:'/dash',
+      templateUrl:'home/home-index.html'
+    })
     //Protected state
     // .state('app', {
     //   url:'/apps/:name',

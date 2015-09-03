@@ -1,5 +1,5 @@
 {
-  "name": "cloudbrain-ui",
+  "name": "cloudbrain",
   "version": "0.0.1",
   "description": "User interface of cloudbrain.",
   "main": "app-routes.js",
@@ -15,7 +15,11 @@
     "eeg",
     "openbci"
   ],
-  "author": "Prescott Prue <sprue.dev@gmail.com> (http://prescottprue.com/)",
+  "authors": [
+    "william.wnekowicz@gmail.com",
+    "jnaulty@gmail.com",
+    "Prescott Prue <sprue.dev@gmail.com>"
+  ],
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/marionleborgne/cloudbrain/issues"

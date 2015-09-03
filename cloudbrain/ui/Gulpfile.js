@@ -8,13 +8,19 @@ var pkg = require('./package.json');
 */
 gulp.task('serve:ui', function() {
   browserSync.init({
-    port:3000,
+    port:4000,
     server: {
       baseDir: './'
     }
   });
+  var watchPaths = ['./**/*.html', './**/*.js', './**/*.css'];
+  var ignoreWatching = ['./bower_components/**', './node_modules/**'];
+  var ignorePaths = ignoreWatching.map(function (ignorePath){
+  	return '!' + ignorePath;
+  });
+  watchPaths = watchPaths.concat(ignorePaths);
   //Watch and Livereload html, js, and css files in all folders
-  gulp.watch(['./**/*.html', './**/*.js', './**/*.css'], reload);
+  gulp.watch(watchPaths, reload);
 });
 
 gulp.task('default', ['serve:ui']);
