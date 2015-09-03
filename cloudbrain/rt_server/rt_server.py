@@ -104,7 +104,8 @@ class TornadoSubscriber(object):
                                         custom_ioloop=tornado.ioloop.IOLoop.instance())
 
     def disconnect(self):
-        self.connection.close()
+        if self.connection is not None:
+            self.connection.close()
 
     def on_connected(self, connection):
         self.connection = connection
