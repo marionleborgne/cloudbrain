@@ -5,7 +5,7 @@
     <script src="//cdn.jsdelivr.net/sockjs/1.0.0/sockjs.min.js"></script>
     <script>
     $(function() {
-      var conn = null;
+      var connected = false;
 
       var mockConfiguration = {
         deviceName: "muse",
@@ -15,62 +15,45 @@
 
       function log(msg) {
         var control = $('#rt-stream');
-        control.html(control.html() + msg + '<br/>');
+        control.html(msg);
         control.scrollTop(control.scrollTop() + 1000);
       }
 
-      function connect() {
-        disconnect();
+      var worker = new Worker('live-data-worker.js');
 
-        conn = new SockJS('http://' + window.location.host + '/rt-stream');
-
-        log('Connecting...');
-
-        conn.onopen = function() {
-          log('Connected.');
-          conn.send(JSON.stringify(mockConfiguration));
-          update_ui();
-        };
-
-        conn.onmessage = function(e) {
-          log('Received: ' + e.data);
-        };
-
-        conn.onclose = function() {
-          log('Disconnected.');
-          conn = null;
-          update_ui();
-        };
-      }
-
-      function disconnect() {
-        if (conn != null) {
-          log('Disconnecting...');
-
-          conn.close();
-          conn = null;
-
-          update_ui();
+      worker.addEventListener('message', function(e) {
+        switch (e.data.type) {
+          case 'connected':
+            connected = true;
+            update_ui();
+            break;
+          case 'disconnected':
+            connected = false;
+            update_ui();
+            break;
+          case 'msg':
+            log(e.data.msg);
+            break;
         }
-      }
+      }, false);
 
       function update_ui() {
         var msg = '';
 
-        if (conn == null || conn.readyState != SockJS.OPEN) {
+        if (connected) {
+          $('#status').text('connected');
+          $('#connect').text('Disconnect');
+        } else {
           $('#status').text('disconnected');
           $('#connect').text('Connect');
-        } else {
-          $('#status').text('connected (' + conn.protocol + ')');
-          $('#connect').text('Disconnect');
         }
       }
 
       $('#connect').click(function() {
-        if (conn == null) {
-          connect();
+        if (connected) {
+          worker.postMessage({ cmd: 'stop' }); 
         } else {
-          disconnect();
+          worker.postMessage({ cmd: 'start', conf: mockConfiguration }); 
         }
 
         update_ui();

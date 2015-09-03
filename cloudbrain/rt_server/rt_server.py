@@ -78,6 +78,13 @@ class MockHandler(tornado.web.RequestHandler):
     def get(self):
         self.render('mock.html')
 
+class WebWorkerHandler(tornado.web.RequestHandler):
+    """
+    Just a custom handler for the web-worker... please we need to replace
+    this stuff with a proper router :)
+    """
+    def get(self):
+        self.render('live-data-worker.js')
 
 # Based on: https://pika.readthedocs.org/en/0.9.14/examples/tornado_consumer.html
 class TornadoSubscriber(object):
@@ -169,7 +176,7 @@ if __name__ == "__main__":
 
     # 2. Create Tornado application
     app = tornado.web.Application(
-            [(r"/", MockHandler)] + RtStreamRouter.urls
+            [(r"/", MockHandler), (r"/live-data-worker.js", WebWorkerHandler)] + RtStreamRouter.urls
     )
 
     # 3. Make Tornado app listen on Pi
