@@ -3,7 +3,6 @@ import config from '../config';
 let storage = {
 	get exists() {
 		const testKey = 'test';
-		console.log('storage exists called');
 		if (typeof window != 'undefined') {
 			try {
 				window.sessionStorage.setItem(testKey, '1');
@@ -43,7 +42,6 @@ let storage = {
 	 */
 	getItem(itemName) {
 		if (this.exists) {
-			console.log('item loaded from session');
 			return window.sessionStorage.getItem(itemName);
 		} else {
 			return null;

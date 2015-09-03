@@ -30,3 +30,7 @@ body {
 label {
   color: white;
 }
+.account-buttons {
+  margin-top:8px;
+  margin-left:20px;
+}

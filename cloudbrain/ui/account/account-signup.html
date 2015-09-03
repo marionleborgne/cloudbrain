@@ -1,21 +1,26 @@
 <div class="col-md-12">
 	<div class="col-sm-offset-3 col-md-6  login-box">
-		<h2>Login</h2>
+		<h2>Signup</h2>
 		<form name="form" id="form" class="form-horizontal" enctype="multipart/form-data" method="POST">
 		<div class="input-group login-input">
 			<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-			<input id="user" type="text" class="form-control" name="username" value="" placeholder="User" ng-model="data.username">
+			<input id="user" type="text" class="form-control" name="username" value="" placeholder="User">
 		</div>
 
 	  <div class="input-group login-input">
 			<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-			<input id="password" type="password" class="form-control" name="password" placeholder="Password" ng-model="data.password">
+			<input id="password" type="password" class="form-control" name="password" placeholder="Password">
+	  </div>
+
+	  <div class="input-group login-input">
+			<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+			<input id="password" type="password" class="form-control" name="confirm password" placeholder="Password">
 	  </div>                                                                  
 
 	  <div class="form-group">
 	    <!-- Button -->
 	    <div class="col-sm-12 controls">
-	      <button type="submit" href="#" class="btn btn-primary pull-right" ng-click="login()">
+	      <button type="submit" href="#" class="btn btn-primary pull-right">
 	      	<i class="glyphicon glyphicon-log-in"></i> Log in
 	      </button>                          
 	    </div>

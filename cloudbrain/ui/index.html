@@ -6,6 +6,8 @@
   <title>Cloudbrain</title>
   <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.css">
   <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="account/account.css">
+
 </head>
 
 <body ng-app="cloudbrain" ng-cloak ng-controller="chartController">
@@ -19,6 +21,14 @@
             <span>Cloudbrain</span>
           </a>
         </div>
+      </div>
+      <div class="container-fluid pull-right">
+        <button type="submit" ui-sref="signup" class="btn btn-primary account-buttons">
+          Signup
+        </button>
+        <button type="submit" ui-sref="login" class="btn btn-primary account-buttons">
+          Log in
+        </button>
       </div>
     </div>
   </nav>

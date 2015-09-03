@@ -24,6 +24,6 @@
     "bootstrap-css-only": "~3.3.4",
     "highcharts": "~4.1.7",
     "highcharts-ng": "~0.0.8",
-    "kyper-matter": "~0.0.2"
+    "kyper-matter": "~0.0.3"
   }
 }

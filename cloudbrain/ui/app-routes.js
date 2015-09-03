@@ -1,7 +1,7 @@
 /* global angular */
 (function () { 'use strict';
 
-  var app = angular.module('cloudbrain', ['ui.bootstrap', 'ui.router', 'highcharts-ng', 'cloudbrain.chart'])
+  var app = angular.module('cloudbrain')
   app.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('home', {

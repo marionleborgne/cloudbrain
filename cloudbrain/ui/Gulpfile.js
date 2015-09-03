@@ -13,8 +13,8 @@ gulp.task('serve:ui', function() {
       baseDir: './'
     }
   });
-  //Watch and Livereload html and js files in all folders
-  gulp.watch(['./**/*.html', './**/*.js'], reload);
+  //Watch and Livereload html, js, and css files in all folders
+  gulp.watch(['./**/*.html', './**/*.js', './**/*.css'], reload);
 });
 
 gulp.task('default', ['serve:ui']);
