@@ -4,8 +4,8 @@
 
   angular.module('cloudbrain.chart')
 
-  .controller('ChartCtrl', ['$scope','$http','$interval','$log','apiService','dataService', 'API_URL',
-  function ($scope , $http , $interval , $log , apiService , dataService, API_URL) {
+  .controller('ChartCtrl', ['$scope','$http','$interval','$log','apiService','dataService', 'API_URL', '$state',
+  function ($scope , $http , $interval , $log , apiService , dataService, API_URL, $state) {
 
     $scope.model = {
       deviceIds: [],
@@ -55,7 +55,7 @@
     $scope.showClick = false;
     $scope.chartMuse = false;
     $scope.getData = function (device, url) {
-
+      $state.go('chart');
       dataService.startPowerBand(device.name, device.id, function(data) {
         updatePowerBandGraph('chartPolar', data);
         updatePowerBandGraph('chartBar', data);

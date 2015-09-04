@@ -3,19 +3,23 @@
 	angular.module('cloudbrain.account')
 	.controller('AccountCtrl', ['$scope', '$log', '$matter', '$rootScope', '$state', function ($scope, $log, $matter, $rootScope, $state){
 		$scope.data = {username:null, password:null};
+
 		$scope.login = function(){
 			$log.log('Login called', $scope.data);
+			$scope.data.loading = true;
 			$matter.login({
 				username:$scope.data.username, 
 				password: $scope.data.password
 			})
 			.then(function (loginRes){
 				$log.log('Successful login:', loginRes);
+				$scope.data.loading = false;
 				$rootScope.currentUser = $matter.currentUser;
 				$rootScope.$digest();
 				$scope.showToast('Logged In');
 				$state.go('chart');
 			}, function (err){
+				$scope.data.loading = false;
 				$log.error('Error logging in:', err);
 				$scope.showToast('Login Error: ', err.message || err);
 			});
@@ -38,6 +42,7 @@
 			if(!$scope.data.username || !$scope.data.username){
 				$scope.showToast('Username and password are required to signup');
 			} else {
+				$scope.data.loading = true;
 				$matter.signup({
 					username:$scope.data.username,
 					name:$scope.data.name || '',
@@ -45,9 +50,11 @@
 					password: $scope.data.password
 				})
 				.then(function (loginRes){
+					$scope.data.loading = false;
 					$log.log('Successful login:', loginRes);
 					$scope.showToast('Logged In');
 				}, function (err){
+					$scope.data.loading = false;
 					$log.error('Error logging in:', err);
 					var msg = 'Login Error';
 					if(err && err.message){

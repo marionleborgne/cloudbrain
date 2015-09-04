@@ -7,10 +7,10 @@
     .state('home', {
       url:'/',
       templateUrl:'home/home-index.html',
-      controller:'ChartCtrl'
+      controller:'HomeCtrl'
     })
     .state('chart', {
-      url:'/chart',
+      url:'/chart/:device',
       templateUrl:'chart/chart-index.html',
       controller:'ChartCtrl'
     })
