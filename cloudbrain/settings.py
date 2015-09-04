@@ -9,6 +9,8 @@ WEBSERVER_PORT = 8080
 
 MOCK_DEVICE_ID = "mock"
 
+REGISTERED_DEVICES_TABLE_NAME = "registered_device_ids"
+
 # Metric metadata of all wearable devices accepted by CloudBrain.
 DEVICE_METADATA = [
   {'device_name': 'openbci',

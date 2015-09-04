@@ -4,7 +4,8 @@
   "homepage": "https://github.com/marionleborgne/cloudbrain",
   "authors": [
     "william.wnekowicz@gmail.com",
-    "jnaulty@gmail.com"
+    "jnaulty@gmail.com",
+    "Prescott Prue <sprue.dev@gmail.com>"
   ],
   "moduleType": [
     "amd"
@@ -19,9 +20,14 @@
   ],
   "dependencies": {
     "angular": "~1.4.3",
+    "angular-animate": "~1.4.5",
     "angular-bootstrap": "~0.13.3",
+    "angular-material": "~0.10.1",
+    "angular-ui-router": "~0.2.15",
     "bootstrap-css-only": "~3.3.4",
+    "font-awesome": "fontawesome#~4.4.0",
+    "highcharts": "~4.1.7",
     "highcharts-ng": "~0.0.8",
-    "highcharts": "~4.1.7"
+    "kyper-matter": "~0.0.7"
   }
 }
