@@ -19,11 +19,14 @@
     };
 
     apiService.refreshDeviceIds().then(function(response) {
+      console.log('devices loaded:', response);
       angular.copy(response.data, $scope.model.deviceIds);
     });
 
     apiService.refreshPhysicalDeviceNames().then(function(response) {
       angular.copy(response.data, $scope.model.deviceNames);
+      console.log('devices loaded:', response);
+      
     });
 
     var setChannelSeries = function(data){
@@ -68,7 +71,7 @@
       var metric = 'eeg';
       $scope.lastTimestamp = Date.now() * 1000; //microseconds
       $scope.cloudbrain = API_URL + '/data?device_name='+device.name+'&metric='+metric+'&device_id='+device.id+'&callback=JSON_CALLBACK&start='+$scope.lastTimestamp;
-      $scope.chart3 = $scope.chartStock.getHighcharts();
+      // $scope.chart3 = $scope.chartStock.getHighcharts();
 
       //initialize series data for charts
       $http.jsonp($scope.cloudbrain)

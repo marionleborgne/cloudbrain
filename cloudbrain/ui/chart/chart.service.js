@@ -1,10 +1,10 @@
 (function () { 
 	'use strict';
 
-	var chartMod = angular.module('cloudbrain.chart')
+	var chartMod = angular.module('cloudbrain')
   chartMod.value('API_URL', 'http://demo.apiserver.cloudbrain.rocks');
 
-	chartMod.factory('apiService', ['$http','$q', 'API_URL', function ($http , $q, API_URL) {
+	chartMod.factory('apiService', ['$http','$q', 'API_URL', '$log', function ($http , $q, API_URL, $log) {
  		// Public service interface
 	  return {
 	    refreshDeviceIds: refreshDeviceIds,
@@ -14,8 +14,17 @@
 	    return $http.jsonp(API_URL + '/device_names?callback=JSON_CALLBACK');
 	  }
 	  function refreshDeviceIds() {
-	    return $http.jsonp(API_URL + '/registered_devices?callback=JSON_CALLBACK');
-	  }
+    	$log.log('refreshDeviceIds called');
+    	var d = $q.defer();
+    	$http.jsonp(API_URL + '/registered_devices?callback=JSON_CALLBACK').then(function(devices){
+    		console.log('devices loaded:', devices);
+    		d.resolve(devices);
+    	}, function(err){
+    		console.error('error refreshing device ids:', err);
+    		d.reject(err.message || err);
+    	});
+      return d.promise;
+    }
 	}])
 	//Data Service
 	chartMod.factory('dataService',['$http','$interval', 'API_URL', function ($http, $interval, API_URL) {

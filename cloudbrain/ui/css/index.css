@@ -1,4 +1,8 @@
-
+body {
+  color: #788288;
+  background-color: transparent;
+  font-size:1.6em;
+}
 .logo {
   float: left;
   width: 30px;
@@ -19,9 +23,21 @@
 label {
   color: white;
 }
+.username-dropdown .md-select-placeholder {
+  color:white !important;
+}
 .account-buttons {
   margin-top:8px;
   margin-left:20px;
+}
+.hc-btn {
+  font-size:.8em;
+}
+.hc-background {
+  background-color: #f2f4f8;
+}
+.md-whiteframe-z1,.md-whiteframe-z2 {
+  background-color:white !important;
 }
 md-sidenav, 
 md-sidenav.md-locked-open, 

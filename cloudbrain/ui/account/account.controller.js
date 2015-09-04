@@ -13,9 +13,11 @@
 				$log.log('Successful login:', loginRes);
 				$rootScope.currentUser = $matter.currentUser;
 				$rootScope.$digest();
+				$scope.showToast('Logged In');
 				$state.go('chart');
 			}, function (err){
 				$log.error('Error logging in:', err);
+				$scope.showToast('Login Error: ', err.message || err);
 			});
 		};
 		$scope.logout = function(){
@@ -25,18 +27,21 @@
 				$log.log('Successful logout');
 				$rootScope.currentUser = null;
 				$rootScope.$digest();
+				$scope.showToast('Logged Out');
 				$state.go('home');
 			}, function (err){
 				$log.error('Error logging out:', err);
 			});
 		};
 		$scope.signup = function(){
-			$log.log('Login called', $scope.data);
+			$log.log('Signup called', $scope.data);
 			if(!$scope.data.username || !$scope.data.username){
 				$scope.showToast('Username and password are required to signup');
 			} else {
 				$matter.signup({
 					username:$scope.data.username,
+					name:$scope.data.name || '',
+					email:$scope.data.email || '',
 					password: $scope.data.password
 				})
 				.then(function (loginRes){

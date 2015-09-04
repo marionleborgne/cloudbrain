@@ -1,8 +1,10 @@
 <md-content class="hc-background" layout layout-padding layout-align="center">
-  <md-whiteframe class="md-whiteframe-z2" flex="55" flex-sm="95" layout-padding>
+  <md-whiteframe class="md-whiteframe-z2" flex="60" flex-sm="95" layout-padding layout-align="center center">
+
     <md-content layout="row" layout-sm="column" layout-align="center center" flex>
-      <div layout="column" flex="80" layout-align="center" layout-margin>
-       	<form name="loginForm">
+      <div layout="column" flex="70" layout-align="center center" layout-margin>
+		  	<h2 class="md-headline">Login</h2>
+       	<form name="loginForm" layout-fill>
           <md-input-container>
             <label>Username or Email</label>
             <input ng-model="data.username" type="text" required name="username">

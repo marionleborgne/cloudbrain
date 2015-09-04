@@ -11,7 +11,7 @@
   <!-- <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.css"> -->
 </head>
 
-<body ng-app="cloudbrain" ng-cloak ng-controller="AppCtrl">
+<body ng-app="cloudbrain" ng-cloak ng-controller="AppCtrl" class="hc-background">
   <md-toolbar class="shadow-z-2" ng-controller="AccountCtrl">
     <div class="md-toolbar-tools">
       <h2 class="md-display-2">
@@ -29,11 +29,7 @@
         <md-button class="nav-buttons outline-green" ui-sref="login" >Login</md-button>
         <md-button class="nav-buttons outline-blue" ui-sref="signup">Signup</md-button>
       </div>
-      <md-select placeholder="{{currentUser.username || 'Account'}}" ng-if="currentUser" ng-model="someVal" aria-label="User">
-<!--         <md-select-label>
-          <i class="fa fa-user" ></i>
-          {{currentUser.username}}
-        </md-select-label> -->
+      <md-select placeholder="{{currentUser.username || 'Account'}}" ng-if="currentUser" ng-model="someVal" aria-label="User" class="username-dropdown">
         <md-option ui-sref="account">Profile</md-option>
         <md-option ng-click="logout()">Logout</md-option>
       </md-select>
@@ -41,7 +37,7 @@
     </div>
   </md-toolbar>
   <!-- Page Content -->
-  <div ui-view class="container-fluid"></div>
+  <div ui-view class="container-fluid hc-background"></div>
   <!-- Library Scripts -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
@@ -60,7 +56,7 @@
   <script src="app.js"></script>
   <script src="app.controller.js"></script>
   <script src="app-routes.js"></script>
-  <script src="home/home.controller.js"></script>
+  <script src="home/home.module.js"></script>
   <script src="account/account.module.js"></script>
   <script src="account/account.controller.js"></script>
   <script src="chart/chart.module.js"></script>

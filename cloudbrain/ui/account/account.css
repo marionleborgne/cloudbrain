@@ -21,3 +21,12 @@
 	margin-top:50%;
 	display:inline;
 }
+.login-btn {
+	padding:5px !important;
+	padding-right:10px !important;
+	padding-left:10px !important;
+	margin-bottom:20px;
+}
+.google-login-btn {
+	background-color:#DD4B39 !important;
+}

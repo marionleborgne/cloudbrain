@@ -3,7 +3,6 @@
 
   var app = angular.module('cloudbrain')
   app.controller('AppCtrl', ['$log','$rootScope', '$scope', '$matter', '$mdToast', 'apiService', function ($log, $rootScope, $scope, $matter, $mdToast, apiService){
-  	$scope.someVal = $matter.currentUser.username;
     $scope.accountDropdownOptions = [{text:'Profile', click:'profile'},{text:'Logout', click:'logout()'}];
 
     $scope.isLoggedIn = function() {
@@ -19,12 +18,17 @@
         }
       }
     });
-    $scope.clickOption = function(ind){
-  		var clickTask = $scope.accountDropdownOptions[ind];
-  		$scope[clickTask];
-  	};
-
-    //---------------- Alerts ---------------- //
+    
+    //---------------- Toast ---------------- //
+    $scope.toastPosition = {
+      left: false,
+      right: true,
+      bottom: true,
+      top: false
+    };
+    $scope.getToastPosition = function () {
+      return Object.keys($scope.toastPosition).filter(function (pos) { return $scope.toastPosition[pos]; }).join(' ');
+    };
     $scope.showToast = function (toastMessage) {
       $mdToast.show(
         $mdToast.simple().content(toastMessage)

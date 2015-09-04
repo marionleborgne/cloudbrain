@@ -24,8 +24,13 @@ This makes use of the demo version of cloudbrain running at [`demo.cloudbrain.ro
 On Linux, install the liblo package. 
 
 If you're on OSX, make sure you have [homebrew](http://brew.sh/) and the OSX command line utilities installed
-Then install liblo through brew
+Then install liblo through brew:
 * `brew install liblo`
+
+Then install cython and flask through pip:
+
+* `pip install cython`
+* `pip install flask`
 
 ### Clone
 * `git clone https://github.com/marionleborgne/cloudbrain.git`
