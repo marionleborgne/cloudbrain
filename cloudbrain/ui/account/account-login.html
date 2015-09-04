@@ -1,24 +1,32 @@
-<div class="col-md-12">
-	<div class="col-sm-offset-3 col-md-6  login-box">
-		<h2>Login</h2>
-		<form name="form" id="form" class="form-horizontal" enctype="multipart/form-data" method="POST">
-		<div class="input-group login-input">
-			<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-			<input id="user" type="text" class="form-control" name="username" value="" placeholder="User" ng-model="data.username">
-		</div>
-
-	  <div class="input-group login-input">
-			<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-			<input id="password" type="password" class="form-control" name="password" placeholder="Password" ng-model="data.password">
-	  </div>                                                              
-	  <div class="form-group">
-	    <!-- Button -->
-	    <div class="col-sm-12 controls">
-	      <button type="submit" href="#" class="btn btn-primary pull-right" ng-click="login()">
-	      	<i class="glyphicon glyphicon-log-in"></i> Log in
-	      </button>                          
-	    </div>
-	  </div>
-	  </form>
-  </div>     
-</div>
+<md-content class="hc-background" layout layout-padding layout-align="center">
+  <md-whiteframe class="md-whiteframe-z2" flex="55" flex-sm="95" layout-padding>
+    <md-content layout="row" layout-sm="column" layout-align="center center" flex>
+      <div layout="column" flex="80" layout-align="center" layout-margin>
+       	<form name="loginForm">
+          <md-input-container>
+            <label>Username or Email</label>
+            <input ng-model="data.username" type="text" required name="username">
+						<!-- Error Message
+						<div ng-messages="loginForm.username.$pristine || data.missing.password || loginForm.password.$error ">
+                <div ng-message="required">This is required.</div>
+              </div> -->
+          </md-input-container>
+          <md-input-container>
+            <label>Password</label>
+            <input ng-model="data.password" type="password" name="password" required>
+						<!-- Error Message           
+							<div ng-messages="loginForm.password.$error || data.missing.password" ng-hide="loginForm.username.$pristine">
+                <div ng-message="required">This is required.</div>
+              </div> -->
+          </md-input-container>
+          <section layout="row" layout-sm="column" layout-align="center center">
+	          <md-progress-circular md-mode="indeterminate" ng-if="data.loading"></md-progress-circular>
+	          <md-button class="md-raised" aria-label="Login" ng-click="login()"  type="submit" ng-if="!data.loading">
+            <span >Login</span>
+	          </md-button>
+          </section>
+        </form>
+    	</div>
+    </md-content>
+  </md-whiteframe>
+</md-content>

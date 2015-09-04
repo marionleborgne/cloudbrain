@@ -4,62 +4,42 @@
 <head>
   <meta charset="utf-8">
   <title>Cloudbrain</title>
-  <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.css">
   <link rel="stylesheet" href="css/index.css">
   <link rel="stylesheet" href="account/account.css">
-
+  <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css"></link>
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css"></link>
+  <!-- <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.css"> -->
 </head>
 
 <body ng-app="cloudbrain" ng-cloak ng-controller="AppCtrl">
-  <!-- Navbar -->
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <div id='logo' class="navbar-header">
-        <div class='row'>
-          <a class="navbar-brand" href="https://github.com/marionleborgne/cloudbrain" target="_blank">
+  <md-toolbar class="shadow-z-2" ng-controller="AccountCtrl">
+    <div class="md-toolbar-tools">
+      <h2 class="md-display-2">
+          <a href="" class="hc-title" ui-sref="home">
             <img src="images/brain-white.png" alt="cloudbrain" class="logo" />
-            <span>Cloudbrain</span>
+              Cloudbrain
           </a>
-        </div>
+      </h2>
+      <span flex></span>
+      <div nf-if="navButtons" class="navbtn-wrapper" layout="row" ng-repeat="btn in navButtons" >
+        <md-button class="nav-buttons outline" ng-click="clickBtn($index)">{{btn.text}}</md-button>
       </div>
-      <div class="container-fluid pull-right" ng-hide="currentUser">
-        <button type="submit" ui-sref="signup" class="btn btn-primary account-buttons">
-          Signup
-        </button>
-        <button type="submit" ui-sref="login" class="btn btn-primary account-buttons">
-          Log in
-        </button>
+      <div></div>
+      <div ng-if="!currentUser" layout="row">
+        <md-button class="nav-buttons outline-green" ui-sref="login" >Login</md-button>
+        <md-button class="nav-buttons outline-blue" ui-sref="signup">Signup</md-button>
       </div>
-
-      <div class="container-fluid pull-right" ng-show="currentUser">
-<!--         <button type="submit" ui-sref="signup" class="btn btn-primary account-buttons">
+      <md-select placeholder="{{currentUser.username || 'Account'}}" ng-if="currentUser" ng-model="someVal" aria-label="User">
+<!--         <md-select-label>
+          <i class="fa fa-user" ></i>
           {{currentUser.username}}
-        </button> -->
-        <ul class="nav navbar-nav navbar-right" ng-controller="AccountCtrl">
-
-          <li dropdown style="account-dropdown">
-            <div class="navbar-header">
-              <div class='row'>
-                <a href id="simple-dropdown" dropdown-toggle class="account-dropdown-label">
-                  <span class="username">{{currentUser.username}}</span>
-                  <span class="glyphicon glyphicon-triangle-bottom"></span>
-                </a>
-              </div>
-            </div>
-            <ul class="dropdown-menu" aria-labelledby="simple-dropdown">
-              <li>
-                <a href ui-sref="profile">Profile</a>
-              </li>
-              <li>
-                <a href ng-click="logout()">Logout</a>
-              </li>
-
-            </ul>
-          </li>
-        </ul>
-      </div>
+        </md-select-label> -->
+        <md-option ui-sref="account">Profile</md-option>
+        <md-option ng-click="logout()">Logout</md-option>
+      </md-select>
+        <!-- <md-button class="md-warn" ui-sref="signup" href="#/signup">Login</md-button> -->
     </div>
-  </nav>
+  </md-toolbar>
   <!-- Page Content -->
   <div ui-view class="container-fluid"></div>
   <!-- Library Scripts -->
@@ -72,11 +52,15 @@
   <script src="http://code.highcharts.com/highcharts-more.js"></script>
   <script src="bower_components/highcharts-ng/src/highcharts-ng.js"></script>
   <script src="bower_components/kyper-matter/dist/matter.bundle.js"></script>
-  
+  <script src="bower_components/angular-material/angular-material.min.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+
   <!-- Application Scripts -->
   <script src="app.js"></script>
   <script src="app.controller.js"></script>
   <script src="app-routes.js"></script>
+  <script src="home/home.controller.js"></script>
   <script src="account/account.module.js"></script>
   <script src="account/account.controller.js"></script>
   <script src="chart/chart.module.js"></script>

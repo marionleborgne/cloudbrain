@@ -32,15 +32,25 @@
 		};
 		$scope.signup = function(){
 			$log.log('Login called', $scope.data);
-			$matter.signup({
-				username:$scope.data.username, 
-				password: $scope.data.password
-			})
-			.then(function (loginRes){
-				$log.log('Successful login:', loginRes);
-			}, function (err){
-				$log.error('Error logging in:', err);
-			});
+			if(!$scope.data.username || !$scope.data.username){
+				$scope.showToast('Username and password are required to signup');
+			} else {
+				$matter.signup({
+					username:$scope.data.username,
+					password: $scope.data.password
+				})
+				.then(function (loginRes){
+					$log.log('Successful login:', loginRes);
+					$scope.showToast('Logged In');
+				}, function (err){
+					$log.error('Error logging in:', err);
+					var msg = 'Login Error';
+					if(err && err.message){
+						msg += ' ' + err.message;
+					}
+					$scope.showToast(msg);
+				});
+			}
 		};
 	}]);
 })();

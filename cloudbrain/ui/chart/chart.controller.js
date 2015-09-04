@@ -28,7 +28,6 @@
 
     var setChannelSeries = function(data){
       var keys = Object.keys(data[0]);
-
       keys.forEach(function(key){
         if (key != 'timestamp'){
           for (var a=[],i=0;i<500;++i) a[i]=0;
@@ -81,24 +80,19 @@
 
       $interval(function () {
         $http.jsonp($scope.cloudbrain)
-        .then(function(response){
+        .then(function (response){
           $scope.lastTimestamp = response.data[response.data.length - 1].timestamp;
-
           response.data.forEach(function (dataPoints) {
             delete dataPoints.timestamp;
-
             for(var channel in dataPoints){
               $scope.chartStock.series[channel.split('_')[1]].data.push(dataPoints[channel]);
               if($scope.chartStock.series[channel.split('_')[1]].data.length > 300){
                 $scope.chartStock.series[channel.split('_')[1]].data.shift();
               }
             }
-
           });
-
-        },
-        function(response){
-          $log.log('fail');
+        }, function (response){
+          $log.error('fail');
         });
       }, 500);
     };

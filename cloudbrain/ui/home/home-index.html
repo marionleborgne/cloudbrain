@@ -1,4 +1,4 @@
-<div>
+<md-content layout="row" layout-align="center center">
   <div class="row">
     <div class="col-md-6 col-md-offset-2">
 	    <h2>Welcome to Cloudbrain!</h2>
@@ -6,23 +6,23 @@
 	    <h4>Please select <strong>Device ID</strong> and <strong>Device Name.</strong></h4>
 	    <ng-form name="deviceIdForm" role="form">
         <div class="nav_button navbar-form navbar-right">
-          <button type="submit" ng-click="getData(device)" class="btn btn-success">Connect</button>
+          <md-button type="submit" ng-click="getData(device)" class="btn btn-success">Connect</md-button>
         </div>
         <div class="navbar-form navbar-right" style="padding-right: 10px;"><!--DeviceName-->
-          <select ng-model='device.name' id="deviceName" class="form-control">
-            <option selected="selected" value="">Select Device Name</option>
+          <md-select placeholder="Select Device Name" ng-model="device.name" id="deviceName" class="form-control">
             <option ng-repeat="deviceName in model.deviceNames">{{deviceName}}</option>
-          </select>
+          </md-select>
         </div><!--DeviceName -->
+        {{model}}
         <div class="navbar-form navbar-right"><!--DeviceId-->
           <div class="form-group">
-            <select ng-model='device.id' id="registeredDevices" class="form-control">
-            <option selected="selected" value="">Select Device ID</option>
+            <md-select placeholder="Select Device ID" ng-model='device.id' id="registeredDevices" class="form-control">
             <option ng-repeat="deviceId in model.deviceIds">{{deviceId}}</option>
-          </select>
+          </md-select>
           </div>
         </div><!--DeviceId -->
       </ng-form>
     </div>
   </div>
 </div>
+</md-content>

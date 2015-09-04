@@ -1,30 +1,25 @@
-<div class="col-md-12">
-	<div class="col-sm-offset-3 col-md-6  login-box">
-		<h2>Signup</h2>
-		<form name="form" id="form" class="form-horizontal" enctype="multipart/form-data" method="POST">
-		<div class="input-group login-input">
-			<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-			<input id="user" type="text" class="form-control" name="username" value="" placeholder="User">
-		</div>
-
-	  <div class="input-group login-input">
-			<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-			<input id="password" type="password" class="form-control" name="password" placeholder="Password">
-	  </div>
-
-	  <div class="input-group login-input">
-			<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-			<input id="password" type="password" class="form-control" name="confirm password" placeholder="Password">
-	  </div>                                                                  
-
-	  <div class="form-group">
-	    <!-- Button -->
-	    <div class="col-sm-12 controls">
-	      <button type="submit" href="#" class="btn btn-primary pull-right">
-	      	<i class="glyphicon glyphicon-log-in"></i> Log in
-	      </button>                          
-	    </div>
-	  </div>
-	  </form>
-  </div>     
-</div>
+<md-content class="hc-background" layout layout-padding layout-align="center">
+  <md-whiteframe class="md-whiteframe-z2" flex="80">
+        <div layout="column" layout-sm="column">
+          <md-input-container flex="50">
+            <label>Username</label>
+            <input ng-model="data.username">
+          </md-input-container>
+          <md-input-container flex="50">
+            <label>Name</label>
+            <input ng-model="data.name">
+          </md-input-container>
+          <md-input-container flex="50">
+            <label>Email</label>
+            <input ng-model="data.email" ng-required="true" type="email">
+          </md-input-container>
+          <md-input-container flex="50">
+            <label>Password</label>
+            <input ng-model="data.password" ng-required="true" type="password">
+          </md-input-container>
+        </div>
+        <section layout="row" layout-sm="column" layout-align="center center">
+          <md-button class="md-raised md-primary" ng-click="signup()">Sign Up</md-button>
+        </section>
+  </md-whiteframe>
+</md-content>
