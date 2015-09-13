@@ -2,7 +2,7 @@
 Cassandra Data Access Layer
 """
 from cassandra.cluster import Cluster
-from cloudbrain.settings import DATE_FORMAT, SENSOR_DATA_KEYSPACE, REGISTERED_DEVICES_TABLE_NAME
+from cloudbrain.settings import DATE_FORMAT, SENSOR_DATA_KEYSPACE
 import datetime
 import time
 from cloudbrain.utils.metadata_info import get_num_channels
@@ -72,7 +72,7 @@ class CassandraDAL(object):
 
     self.session.execute(cql_insert)
 
-
+  '''
   def get_registered_devices(self):
     """
     Get the available device ids
@@ -98,11 +98,6 @@ class CassandraDAL(object):
 
     cql_insert = "INSERT INTO %s (%s) VALUES (%s, %s);" % (REGISTERED_DEVICES_TABLE_NAME, device_id, device_name)
     self.session.execute(cql_insert)
+  '''
 
 
-  def get_power_band_data(self, device_name, device_id, start):
-    """
-    TODO
-
-    """
-    return
