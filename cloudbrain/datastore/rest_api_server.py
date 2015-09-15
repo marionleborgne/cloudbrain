@@ -13,8 +13,8 @@ app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
 if not _MOCK_ENABLED:
-  from cloudbrain.datastore.CassandraDAL import CassandraDAL
-  dao = CassandraDAL()
+  from cloudbrain.datastore.CassandraDAO import CassandraDAO
+  dao = CassandraDAO()
   dao.connect()
 
 

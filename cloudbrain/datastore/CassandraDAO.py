@@ -7,7 +7,7 @@ import datetime
 import time
 from cloudbrain.utils.metadata_info import get_num_channels
 
-class CassandraDAL(object):
+class CassandraDAO(object):
   def __init__(self):
     self.session = None
 
