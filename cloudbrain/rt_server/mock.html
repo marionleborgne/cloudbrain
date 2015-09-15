@@ -13,6 +13,12 @@
         metric: "eeg"
       };
 
+      var mockConfiguration2 = {
+        deviceName: "muse",
+        deviceId: "alessio",
+        metric: "alpha_absolute"
+      };
+
       function log(msg) {
         var control = $('#rt-stream');
         control.html(msg);
@@ -53,7 +59,8 @@
         if (connected) {
           worker.postMessage({ cmd: 'stop' }); 
         } else {
-          worker.postMessage({ cmd: 'start', conf: mockConfiguration }); 
+          worker.postMessage({ cmd: 'start', conf: mockConfiguration });
+          //worker.postMessage({ cmd: 'start', conf: mockConfiguration2 });
         }
 
         update_ui();
