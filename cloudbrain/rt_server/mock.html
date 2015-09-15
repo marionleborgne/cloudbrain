@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="//cdn.jsdelivr.net/sockjs/1.0.0/sockjs.min.js"></script>
+    <script>
+    $(function() {
+      var connected = false;
+
+      var mockConfiguration = {
+        deviceName: "muse",
+        deviceId: "alessio",
+        metric: "eeg"
+      };
+
+      function log(msg) {
+        var control = $('#rt-stream');
+        control.html(msg);
+        control.scrollTop(control.scrollTop() + 1000);
+      }
+
+      var worker = new Worker('live-data-worker.js');
+
+      worker.addEventListener('message', function(e) {
+        switch (e.data.type) {
+          case 'connected':
+            connected = true;
+            update_ui();
+            break;
+          case 'disconnected':
+            connected = false;
+            update_ui();
+            break;
+          case 'msg':
+            log(e.data.msg);
+            break;
+        }
+      }, false);
+
+      function update_ui() {
+        var msg = '';
+
+        if (connected) {
+          $('#status').text('connected');
+          $('#connect').text('Disconnect');
+        } else {
+          $('#status').text('disconnected');
+          $('#connect').text('Connect');
+        }
+      }
+
+      $('#connect').click(function() {
+        if (connected) {
+          worker.postMessage({ cmd: 'stop' }); 
+        } else {
+          worker.postMessage({ cmd: 'start', conf: mockConfiguration }); 
+        }
+
+        update_ui();
+        return false;
+      });
+    });
+
+    </script>
+</head>
+<body>
+<h3>Real time data!</h3>
+<div>
+    <a id="connect" href="#">Connect</a>&nbsp;|&nbsp;Status: <span id="status">disconnected</span>
+</div>
+<div id="rt-stream" style="width: 60em; height: 20em; overflow:auto; border: 1px solid black">
+</div>
+</body>
+</html>
