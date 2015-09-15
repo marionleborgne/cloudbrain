@@ -1,0 +1,27 @@
+# .pairs - configuration for 'git pair'
+
+##################################
+#           HOW TO USE           #
+##################################
+#  1. brew tap pivotal/tap
+#  2. brew install git-pair
+#  3. Example: `git pair mlb ww`
+#  4: Commit
+#
+#  Reset: `git pair`
+##################################
+
+pairs:
+  adm: Alessio Della Motta; alessio
+  ds: David Silva; david
+  jn: John Naulty; john
+  mlb: Marion Le Borgne; marion
+  mvl: Mel Van Londen; mel
+  sp: Scott Prue; scott
+  pk: Pierre Karashchuk; pierre
+  ww: William Wnekowicz; will
+email:
+  prefix: pair
+  domain: getcloudbrain.com
+  no_solo_prefix: true
+#global: true
