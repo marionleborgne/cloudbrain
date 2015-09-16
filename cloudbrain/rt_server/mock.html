@@ -60,7 +60,7 @@
           worker.postMessage({ cmd: 'stop' }); 
         } else {
           worker.postMessage({ cmd: 'start', conf: mockConfiguration });
-          //worker.postMessage({ cmd: 'start', conf: mockConfiguration2 });
+          worker.postMessage({ cmd: 'start', conf: mockConfiguration2 });
         }
 
         update_ui();
