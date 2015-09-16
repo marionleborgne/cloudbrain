@@ -105,6 +105,7 @@ RtDataStream.prototype.subscribe = function (channel, onMessageCb) {
     var self = this;
 
     var configuration = {
+        type: 'subscription',
         deviceName: this.deviceName,
         deviceId: this.deviceId,
         metric: channel
@@ -120,10 +121,17 @@ RtDataStream.prototype.subscribe = function (channel, onMessageCb) {
 RtDataStream.prototype.unsubscribe = function (channel, onMessageCb) {
     var self = this;
 
+    var unsubscriptionMsg = {
+        type: 'unsubscription',
+        metric: channel
+    };
+
     if (self.channelSubs[channel]) {
         self.channelSubs[channel].splice(
             self.channelSubs[channel].indexOf(onMessageCb), 1);
     }
+
+    self.conn.send(JSON.stringify(unsubscriptionMsg));
 };
 
 

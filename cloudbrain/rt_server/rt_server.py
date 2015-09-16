@@ -59,7 +59,13 @@ class RtStreamConnection(SockJSConnection):
     def on_message(self, message):
         logging.info("Got a new message: " + message)
 
-        stream_configuration = json.loads(message)
+        msg_dict = json.loads(message)
+        if msg_dict['type'] == 'subscription':
+            self.handle_channel_suscription(msg_dict)
+        elif msg_dict['type'] == 'unsubscription':
+            self.handle_channel_unsubscription(msg_dict)
+
+    def handle_channel_suscription(self, stream_configuration):
         device_name = stream_configuration['deviceName']
         device_id = stream_configuration['deviceId']
         metric = stream_configuration['metric']
@@ -72,6 +78,10 @@ class RtStreamConnection(SockJSConnection):
                                        metric_name=metric)
 
             self.subscribers[metric].connect()
+
+    def handle_channel_unsubscription(self, unsubscription_msg):
+        if unsubscription_msg['metric'] in self.subscribers:
+            self.subscribers[unsubscription_msg['metric']].disconnect()
 
     def on_close(self):
         for (metric, subscriber) in self.subscribers.keys():
