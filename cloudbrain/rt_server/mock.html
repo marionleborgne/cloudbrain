@@ -3,45 +3,29 @@
 <head>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="//cdn.jsdelivr.net/sockjs/1.0.0/sockjs.min.js"></script>
+    <script src="/rt-data-stream.js"></script>
     <script>
     $(function() {
       var connected = false;
 
-      var mockConfiguration = {
-        deviceName: "muse",
-        deviceId: "alessio",
-        metric: "eeg"
-      };
-
-      var mockConfiguration2 = {
-        deviceName: "muse",
-        deviceId: "alessio",
-        metric: "alpha_absolute"
-      };
-
-      function log(msg) {
-        var control = $('#rt-stream');
-        control.html(msg);
-        control.scrollTop(control.scrollTop() + 1000);
+      function log(jsonContent) {
+          var control = $('#rt-stream');
+          control.html(JSON.stringify(jsonContent));
+          control.scrollTop(control.scrollTop() + 1000);
       }
 
-      var worker = new Worker('live-data-worker.js');
+      var rtDataStream = new RtDataStream('http://localhost:31415/rt-stream', 'muse', 'alessio');
 
-      worker.addEventListener('message', function(e) {
-        switch (e.data.type) {
-          case 'connected':
-            connected = true;
-            update_ui();
-            break;
-          case 'disconnected':
-            connected = false;
-            update_ui();
-            break;
-          case 'msg':
-            log(e.data.msg);
-            break;
-        }
-      }, false);
+      function onConnect() {
+          connected = true;
+          rtDataStream.subscribe('eeg', log);
+          update_ui();
+      }
+
+      function onDisconnect() {
+          connected = false;
+          update_ui();
+      }
 
       function update_ui() {
         var msg = '';
@@ -57,10 +41,9 @@
 
       $('#connect').click(function() {
         if (connected) {
-          worker.postMessage({ cmd: 'stop' }); 
+            rtDataStream.disconnect();
         } else {
-          worker.postMessage({ cmd: 'start', conf: mockConfiguration });
-          worker.postMessage({ cmd: 'start', conf: mockConfiguration2 });
+            rtDataStream.connect(onConnect, onDisconnect);
         }
 
         update_ui();

@@ -74,7 +74,12 @@ class RtStreamConnection(SockJSConnection):
 
             self.subscribers[metric].connect()
 
-
+    def send_probe(self, body):
+        #logging.info("GOT: " + body)
+        buffer_content = json.loads(body)
+        for record in buffer_content:
+            record["metric"] = "eeg"; # TODO: Temporary fake EEG metric ALWAYS!
+            self.send(json.dumps(record))
 
     def on_close(self):
         for (metric, subscriber) in self.subscribers.keys():
@@ -94,13 +99,12 @@ class MockHandler(RequestHandler):
     def get(self):
         self.render('mock.html')
 
-class WebWorkerHandler(RequestHandler):
+class RtDataStreamHandler(tornado.web.RequestHandler):
     """
-    Just a custom handler for the web-worker... please we need to replace
-    this stuff with a proper router :)
+    Just a custom handler for the rt-data-stream.js file :)
     """
     def get(self):
-        self.render('live-data-worker.js')
+        self.render('rt-data-stream.js')
 
 # Based on: https://pika.readthedocs.org/en/0.9.14/examples/tornado_consumer.html
 class TornadoSubscriber(object):
@@ -190,8 +194,8 @@ if __name__ == "__main__":
     RtStreamRouter = SockJSRouter(RtStreamConnection, '/rt-stream')
 
     # 2. Create Tornado application
-    app = Application(
-            [(r"/", MockHandler), (r"/live-data-worker.js", WebWorkerHandler)] + RtStreamRouter.urls
+    app = tornado.web.Application(
+            [(r"/", MockHandler), (r"/rt-data-stream.js", RtDataStreamHandler)] + RtStreamRouter.urls
     )
 
     # 3. Make Tornado app listen on Pi

@@ -14,7 +14,7 @@ RtDataStream = function (connUrl, deviceName, deviceId) {
     // Super call
     Object.call(this);
 
-    if (!connUrl || !deviceName || deviceId) {
+    if (!connUrl || !deviceName || !deviceId) {
         throw Error('SockJS connection URL or device information not specified');
     }
 
@@ -56,65 +56,73 @@ RtDataStream.prototype.constructor = Object;
 
 // Methods
 RtDataStream.prototype.disconnect = function () {
-    if (this.conn) {
-        this.conn.close();
-        this.conn = null;
+    var self = this;
+    if (self.conn) {
+        self.conn.close();
+        self.conn = null;
     }
 };
 
 RtDataStream.prototype.connect = function (onOpenCallback, onCloseCallback) {
-    this.disconnect();
+    var self = this;
 
-    this.conn = new SockJS(this.connUrl);
+    self.disconnect();
 
-    this.conn.onopen = function () {
+    self.conn = new SockJS(this.connUrl);
+
+    self.conn.onopen = function () {
         if (onOpenCallback) {
             onOpenCallback();
         }
     };
 
     // Pay attention: it dispaches only messages tight to a channel/metric
-    this.conn.onmessage = function (e) {
-        var fromChannel = e.data.metric;
-        if (_isMetricAllowed.call(this, this, fromChannel)) {
-            delete e.data.metric;
-            this.channelSubs[fromChannel].forEach(function (cb) {
-                cb(e.data);
+    self.conn.onmessage = function (e) {
+        var jsonContent = JSON.parse(e.data);
+        var fromChannel = jsonContent.metric;
+        if (_isMetricAllowed.call(self, self, fromChannel)) {
+            delete jsonContent.metric;
+            self.channelSubs[fromChannel].forEach(function (cb) {
+                cb(jsonContent);
             });
         }
     };
 
-    this.conn.onclose = function () {
+    self.conn.onclose = function () {
         Object.keys(this.channelSubs).forEach(function (key) {
-            this.channelSubs[key].length = 0;
+            self.channelSubs[key].length = 0;
         });
         if (onCloseCallback) {
             onCloseCallback();
         }
-        this.conn = null;
+        self.conn = null;
     };
 };
 
 
 // Methods
 RtDataStream.prototype.subscribe = function (channel, onMessageCb) {
+    var self = this;
+
     var configuration = {
         deviceName: this.deviceName,
         deviceId: this.deviceId,
         metric: channel
     };
 
-    if (this.channelSubs[channel]) {
-        this.channelSubs[channel].push(onMessageCb);
+    if (self.channelSubs[channel]) {
+        self.channelSubs[channel].push(onMessageCb);
     }
 
-    this.conn.send(JSON.stringify(configuration));
+    self.conn.send(JSON.stringify(configuration));
 };
 
 RtDataStream.prototype.unsubscribe = function (channel, onMessageCb) {
-    if (this.channelSubs[channel]) {
-        this.channelSubs[channel].splice(
-            this.channelSubs[channel].indexOf(onMessageCb), 1);
+    var self = this;
+
+    if (self.channelSubs[channel]) {
+        self.channelSubs[channel].splice(
+            self.channelSubs[channel].indexOf(onMessageCb), 1);
     }
 };
 
