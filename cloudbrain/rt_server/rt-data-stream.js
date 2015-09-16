@@ -89,7 +89,7 @@ RtDataStream.prototype.connect = function (onOpenCallback, onCloseCallback) {
     };
 
     self.conn.onclose = function () {
-        Object.keys(this.channelSubs).forEach(function (key) {
+        Object.keys(self.channelSubs).forEach(function (key) {
             self.channelSubs[key].length = 0;
         });
         if (onCloseCallback) {

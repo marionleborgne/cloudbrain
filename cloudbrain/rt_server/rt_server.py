@@ -71,15 +71,7 @@ class RtStreamConnection(SockJSConnection):
                                        rabbitmq_address=RABBITMQ_ADDRESS,
                                        metric_name=metric)
 
-
             self.subscribers[metric].connect()
-
-    def send_probe(self, body):
-        #logging.info("GOT: " + body)
-        buffer_content = json.loads(body)
-        for record in buffer_content:
-            record["metric"] = "eeg"; # TODO: Temporary fake EEG metric ALWAYS!
-            self.send(json.dumps(record))
 
     def on_close(self):
         for (metric, subscriber) in self.subscribers.keys():
@@ -99,7 +91,7 @@ class MockHandler(RequestHandler):
     def get(self):
         self.render('mock.html')
 
-class RtDataStreamHandler(tornado.web.RequestHandler):
+class RtDataStreamHandler(RequestHandler):
     """
     Just a custom handler for the rt-data-stream.js file :)
     """
@@ -194,7 +186,7 @@ if __name__ == "__main__":
     RtStreamRouter = SockJSRouter(RtStreamConnection, '/rt-stream')
 
     # 2. Create Tornado application
-    app = tornado.web.Application(
+    app = Application(
             [(r"/", MockHandler), (r"/rt-data-stream.js", RtDataStreamHandler)] + RtStreamRouter.urls
     )
 
@@ -205,5 +197,3 @@ if __name__ == "__main__":
 
     # 4. Start IOLoop
     IOLoop.instance().start()
-
-
