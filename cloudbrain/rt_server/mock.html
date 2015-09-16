@@ -8,17 +8,24 @@
     $(function() {
       var connected = false;
 
-      function log(jsonContent) {
-          var control = $('#rt-stream');
-          control.html(JSON.stringify(jsonContent));
-          control.scrollTop(control.scrollTop() + 1000);
+      function generateLogFn(logId) {
+          return function (jsonContent) {
+              var control = $('#rt-stream-'+logId);
+              jsonContent._logId = logId;
+              control.html(JSON.stringify(jsonContent));
+              control.scrollTop(control.scrollTop() + 1000);
+          };
       }
 
       var rtDataStream = new RtDataStream('http://localhost:31415/rt-stream', 'muse', 'alessio');
 
       function onConnect() {
           connected = true;
-          rtDataStream.subscribe('eeg', log);
+          rtDataStream.subscribe('eeg', generateLogFn(1));
+          // After 3 seconds you subscribe also to the second metric
+          setTimeout(function () {
+              rtDataStream.subscribe('power_bands', generateLogFn(2));
+          }, 3000);
           update_ui();
       }
 
@@ -58,7 +65,9 @@
 <div>
     <a id="connect" href="#">Connect</a>&nbsp;|&nbsp;Status: <span id="status">disconnected</span>
 </div>
-<div id="rt-stream" style="width: 60em; height: 20em; overflow:auto; border: 1px solid black">
+<div id="rt-stream-1" style="width: 30em; height: 7em; overflow:auto; word-wrap: break-word; border: 1px solid black">
+</div>
+<div id="rt-stream-2" style="width: 30em; height: 7em; overflow:auto; word-wrap: break-word; border: 1px solid black">
 </div>
 </body>
 </html>
