@@ -1,6 +1,6 @@
 from cloudbrain.subscribers.PikaSubscriber import PikaSubscriber
 from cloudbrain.utils.metadata_info import get_num_channels, get_supported_metrics, get_supported_devices
-from cloudbrain.datastore.CassandraDAL import CassandraDAL
+from cloudbrain.datastore.CassandraDAO import CassandraDAO
 import json
 import argparse
 from cloudbrain.settings import MOCK_DEVICE_ID, RABBITMQ_ADDRESS
@@ -24,7 +24,7 @@ class CassandraSubscriber(object):
     self.device_id = device_id
     self.num_channels = get_num_channels(device_name, metric)
 
-    self.cassandra_dao = CassandraDAL()
+    self.cassandra_dao = CassandraDAO()
 
 
   def start(self):
