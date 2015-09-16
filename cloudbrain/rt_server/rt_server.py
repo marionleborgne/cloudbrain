@@ -77,9 +77,11 @@ class RtStreamConnection(SockJSConnection):
 
 
     def on_close(self):
-        if self.subscriber is not None:
-            self.subscriber.disconnect()
-            self.subscriber = None
+        for (metric, subscriber) in self.subscribers.keys():
+          if subscriber is not None:
+              subscriber.disconnect()
+
+        self.subscribers = {}
         #self.timeout.stop()
         self.clients.remove(self)
 
