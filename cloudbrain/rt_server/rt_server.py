@@ -59,7 +59,13 @@ class RtStreamConnection(SockJSConnection):
     def on_message(self, message):
         logging.info("Got a new message: " + message)
 
-        stream_configuration = json.loads(message)
+        msg_dict = json.loads(message)
+        if msg_dict['type'] == 'subscription':
+            self.handle_channel_suscription(msg_dict)
+        elif msg_dict['type'] == 'unsubscription':
+            self.handle_channel_unsubscription(msg_dict)
+
+    def handle_channel_suscription(self, stream_configuration):
         device_name = stream_configuration['deviceName']
         device_id = stream_configuration['deviceId']
         metric = stream_configuration['metric']
@@ -71,10 +77,11 @@ class RtStreamConnection(SockJSConnection):
                                        rabbitmq_address=RABBITMQ_ADDRESS,
                                        metric_name=metric)
 
-
             self.subscribers[metric].connect()
 
-
+    def handle_channel_unsubscription(self, unsubscription_msg):
+        if unsubscription_msg['metric'] in self.subscribers:
+            self.subscribers[unsubscription_msg['metric']].disconnect()
 
     def on_close(self):
         for (metric, subscriber) in self.subscribers.keys():
@@ -94,13 +101,12 @@ class MockHandler(RequestHandler):
     def get(self):
         self.render('mock.html')
 
-class WebWorkerHandler(RequestHandler):
+class RtDataStreamHandler(RequestHandler):
     """
-    Just a custom handler for the web-worker... please we need to replace
-    this stuff with a proper router :)
+    Just a custom handler for the rt-data-stream.js file :)
     """
     def get(self):
-        self.render('live-data-worker.js')
+        self.render('rt-data-stream.js')
 
 # Based on: https://pika.readthedocs.org/en/0.9.14/examples/tornado_consumer.html
 class TornadoSubscriber(object):
@@ -191,7 +197,7 @@ if __name__ == "__main__":
 
     # 2. Create Tornado application
     app = Application(
-            [(r"/", MockHandler), (r"/live-data-worker.js", WebWorkerHandler)] + RtStreamRouter.urls
+            [(r"/", MockHandler), (r"/rt-data-stream.js", RtDataStreamHandler)] + RtStreamRouter.urls
     )
 
     # 3. Make Tornado app listen on Pi
@@ -201,5 +207,3 @@ if __name__ == "__main__":
 
     # 4. Start IOLoop
     IOLoop.instance().start()
-
-
