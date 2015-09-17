@@ -35,6 +35,7 @@
     "commit": "b1a35d2aa67f36346688ccb58801183810e25baa"
   },
   "_source": "git://github.com/KyperTech/matter.git",
-  "_target": "~0.0.7",
-  "_originalSource": "kyper-matter"
+  "_target": "0.0.7",
+  "_originalSource": "kyper-matter",
+  "_direct": true
 }

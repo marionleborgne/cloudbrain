@@ -8,8 +8,13 @@
   function ($scope , $http , $interval , $log , apiService , dataService, API_URL, $state) {
 
     $scope.model = {
+      device: {
+        id: undefined,
+        name: undefined,
+      },
       deviceIds: [],
       deviceNames: [],
+      connected: false,
     };
 
     $scope.changeColor = function () {
@@ -17,17 +22,6 @@
       $scope.chartPolar.options.chart.backgroundColor = color_val;
       $scope.chartBar.options.chart.backgroundColor = color_val;
     };
-
-    apiService.refreshDeviceIds().then(function(response) {
-      console.log('devices loaded:', response);
-      angular.copy(response.data, $scope.model.deviceIds);
-    });
-
-    apiService.refreshPhysicalDeviceNames().then(function(response) {
-      angular.copy(response.data, $scope.model.deviceNames);
-      console.log('devices loaded:', response);
-      
-    });
 
     var setChannelSeries = function(data){
       var keys = Object.keys(data[0]);
@@ -38,6 +32,18 @@
         }
       });
     };
+
+    // apiService.refreshDeviceIds().then(function(response) {
+    //   angular.copy(response.data, $scope.model.deviceIds);
+    // });
+    $scope.model.deviceIds = [ 'Demo' ];
+    $scope.model.device.id = $scope.model.deviceIds[0];
+
+    // apiService.refreshPhysicalDeviceNames().then(function(response) {
+    //   angular.copy(response.data, $scope.model.deviceNames);
+    // });
+    $scope.model.deviceNames = [ 'muse', 'openbci' ];
+    $scope.model.device.name = $scope.model.deviceNames[0];
 
     // FIXME: considering only the first point right now...
     function updatePowerBandGraph(graphName, data) {
@@ -65,14 +71,7 @@
       $scope.chartBar.title.text = device.name + ' ' + device.id;
       $scope.chartStock.title.text = device.name + ' ' + device.id;
       $scope.showClick=true;
-      if ('muse' === device.name){
-        $scope.chartMuse = true;
-      }
-      var metric = 'eeg';
-      $scope.lastTimestamp = Date.now() * 1000; //microseconds
-      $scope.cloudbrain = API_URL + '/data?device_name='+device.name+'&metric='+metric+'&device_id='+device.id+'&callback=JSON_CALLBACK&start='+$scope.lastTimestamp;
-      // $scope.chart3 = $scope.chartStock.getHighcharts();
-
+      
       //initialize series data for charts
       $http.jsonp($scope.cloudbrain)
         .then(function(response){
@@ -156,14 +155,10 @@
             size: '80%'
           },
           tooltip: {
+            enabled: false,
             shared: true,
             pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
           },
-          legend: {
-            align: 'right',
-            verticalAlign: 'top',
-            layout: 'vertical'
-          }
         },
         title: {
           text: 'EEG',
@@ -183,7 +178,8 @@
         yAxis: {
           gridLineInterpolation: 'polygon',
           lineWidth: 0,
-          min: 0
+          min: 0,
+          max: 10,
         },
         series: [
         {
@@ -218,15 +214,10 @@
             size: '80%'
           },
           tooltip: {
+            enabled: false,
             shared: true,
             pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
           },
-          legend: {
-            align: 'right',
-            verticalAlign: 'top',
-            y: 70,
-            layout: 'vertical'
-          }
         },
         title: {
           text: 'EEG',
@@ -246,7 +237,8 @@
         yAxis: {
           gridLineInterpolation: 'polygon',
           lineWidth: 0,
-          min: 0
+          min: 0,
+          max: 10,
         },
         series: [
         {

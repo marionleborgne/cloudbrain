@@ -21,7 +21,7 @@
 			}, function (err){
 				$scope.data.loading = false;
 				$log.error('Error logging in:', err);
-				$scope.showToast('Login Error: ', err.message || err);
+				$scope.showToast('Login Error: Invalid Credentials');
 			});
 		};
 		$scope.logout = function(){

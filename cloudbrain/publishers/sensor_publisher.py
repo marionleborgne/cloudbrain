@@ -8,45 +8,64 @@ from cloudbrain.settings import RABBITMQ_ADDRESS, MOCK_DEVICE_ID
 _SUPPORTED_DEVICES = get_supported_devices()
 
 
-def parse_args():
-  parser = argparse.ArgumentParser()
+def validate_opts(opts):
+    """
+    validate that we've got the right options
 
-  parser.add_argument('-i', '--device_id', required=True,
-                      help="A unique ID to identify the device you are sending data from. "
-                           "For example: 'octopicorn2015'")
-  parser.add_argument('-m', '--mock', action='store_true', required=False,
-                      help="Use this flag to generate mock data for a "
-                           "supported device name %s" % _SUPPORTED_DEVICES)
-  parser.add_argument('-n', '--device_name', required=True,
-                      help="The name of the device your are sending data from. "
-                           "Supported devices are: %s" % _SUPPORTED_DEVICES)
-  parser.add_argument('-c', '--cloudbrain', default=RABBITMQ_ADDRESS,
-                      help="The address of the CloudBrain instance you are sending data to, for pika publisher.\n"
-                           "Use " + RABBITMQ_ADDRESS + " to send data to our hosted service. \n"
-                           "Otherwise use 'localhost' if running CloudBrain locally")
-  parser.add_argument('-o', '--output', default=None,
-                      help="The named pipe you are sending data to (e.g. /tmp/eeg_pipe), for pipe publisher.\n"
-                           "The publisher will create the pipe.\n"
-                           "By default this is the standard output.")
-
-  parser.add_argument('-b', '--buffer_size', default=10,
-                      help='Size of the buffer ')
-  parser.add_argument('-p', '--device_port', help="Port used for OpenBCI Device.")
-
-  parser.add_argument('-P', '--publisher', default="pika",
-                      help="The subscriber to use to get the data.\n"
-                      "Possible options are pika, pipe.\n"
-                      "The default is pika.")
+    @param opts: (list) options to validate
+    @retun opts_valid: (bool) 1 if opts are valid. 0 otherwise.
+    """
+    opts_valid = True
+    if (opts.device_name == "openbci") and (opts.device_port is None):
+      opts_valid = False
+    return opts_valid
 
 
-  opts = parser.parse_args()
-  if opts.device_name == "openbci" and opts.device_port is not None:
-    parser.error("You have to specify a port for the OpenBCI device!")
-  return opts
+def get_args_parser():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('-i', '--device_id', required=True,
+                        help="A unique ID to identify the device you are sending data from. "
+                             "For example: 'octopicorn2015'")
+    parser.add_argument('-m', '--mock', action='store_true', required=False,
+                        help="Use this flag to generate mock data for a "
+                             "supported device name %s" % _SUPPORTED_DEVICES)
+    parser.add_argument('-n', '--device_name', required=True,
+                        help="The name of the device your are sending data from. "
+                             "Supported devices are: %s" % _SUPPORTED_DEVICES)
+    parser.add_argument('-c', '--cloudbrain', default=RABBITMQ_ADDRESS,
+                        help="The address of the CloudBrain instance you are sending data to, for pika publisher.\n"
+                             "Use " + RABBITMQ_ADDRESS + " to send data to our hosted service. \n"
+                             "Otherwise use 'localhost' if running CloudBrain locally")
+    parser.add_argument('-o', '--output', default=None,
+                        help="The named pipe you are sending data to (e.g. /tmp/eeg_pipe), for pipe publisher.\n"
+                             "The publisher will create the pipe.\n"
+                             "By default this is the standard output.")
+
+    parser.add_argument('-b', '--buffer_size', default=10,
+                        help='Size of the buffer ')
+    parser.add_argument('-p', '--device_port', help="Port used for OpenBCI Device.")
+    parser.add_argument('-M', '--device_mac', help="MAC address of device used for Muse connector.")
+
+    parser.add_argument('-P', '--publisher', default="pika",
+                        help="The subscriber to use to get the data.\n"
+                        "Possible options are pika, pipe.\n"
+                        "The default is pika.")
+
+    return parser
+
+
+def get_opts():
+ parser = get_args_parser()
+ opts = parser.parse_args()
+ opts_valid = validate_opts(opts)
+ if not opts_valid:
+    parser.error("You have to speficy the OpenBCI port")
+ return opts
 
 
 def main():
-  opts = parse_args()
+  opts = get_opts()
   mock_data_enabled = opts.mock
   device_name = opts.device_name
   device_id = opts.device_id
@@ -55,6 +74,7 @@ def main():
   device_port = opts.device_port
   pipe_name = opts.output
   publisher = opts.publisher
+  device_mac = opts.device_mac
 
   run(device_name,
       mock_data_enabled,
@@ -63,7 +83,8 @@ def main():
       buffer_size,
       device_port,
       pipe_name,
-      publisher)
+      publisher,
+      device_mac)
 
 
 def run(device_name='muse',
@@ -73,7 +94,8 @@ def run(device_name='muse',
         buffer_size=10,
         device_port='/dev/tty.OpenBCI-DN0094CZ',
         pipe_name=None,
-        publisher_type="pika"):
+        publisher_type="pika",
+        device_mac=None):
   if device_name == 'muse':
     from cloudbrain.connectors.MuseConnector import MuseConnector as Connector
   elif device_name == 'openbci':
@@ -84,7 +106,7 @@ def run(device_name='muse',
   if mock_data_enabled:
     from cloudbrain.connectors.MockConnector import MockConnector as Connector
 
-  
+
   if publisher_type not in ['pika', 'pipe']:
     raise ValueError("'%s' is not a valid publisher type. Valid types are %s." % (publisher_type, "pika, pipe"))
 
@@ -93,14 +115,14 @@ def run(device_name='muse',
   if publisher_type == 'pika':
     publishers = {metric: PikaPublisher(device_name, device_id, cloudbrain_address, metric) for metric in metrics}
   elif publisher_type == 'pipe':
-    publishers = {metric: PipePublisher(device_name, device_id, metric, pipe_name) for metric in metrics} 
+    publishers = {metric: PipePublisher(device_name, device_id, metric, pipe_name) for metric in metrics}
 
   for publisher in publishers.values():
     publisher.connect()
   if device_name == 'openbci':
     connector = Connector(publishers, buffer_size, device_name, device_port)
   else:
-    connector = Connector(publishers, buffer_size, device_name)
+    connector = Connector(publishers, buffer_size, device_name, 9090, device_mac)
   connector.connect_device()
 
   if mock_data_enabled and (publisher_type != 'pipe'):
@@ -116,6 +138,3 @@ def run(device_name='muse',
 if __name__ == "__main__":
   main()
   #run('muse', False, 'marion', RABBITMQ_ADDRESS)
-
-
-
