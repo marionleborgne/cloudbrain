@@ -16,7 +16,7 @@
 	    .accentPalette('pink')
 	});
   app.service('$matter', ['$log', '$window', '$rootScope', function ($log, $window, $rootScope){
-  	var matter = new $window.Matter('cloudbrain', {localServer:true});
+  	var matter = new $window.Matter('cloudbrain', {localServer:false});
   	$log.log('Matter created:', matter);
   	$rootScope.matter = matter;
   	$rootScope.currentUser = matter.currentUser;
