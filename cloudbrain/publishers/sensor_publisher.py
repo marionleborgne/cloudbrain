@@ -45,7 +45,6 @@ def get_args_parser():
     parser.add_argument('-b', '--buffer_size', default=10,
                         help='Size of the buffer ')
     parser.add_argument('-p', '--device_port', help="Port used for OpenBCI Device.")
-    parser.add_argument('-M', '--device_mac', help="MAC address of device used for Muse connector.")
 
     parser.add_argument('-P', '--publisher', default="pika",
                         help="The subscriber to use to get the data.\n"
@@ -74,7 +73,6 @@ def main():
   device_port = opts.device_port
   pipe_name = opts.output
   publisher = opts.publisher
-  device_mac = opts.device_mac
 
   run(device_name,
       mock_data_enabled,
@@ -83,8 +81,7 @@ def main():
       buffer_size,
       device_port,
       pipe_name,
-      publisher,
-      device_mac)
+      publisher)
 
 
 def run(device_name='muse',
@@ -94,8 +91,7 @@ def run(device_name='muse',
         buffer_size=10,
         device_port='/dev/tty.OpenBCI-DN0094CZ',
         pipe_name=None,
-        publisher_type="pika",
-        device_mac=None):
+        publisher_type="pika"):
   if device_name == 'muse':
     from cloudbrain.connectors.MuseConnector import MuseConnector as Connector
   elif device_name == 'openbci':
@@ -122,7 +118,7 @@ def run(device_name='muse',
   if device_name == 'openbci':
     connector = Connector(publishers, buffer_size, device_name, device_port)
   else:
-    connector = Connector(publishers, buffer_size, device_name, 9090, device_mac)
+    connector = Connector(publishers, buffer_size, device_name)
   connector.connect_device()
 
   if mock_data_enabled and (publisher_type != 'pipe'):
