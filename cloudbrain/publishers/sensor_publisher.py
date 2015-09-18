@@ -69,7 +69,7 @@ def main():
   device_name = opts.device_name
   device_id = opts.device_id
   cloudbrain_address = opts.cloudbrain
-  buffer_size = opts.buffer_size
+  buffer_size = int(opts.buffer_size)
   device_port = opts.device_port
   pipe_name = opts.output
   publisher = opts.publisher
