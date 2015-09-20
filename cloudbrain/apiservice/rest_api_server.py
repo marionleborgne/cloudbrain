@@ -124,6 +124,8 @@ def get_tags(user_id):
     tag_name = request.args.get('tag_name', None)
 
     if _MOCK_ENABLED:
+        if tag_name is None:
+            tag_name = "label_1"
         tags = [
             {"tag_id": "c1f6e1f2-c964-48c0-8cdd-fafe8336190b",
              "user_id": user_id,
