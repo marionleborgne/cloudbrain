@@ -149,8 +149,8 @@ def get_tags(user_id):
 
     tag_name = request.args.get('tag_name', None)
 
-    tags = _generate_mock_tags(user_id, tag_name)
-    #tags = dao.get_tags(user_id, tag_name)
+    #tags = _generate_mock_tags(user_id, tag_name)
+    tags = dao.get_tags(user_id, tag_name)
 
     return json.dumps(tags), 200
 
@@ -162,8 +162,8 @@ def get_tags(user_id):
 def get_tag(user_id, tag_id):
     """Retrieve a specific tag for a specific user """
 
-    tag = dao.get_mock_tag(user_id, tag_id)
-    #tag = dao.get_tag(user_id, tag_id)
+    #tag = dao.get_mock_tag(user_id, tag_id)
+    tag = dao.get_tag(user_id, tag_id)
 
     return json.dumps(tag), 200
 
@@ -174,7 +174,6 @@ def get_tag(user_id, tag_id):
 @support_jsonp
 def create_tag(user_id):
     if (not request.json
-        or not 'user_id' in request.json
         or not 'tag_name' in request.json
         or not 'start' in request.json):
         abort(400)
@@ -184,8 +183,8 @@ def create_tag(user_id):
     start = request.json.get("start")
     end = request.json.get("end")
 
-    tag_id = "c1f6e1f2-c964-48c0-8cdd-fafe8336190b"
-    #tag_id = dao.create_tag(user_id, tag_name, metadata, start, end)
+    #tag_id = "c1f6e1f2-c964-48c0-8cdd-fafe8336190b"
+    tag_id = dao.create_tag(user_id, tag_name, metadata, start, end)
 
     return json.dumps({"tag_id": tag_id}), 500
 
@@ -233,8 +232,8 @@ def get_tag_aggregate(user_id, tag_id):
     elif len(metrics) > 0 and device_type is None:
         return "parameter 'device_type' is required to filter on `metrics`", 500
 
-    aggregates = _generate_mock_tag_aggregates(user_id, tag_id, device_type, metrics)
-    #aggregates = dao.get_aggregates(user_id, tag_id, device_type, metrics)
+    #aggregates = _generate_mock_tag_aggregates(user_id, tag_id, device_type, metrics)
+    aggregates = dao.get_aggregates(user_id, tag_id, device_type, metrics)
 
     return json.dumps(aggregates), 200
 

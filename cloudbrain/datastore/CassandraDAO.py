@@ -112,9 +112,9 @@ class CassandraDAO(object):
             tag_id = row[0]
             user_id = row[1]
             tag_name = row[2]
-            metadata = row[3]
-            if row[4] is not None:
-                end = int(time.mktime(row[4].timetuple()) * 1000)
+            metadata = row[4]
+            if row[3] is not None:
+                end = int(time.mktime(row[3].timetuple()) * 1000)
             else:
                 end = None
             if row[5] is not None:
@@ -130,7 +130,6 @@ class CassandraDAO(object):
                       "start": start
             }
 
-            print cql_select
             data.append(record)
         return data
 
@@ -151,7 +150,6 @@ class CassandraDAO(object):
                                                            values)
 
         self.analytics_session.execute(cql_insert)
-
         return tag_id
 
 
