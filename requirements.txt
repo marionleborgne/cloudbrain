@@ -3,3 +3,4 @@ pyliblo==0.9.2
 pyserial==2.7
 wheel==0.24.0
 sockjs-tornado
+flask
