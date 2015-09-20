@@ -165,7 +165,7 @@ def create_tag():
   else:
     tag_id = dao.create_tag(user_id, tag_name, metadata, start, end)
 
-  return json.dumps(tag_id), 500
+  return json.dumps({"tag_id": tag_id}), 500
 
 
 if __name__ == "__main__":
