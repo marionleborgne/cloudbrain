@@ -9,7 +9,7 @@ from cloudbrain.utils.metadata_info import (map_metric_name_to_num_channels,
                                             get_metrics_names)
 from cloudbrain.settings import WEBSERVER_PORT
 
-_MOCK_ENABLED = True
+_MOCK_ENABLED = False
 _API_VERSION = "v1.0"
 
 app = Flask(__name__)

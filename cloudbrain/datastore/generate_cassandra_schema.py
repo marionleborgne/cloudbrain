@@ -118,7 +118,7 @@ def _create_analytics_keyspace_and_table(outFile):
 
     create_tags_table = ("CREATE TABLE %s (tag_id text, tag_name text, user_id text, "
                          "start timestamp, end timestamp, metadata text, "
-                         "PRIMARY KEY (tag_id));\n") % TAGS_TABLE_NAME
+                         "PRIMARY KEY (tag_id, user_id, tag_name));\n") % TAGS_TABLE_NAME
 
     create_aggregates_table = ("CREATE TABLE %s (aggregate_id text, user_id text, "
                                "tag_id text, device_type text, aggregate_type text, "
