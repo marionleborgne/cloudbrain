@@ -110,7 +110,7 @@ def get_registered_devices():
 
 def _generate_mock_tags(user_id, tag_name):
     if tag_name is None:
-        tag_names = ["label_1", "label_2", "label_3"]
+        tag_names = ["Facebook", "Netflix", "TechCrunch"]
     else:
         tag_names = [tag_name]
 
@@ -125,7 +125,7 @@ def _generate_mock_tags(user_id, tag_name):
              "end": int(time.time() * 1000)
             })
 
-    return tag_names
+    return tags
 
 
 
