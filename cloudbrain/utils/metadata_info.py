@@ -24,17 +24,17 @@ def map_metric_name_to_num_channels(device_name):
   return metric_name_to_num_channels
 
 
-def get_metrics_names(device_name):
+def get_metrics_names(device_type):
   """
-  Get metric names for a specific device name.
+  Get metric names for a specific device type.
   :return: list of metric names
   """
-  metadata = [metadata for metadata in DEVICE_METADATA if metadata['device_name'] == device_name]
+  metadata = [metadata for metadata in DEVICE_METADATA if metadata['device_name'] == device_type]
 
   if len(metadata) > 0:
     metrics = metadata[0]['metrics']
   else:
-    raise _DeviceNameNotFound("Could not find device name '%s' in metadata" % device_name)
+    raise _DeviceNameNotFound("Could not find device name '%s' in metadata" % device_type)
 
   metric_names = []
   for metric in metrics:

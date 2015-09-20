@@ -1,10 +1,18 @@
+# Database info
 DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
+SENSOR_DATA_KEYSPACE = "sensor_data"
+ANALYTICS_KEYSPACE = "analytics"
+USERS_KEYSPACE = "users"
+USERS_CONSENT_TABLE = "users_consent"
+TAGS_TABLE_NAME = "tags"
 
+# Servers config info
 CASSANDRA_ADDRESS = 'cassandra.cloudbrain.rocks'
 RABBITMQ_ADDRESS = 'rabbitmq.cloudbrain.rocks'
 WEBSERVER_ADDRESS = 'webserver.cloudbrain.rocks'
 WEBSERVER_PORT = 8080
 
+# Mock info
 MOCK_DEVICE_ID = "mock"
 
 # Metric metadata of wearable devices accepted by CloudBrain.
