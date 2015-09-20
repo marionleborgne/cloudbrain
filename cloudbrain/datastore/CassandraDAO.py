@@ -5,7 +5,6 @@ Cassandra Data Access Layer
 import uuid
 import datetime
 import time
-import json
 
 from cassandra.cluster import Cluster
 from cloudbrain.settings import (DATE_FORMAT,
@@ -91,7 +90,7 @@ class CassandraDAO(object):
 
 
     def get_registered_devices(self):
-        raise NotImplementedError
+        return ['mock_device_id']
 
 
     def get_tag(self, user_id, tag_id):
@@ -156,6 +155,6 @@ class CassandraDAO(object):
         return tag_id
 
 
-    def get_aggregates(self, user_id, tag_id, device_id, device_type, metrics):
+    def get_aggregates(self, user_id, tag_id, device_type, metrics):
         raise NotImplementedError
 

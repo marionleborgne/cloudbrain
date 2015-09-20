@@ -9,17 +9,15 @@ from cloudbrain.utils.metadata_info import (map_metric_name_to_num_channels,
                                             get_metrics_names)
 from cloudbrain.settings import WEBSERVER_PORT
 
-_MOCK_ENABLED = False
 _API_VERSION = "v1.0"
 
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
-if not _MOCK_ENABLED:
-    from cloudbrain.datastore.CassandraDAO import CassandraDAO
+from cloudbrain.datastore.CassandraDAO import CassandraDAO
 
-    dao = CassandraDAO()
-    dao.connect()
+dao = CassandraDAO()
+dao.connect()
 
 
 
@@ -64,10 +62,8 @@ def data():
     if not device_id:
         return "missing param: device_id", 500
 
-    if _MOCK_ENABLED:
-        data_records = _get_mock_data(device_name, metric)
-    else:
-        data_records = dao.get_data(device_name, device_id, metric, start)
+    # data_records = _get_mock_data(device_name, metric)
+    data_records = dao.get_data(device_name, device_id, metric, start)
 
     return json.dumps(data_records)
 
@@ -103,15 +99,45 @@ def get_device_names():
 @support_jsonp
 def get_registered_devices():
     """ Get the registered devices IDs """
-    if _MOCK_ENABLED:
-        registered_devices = ['octopicorn']  # mock ID
-    else:
-        registered_devices = dao.get_registered_devices()
+    registered_devices = dao.get_registered_devices()
     return json.dumps(registered_devices)
 
 
 
 """ Tags """
+
+
+
+def _generate_mock_tags(user_id, tag_name):
+    if tag_name is None:
+        tag_names = ["label_1", "label_2", "label_3"]
+    else:
+        tag_names = [tag_name]
+
+    tags = []
+    for tag_name in tag_names:
+        tags.append(
+            {"tag_id": "c1f6e1f2-c964-48c0-8cdd-fafe8336190b",
+             "user_id": user_id,
+             "tag_name": tag_name,
+             "metadata": {},
+             "start": int(time.time() * 1000) - 10,
+             "end": int(time.time() * 1000)
+            })
+
+    return tag_names
+
+
+
+def generate_mock_tag(user_id, tag_id):
+    tag = {"tag_id": tag_id,
+           "user_id": user_id,
+           "tag_name": "label_1",
+           "metadata": {},
+           "start": int(time.time() * 1000) - 10,
+           "end": int(time.time() * 1000)
+    }
+    return tag
 
 
 
@@ -123,25 +149,8 @@ def get_tags(user_id):
 
     tag_name = request.args.get('tag_name', None)
 
-    if _MOCK_ENABLED:
-        if tag_name is None:
-            tag_names = ["label_1", "label_2", "label_3"]
-        else:
-            tag_names = [tag_name]
-
-        tags = []
-
-        for tag_name in tag_names:
-            tags.append(
-            {"tag_id": "c1f6e1f2-c964-48c0-8cdd-fafe8336190b",
-             "user_id": user_id,
-             "tag_name": tag_name,
-             "metadata": {},
-             "start": int(time.time() * 1000) - 10,
-             "end": int(time.time() * 1000)
-            })
-    else:
-        tags = dao.get_tags(user_id, tag_name)
+    # tags = _generate_mock_tags(user_id, tag_name)
+    tags = dao.get_tags(user_id, tag_name)
 
     return json.dumps(tags), 200
 
@@ -153,16 +162,8 @@ def get_tags(user_id):
 def get_tag(user_id, tag_id):
     """Retrieve a specific tag for a specific user """
 
-    if _MOCK_ENABLED:
-        tag = {"tag_id": tag_id,
-               "user_id": user_id,
-               "tag_name": "label_1",
-               "metadata": {},
-               "start": int(time.time() * 1000) - 10,
-               "end": int(time.time() * 1000)
-        }
-    else:
-        tag = dao.get_tag(user_id, tag_id)
+    # tag = dao.get_mock_tag(user_id, tag_id)
+    tag = dao.get_tag(user_id, tag_id)
 
     return json.dumps(tag), 200
 
@@ -183,16 +184,34 @@ def create_tag(user_id):
     start = request.json.get("start")
     end = request.json.get("end")
 
-    if _MOCK_ENABLED:
-        tag_id = "c1f6e1f2-c964-48c0-8cdd-fafe8336190b"
-    else:
-        tag_id = dao.create_tag(user_id, tag_name, metadata, start, end)
+    #tag_id = "c1f6e1f2-c964-48c0-8cdd-fafe8336190b"
+    tag_id = dao.create_tag(user_id, tag_name, metadata, start, end)
 
     return json.dumps({"tag_id": tag_id}), 500
 
 
 
 """ Tag aggregates"""
+
+
+
+def _generate_mock_tag_aggregates(user_id, tag_id, device_type, metrics):
+    aggregates = []
+    for metric in metrics:
+        aggregates.append(
+            {
+                "aggregate_id": "c1f6e1f2-c964-48c0-8cdd-fafe83361977",
+                "user_id": user_id,
+                "tag_id": tag_id,
+                "aggregate_type": "avg",
+                "device_type": device_type,
+                "aggregate_value": random.random() * 10,
+                "metric": metric,
+                "start": int(time.time() * 1000) - 10,
+                "end": int(time.time() * 1000)
+            })
+
+    return aggregates
 
 
 
@@ -214,23 +233,8 @@ def get_tag_aggregate(user_id, tag_id):
     elif len(metrics) > 0 and device_type is None:
         return "parameter 'device_type' is required to filter on `metrics`", 500
 
-    if _MOCK_ENABLED:
-        aggregates = []
-        for metric in metrics:
-            aggregates.append(
-                {
-                    "aggregate_id": "c1f6e1f2-c964-48c0-8cdd-fafe83361977",
-                    "user_id": user_id,
-                    "tag_id": tag_id,
-                    "aggregate_type": "avg",
-                    "device_type": device_type,
-                    "aggregate_value": random.random() * 10,
-                    "metric": metric,
-                    "start": int(time.time() * 1000) - 10,
-                    "end": int(time.time() * 1000)
-                })
-    else:
-        aggregates = dao.get_aggregates(user_id, tag_id, device_type, metrics)
+    aggregates = _generate_mock_tag_aggregates(user_id, tag_id, device_type, metrics)
+    #aggregates = dao.get_aggregates(user_id, tag_id, device_type, metrics)
 
     return json.dumps(aggregates), 200
 
