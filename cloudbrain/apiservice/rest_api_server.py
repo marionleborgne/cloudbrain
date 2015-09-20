@@ -149,8 +149,8 @@ def get_tags(user_id):
 
     tag_name = request.args.get('tag_name', None)
 
-    # tags = _generate_mock_tags(user_id, tag_name)
-    tags = dao.get_tags(user_id, tag_name)
+    tags = _generate_mock_tags(user_id, tag_name)
+    #tags = dao.get_tags(user_id, tag_name)
 
     return json.dumps(tags), 200
 
@@ -162,8 +162,8 @@ def get_tags(user_id):
 def get_tag(user_id, tag_id):
     """Retrieve a specific tag for a specific user """
 
-    # tag = dao.get_mock_tag(user_id, tag_id)
-    tag = dao.get_tag(user_id, tag_id)
+    tag = dao.get_mock_tag(user_id, tag_id)
+    #tag = dao.get_tag(user_id, tag_id)
 
     return json.dumps(tag), 200
 
@@ -184,8 +184,8 @@ def create_tag(user_id):
     start = request.json.get("start")
     end = request.json.get("end")
 
-    #tag_id = "c1f6e1f2-c964-48c0-8cdd-fafe8336190b"
-    tag_id = dao.create_tag(user_id, tag_name, metadata, start, end)
+    tag_id = "c1f6e1f2-c964-48c0-8cdd-fafe8336190b"
+    #tag_id = dao.create_tag(user_id, tag_name, metadata, start, end)
 
     return json.dumps({"tag_id": tag_id}), 500
 
