@@ -30,7 +30,7 @@ class MockConnector(Connector):
     while 1:
       for data_generator in self.data_generators:
         data_generator()
-      time.sleep(0.1)
+      time.sleep(0.0001)
 
 
   def data_generator_factory(self, metric_name, num_channels):

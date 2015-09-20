@@ -50,6 +50,7 @@ class CassandraDAO(object):
       data.append(record)
     return data
 
+
   def store_data(self, timestamp, device_id, device_name, metric_name, channel_data):
     """
     Store data in cassandra.
@@ -74,32 +75,15 @@ class CassandraDAO(object):
 
     self.session.execute(cql_insert)
 
-  '''
+
   def get_registered_devices(self):
-    """
-    Get the available device ids
-    :return:
-    """
+    raise NotImplementedError
 
-    table_name = REGISTERED_DEVICES_TABLE_NAME
-    cql_select = "SELECT * FROM %s;" % table_name
+  def get_tag(self, tag_id):
+    raise NotImplementedError
 
-    rows = self.session.execute(cql_select)
-    registered_device_ids = []
-    for row in rows:
-      registered_device_ids.append(row[0])
+  def get_tags(self):
+    raise NotImplementedError
 
-    return registered_device_ids
-
-
-  def store_registered_device(self, device_id, device_name):
-    """
-    Store the device metadata
-    :return:
-    """
-
-    cql_insert = "INSERT INTO %s (%s) VALUES (%s, %s);" % (REGISTERED_DEVICES_TABLE_NAME, device_id, device_name)
-    self.session.execute(cql_insert)
-  '''
-
-
+  def create_tag(self, user_id, tag_name, metadata, start, end):
+    raise NotImplemented
