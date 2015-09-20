@@ -125,23 +125,21 @@ def get_tags(user_id):
 
     if _MOCK_ENABLED:
         if tag_name is None:
-            tag_name = "label_1"
-        tags = [
+            tag_names = ["label_1", "label_2", "label_3"]
+        else:
+            tag_names = [tag_name]
+
+        tags = []
+
+        for tag_name in tag_names:
+            tags.append(
             {"tag_id": "c1f6e1f2-c964-48c0-8cdd-fafe8336190b",
              "user_id": user_id,
              "tag_name": tag_name,
              "metadata": {},
              "start": int(time.time() * 1000) - 10,
              "end": int(time.time() * 1000)
-            },
-            {"tag_id": "c1f6e1f2-c964-48c0-8cdd-fafe83361977",
-             "user_id": user_id,
-             "tag_name": tag_name,
-             "metadata": {},
-             "start": int(time.time() * 1000) - 10,
-             "end": int(time.time() * 1000)
-            }
-        ]
+            })
     else:
         tags = dao.get_tags(user_id, tag_name)
 
