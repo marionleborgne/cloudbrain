@@ -5,6 +5,7 @@ ANALYTICS_KEYSPACE = "analytics"
 USERS_KEYSPACE = "users"
 USERS_CONSENT_TABLE = "users_consent"
 TAGS_TABLE_NAME = "tags"
+AGGREGATES_TABLE_NAME = "aggregates"
 
 # Servers config info
 CASSANDRA_ADDRESS = 'cassandra.cloudbrain.rocks'
