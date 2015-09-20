@@ -1,5 +1,6 @@
 import json
 import argparse
+import threading
 
 from cloudbrain.subscribers.PikaSubscriber import PikaSubscriber
 from cloudbrain.datastore.CassandraDAO import CassandraDAO
@@ -26,6 +27,7 @@ class CassandraSubscriber(object):
         self.device_type = device_type
         self.device_id = device_id
         self.cassandra_dao = CassandraDAO()
+        self.threads = []
 
 
     def start(self):
@@ -38,7 +40,11 @@ class CassandraSubscriber(object):
                 rabbitmq_address=self.rabbitmq_address,
                 metric_name=metric)
             self.subscribers[metric].connect()
-            self.subscribers[metric].consume_messages(self.write_to_cassandra_factory(metric))
+
+            t = threading.Thread(target=self.subscribers[metric].consume_messages,
+                                 args=(self.write_to_cassandra_factory(metric),))
+            self.threads.append(t)
+            t.start()
 
 
     def stop(self):
@@ -115,5 +121,4 @@ def run(device_name='muse',
 
 
 if __name__ == "__main__":
-    # main()
-    run()
+    main()
