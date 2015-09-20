@@ -61,11 +61,11 @@ class RtStreamConnection(SockJSConnection):
 
         msg_dict = json.loads(message)
         if msg_dict['type'] == 'subscription':
-            self.handle_channel_suscription(msg_dict)
+            self.handle_channel_subscription(msg_dict)
         elif msg_dict['type'] == 'unsubscription':
             self.handle_channel_unsubscription(msg_dict)
 
-    def handle_channel_suscription(self, stream_configuration):
+    def handle_channel_subscription(self, stream_configuration):
         device_name = stream_configuration['deviceName']
         device_id = stream_configuration['deviceId']
         metric = stream_configuration['metric']
