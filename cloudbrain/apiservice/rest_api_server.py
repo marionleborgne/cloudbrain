@@ -202,20 +202,17 @@ def create_tag(user_id):
 def get_tag_aggregate(user_id, tag_id):
     """Retrieve all aggregates for a specific tag and user"""
 
-    metrics  = []
     device_type = request.args.get('device_type', None)
-    metric = request.args.get('metric', None)
+    metrics = request.args.getlist('metrics', None)
 
-    if device_type is None and metric is None:
+    if device_type is None and len(metrics) == 0:
         device_types = get_supported_devices()
         for device_type in device_types:
             metrics.extend(get_metrics_names(device_type))
-    elif metric is None and device_type is not None:
+    elif len(metrics) == 0 and device_type is not None:
         metrics = get_metrics_names(device_type)
-    elif metric is not None and device_type is not None:
-        metrics.append(metric)
-    elif metric is not None and device_type is None:
-        return "parameter 'device_type' is required to filter on `metric`", 500
+    elif len(metrics) > 0 and device_type is None:
+        return "parameter 'device_type' is required to filter on `metrics`", 500
 
     if _MOCK_ENABLED:
         aggregates = []
