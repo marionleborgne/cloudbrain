@@ -120,25 +120,28 @@ def get_registered_devices():
 @support_jsonp
 def get_tags(user_id):
     """Retrieve all tags for a specific user """
+
+    tag_name = request.args.get('tag_name', None)
+
     if _MOCK_ENABLED:
         tags = [
             {"tag_id": "c1f6e1f2-c964-48c0-8cdd-fafe8336190b",
              "user_id": user_id,
-             "tag_name": "label1",
+             "tag_name": tag_name,
              "metadata": {},
              "start": int(time.time() * 1000) - 10,
              "end": int(time.time() * 1000)
             },
             {"tag_id": "c1f6e1f2-c964-48c0-8cdd-fafe83361977",
              "user_id": user_id,
-             "tag_name": "label2",
+             "tag_name": tag_name,
              "metadata": {},
              "start": int(time.time() * 1000) - 10,
              "end": int(time.time() * 1000)
             }
         ]
     else:
-        tags = dao.get_tags()
+        tags = dao.get_tags(user_id, tag_name)
 
     return json.dumps(tags), 200
 
@@ -153,13 +156,13 @@ def get_tag(user_id, tag_id):
     if _MOCK_ENABLED:
         tag = {"tag_id": tag_id,
                "user_id": user_id,
-               "tag_name": "label1",
+               "tag_name": "label_1",
                "metadata": {},
                "start": int(time.time() * 1000) - 10,
                "end": int(time.time() * 1000)
         }
     else:
-        tag = dao.get_tag(tag_id)
+        tag = dao.get_tag(user_id, tag_id)
 
     return json.dumps(tag), 200
 
@@ -199,18 +202,18 @@ def create_tag(user_id):
 def get_tag_aggregate(user_id, tag_id):
     """Retrieve all aggregates for a specific tag and user"""
 
+    metrics  = []
     device_type = request.args.get('device_type', None)
     metric = request.args.get('metric', None)
 
     if device_type is None and metric is None:
-        metrics  = []
         device_types = get_supported_devices()
         for device_type in device_types:
             metrics.extend(get_metrics_names(device_type))
     elif metric is None and device_type is not None:
         metrics = get_metrics_names(device_type)
     elif metric is not None and device_type is not None:
-        metrics = [metric]
+        metrics.append(metric)
     elif metric is not None and device_type is None:
         return "parameter 'device_type' is required to filter on `metric`", 500
 

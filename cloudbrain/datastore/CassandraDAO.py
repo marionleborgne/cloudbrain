@@ -89,11 +89,11 @@ class CassandraDAO(object):
         raise NotImplementedError
 
 
-    def get_tag(self, tag_id):
+    def get_tag(self, user_id, tag_id):
         raise NotImplementedError
 
 
-    def get_tags(self):
+    def get_tags(self, user_id, tag_name):
         raise NotImplementedError
 
 
@@ -101,6 +101,6 @@ class CassandraDAO(object):
         raise NotImplemented
 
 
-    def get_aggregates(self, device_id, device_type, metrics):
+    def get_aggregates(self, user_id, tag_id, device_id, device_type, metrics):
         raise NotImplementedError
 
