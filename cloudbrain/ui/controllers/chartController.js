@@ -64,12 +64,12 @@ function   ( $scope , $http , $interval , $log , apiService , dataService ) {
             return true;
         } else if ($scope.deviceIdForm.$valid && $scope.deviceIdForm.$dirty) {
             $scope.button = 'Connect';
-            return false
+            return false;
         } else {
           $scope.button = 'Connected';
-          return false
+          return false;
         }
-      }
+      };
 
       $scope.getData = function (device, url) {
 

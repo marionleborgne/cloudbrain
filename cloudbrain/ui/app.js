@@ -39,8 +39,8 @@ function( $http , $interval  ) {
         var curTimestamp = new Date().getTime();
         if (!powerBandPromise) {
             powerBandPromise = $interval(function() {
-                $http.jsonp(API_URL + '/power_bands?device_name=' + deviceName + 
-                            '&device_id=' + deviceId + 
+                $http.jsonp(API_URL + '/power_bands?device_name=' + deviceName +
+                            '&device_id=' + deviceId +
                             '&callback=JSON_CALLBACK&start=' + curTimestamp).then(
                 function(response) {
                     // TODO: Update the curTimestamp with the latest timestamp from the

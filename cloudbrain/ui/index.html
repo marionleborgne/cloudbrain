@@ -43,16 +43,7 @@
             </div>
           </div> -->
 
-          
-          
-          
-          
-
-
         </ng-form>
-
-    
-
     </div>
   </div>
 </nav>
@@ -68,9 +59,14 @@
   </div>
 </div>
 
+ <rt-chart></rt-chart>
+
  <div ng-show='showClick'>
  <div class = "row">
   <div class="col-md-12">
+
+
+
     <highchart id="chart3" config="chartStock"></highchart>
   </div>
 </div>
@@ -86,25 +82,23 @@
     </div>
   </div>
 
-
-
-
-
 <!--</div><!--chartController-->
 </div><!--Container-->
 
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-<script src="http://code.highcharts.com/adapters/standalone-framework.js"></script>
-<script src="http://code.highcharts.com/stock/highstock.src.js"></script>
-    <!--<script src="bower_components/highcharts/highcharts.src.js"></script>-->
-<script src="http://code.highcharts.com/highcharts-more.js"></script>
-<script src="bower_components/highcharts-ng/src/highcharts-ng.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+  <script src="http://cdn.jsdelivr.net/sockjs/1.0.0/sockjs.min.js"></script>
+  <script src="http://code.highcharts.com/adapters/standalone-framework.js"></script>
+  <script src="http://code.highcharts.com/stock/highstock.src.js"></script>
+      <!--<script src="bower_components/highcharts/highcharts.src.js"></script>-->
+  <script src="http://code.highcharts.com/highcharts-more.js"></script>
+  <script src="bower_components/highcharts-ng/src/highcharts-ng.js"></script>
 
-<script src="app.js"></script>
-<script src="controllers/chartController.js"></script>
+  <script src="app.js"></script>
+  <script src="controllers/chartController.js"></script>
+  <script src="services/RtDataStreamService.js"></script>
+  <script src="services/RtChartService.js"></script>
+  <script src="directives/rtChartDirective.js"></script>
 
   </body>
-
-
-  </html>
+</html>
