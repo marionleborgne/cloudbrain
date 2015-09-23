@@ -28,6 +28,9 @@
     "font-awesome": "fontawesome#~4.4.0",
     "highcharts": "~4.1.7",
     "highcharts-ng": "~0.0.8",
-    "kyper-matter": "~0.0.7"
+    "kyper-matter": "~0.1.1"
+  },
+  "resolutions": {
+    "kyper-matter": "~0.1.1"
   }
 }

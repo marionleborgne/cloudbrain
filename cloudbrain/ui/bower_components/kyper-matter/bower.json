@@ -13,12 +13,22 @@
   "license": "MIT",
   "ignore": [
     "**/.*",
+    "**/*.md",
     "node_modules",
     "bower_components",
     "test",
     "package.json",
     ".DS_Store",
-    "**/.DS_Store"
+    "**/.DS_Store",
+    "test",
+    "redirect.html",
+    "index.html",
+    "karma.conf.js",
+    "gulpfile.js",
+    "LICENSE",
+    "examples",
+    "wiki",
+    "config.json"
   ],
   "repository":{
     "type":"git",

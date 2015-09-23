@@ -1,68 +1,87 @@
 import config from '../config';
 import _ from 'lodash';
 
+//Set default log level to debug
+let logLevel = 'debug';
+//Set log level from config
+if (config.logLevel) {
+	logLevel = config.logLevel;
+}
+
 let logger = {
 	log(logData) {
 		let msgArgs = buildMessageArgs(logData);
-		if (config.envName == 'local') {
-			console.log(logData);
+		if (config.envName == 'production') {
+			runConsoleMethod('log', msgArgs);
 		} else {
-			console.log.apply(console, msgArgs);
+			runConsoleMethod('log', msgArgs);
 		}
 	},
 	info(logData) {
 		let msgArgs = buildMessageArgs(logData);
-		if (config.envName == 'local') {
-			console.info(logData);
+		if (config.envName == 'production') {
+			runConsoleMethod('info', msgArgs);
 		} else {
-			console.info.apply(console, msgArgs);
+			runConsoleMethod('info', msgArgs);
 		}
 	},
 	warn(logData) {
 		let msgArgs = buildMessageArgs(logData);
-		if (config.envName == 'local') {
-			console.warn(logData);
+		if (config.envName == 'production') {
+			runConsoleMethod('warn', msgArgs);
 		} else {
-			console.warn.apply(console, msgArgs);
+			runConsoleMethod('warn', msgArgs);
 		}
 	},
 	debug(logData) {
 		let msgArgs = buildMessageArgs(logData);
-		if (config.envName == 'local') {
-			console.log(logData);
+		if (config.envName == 'production') {
+			// runConsoleMethod('debug', msgArgs);
+			//Do not display console debugs in production
 		} else {
-			console.log.apply(console, msgArgs);
+			runConsoleMethod('debug', msgArgs);
 		}
 	},
 	error(logData) {
 		let msgArgs = buildMessageArgs(logData);
-		if (config.envName == 'local') {
-			console.error(logData);
-		} else {
-			console.error.apply(console, msgArgs);
+		if (config.envName == 'production') {
 			//TODO: Log to external logger
+			runConsoleMethod('error', msgArgs);
+		} else {
+			runConsoleMethod('error', msgArgs);
 		}
 	}
 };
 
 export default logger;
-
+function runConsoleMethod(methodName, methodData) {
+	//Safley run console methods or use console log
+	if (methodName && console[methodName]) {
+		return console[methodName].apply(console, methodData);
+	} else {
+		return console.log.apply(console, methodData);
+	}
+}
 function buildMessageArgs(logData) {
 	var msgStr = '';
 	var msgObj = {};
 	//TODO: Attach time stamp
+	//Attach location information to the beginning of message
 	if (_.isObject(logData)) {
-		if (_.has(logData, 'func')) {
-			if (_.has(logData, 'obj')) {
-				msgStr += '[' + logData.obj + '.' + logData.func + '()] ';
-			} else if (_.has(logData, 'file')) {
-				msgStr += '[' + logData.file + ' > ' + logData.func + '()] ';
-			} else {
-				msgStr += '[' + logData.func + '()] ';
+		if (logLevel == 'debug') {
+			if (_.has(logData, 'func')) {
+				if (_.has(logData, 'obj')) {
+					//Object and function provided
+					msgStr += `[${logData.obj}.${logData.func}()]\n `;
+				} else if (_.has(logData, 'file')) {
+					msgStr += `[${logData.file} > ${logData.func}()]\n `;
+				} else {
+					msgStr += `[${logData.func}()]\n `;
+				}
 			}
 		}
 		//Print each key and its value other than obj and func
-		_.each(_.omit(_.keys(logData)), function(key, ind, list) {
+		_.each(_.omit(_.keys(logData)), (key, ind, list) => {
 			if (key != 'func' && key != 'obj') {
 				if (key == 'description' || key == 'message') {
 					msgStr += logData[key];

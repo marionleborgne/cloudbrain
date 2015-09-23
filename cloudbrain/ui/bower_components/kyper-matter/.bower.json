@@ -15,27 +15,37 @@
   "license": "MIT",
   "ignore": [
     "**/.*",
+    "**/*.md",
     "node_modules",
     "bower_components",
     "test",
     "package.json",
     ".DS_Store",
-    "**/.DS_Store"
+    "**/.DS_Store",
+    "test",
+    "redirect.html",
+    "index.html",
+    "karma.conf.js",
+    "gulpfile.js",
+    "LICENSE",
+    "examples",
+    "wiki",
+    "config.json"
   ],
   "repository": {
     "type": "git",
     "url": "git://github.com/KyperTech/matter"
   },
   "homepage": "https://github.com/KyperTech/matter",
-  "version": "0.0.7",
-  "_release": "0.0.7",
+  "version": "0.1.1",
+  "_release": "0.1.1",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.7",
-    "commit": "b1a35d2aa67f36346688ccb58801183810e25baa"
+    "tag": "v0.1.1",
+    "commit": "018dcfe5cbb8d001470d2b6459e43e62864909e8"
   },
   "_source": "git://github.com/KyperTech/matter.git",
-  "_target": "0.0.7",
+  "_target": "~0.1.1",
   "_originalSource": "kyper-matter",
   "_direct": true
 }

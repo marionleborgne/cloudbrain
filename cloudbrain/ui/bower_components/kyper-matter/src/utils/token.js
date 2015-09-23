@@ -37,16 +37,34 @@ let token = {
 			storage.setItem(config.tokenDataName, tokenData);
 		}
 	},
-	set string(tokenStr) {
-		logger.log({description: 'Token was set.', token: tokenStr, func: 'string', obj: 'token'});
-		this.data = jwtDecode(tokenStr);
+	set string(tokenData) {
+		let tokenStr;
+		//Handle object being passed
+		if (!_.isString(tokenData)) {
+			//Token is included in object
+			logger.log({description: 'Token data is not string.', token: tokenData, func: 'string', obj: 'token'});
+
+			if (_.isObject(tokenData) && _.has(tokenData, 'token')) {
+				tokenStr = tokenData.token;
+			} else {
+				//Input is either not an string or object that contains nessesary info
+				logger.error({description: 'Invalid value set to token.', token: tokenData, func: 'string', obj: 'token'});
+				return;
+			}
+		} else {
+			tokenStr = tokenData;
+		}
+		logger.log({description: 'Token was set.', token: tokenData, tokenStr: tokenStr, func: 'string', obj: 'token'});
 		storage.setItem(config.tokenName, tokenStr);
+		this.data = jwtDecode(tokenStr);
 	},
 	save(tokenStr) {
 		this.string = tokenStr;
 	},
 	delete() {
+		//Remove string token
 		storage.removeItem(config.tokenName);
+		//Remove user data
 		storage.removeItem(config.tokenDataName);
 		logger.log({description: 'Token was removed.', func: 'delete', obj: 'token'});
 	}
