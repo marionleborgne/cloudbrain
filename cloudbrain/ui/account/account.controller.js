@@ -53,7 +53,7 @@
 					$scope.data.loading = false;
 					$log.log('Successful login:', loginRes);
 					$scope.showToast('Logged In');
-					$state.go('chart');
+					$state.go('rtchart');
 				}, function (err){
 					$scope.data.loading = false;
 					$log.error('Error logging in:', err);
