@@ -17,7 +17,7 @@
 				$rootScope.currentUser = $matter.currentUser;
 				$rootScope.$digest();
 				$scope.showToast('Logged In');
-				$state.go('chart');
+				$state.go('rtchart');
 			}, function (err){
 				$scope.data.loading = false;
 				$log.error('Error logging in:', err);

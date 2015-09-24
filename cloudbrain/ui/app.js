@@ -2,12 +2,13 @@
 (function () { 'use strict';
 
   var app = angular.module('cloudbrain', [
-  	'ui.bootstrap', 
-  	'ui.router', 
-  	'ngMaterial', 
-  	'highcharts-ng', 
-  	'cloudbrain.chart', 
-  	'cloudbrain.account', 
+  	'ui.bootstrap',
+  	'ui.router',
+  	'ngMaterial',
+  	'highcharts-ng',
+    'cloudbrain.chart', 
+  	'cloudbrain.rtchart',
+  	'cloudbrain.account',
   	'cloudbrain.home'
   ]);
   app.config(function($mdThemingProvider) {

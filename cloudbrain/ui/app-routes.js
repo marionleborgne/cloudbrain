@@ -14,6 +14,10 @@
       templateUrl:'chart/chart-index.html',
       controller:'ChartCtrl'
     })
+    .state('rtchart', {
+      url:'/rt-chart/:device',
+      template:'<rt-chart></rt-chart>'
+    })
     .state('signup', {
       url:'/signup',
       templateUrl:'account/account-signup.html',

@@ -1,5 +1,5 @@
 /* global angular */
-(function () { 
+(function () {
   'use strict';
 
   angular.module('cloudbrain.chart')
@@ -71,7 +71,7 @@
       $scope.chartBar.title.text = device.name + ' ' + device.id;
       $scope.chartStock.title.text = device.name + ' ' + device.id;
       $scope.showClick=true;
-      
+
       //initialize series data for charts
       $http.jsonp($scope.cloudbrain)
         .then(function(response){

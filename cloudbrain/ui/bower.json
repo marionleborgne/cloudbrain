@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "homepage": "https://github.com/marionleborgne/cloudbrain",
   "authors": [
-    "william.wnekowicz@gmail.com",
-    "jnaulty@gmail.com",
+    "William Wnekowicz <william.wnekowicz@gmail.com>",
+    "John Naulty <jnaulty@gmail.com>",
     "Prescott Prue <sprue.dev@gmail.com>"
   ],
   "moduleType": [
@@ -28,7 +28,9 @@
     "font-awesome": "fontawesome#~4.4.0",
     "highcharts": "~4.1.7",
     "highcharts-ng": "~0.0.8",
-    "kyper-matter": "~0.1.1"
+    "kyper-matter": "~0.1.1",
+    "Chart.js": "~1.0.2",
+    "angular-chart.js": "~0.8.4"
   },
   "resolutions": {
     "kyper-matter": "~0.1.1"
