@@ -24,8 +24,13 @@ This makes use of the demo version of cloudbrain running at [`demo.cloudbrain.ro
 On Linux, install the liblo package. 
 
 If you're on OSX, make sure you have [homebrew](http://brew.sh/) and the OSX command line utilities installed
-Then install liblo through brew
+Then install liblo through brew:
 * `brew install liblo`
+
+Then install cython and flask through pip:
+
+* `pip install cython`
+* `pip install flask`
 
 ### Clone
 * `git clone https://github.com/marionleborgne/cloudbrain.git`
@@ -80,8 +85,9 @@ For the mock data streamed above, the command would be:
 * `cd cloudbrain/ui`
 * `npm install`
 * `bower install`
-* Start the REST API server `python cloudbrain/datastore/rest_api_server.py`
-* Open `ui/index.html` in your browser.
+* Start the REST API server `python cloudbrain/datastore/rest_api_server.py` (Hosted version will be used if not started)
+* Run `gulp` to start live-reloading local ui server.
+* Use the cloud brain ui in the browser window that opens.
 
 ### [Optional] Generate binaries
 * Install PyInstaller `pip install pyinstaller`

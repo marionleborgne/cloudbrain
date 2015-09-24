@@ -1,0 +1,16 @@
+<md-content layout="row" layout-align="center center" layout-fill  class="hc-background">
+  <div class="row" layout-align="center center" flex="60" flex-sm="80" layout-margin>
+    <md-whiteframe class="md-whiteframe-z2" layout layout-align="center center" layout-padding>
+      <div layout="column" layout-align="center center">
+        <h2 class="md-headline">Welcome to Cloudbrain!</h2>
+        <h3 class="md-title">For A Preview</h3>
+  	    <h4 class="md-title">Please select a B.C.I. Device Below</h4>
+        <!--DeviceName-->
+        <md-select placeholder="Select Device Name" ng-model="selectedDevice" id="deviceName" class="form-control">
+          <md-option ng-repeat="deviceName in model.deviceNames">{{deviceName}}</md-option>
+        </md-select>
+        <md-button type="submit" ng-click="getData()" class="md-raised md-primary">Connect</md-button>
+      </div>
+    </md-whiteframe>
+  </div>
+</md-content>

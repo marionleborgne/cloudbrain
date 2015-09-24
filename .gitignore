@@ -10,6 +10,7 @@ cloudbrain.egg-info/
 cloudbrain/datastore/cassandra_schema.cql
 *.spec
 node_modules/
+cloudbrain/ui/node_modules/
 /data/
 .idea/
 
