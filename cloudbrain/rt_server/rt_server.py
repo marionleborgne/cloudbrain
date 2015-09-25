@@ -141,11 +141,15 @@ class TornadoSubscriber(object):
     def on_connected(self, connection):
         self.connection = connection
         self.connection.add_on_close_callback(self.on_connection_closed)
+        self.connection.add_backpressure_callback(self.on_backpressure_callback)
         self.open_channel()
 
     def on_connection_closed(self, connection, reply_code, reply_text):
         self.connection = None
         self.channel = None
+
+    def on_backpressure_callback(self, connection):
+        logging.info('******** Backpressure detected for ' + self.get_key())
 
     def open_channel(self):
         self.connection.channel(self.on_channel_open)
