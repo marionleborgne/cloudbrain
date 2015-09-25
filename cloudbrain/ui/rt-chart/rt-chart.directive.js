@@ -5,7 +5,7 @@
     .directive('rtChart', ['$matter', 'RtChart', function($matter, RtChart){
 
       var link = function(scope, element){
-        scope.deviceNames = ['Muse', 'OpenBCI'];
+        scope.deviceNames = ['muse', 'OpenBCI'];
 
         scope.series = RtChart.getSeries();
         scope.data = RtChart.getData();
