@@ -85,14 +85,17 @@ class RtStreamConnection(SockJSConnection):
             self.subscribers[unsubscription_msg['metric']].disconnect()
 
     def on_close(self):
-        logging.info('Disconnecting client, unsubscribing from queues...')
-        for (metric, subscriber) in self.subscribers.keys():
-          if subscriber is not None:
-              subscriber.disconnect()
+        logging.info('Disconnecting client...')
+        for metric in self.subscribers.keys():
+            subscriber = self.subscribers[metric]
+            if subscriber is not None:
+                logging.info('Disconnecting subscriber for metric: ' + metric)
+                subscriber.disconnect()
 
         self.subscribers = {}
         #self.timeout.stop()
         self.clients.remove(self)
+        logging.info('Client disconnection complete!')
 
     def send_heartbeat(self):
         self.broadcast(self.clients, 'message')
