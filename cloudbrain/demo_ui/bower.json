@@ -1,0 +1,27 @@
+{
+  "name": "cloudbrain",
+  "version": "0.0.1",
+  "homepage": "https://github.com/marionleborgne/cloudbrain",
+  "authors": [
+    "william.wnekowicz@gmail.com",
+    "jnaulty@gmail.com"
+  ],
+  "moduleType": [
+    "amd"
+  ],
+  "license": "GPLv3",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.3",
+    "angular-bootstrap": "~0.13.3",
+    "bootstrap-css-only": "~3.3.4",
+    "highcharts-ng": "~0.0.8",
+    "highcharts": "~4.1.7"
+  }
+}
