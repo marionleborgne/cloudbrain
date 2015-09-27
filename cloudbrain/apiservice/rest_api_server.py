@@ -75,7 +75,8 @@ def data():
     if mock_data_enabled:
         data_records = _get_mock_data(device_name, metric)
     else:
-        data_records = dao.get_data(device_name, device_id, metric, start)
+        data_records = _get_mock_data(device_name, metric) # temporary for demo
+        #data_records = dao.get_data(device_name, device_id, metric, start)
 
     return json.dumps(data_records)
 

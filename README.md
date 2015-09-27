@@ -1,4 +1,4 @@
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/ui/images/cb-logo-low-res.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/docs/images/cb-logo-low-res.png)
 
 #Overview
 
@@ -24,13 +24,8 @@ This makes use of the demo version of cloudbrain running at [`demo.cloudbrain.ro
 On Linux, install the liblo package. 
 
 If you're on OSX, make sure you have [homebrew](http://brew.sh/) and the OSX command line utilities installed
-Then install liblo through brew:
+Then install liblo through brew
 * `brew install liblo`
-
-Then install cython and flask through pip:
-
-* `pip install cython`
-* `pip install flask`
 
 ### Clone
 * `git clone https://github.com/marionleborgne/cloudbrain.git`
@@ -82,12 +77,12 @@ For the mock data streamed above, the command would be:
 * Start storing data: `python cloudbrain/subscribers/cassandra_pika_subscriber.py`
 
 ### Visualize data
-* `cd cloudbrain/ui`
+Start the demo UI:
+* `cd cloudbrain/demo`
 * `npm install`
 * `bower install`
-* Start the REST API server `python cloudbrain/datastore/rest_api_server.py` (Hosted version will be used if not started)
-* Run `gulp` to start live-reloading local ui server.
-* Use the cloud brain ui in the browser window that opens.
+* Start the REST API server `python cloudbrain/datastore/rest_api_server.py`
+* Open `demo/index.html` in your browser.
 
 ### [Optional] Generate binaries
 * Install PyInstaller `pip install pyinstaller`
@@ -141,11 +136,11 @@ Many thanks to my teamates:
 ## Cloudbrain's data visualizations
 
 ### Aggregated data (bar charts)
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/ui/images/data-aggregates.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/docs/images/data-aggregates.png)
 
 ### Live EEG data (radar charts)
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/ui/images/radar-charts.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/docs/images/radar-charts.png)
 
 ### Live EEG data (line charts)
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/ui/images/timeserie-data.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/docs/images/timeserie-data.png)
 
