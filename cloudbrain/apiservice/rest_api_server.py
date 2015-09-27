@@ -4,6 +4,8 @@ import random
 
 from flask import Flask, request, current_app, abort
 from functools import wraps
+from cassandra.cluster import NoHostAvailable
+
 from cloudbrain.utils.metadata_info import (map_metric_name_to_num_channels,
                                             get_supported_devices,
                                             get_metrics_names)
@@ -16,8 +18,16 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 
 from cloudbrain.datastore.CassandraDAO import CassandraDAO
 
-dao = CassandraDAO()
-dao.connect()
+
+mock_data_enabled = False
+
+try:
+    dao = CassandraDAO()
+    dao.connect()
+    print "INFO: cassandra is running."
+except NoHostAvailable:
+    print "WARNING: cassandra is not running. Using mock data."
+    mock_data_enabled = True
 
 
 
@@ -62,8 +72,10 @@ def data():
     if not device_id:
         return "missing param: device_id", 500
 
-    # data_records = _get_mock_data(device_name, metric)
-    data_records = dao.get_data(device_name, device_id, metric, start)
+    if mock_data_enabled:
+        data_records = _get_mock_data(device_name, metric)
+    else:
+        data_records = dao.get_data(device_name, device_id, metric, start)
 
     return json.dumps(data_records)
 
@@ -148,8 +160,10 @@ def get_tags(user_id):
 
     tag_name = request.args.get('tag_name', None)
 
-    #tags = _generate_mock_tags(user_id, tag_name)
-    tags = dao.get_tags(user_id, tag_name)
+    if mock_data_enabled:
+        tags = _generate_mock_tags(user_id, tag_name)
+    else:
+        tags = dao.get_tags(user_id, tag_name)
 
     return json.dumps(tags), 200
 
@@ -161,8 +175,10 @@ def get_tags(user_id):
 def get_tag(user_id, tag_id):
     """Retrieve a specific tag for a specific user """
 
-    #tag = dao.get_mock_tag(user_id, tag_id)
-    tag = dao.get_tag(user_id, tag_id)
+    if mock_data_enabled:
+        tag = dao.get_mock_tag(user_id, tag_id)
+    else:
+        tag = dao.get_tag(user_id, tag_id)
 
     return json.dumps(tag), 200
 
@@ -182,8 +198,10 @@ def create_tag(user_id):
     start = request.json.get("start")
     end = request.json.get("end")
 
-    #tag_id = "c1f6e1f2-c964-48c0-8cdd-fafe8336190b"
-    tag_id = dao.create_tag(user_id, tag_name, metadata, start, end)
+    if mock_data_enabled:
+        tag_id = "c1f6e1f2-c964-48c0-8cdd-fafe8336190b"
+    else:
+        tag_id = dao.create_tag(user_id, tag_name, metadata, start, end)
 
     return json.dumps({"tag_id": tag_id}), 500
 
@@ -231,8 +249,10 @@ def get_tag_aggregate(user_id, tag_id):
     elif len(metrics) > 0 and device_type is None:
         return "parameter 'device_type' is required to filter on `metrics`", 500
 
-    #aggregates = _generate_mock_tag_aggregates(user_id, tag_id, device_type, metrics)
-    aggregates = dao.get_aggregates(user_id, tag_id, device_type, metrics)
+    if mock_data_enabled:
+        aggregates = _generate_mock_tag_aggregates(user_id, tag_id, device_type, metrics)
+    else:
+        aggregates = dao.get_aggregates(user_id, tag_id, device_type, metrics)
 
     return json.dumps(aggregates), 200
 
