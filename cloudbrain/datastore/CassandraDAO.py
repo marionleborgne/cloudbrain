@@ -89,11 +89,12 @@ class CassandraDAO(object):
         self.sensor_data_session.execute(cql_insert)
 
 
-    def get_registered_devices(self):
-        return ['mock_device_id']
+    def get_registered_devices(self, user_id):
+        raise NotImplementedError
 
 
     def get_tag(self, user_id, tag_id):
+        """ Get the registered devices IDs for a user """
         raise NotImplementedError
 
 

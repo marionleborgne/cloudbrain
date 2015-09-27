@@ -87,7 +87,7 @@ def _get_mock_data(device_name, metric):
 
 
 
-@app.route('/metadata/devices', methods=['GET'])
+@app.route('/api/%s/metadata/devices' %_API_VERSION, methods=['GET'])
 @support_jsonp
 def get_device_names():
     """ Returns the device names from the metadata file  """
@@ -95,12 +95,11 @@ def get_device_names():
 
 
 
-@app.route('/registered_devices', methods=['GET'])
+@app.route('/api/%s/users/<string:user_id>/devices' % _API_VERSION, methods=['GET'])
 @support_jsonp
-def get_registered_devices():
-    """ Get the registered devices IDs """
-    registered_devices = dao.get_registered_devices()
-    return json.dumps(registered_devices)
+def get_registered_devices(user_id):
+    """ Get the registered devices IDs for a user """
+    return dao.get_registered_devices(user_id)
 
 
 
