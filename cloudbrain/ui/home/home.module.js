@@ -1,7 +1,7 @@
-(function () { 
+(function () {
 	'use strict';
 
-	angular.module('cloudbrain.home', ['cloudbrain.chart']);
+	angular.module('cloudbrain.home', ['cloudbrain.rtchart']);
 
 
 })();

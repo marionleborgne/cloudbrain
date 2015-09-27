@@ -6,7 +6,6 @@
   	'ui.router',
   	'ngMaterial',
   	'highcharts-ng',
-    'cloudbrain.chart', 
   	'cloudbrain.rtchart',
   	'cloudbrain.account',
   	'cloudbrain.home'

@@ -1,10 +1,10 @@
 /* global angular */
-(function () { 
+(function () {
   'use strict';
 
   angular.module('cloudbrain.home')
 
-  .controller('HomeCtrl', ['$scope','$http','$interval','$log','apiService','dataService', 'API_URL', '$state',
+  .controller('HomeCtrl', ['$scope','$http','$interval','$log','apiService', 'API_URL', '$state',
   function ($scope , $http , $interval , $log , apiService , dataService, API_URL, $state) {
 
     $scope.model = {
@@ -18,15 +18,10 @@
       $scope.chartBar.options.chart.backgroundColor = color_val;
     };
 
-    apiService.refreshDeviceIds().then(function(response) {
-      console.log('devices loaded:', response);
-      angular.copy(response.data, $scope.model.deviceIds);
-    });
-
     apiService.refreshPhysicalDeviceNames().then(function(response) {
       angular.copy(response.data, $scope.model.deviceNames);
       console.log('devices loaded:', response);
-      
+
     });
 
     var setChannelSeries = function(data){
@@ -56,7 +51,7 @@
     $scope.chartMuse = false;
     $scope.selectedDevice = '';
     $scope.getData = function (device, url) {
-      $state.go('chart', {device:$scope.selectedDevice});
+      $state.go('rtchart', {device:$scope.selectedDevice});
     }
   }
   ]);
