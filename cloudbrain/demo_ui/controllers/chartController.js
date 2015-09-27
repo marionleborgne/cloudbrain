@@ -181,6 +181,9 @@ function   ( $scope , $http , $interval , $log , apiService , dataService ) {
             50
             ]
           },
+          legend: {
+            enabled: false
+          },
           pane: {
             size: '80%'
           },
@@ -239,6 +242,9 @@ function   ( $scope , $http , $interval , $log , apiService , dataService ) {
             50
             ],
             type: 'column'
+          },
+          legend: {
+            enabled: false
           },
           pane: {
             size: '80%'
