@@ -1,7 +1,7 @@
 /* global angular */
 (function () { 'use strict';
 
-var API_URL = 'http://demo.apiserver.cloudbrain.rocks';
+var API_URL = 'http://apiserver.cloudbrain.rocks';
 
 angular.module('cloudbrain', ['ui.bootstrap', 'highcharts-ng'])
 
