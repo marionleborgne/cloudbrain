@@ -7,6 +7,8 @@
       this.deviceType;
       this.deviceId;
 
+      var stream = {};
+
       var data = [[],[],[],[]];
 
       function chartConfig() {
@@ -94,7 +96,7 @@
       }
 
       function start(callback) {
-        var stream = new RtDataStream('http://localhost:31415/rt-stream', this.deviceType, this.deviceId);
+        stream = new RtDataStream('http://localhost:31415/rt-stream', this.deviceType, this.deviceId);
 
         stream.connect(
           function open(){
@@ -115,6 +117,10 @@
           });
       }
 
+      function stop() {
+        stream.disconnect();
+      }
+
       return {
         chartConfig: chartConfig,
         getSeries: getSeries,
@@ -122,7 +128,8 @@
         getData: getData,
         setDeviceType: setDeviceType,
         setDeviceId: setDeviceId,
-        start: start
+        start: start,
+        stop: stop
       };
 
   }]);
