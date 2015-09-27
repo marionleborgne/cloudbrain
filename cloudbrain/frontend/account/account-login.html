@@ -1,0 +1,34 @@
+<md-content class="hc-background" layout layout-padding layout-align="center">
+  <md-whiteframe class="md-whiteframe-z2" flex="60" flex-sm="95" layout-padding layout-align="center center">
+
+    <md-content layout="row" layout-sm="column" layout-align="center center" flex>
+      <div layout="column" flex="70" layout-align="center center" layout-margin>
+		  	<h2 class="md-headline">Login</h2>
+       	<form name="loginForm" layout-fill>
+          <md-input-container>
+            <label>Username or Email</label>
+            <input ng-model="data.username" type="text" required name="username">
+						<!-- Error Message
+						<div ng-messages="loginForm.username.$pristine || data.missing.password || loginForm.password.$error ">
+                <div ng-message="required">This is required.</div>
+              </div> -->
+          </md-input-container>
+          <md-input-container>
+            <label>Password</label>
+            <input ng-model="data.password" type="password" name="password" required>
+						<!-- Error Message           
+							<div ng-messages="loginForm.password.$error || data.missing.password" ng-hide="loginForm.username.$pristine">
+                <div ng-message="required">This is required.</div>
+              </div> -->
+          </md-input-container>
+          <section layout="row" layout-sm="column" layout-align="center center">
+	          <md-progress-circular md-mode="indeterminate" ng-if="data.loading"></md-progress-circular>
+	          <md-button class="md-raised" aria-label="Login" ng-click="login()"  type="submit" ng-if="!data.loading">
+            <span >Login</span>
+	          </md-button>
+          </section>
+        </form>
+    	</div>
+    </md-content>
+  </md-whiteframe>
+</md-content>
