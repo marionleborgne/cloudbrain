@@ -87,9 +87,14 @@ function   ( $scope , $http , $interval , $log , apiService , dataService ) {
         $scope.chartBar.title.text = device.name + ' ' + device.id;
         $scope.chartStock.title.text = device.name + ' ' + device.id;
         $scope.showClick=true;
+
+        $scope.chartMuse = true;
+        /*
         if ('muse' === device.name){
           $scope.chartMuse = true;
         }
+        */
+
         var metric = 'eeg';
         $scope.lastTimestamp = Date.now() * 1000; //microseconds
         $scope.cloudbrain = baseURL + '/data?device_name='+device.name+'&metric='+metric+'&device_id='+device.id+'&callback=JSON_CALLBACK&start='+$scope.lastTimestamp;
