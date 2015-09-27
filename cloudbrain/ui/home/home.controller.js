@@ -21,7 +21,6 @@
     apiService.refreshPhysicalDeviceNames().then(function(response) {
       angular.copy(response.data, $scope.model.deviceNames);
       console.log('devices loaded:', response);
-
     });
 
     var setChannelSeries = function(data){

@@ -2,11 +2,10 @@
   'use strict';
 
   angular.module('cloudbrain.rtchart')
-    .directive('rtChart', ['$rootScope', '$matter', 'RtChart', function($rootScope, $matter, RtChart){
+    .directive('rtChart', ['$rootScope', '$matter', 'apiService', 'RtChart', function($rootScope, $matter, apiService, RtChart){
 
       var link = function(scope, element){
         scope.deviceNames = ['muse', 'openbci'];
-
         scope.series = RtChart.getSeries();
         scope.data = RtChart.getData();
         scope.labels = RtChart.getLabels();
@@ -21,9 +20,14 @@
         };
 
         $rootScope.$watch('currentUser', function (newVal) {
-          if(newVal == null) {
+          if(newVal === null) {
             RtChart.stop();
           }
+        });
+
+        apiService.refreshPhysicalDeviceNames().then(function(response) {
+          angular.copy(response.data, scope.deviceNames);
+          console.log('devices loaded:', response);
         });
 
       };
