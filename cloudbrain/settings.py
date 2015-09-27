@@ -127,36 +127,35 @@ DEVICE_METADATA = [
 
       ]
   },
-  {
-    'device_name': 'neurosky',
-    'device_type': 'eeg_headset',
-    'metrics': [
-      {
-        'metric_name': 'concentration',
-        'num_channels': 1,
-        'metric_description': None
-      },
-      {
-        'metric_name': 'meditation',
-        'num_channels': 1,
-        'metric_description': None
-      },
-      {
-        'metric_name': 'signal_strength',
-        'num_channels': 1,
-        'metric_description': None
-      },
-    ]
-  },
-  {
-    'device_name': 'pulsesensor',
-    'device_type': 'heart_rate_monitor',
-    'metrics': [
-      {
-        'metric_name': 'raw',
-        'num_channels': 1,
-        'metric_description': None
-      }
-    ]
-  }
+  # {
+  #   'device_name': 'neurosky',
+  #   'device_type': 'eeg_headset',
+  #   'metrics': [
+  #     {
+  #       'metric_name': 'concentration',
+  #       'num_channels': 1,
+  #       'metric_description': None
+  #     },
+  #     {
+  #       'metric_name': 'meditation',
+  #       'num_channels': 1,
+  #       'metric_description': None
+  #     },
+  #     {
+  #       'metric_name': 'signal_strength',
+  #       'num_channels': 1,
+  #       'metric_description': None
+  #     },
+  #   ]
+  # },
+  #{
+  #  'device_name': 'pulsesensor',
+  #  'device_type': 'heart_rate_monitor',
+  #  'metrics': [
+  #    {
+  #      'metric_name': 'raw',
+  #      'num_channels': 1,
+  #   }
+  #  ]
+  #}
 ]

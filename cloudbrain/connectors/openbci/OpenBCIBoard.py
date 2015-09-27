@@ -62,7 +62,7 @@ class OpenBCIBoard(object):
 
     while self.streaming:
       sample = self._read_serial_binary()
-      for callback_function in callback_functions:
+      for (metric, callback_function) in callback_functions.items():
         callback_function(sample)
 
 
