@@ -1,0 +1,74 @@
+body {
+  color: #788288;
+  background-color: transparent;
+  font-size:1.6em;
+}
+.logo {
+  float: left;
+  width: 30px;
+  margin-right: 10px;
+  margin-top: 20px;
+}
+
+#logo {
+  padding-left: 15px;
+}
+
+
+#bot_charts {
+	padding-top: 10px;
+}
+
+/*Navbar*/
+label {
+  color: white;
+}
+.username-dropdown .md-select-placeholder {
+  color:white !important;
+}
+.account-buttons {
+  margin-top:8px;
+  margin-left:20px;
+}
+.hc-btn {
+  font-size:.8em;
+}
+.hc-background {
+  background-color: #f2f4f8;
+}
+.md-whiteframe-z1,.md-whiteframe-z2 {
+  background-color:white !important;
+}
+md-sidenav, 
+md-sidenav.md-locked-open, 
+md-sidenav.md-closed.md-locked-open-add-active {
+    min-width: 130px !important;
+    width: 55vw !important;
+    max-width: 400px !important;
+}
+.navbar-dark {
+  background-color: #616161 !important;
+}
+.hc-icon {
+  font-size:1.2em !important;
+}
+.hc-title {
+  font-size:1.2em;
+}
+.outline-green {
+  background:none !important;
+  border: 2px solid rgb(0,180,23);
+}
+.outline-blue {
+  background:none !important;
+  border: 2px solid rgb(33,150,243);
+}
+.outline {
+  background:none !important;
+  border: 2px solid;
+  border-radius:4px;
+}
+.navbtn-wrapper {
+  margin-right:40px;
+  margin-left:40px;
+}

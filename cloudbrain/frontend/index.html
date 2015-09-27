@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Cloudbrain</title>
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="account/account.css">
+  <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css"></link>
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css"></link>
+  <!-- <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.css"> -->
+</head>
+
+<body ng-app="cloudbrain" ng-cloak ng-controller="AppCtrl" class="hc-background">
+  <md-toolbar class="shadow-z-2" ng-controller="AccountCtrl">
+    <div class="md-toolbar-tools">
+      <h2 class="md-display-2">
+          <a href="" class="hc-title" ui-sref="home">
+            <img src="images/brain-white.png" alt="cloudbrain" class="logo" />
+              Cloudbrain
+          </a>
+      </h2>
+      <span flex></span>
+      <div nf-if="navButtons" class="navbtn-wrapper" layout="row" ng-repeat="btn in navButtons" >
+        <md-button class="nav-buttons outline" ng-click="clickBtn($index)">{{btn.text}}</md-button>
+      </div>
+      <div></div>
+      <div ng-if="!currentUser" layout="row">
+        <md-button class="nav-buttons outline-green" ui-sref="login" >Login</md-button>
+        <md-button class="nav-buttons outline-blue" ui-sref="signup">Signup</md-button>
+      </div>
+      <md-select placeholder="{{currentUser.username || 'Account'}}" ng-if="currentUser" ng-model="someVal" aria-label="User" class="username-dropdown">
+        <md-option ui-sref="account">Profile</md-option>
+        <md-option ng-click="logout()">Logout</md-option>
+      </md-select>
+        <!-- <md-button class="md-warn" ui-sref="signup" href="#/signup">Login</md-button> -->
+    </div>
+  </md-toolbar>
+  <!-- Page Content -->
+  <div ui-view class="container-fluid hc-background"></div>
+  <!-- Library Scripts -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+  <script src="http://code.highcharts.com/adapters/standalone-framework.js"></script>
+  <script src="http://code.highcharts.com/stock/highstock.src.js"></script>
+  <!--<script src="bower_components/highcharts/highcharts.src.js"></script>-->
+  <script src="http://code.highcharts.com/highcharts-more.js"></script>
+  <script src="bower_components/highcharts-ng/src/highcharts-ng.js"></script>
+  <script src="bower_components/kyper-matter/dist/matter.bundle.js"></script>
+  <script src="bower_components/angular-material/angular-material.min.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.0.3/sockjs.js"></script>
+  <script src="bower_components/Chart.js/Chart.js"></script>
+  <script src="bower_components/angular-chart.js/angular-chart.js"></script>
+
+  <!-- Application Scripts -->
+  <script src="app.js"></script>
+  <script src="app.controller.js"></script>
+  <script src="app-routes.js"></script>
+  <script src="home/home.module.js"></script>
+  <script src="home/home.controller.js"></script>
+  <script src="account/account.module.js"></script>
+  <script src="account/account.controller.js"></script>
+  <script src="rt-chart/rt-chart.module.js"></script>
+  <script src="rt-chart/rt-datastream.service.js"></script>
+  <script src="rt-chart/rt-chart.service.js"></script>
+  <script src="rt-chart/devices.service.js"></script>
+  <script src="rt-chart/rt-chart.directive.js"></script>
+
+  <!-- Live Reload Script -->
+  <script type='text/javascript' id="__bs_script__">//<![CDATA[document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.2.8.2.js'><\/script>".replace("HOST", location.hostname));
+  //]]></script>
+</body>
+</html>

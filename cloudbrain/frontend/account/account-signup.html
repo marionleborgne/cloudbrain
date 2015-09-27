@@ -1,0 +1,32 @@
+<md-content class="hc-background" layout layout-padding layout-align="center" flex="50">
+  <md-whiteframe class="md-whiteframe-z2" flex="60" flex-sm="80" layout-align="center center" layout-padding>
+    <md-content layout="row" layout-sm="column" layout-align="center center" flex>
+    <div layout="column" layout-sm="column" layout-margin flex="70" layout-align="center center">
+  		<h2 class="md-headline">New User Signup</h2>
+       	<form name="signupForm" layout-fill>
+		      <md-input-container>
+		        <label>Username</label>
+		        <input ng-model="data.username">
+		      </md-input-container>
+		      <md-input-container flex="50">
+		        <label>Name</label>
+		        <input ng-model="data.name">
+		      </md-input-container>
+		      <md-input-container flex="50">
+		        <label>Email</label>
+		        <input ng-model="data.email" ng-required="true" type="email">
+		      </md-input-container>
+		      <md-input-container flex="50">
+		        <label>Password</label>
+		        <input ng-model="data.password" ng-required="true" type="password">
+		      </md-input-container>
+	      </form>
+      <section layout="column" layout-sm="column" layout-align="center center">
+        <md-button class="md-raised md-primary login-btn" ng-click="signup()">Sign Up</md-button>
+ <!--        <md-button class="md-raised md-primary login-btn google-login-btn" ng-click="" disabled>Sign up using Google</md-button> -->
+      	
+      </section>
+    </div>
+    </md-content>
+  </md-whiteframe>
+</md-content>
