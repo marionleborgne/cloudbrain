@@ -8,12 +8,13 @@ class Connector(object):
   
     __metaclass__ = ABCMeta
   
-    def __init__(self, publishers, buffer_size, device_name, device_port):
+    def __init__(self, publishers, buffer_size, device_name, device_port, device_mac=None):
 
       self.metrics = get_metrics_names(device_name)
       self.device = None
       self.device_port = device_port
       self.device_name = device_name
+      self.device_mac = device_mac
 
       self.buffers = {metric: ConnectorBuffer(buffer_size, publishers[metric].publish) for metric in self.metrics}
       self.publishers = publishers

@@ -43,7 +43,7 @@ class OpenBCIConnector(Connector):
       Handle OpenBCI samples for that metric
       :param sample: the sample to handle
       """
-      message = {"channel_%s" % i: sample.channel_data[i] for i in xrange(num_channels)}
+      message = {"channel_%s" % i: "%.4f" %(sample.channel_data[i]*10**6) for i in xrange(num_channels)}
       message['timestamp'] = int(time.time() * 1000000) # micro seconds
 
       self.buffers[metric_name].write(message)
