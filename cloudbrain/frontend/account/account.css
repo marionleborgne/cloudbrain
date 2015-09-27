@@ -1,0 +1,32 @@
+.login-box {
+	text-align:center;
+}
+.login-input {
+	margin-top: 20px;
+	margin-bottom:20px;
+}
+.account-dropdown {
+	margin-right:25px;
+}
+
+.account-dropdown-label {
+	color:white;
+}
+.account-dropdown-label:hover{
+	text-decoration: none;
+	color:#337ab7;
+}
+.account-dropdown-label .username {
+	font-size:1.6em;
+	margin-top:50%;
+	display:inline;
+}
+.login-btn {
+	padding:5px !important;
+	padding-right:10px !important;
+	padding-left:10px !important;
+	margin-bottom:20px;
+}
+.google-login-btn {
+	background-color:#DD4B39 !important;
+}

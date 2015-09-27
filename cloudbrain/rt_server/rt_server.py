@@ -80,17 +80,22 @@ class RtStreamConnection(SockJSConnection):
             self.subscribers[metric].connect()
 
     def handle_channel_unsubscription(self, unsubscription_msg):
+        logging.info('Unsubscription received for ' + unsubscription_msg['metric'])
         if unsubscription_msg['metric'] in self.subscribers:
             self.subscribers[unsubscription_msg['metric']].disconnect()
 
     def on_close(self):
-        for (metric, subscriber) in self.subscribers.keys():
-          if subscriber is not None:
-              subscriber.disconnect()
+        logging.info('Disconnecting client...')
+        for metric in self.subscribers.keys():
+            subscriber = self.subscribers[metric]
+            if subscriber is not None:
+                logging.info('Disconnecting subscriber for metric: ' + metric)
+                subscriber.disconnect()
 
         self.subscribers = {}
         #self.timeout.stop()
         self.clients.remove(self)
+        logging.info('Client disconnection complete!')
 
     def send_heartbeat(self):
         self.broadcast(self.clients, 'message')
@@ -110,8 +115,6 @@ class RtDataStreamHandler(RequestHandler):
 
 # Based on: https://pika.readthedocs.org/en/0.9.14/examples/tornado_consumer.html
 class TornadoSubscriber(object):
-
-    QUEUE = 'test'
 
     def __init__(self, callback, device_name, device_id, rabbitmq_address, metric_name):
         self.callback = callback
@@ -141,11 +144,15 @@ class TornadoSubscriber(object):
     def on_connected(self, connection):
         self.connection = connection
         self.connection.add_on_close_callback(self.on_connection_closed)
+        self.connection.add_backpressure_callback(self.on_backpressure_callback)
         self.open_channel()
 
     def on_connection_closed(self, connection, reply_code, reply_text):
         self.connection = None
         self.channel = None
+
+    def on_backpressure_callback(self, connection):
+        logging.info('******** Backpressure detected for ' + self.get_key())
 
     def open_channel(self):
         self.connection.channel(self.on_channel_open)
@@ -155,29 +162,31 @@ class TornadoSubscriber(object):
         self.channel.add_on_close_callback(self.on_channel_closed)
         # self.setup_exchange(self.EXCHANGE)
         # self.channel.confirm_delivery(self.on_delivery_confirmation)
-        key = "%s:%s:%s" % (self.device_id, self.device_name, self.metric_name)
+        logging.info("Declaring exchange: " + self.get_key())
         self.channel.exchange_declare(self.on_exchange_declareok,
-                                      exchange=key,
-                                      type='direct')
+                                      exchange=self.get_key(),
+                                      type='direct',
+                                      passive=True)
+                                      #type='direct')
         # self.queue_name = self.channel.queue_declare(exclusive=True).method.queue
 
     def on_channel_closed(self, channel, reply_code, reply_text):
         self.connection.close()
 
     def on_exchange_declareok(self, unused_frame):
-        self.channel.queue_declare(self.on_queue_declareok, self.QUEUE)
+        self.channel.queue_declare(self.on_queue_declareok, self.get_key())
 
     def on_queue_declareok(self, unused_frame):
-        key = "%s:%s:%s" %(self.device_id,self.device_name, self.metric_name)
+        logging.info("Binding queue: " + self.get_key())
         self.channel.queue_bind(
                        self.on_bindok,
-                       exchange=key,
-                       queue=self.QUEUE,
-                       routing_key=key)
+                       exchange=self.get_key(),
+                       queue=self.get_key(),
+                       routing_key=self.get_key())
 
     def on_bindok(self, unused_frame):
         self.channel.add_on_cancel_callback(self.on_consumer_cancelled)
-        self.consumer_tag = self.channel.basic_consume(self.on_message, self.QUEUE)
+        self.consumer_tag = self.channel.basic_consume(self.on_message, self.get_key())
 
     def on_consumer_cancelled(self, method_frame):
         if self.channel:
@@ -189,6 +198,10 @@ class TornadoSubscriber(object):
 
     def acknowledge_message(self, delivery_tag):
         self.channel.basic_ack(delivery_tag)
+
+    def get_key(self):
+        key = "%s:%s:%s" %(self.device_id,self.device_name, self.metric_name)
+        return key
 
 if __name__ == "__main__":
 

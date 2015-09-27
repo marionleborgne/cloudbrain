@@ -1,0 +1,37 @@
+{
+  "name": "kyper-matter",
+  "main":["dist/matter.bundle.js"],
+  "description": "Simple application functionality like authentication and local/session/token storage.",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "authors": [
+    "Scott Prue <sprue.dev@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "**/*.md",
+    "node_modules",
+    "bower_components",
+    "test",
+    "package.json",
+    ".DS_Store",
+    "**/.DS_Store",
+    "test",
+    "redirect.html",
+    "index.html",
+    "karma.conf.js",
+    "gulpfile.js",
+    "LICENSE",
+    "examples",
+    "wiki",
+    "config.json"
+  ],
+  "repository":{
+    "type":"git",
+    "url":"git://github.com/KyperTech/matter"
+  }
+}

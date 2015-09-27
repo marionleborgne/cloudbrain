@@ -1,0 +1,32 @@
+{
+  "name": "cloudbrain",
+  "version": "0.0.1",
+  "description": "User interface of cloudbrain.",
+  "main": "app-routes.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/marionleborgne/cloudbrain.git"
+  },
+  "keywords": [
+    "cloudbrain",
+    "eeg",
+    "openbci"
+  ],
+  "authors": [
+    "william.wnekowicz@gmail.com",
+    "jnaulty@gmail.com",
+    "Prescott Prue <sprue.dev@gmail.com>"
+  ],
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/marionleborgne/cloudbrain/issues"
+  },
+  "homepage": "https://github.com/marionleborgne/cloudbrain#readme",
+  "devDependencies": {
+    "browser-sync": "^2.8.2",
+    "gulp": "^3.9.0"
+  }
+}
