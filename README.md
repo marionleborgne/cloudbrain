@@ -78,11 +78,11 @@ For the mock data streamed above, the command would be:
 
 ### Visualize data
 Start the demo UI:
-* `cd cloudbrain/demo`
+* `cd cloudbrain/demo_ui`
 * `npm install`
 * `bower install`
 * Start the REST API server `python cloudbrain/datastore/rest_api_server.py`
-* Open `demo/index.html` in your browser.
+* Open `demo_ui/index.html` in your browser.
 
 ### [Optional] Generate binaries
 * Install PyInstaller `pip install pyinstaller`
