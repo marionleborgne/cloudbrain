@@ -8,12 +8,12 @@ from cloudbrain.utils.metadata_info import get_num_channels
 class OpenBCIConnector(Connector):
 
 
-  def __init__(self, publishers, buffer_size, device_type='openbci', device_port='/dev/tty.OpenBCI-DN0094CZ'):
+  def __init__(self, publishers, buffer_size, device_type='openbci', device_port='/dev/tty.OpenBCI-DN0094CZ', device_mac=None):
     """
 
     :return:
     """
-    super(OpenBCIConnector, self).__init__(publishers, buffer_size, device_type, device_port)
+    super(OpenBCIConnector, self).__init__(publishers, buffer_size, device_type, device_port, device_mac)
 
 
 
@@ -33,7 +33,7 @@ class OpenBCIConnector(Connector):
     self.device.start(cb_functions)
 
 
-  def callback_factory(self, metric_name, num_args):
+  def callback_factory(self, metric_name, num_channels):
     """
     Callback function generator for OpenBCI metrics
     :return: callback function
@@ -43,7 +43,7 @@ class OpenBCIConnector(Connector):
       Handle OpenBCI samples for that metric
       :param sample: the sample to handle
       """
-      message = {"channel_%s" % i: sample.channel_data[i] for i in xrange(num_args)}
+      message = {"channel_%s" % i: sample.channel_data[i] for i in xrange(num_channels)}
       message['timestamp'] = int(time.time() * 1000000) # micro seconds
 
       self.buffers[metric_name].write(message)
