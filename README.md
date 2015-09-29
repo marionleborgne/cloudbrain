@@ -44,7 +44,7 @@ You can stream some Muse mock data using:
 * `python cloudbrain/publishers/sensor_publisher.py --mock -n muse -i octopicorn`
 
 ### Subscribers: get data from cloudbrain
-* Write data to a file: `python cloudbrain/subscribers/file_writer_subscriber.py`
+* Write data to a file: `python cloudbrain/apps/file_writer_subscriber.py`
 * Use the `--help` flag for the docs.
 
 For the mock data streamed above, the command would be:
