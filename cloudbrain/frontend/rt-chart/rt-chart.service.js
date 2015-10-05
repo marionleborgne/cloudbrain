@@ -23,7 +23,7 @@
           scaleStartValue: null,
           scaleLineColor: "rgba(0,0,0,.1)",
           scaleLineWidth: 1,
-          scaleShowLabels: false,
+          scaleShowLabels: true,
           scaleLabel: "<%=value%>",
           scaleIntegersOnly: false,
           scaleBeginAtZero: true,
@@ -79,7 +79,7 @@
       }
 
       function getLabels() {
-        for (var a=[],i=0;i<100;++i) a[i]='0';
+        for (var a=[],i=0;i<100;++i) a[i]='';
         return a;
       }
 
