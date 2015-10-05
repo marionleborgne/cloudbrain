@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('cloudbrain.rtchart')
-    .directive('rtChart', ['$rootScope', '$matter', 'apiService', 'RtChart', function($rootScope, $matter, apiService, RtChart){
+    .directive('rtChart', ['$rootScope', '$interval', '$matter', 'apiService', 'RtChart', function($rootScope, $interval, $matter, apiService, RtChart){
 
       var link = function(scope, element){
         scope.deviceNames = ['muse', 'openbci'];
@@ -14,9 +14,8 @@
         scope.showChart = function () {
           RtChart.setDeviceType(scope.selectedDevice);
           RtChart.setDeviceId($matter.currentUser.username);
-          RtChart.start(function(){
-            scope.$apply();
-          });
+          RtChart.start();
+          $interval(function () {}, 50);
         };
 
         $rootScope.$watch('currentUser', function (newVal) {

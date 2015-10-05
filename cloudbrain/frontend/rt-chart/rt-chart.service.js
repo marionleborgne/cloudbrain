@@ -109,7 +109,6 @@
                     data[channel.split('_')[1]].shift();
                   }
                 }
-                callback();
             });
           },
           function close(){
