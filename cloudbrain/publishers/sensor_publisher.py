@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+
 import argparse
 
 from cloudbrain.publishers.PikaPublisher import PikaPublisher

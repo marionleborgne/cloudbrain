@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+
 from cloudbrain.subscribers.PikaSubscriber import PikaSubscriber
 from cloudbrain.subscribers.PipeSubscriber import PipeSubscriber
 from cloudbrain.utils.metadata_info import get_num_channels, get_supported_metrics, get_supported_devices
@@ -118,7 +120,7 @@ def parse_args():
                       help="The subscriber to use to get the data.\n"
                       "Possible options are pika, pipe.\n"
                       "The default is pika.")
-  
+
 
   opts = parser.parse_args()
   if opts.device_name == "openbci" and opts.device_port is not None:
@@ -135,7 +137,7 @@ def main():
   metric_name = opts.metric_name
   pipe_name = opts.pipe
   subscriber_type = opts.subscriber
-  
+
   run(device_name,
       device_id,
       cloudbrain_address,
