@@ -40,8 +40,8 @@ def connect_muse(port=9090):
 
 
 class MuseConnector(Connector):
-  def __init__(self, publishers, buffer_size, device_name='muse', device_port='9090'):
-    super(MuseConnector, self).__init__(publishers, buffer_size, device_name, device_port)
+  def __init__(self, publishers, buffer_size, device_name='muse', device_port='9090', device_mac=None):
+    super(MuseConnector, self).__init__(publishers, buffer_size, device_name, device_port, device_mac)
 
   def connect_device(self):
 
