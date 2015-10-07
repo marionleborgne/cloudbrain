@@ -17,7 +17,7 @@
             RtChart.stop();
           }else{
             RtChart.setDeviceType(scope.selectedDevice);
-            RtChart.setDeviceId($matter.currentUser.username);
+            RtChart.setDeviceId('Will');
             RtChart.start();
             $interval(function () {}, 50);
           }

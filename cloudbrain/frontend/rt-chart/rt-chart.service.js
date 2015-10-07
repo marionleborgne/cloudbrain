@@ -17,10 +17,10 @@
           animationSteps: 60,
           animationEasing: "easeOutQuart",
           showScale: true,
-          scaleOverride: false,
-          scaleSteps: null,
-          scaleStepWidth: null,
-          scaleStartValue: null,
+          scaleOverride: true,
+          scaleSteps: 40,
+          scaleStepWidth: 50,
+          scaleStartValue: 0,
           scaleLineColor: "rgba(0,0,0,.1)",
           scaleLineWidth: 1,
           scaleShowLabels: true,
@@ -105,7 +105,7 @@
                 delete msg.timestamp;
                 for(var channel in msg){
                   data[channel.split('_')[1]].push(msg[channel]);
-                  if(data[channel.split('_')[1]].length > 100){
+                  if(data[channel.split('_')[1]].length > 300){
                     data[channel.split('_')[1]].shift();
                   }
                 }
