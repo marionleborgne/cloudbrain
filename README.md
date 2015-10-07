@@ -1,4 +1,4 @@
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/docs/images/cb-logo-low-res.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/docs/images/cb-logo-low-res.png)
 
 #Overview
 
@@ -32,9 +32,7 @@ Then install liblo through brew
 * `cd cloudbrain`
 
 ### Install
-* `python setup.py install`
-
-You may have to add `sudo` in front (`sudo python setup.py install`) if it says "Permission denied".
+* `python setup.py install --user`
 
 ### Publishers: send data to cloudbrain
 * Run `python cloudbrain/publishers/sensor_publisher.py`
@@ -136,11 +134,11 @@ Many thanks to my teamates:
 ## Cloudbrain's data visualizations
 
 ### Aggregated data (bar charts)
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/docs/images/data-aggregates.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/docs/images/data-aggregates.png)
 
 ### Live EEG data (radar charts)
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/docs/images/radar-charts.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/docs/images/radar-charts.png)
 
 ### Live EEG data (line charts)
-![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/cloudbrain/docs/images/timeserie-data.png)
+![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/docs/images/timeserie-data.png)
 

@@ -4,7 +4,7 @@
       <md-select placeholder="Select Device Name" ng-model="selectedDevice" id="deviceName" class="form-control">
         <md-option ng-repeat="deviceName in deviceNames">{{deviceName}}</md-option>
       </md-select>
-      <md-button type="submit" ng-click="showChart()" class="md-raised md-primary">Connect</md-button>
+      <md-button type="submit" ng-click="toggleConnection()" class="md-raised md-primary">{{connected ? 'Disconnect' : 'Connect'}}</md-button>
     </div>
   </md-whiteframe>
   <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels"
