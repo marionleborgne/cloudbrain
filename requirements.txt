@@ -4,3 +4,4 @@ pyserial==2.7
 wheel==0.24.0
 sockjs-tornado
 flask
+cassandra-driver
