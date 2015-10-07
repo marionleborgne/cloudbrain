@@ -150,8 +150,15 @@ def run(device_name='muse',
 
 
 if __name__ == "__main__":
-    main()
     # run(device_name='openbci',
     #     mock_data_enabled=False,
     #     device_id='Will',
-    #     device_port='/dev/tty.usbserial-DN0094CZ')
+    #     device_port='/dev/tty.usbserial-DN0095VT')
+
+
+    # run(device_name='muse',
+    #      mock_data_enabled=True,
+    #      device_id='Will')
+
+    main()
+
