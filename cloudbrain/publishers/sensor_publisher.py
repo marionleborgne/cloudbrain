@@ -152,15 +152,15 @@ def run(device_name="muse",
 
 
 if __name__ == "__main__":
-    # run(device_name='openbci',
+    #run(device_name='openbci',
     #     mock_data_enabled=False,
     #     device_id='Will',
     #     device_port='/dev/tty.usbserial-DN0095VT')
 
 
-    run(device_name='muse',
-         mock_data_enabled=False,
-         device_id='Will')
+    #run(device_name='muse',
+    #     mock_data_enabled=False,
+    #     device_id='Will')
 
-    #main()
+    main()
 
