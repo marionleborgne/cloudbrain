@@ -19,9 +19,11 @@
     "tests"
   ],
   "dependencies": {
+    "Chart.js": "~1.0.2",
     "angular": "~1.4.3",
     "angular-animate": "~1.4.5",
     "angular-bootstrap": "~0.13.3",
+    "angular-chart.js": "~0.8.4",
     "angular-material": "~0.10.1",
     "angular-ui-router": "~0.2.15",
     "bootstrap-css-only": "~3.3.4",
@@ -29,8 +31,7 @@
     "highcharts": "~4.1.7",
     "highcharts-ng": "~0.0.8",
     "kyper-matter": "~0.1.1",
-    "Chart.js": "~1.0.2",
-    "angular-chart.js": "~0.8.4"
+    "two.js": "~0.5.0"
   },
   "resolutions": {
     "kyper-matter": "~0.1.1"
