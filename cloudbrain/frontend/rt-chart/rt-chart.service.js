@@ -117,7 +117,9 @@
       }
 
       function stop() {
-        stream.disconnect();
+        if(Object.keys(stream).length) {
+          stream.disconnect();
+        }
       }
 
       return {

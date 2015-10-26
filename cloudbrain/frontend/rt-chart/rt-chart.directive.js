@@ -5,6 +5,7 @@
     .directive('rtChart', ['$rootScope', '$interval', '$matter', 'apiService', 'RtChart', function($rootScope, $interval, $matter, apiService, RtChart){
 
       var link = function(scope, element){
+        scope.currentUser = $rootScope.currentUser;
         scope.deviceNames = ['muse', 'openbci'];
         scope.series = RtChart.getSeries();
         scope.data = RtChart.getData();
@@ -17,7 +18,7 @@
             RtChart.stop();
           }else{
             RtChart.setDeviceType(scope.selectedDevice);
-            RtChart.setDeviceId($matter.currentUser.username);
+            RtChart.setDeviceId(scope.currentUser.username);
             RtChart.start();
             $interval(function () {}, 50);
           }
