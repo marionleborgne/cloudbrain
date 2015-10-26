@@ -9,7 +9,7 @@
 
       var stream = {};
 
-      var data = [[],[],[],[]];
+      var data = [[],[],[],[],[],[],[],[]];
 
       function chartConfig() {
         var defaultConfig = {
@@ -74,7 +74,7 @@
       }
 
       function getSeries() {
-        var staticSeries = ['channel_0', 'channel_1', 'channel_2', 'channel_3'];
+        var staticSeries = ['channel_0', 'channel_1', 'channel_2', 'channel_3', 'channel_4', 'channel_5', 'channel_6', 'channel_7'];
         return staticSeries;
       }
 
