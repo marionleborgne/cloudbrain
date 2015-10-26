@@ -14,7 +14,7 @@
 			.then(function (loginRes){
 				$log.log('Successful login:', loginRes);
 				$scope.data.loading = false;
-				$rootScope.currentUser = $matter.currentUser;
+				$rootScope.currentUser = $matter.currentUser || $scope.data;
 				$rootScope.$digest();
 				$scope.showToast('Logged In');
 				$state.go('rtchart');
@@ -53,6 +53,7 @@
 					$scope.data.loading = false;
 					$log.log('Successful login:', loginRes);
 					$scope.showToast('Logged In');
+					$rootScope.currentUser = $matter.currentUser || $scope.data;
 					$state.go('rtchart');
 				}, function (err){
 					$scope.data.loading = false;
