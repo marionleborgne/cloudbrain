@@ -22,6 +22,10 @@
       url:'/calibration',
       template:'<calibration></calibration>'
     })
+    .state('brainsquared', {
+      url:'/brainsquared',
+      template:'<brainsquared></brainsquared>'
+    })
     .state('signup', {
       url:'/signup',
       templateUrl:'account/account-signup.html',

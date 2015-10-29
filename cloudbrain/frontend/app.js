@@ -8,6 +8,7 @@
   	'highcharts-ng',
     'cloudbrain.rtchart',
   	'cloudbrain.calibration',
+  	'cloudbrain.brainsquared',
   	'cloudbrain.account',
   	'cloudbrain.home'
   ]);
@@ -32,7 +33,7 @@
       'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
        '200', '300', '400', 'A100'],
       'contrastLightColors': undefined    // could also specify this if default was 'dark'
-    })
+    });
 
 	  $mdThemingProvider.theme('default')
 	    .primaryPalette('cloudbrain',  {
@@ -41,7 +42,7 @@
          'hue-2': '600',
          'hue-3': '900'
        })
-	    .accentPalette('pink')
+	    .accentPalette('pink');
 	});
   app.service('$matter', ['$log', '$window',  '$rootScope', function ($log, $window, $rootScope){
     var matter = new $window.Matter('cloudbrain', {localServer:false});

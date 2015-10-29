@@ -1,0 +1,9 @@
+<div>
+    <md-whiteframe class="md-whiteframe-z2" layout layout-align="center center" layout-padding>
+      <div layout="row" layout-align="center center">
+        <md-button type="submit" ng-click="toggleConnection()" class="md-raised md-primary">{{connected ? 'Classifying' : 'Start'}}</md-button>
+      </div>
+    </md-whiteframe>
+    <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels"
+        chart-legend="false" chart-series="series" chart-options="options"></canvas>
+</div>
