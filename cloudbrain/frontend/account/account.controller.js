@@ -5,7 +5,7 @@
 		$scope.data = {username:null, password:null};
 		var DEMO_LOGINS = ['will', 'marion', 'amsterdam', 'paris', 'dublin',
 											 'montreal', 'nyc', 'sf', 'toronto', 'neurotechx',
-										 	 'htmchallenge'];
+										 	 'htmchallenge', 'brainsquared'];
 
 		$scope.login = function(){
 			$log.log('Login called', $scope.data);
@@ -35,7 +35,7 @@
 				$scope.showToast('Username and password are required to signup');
 			} else {
 				$scope.showToast('Email us to get access to the alpha demo');
-				// 
+				//
 				// $log.log('Successful login:', $scope.data);
 				// $rootScope.currentUser = $matter.currentUser || $scope.data;
 				// $scope.showToast('Logged In');

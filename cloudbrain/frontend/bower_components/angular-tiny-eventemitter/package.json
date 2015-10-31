@@ -1,0 +1,46 @@
+{
+  "name": "angular-tiny-eventemitter",
+  "version": "1.1.0",
+  "description": "Tiny event emitter for Angular.JS.",
+  "main": "dist/angular-tiny-eventemitter.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "grunt ci",
+    "prepublish": "grunt build"
+  },
+  "keywords": [
+    "angular",
+    "events"
+  ],
+  "author": {
+    "name": "Ruben Vermeersch",
+    "email": "ruben@rocketeer.be",
+    "url": "http://rocketeer.be/"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "~1.9.0",
+    "grunt": "~0.4.4",
+    "grunt-bump": "0.3.1",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-concat": "~0.4.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-contrib-watch": "~0.6.0",
+    "grunt-jscs-checker": "^0.6.1",
+    "grunt-karma": "~0.8.3",
+    "grunt-ngmin": "0.0.3",
+    "karma-chai": "~0.1.0",
+    "karma-chrome-launcher": "~0.1.2",
+    "karma-firefox-launcher": "~0.1.3",
+    "karma-mocha": "~0.1.1",
+    "karma-phantomjs-launcher": "~0.1.2",
+    "mocha": "~1.18.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rubenv/angular-tiny-eventemitter.git"
+  }
+}

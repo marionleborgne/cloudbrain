@@ -1,0 +1,19 @@
+{
+  "name": "angular-tiny-eventemitter",
+  "version": "1.1.0",
+  "main": "dist/angular-tiny-eventemitter.js",
+  "ignore": [
+    "**/.*",
+    "src",
+    "node_modules",
+    "bower_components",
+    "test",
+    "Gruntfile.coffee"
+  ],
+  "dependencies": {
+    "angular": "*"
+  },
+  "devDependencies": {
+    "angular-mocks": "*"
+  }
+}

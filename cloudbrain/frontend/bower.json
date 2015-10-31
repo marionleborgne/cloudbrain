@@ -25,12 +25,14 @@
     "angular-bootstrap": "~0.13.3",
     "angular-chart.js": "~0.8.4",
     "angular-material": "~0.10.1",
+    "angular-tiny-eventemitter": "~1.1.0",
     "angular-ui-router": "~0.2.15",
     "bootstrap-css-only": "~3.3.4",
     "font-awesome": "fontawesome#~4.4.0",
     "highcharts": "~4.1.7",
     "highcharts-ng": "~0.0.8",
     "kyper-matter": "~0.1.1",
+    "three.js": "threejs#*",
     "two.js": "~0.5.0"
   },
   "resolutions": {

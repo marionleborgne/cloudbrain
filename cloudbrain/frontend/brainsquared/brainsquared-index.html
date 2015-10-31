@@ -1,9 +1,13 @@
-<div>
-    <md-whiteframe class="md-whiteframe-z2" layout layout-align="center center" layout-padding>
+<div class="brainsquared">
+    <md-whiteframe class="md-whiteframe-z2 game-controls" layout layout-align="center center" layout-padding>
       <div layout="row" layout-align="center center">
-        <md-button type="submit" ng-click="toggleConnection()" class="md-raised md-primary">{{connected ? 'Classifying' : 'Start'}}</md-button>
+        <md-button type="submit" ng-click="togglePlay()" class="md-raised md-primary">{{connected ? 'Stop' : 'Play'}}</md-button>
+      </div>
+      <div class="game-info score">
+        Score: {{score}}
+      </div>
+      <div class="game-info target">
+        Target: {{minionBananaCollision.target()}}
       </div>
     </md-whiteframe>
-    <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels"
-        chart-legend="false" chart-series="series" chart-options="options"></canvas>
 </div>
