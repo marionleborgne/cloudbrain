@@ -44,7 +44,7 @@ class OpenBCIConnector(Connector):
       :param sample: the sample to handle
       """
       message = {}
-      for i in [0,1]:
+      for i in xrange(num_channels):
           channel_value = "%.4f" %(sample.channel_data[i]*10**9) # Nano volts
           message["channel_%s" % i] = channel_value
           message['timestamp'] = int(time.time() * 1000000) # micro seconds
@@ -52,6 +52,3 @@ class OpenBCIConnector(Connector):
       self.buffers[metric_name].write(message)
 
     return callback
-
-
-
