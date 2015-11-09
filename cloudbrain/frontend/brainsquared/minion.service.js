@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('cloudbrain.brainsquared')
-    .factory('Minion', ['$timeout', 'RtDataStream', 'eventEmitter', function($timeout, RtDataStream, eventEmitter){
+    .factory('Minion', ['$timeout', 'RtDataStream', 'Accuracy', 'eventEmitter', function($timeout, RtDataStream, Accuracy, eventEmitter){
 
       var Minion = function () {
         this.map = THREE.ImageUtils.loadTexture( "../images/minion.png" );
@@ -22,19 +22,26 @@
         magnitude = magnitude || 1;
         direction = direction || 'right';
         var stepSize = direction == 'right' ? magnitude : magnitude * -1;
-        if(this.sprite.position.x > -8.5 && this.sprite.position.x < 8.5) {
+        if(this.sprite.position.x > -5.7 && this.sprite.position.x < 5.7) {
           this.sprite.position.setX(this.sprite.position.x + stepSize);
+        }else if(this.sprite.position.x <= -5.7) {
+          this.sprite.position.setX(-5.6);
+        }else if(this.sprite.position.x >= 5.7) {
+          this.sprite.position.setX(5.6);
         }
       };
 
       Minion.prototype.start = function (callback) {
-        var stream = this.stream = new RtDataStream('http://localhost:31415/rt-stream', 'openbci', 'brainsquared');
-
+        var stream = this.stream = new RtDataStream('http://localhost:31415/rt-stream', 'module1', 'brainsquared');
+        self = this;
         stream.connect(
           function open(){
             console.log('Realtime Connection Open');
             stream.subscribe('classification', function(msg) {
-              this.step(msg.class/10);
+              if(msg.value !== 0){
+                self.step(msg.value/10);
+                Accuracy.step(msg.value/10);
+              }
             });
           },
           function close(){

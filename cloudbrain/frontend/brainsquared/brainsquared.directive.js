@@ -2,14 +2,20 @@
   'use strict';
 
   angular.module('cloudbrain.brainsquared')
-    .directive('brainsquared', ['$document', '$rootScope', '$interval', 'apiService', 'Minion', 'Banana', 'CollisionDetector', 'TargetTagger', 'Box',
-      function($document, $rootScope, $interval, apiService, Minion, Banana, CollisionDetector, TargetTagger, Box){
+    .directive('brainsquared', ['$document', '$rootScope', '$interval', 'apiService', 'Minion', 'Banana', 'CollisionDetector', 'Box', 'Accuracy', 'AnalysisModule',
+      function($document, $rootScope, $interval, apiService, Minion, Banana, CollisionDetector, Box, Accuracy, AnalysisModule){
 
       var link = function(scope, element, attrs){
         $document.on('keypress', function(e) {
           switch(e.which) {
-            case 97: minion.step(0.3, 'left'); break;
-            case 108: minion.step(0.3, 'right'); break;
+            case 97:
+              scope.minion.step(-0.3);
+              Accuracy.step(-0.3);
+              break;
+            case 108:
+              scope.minion.step(0.3);
+              Accuracy.step(0.3);
+              break;
           }
         });
 
@@ -24,59 +30,60 @@
           scene.remove( scope.banana.sprite );
           scope.banana = new Banana();
           scene.add( scope.banana.sprite );
-          scope.minionBananaCollision = new CollisionDetector(minion, scope.banana);
+          scope.minionBananaCollision = new CollisionDetector(scope.minion, scope.banana);
         };
 
-        var minion = new Minion();
-        scene.add( minion.sprite );
-
+        scope.minion = {};
         scope.banana = {};
         scope.score = 0;
+        scope.missed = 0;
         scope.target = '';
+        scope.accuracy = Accuracy.get();
 
-        // var grassMap = THREE.ImageUtils.loadTexture( "../images/grass.png" );
-        // var grassMaterial = new THREE.SpriteMaterial( { map: grassMap, color: 0xffffff, fog: true } );
-        // var grassSprite = new THREE.Sprite( grassMaterial );
-        // scene.add( grassSprite );
+        scope.minion = new Minion();
+        scene.add( scope.minion.sprite );
+
+        // var texture = THREE.ImageUtils.loadTexture( '../images/grass.png' );
+        // var backgroundMesh = new THREE.Mesh(
+        //     new THREE.PlaneGeometry(1, 1, 0),
+        //     new THREE.MeshBasicMaterial({
+        //         map: texture
+        //     }));
         //
-       var texture = THREE.ImageUtils.loadTexture( '../images/grass.png' );
-       var backgroundMesh = new THREE.Mesh(
-           new THREE.PlaneGeometry(50, 50, 0),
-           new THREE.MeshBasicMaterial({
-               map: texture
-           }));
-
-       backgroundMesh .material.depthTest = false;
-       backgroundMesh .material.depthWrite = false;
-
-       // Create your background scene
-       var backgroundScene = new THREE.Scene();
-       var backgroundCamera = new THREE.Camera();
-       backgroundScene .add(backgroundCamera );
-       backgroundScene .add(backgroundMesh );
-
-
+        // backgroundMesh.material.depthTest = false;
+        // backgroundMesh.material.depthWrite = false;
+        //
+        // // Create your background scene
+        // var backgroundScene = new THREE.Scene();
+        // var backgroundCamera = new THREE.Camera();
+        // backgroundScene.add(backgroundCamera );
+        // backgroundScene.add(backgroundMesh );
 
         scope.$watch('minionBananaCollision.hasCollided()', function (newValue, oldValue) {
           if(newValue) {
             console.log('Collision detected!');
             generateNewBanana();
             scope.score += 1;
-            minion.jump();
+            scope.minion.jump();
           }
         }, true);
 
         scope.$watch('banana.sprite.position.y', function (newValue, oldValue) {
           if(newValue <= -2) {
+            scope.missed += 1;
             generateNewBanana();
           }
+        });
+
+        scope.$on('accuracyUpdated', function (event, data) {
+          scope.accuracy = data;
         });
 
         camera.position.z = 3;
 
         var render = function () {
           requestAnimationFrame(render);
-          renderer.render(backgroundScene , backgroundCamera );
+          // renderer.render(backgroundScene , backgroundCamera );
           renderer.render(scene, camera);
         };
 
@@ -95,17 +102,22 @@
         render();
 
         scope.startAll = function () {
-          minion.start();
-          generateNewBanana();
-          scope.movement = $interval(function(){
-            if(scope.banana) { scope.banana.drop(); }
-            TargetTagger.tag(scope.minionBananaCollision.target());
-          }, 50);
+          scope.motorImageryModule = new AnalysisModule('motor_imagery', 'openbci');
+          scope.motorImageryModule.create().then(function () {
+            scope.minion.start();
+            generateNewBanana();
+            scope.movement = $interval(function(){
+              if(scope.banana) { scope.banana.drop(); }
+              var target = scope.minionBananaCollision.target();
+              scope.motorImageryModule.tag(target);
+              Accuracy.setTarget(target);
+            }, 50);
+          });
         };
 
         scope.resetAll = function () {
-          minion.stop();
-          minion.reset();
+          scope.minion.stop();
+          scope.minion.reset();
           scope.banana.reset();
           scope.score = 0;
           $interval.cancel(scope.movement);
@@ -129,15 +141,3 @@
     }]);
 
 })();
-
-
-// TODO:
-// - Subscribe to 'classification' endpoint // brainsquare:openbci:classification
-//
-// - Update Minion position based on step size from classification
-//
-// - Reset bananas off-screen
-// - Choose a random banana and drop it
-// - Determine and publish target number
-//
-// - Increment score on banana/minion collision

@@ -1,14 +1,10 @@
-.game-controls {
-  background-color: #fafafa!important;
-}
+.game-controls { background-color: #fafafa!important; }
 .game-info {
   position: absolute;
   margin-top: 10px;
   font-size: 22px;
 }
-.score {
-  right: 30px;
-}
-.target {
-  left: 30px;
-}
+.score { right: 150px; }
+.missed { right: 30px; }
+.target { left: 30px; }
+.accuracy { left: 210px; }

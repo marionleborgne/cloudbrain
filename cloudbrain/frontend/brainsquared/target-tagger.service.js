@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('cloudbrain.brainsquared')
-    .factory('TargetTagger', ['CREATE_TAG_URL', 'STREAM_MODE', '$http', function(CREATE_TAG_URL, STREAM_MODE, $http){
+    .factory('TargetTagger', ['MODULE_URL', 'STREAM_MODE', '$http', function(MODULE_URL, STREAM_MODE, $http){
 
       var TargetTagger = function (streamMode) {
         this.streamMode = streamMode || false;
@@ -24,7 +24,7 @@
         };
 
         if(this.lastTag != tag || this.streamMode === true){
-          $http.post(CREATE_TAG_URL, body).then(tagSuccess, tagError);
+          $http.post(MODULE_URL + 'module0/tag' , body).then(tagSuccess, tagError);
         }
 
         this.lastTag = tag;
