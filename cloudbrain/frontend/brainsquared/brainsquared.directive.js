@@ -38,7 +38,7 @@
         scope.score = 0;
         scope.missed = 0;
         scope.target = '';
-        scope.accuracy = Accuracy.get();
+        scope.accuracy = {};
 
         scope.minion = new Minion();
         scene.add( scope.minion.sprite );
@@ -110,6 +110,7 @@
               if(scope.banana) { scope.banana.drop(); }
               var target = scope.minionBananaCollision.target();
               scope.motorImageryModule.tag(target);
+              scope.accuracy = Accuracy.get();
               Accuracy.setTarget(target);
             }, 50);
           });
@@ -119,7 +120,9 @@
           scope.minion.stop();
           scope.minion.reset();
           scope.banana.reset();
+          scope.accuracy = {};
           scope.score = 0;
+          scope.missing = 0;
           $interval.cancel(scope.movement);
         };
 
