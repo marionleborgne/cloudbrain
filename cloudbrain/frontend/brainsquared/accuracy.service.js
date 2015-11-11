@@ -32,6 +32,12 @@
         this.target = target;
       };
 
+      Accuracy.prototype.reset = function () {
+        this.accurateSteps = 0;
+        this.totalSteps = 0;
+        this.target = '';
+      };
+
       return new Accuracy();
   }]);
 

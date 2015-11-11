@@ -120,7 +120,7 @@
           scope.minion.stop();
           scope.minion.reset();
           scope.banana.reset();
-          scope.accuracy = {};
+          Accuracy.reset();
           scope.score = 0;
           scope.missing = 0;
           $interval.cancel(scope.movement);
