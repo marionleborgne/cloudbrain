@@ -23,7 +23,8 @@
         var camera = new THREE.PerspectiveCamera( 100, window.innerWidth/window.innerHeight, 0.1, 1000 );
         var renderer = new THREE.WebGLRenderer({ alpha: true });
         renderer.setSize( window.innerWidth, window.innerHeight );
-        renderer.setClearColor( 0xffffff, 1);
+        renderer.setClearColor( 0x000000, 0);
+        renderer.autoClear = false;
         element[0].appendChild( renderer.domElement );
 
         var generateNewBanana = function () {
@@ -45,21 +46,25 @@
         scope.minion = new Minion();
         scene.add( scope.minion.sprite );
 
-        // var texture = THREE.ImageUtils.loadTexture( '../images/grass.png' );
-        // var backgroundMesh = new THREE.Mesh(
-        //     new THREE.PlaneGeometry(1, 1, 0),
-        //     new THREE.MeshBasicMaterial({
-        //         map: texture
-        //     }));
-        //
-        // backgroundMesh.material.depthTest = false;
-        // backgroundMesh.material.depthWrite = false;
-        //
-        // // Create your background scene
-        // var backgroundScene = new THREE.Scene();
-        // var backgroundCamera = new THREE.Camera();
-        // backgroundScene.add(backgroundCamera );
-        // backgroundScene.add(backgroundMesh );
+        var texture = THREE.ImageUtils.loadTexture( '../images/wide-grass.png' );
+        var backgroundMesh = new THREE.Mesh(
+            new THREE.PlaneGeometry(3, 0.2, 0),
+            new THREE.MeshBasicMaterial({
+                map: texture,
+                transparent: true
+            }));
+
+        backgroundMesh.material.depthTest = false;
+        backgroundMesh.material.depthWrite = false;
+
+        // Create your background scene
+        var backgroundScene = new THREE.Scene();
+        var backgroundCamera = new THREE.Camera();
+        backgroundScene.position.setY(-2.5);
+        // backgroundCamera.position.setY(1.5);
+        backgroundCamera.position.set(0,0.46,0);
+        backgroundScene.add(backgroundCamera);
+        backgroundScene.add(backgroundMesh);
 
         scope.$watch('minionBananaCollision.hasCollided()', function (newValue, oldValue) {
           if(newValue) {
@@ -86,8 +91,10 @@
 
         var render = function () {
           requestAnimationFrame(render);
-          // renderer.render(backgroundScene , backgroundCamera );
+          renderer.clear();
           renderer.render(scene, camera);
+          renderer.clearDepth();
+          renderer.render(backgroundScene , backgroundCamera );
         };
 
         // var minionBox = new Box();
