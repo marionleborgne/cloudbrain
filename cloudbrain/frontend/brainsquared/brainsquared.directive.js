@@ -28,13 +28,15 @@
 
         var generateNewBanana = function () {
           scene.remove( scope.banana.sprite );
-          scope.banana = new Banana();
+          scope.banana = new Banana(scope.bananaPosition);
+          scope.banana.sprite.scale.set( 2, 2, 1 );
           scene.add( scope.banana.sprite );
           scope.minionBananaCollision = new CollisionDetector(scope.minion, scope.banana);
         };
 
         scope.minion = {};
         scope.banana = {};
+        scope.bananaPosition = 'left';
         scope.score = 0;
         scope.missed = 0;
         scope.target = '';
@@ -62,6 +64,7 @@
         scope.$watch('minionBananaCollision.hasCollided()', function (newValue, oldValue) {
           if(newValue) {
             console.log('Collision detected!');
+            scope.bananaPosition = scope.bananaPosition == 'left' ? 'right' : 'left';
             generateNewBanana();
             scope.score += 1;
             scope.minion.jump();
@@ -98,6 +101,7 @@
         //
         // bananaBox.sprite.position.copy(scope.banana.sprite.position);
         // bananaBox.sprite.position.setX(scope.banana.sprite.position.x + scope.banana.offset.x + scope.banana.bound.x);
+        // bananaBox.sprite.position.setY(-1);
 
         render();
 
