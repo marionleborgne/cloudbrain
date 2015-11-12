@@ -8,12 +8,12 @@ from cloudbrain.utils.metadata_info import get_num_channels
 class OpenBCIConnector(Connector):
 
 
-  def __init__(self, publishers, buffer_size, device_type='openbci', device_port='/dev/tty.OpenBCI-DN0094CZ', device_mac=None):
+  def __init__(self, publishers, buffer_size, step_size, device_type='openbci', device_port='/dev/tty.OpenBCI-DN0094CZ', device_mac=None):
     """
 
     :return:
     """
-    super(OpenBCIConnector, self).__init__(publishers, buffer_size, device_type, device_port, device_mac)
+    super(OpenBCIConnector, self).__init__(publishers, buffer_size, step_size, device_type, device_port, device_mac)
 
 
 
@@ -28,7 +28,8 @@ class OpenBCIConnector(Connector):
   def start(self):
 
     # callback functions to handle the sample for that metric (each metric has a specific number of channels)
-    cb_functions = {metric: self.callback_factory(metric, get_num_channels(self.device_name, metric)) for metric in self.metrics}
+    cb_functions = {metric: self.callback_factory(metric, get_num_channels(self.device_name, metric))
+                    for metric in self.metrics}
 
     self.device.start(cb_functions)
 
@@ -44,7 +45,7 @@ class OpenBCIConnector(Connector):
       :param sample: the sample to handle
       """
       message = {}
-      for i in [0,1]:
+      for i in range(8):
           channel_value = "%.4f" %(sample.channel_data[i]*10**9) # Nano volts
           message["channel_%s" % i] = channel_value
           message['timestamp'] = int(time.time() * 1000000) # micro seconds
@@ -52,6 +53,4 @@ class OpenBCIConnector(Connector):
       self.buffers[metric_name].write(message)
 
     return callback
-
-
 

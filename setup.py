@@ -5,7 +5,6 @@ import os
 from setuptools import find_packages, setup
 
 
-
 def findRequirements():
   """
   Read the requirements.txt file and parse into requirements for setup's

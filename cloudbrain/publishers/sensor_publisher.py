@@ -46,6 +46,9 @@ def get_args_parser():
 
     parser.add_argument('-b', '--buffer_size', default=10,
                         help='Size of the buffer ')
+    parser.add_argument('-s', '--step_size', default=None,
+                        help='Number of samples the chunk advances by (default is equal to buffer size) ')
+
     parser.add_argument('-p', '--device_port', help="Port used to get data from wearable device.\n"
                                                                   "Common port values:\n"
                                                                   "* 9090 for the Muse\n"
@@ -83,11 +86,15 @@ def main():
     publisher = opts.publisher
     device_mac = opts.device_mac
 
+    step_size = buffer_size
+    if opts.step_size is not None:
+        step_size = int(opts.step_size)
+
     run(device_name,
         mock_data_enabled,
         device_id,
         cloudbrain_address,
-        buffer_size,
+        buffer_size, step_size,
         device_port,
         pipe_name,
         publisher,
@@ -99,7 +106,7 @@ def run(device_name="muse",
         mock_data_enabled=True,
         device_id=MOCK_DEVICE_ID,
         cloudbrain_address=RABBITMQ_ADDRESS,
-        buffer_size=10,
+        buffer_size=10, step_size=10,
         device_port=None,
         pipe_name=None,
         publisher_type="pika",
@@ -136,7 +143,7 @@ def run(device_name="muse",
 
     for publisher in publishers.values():
         publisher.connect()
-    connector = Connector(publishers, buffer_size, device_name, device_port, device_mac)
+    connector = Connector(publishers, buffer_size, step_size, device_name, device_port, device_mac)
     connector.connect_device()
 
     if mock_data_enabled and (publisher_type != 'pipe'):
@@ -163,4 +170,3 @@ if __name__ == "__main__":
     #     device_id='Will')
 
     main()
-
