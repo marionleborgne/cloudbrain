@@ -94,7 +94,7 @@
           renderer.clear();
           renderer.render(scene, camera);
           renderer.clearDepth();
-          renderer.render(backgroundScene , backgroundCamera );
+          // renderer.render(backgroundScene , backgroundCamera );
         };
 
         // var minionBox = new Box();
