@@ -3,6 +3,7 @@ import json
 import random
 
 from flask import Flask, request, current_app, abort
+from flask.ext.cors import CORS
 from functools import wraps
 from cassandra.cluster import NoHostAvailable
 
@@ -14,6 +15,7 @@ from cloudbrain.settings import WEBSERVER_PORT
 _API_VERSION = "v1.0"
 
 app = Flask(__name__)
+CORS(app)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
 from cloudbrain.datastore.CassandraDAO import CassandraDAO
