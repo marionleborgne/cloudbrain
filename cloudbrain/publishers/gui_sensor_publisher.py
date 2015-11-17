@@ -1,3 +1,4 @@
+from gooey import Gooey
 import argparse
 
 from cloudbrain.publishers.PikaPublisher import PikaPublisher
@@ -73,7 +74,7 @@ def get_opts():
     return opts
 
 
-
+@Gooey
 def main():
     opts = get_opts()
     mock_data_enabled = opts.mock
@@ -165,8 +166,8 @@ if __name__ == "__main__":
     #     device_port='/dev/tty.usbserial-DN0095VT')
 
 
-    run(device_name='openbci',
-         mock_data_enabled=True,
-         device_id='marion')
+    #run(device_name='muse',
+    #     mock_data_enabled=False,
+    #     device_id='Will')
 
-    #main()
+    main()
