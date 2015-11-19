@@ -46,7 +46,13 @@ def get_args_parser():
 
     parser.add_argument('-b', '--buffer_size', default=10,
                         help='Size of the buffer ')
-    parser.add_argument('-p', '--device_port', help="Port used for OpenBCI Device.")
+    parser.add_argument('-s', '--step_size', default=None,
+                        help='Number of samples the chunk advances by (default is equal to buffer size) ')
+
+    parser.add_argument('-p', '--device_port', help="Port used to get data from wearable device.\n"
+                                                                  "Common port values:\n"
+                                                                  "* 9090 for the Muse\n"
+                                                                  "* /dev/tty.usbserial-XXXXXXXX for the OpenBCI")
     parser.add_argument('-M', '--device_mac', help="MAC address of device used for Muse connector.")
 
     parser.add_argument('-P', '--publisher', default="pika",
@@ -80,11 +86,15 @@ def main():
     publisher = opts.publisher
     device_mac = opts.device_mac
 
+    step_size = buffer_size
+    if opts.step_size is not None:
+        step_size = int(opts.step_size)
+
     run(device_name,
         mock_data_enabled,
         device_id,
         cloudbrain_address,
-        buffer_size,
+        buffer_size, step_size,
         device_port,
         pipe_name,
         publisher,
@@ -92,35 +102,37 @@ def main():
 
 
 
-def run(device_name='muse',
+def run(device_name="muse",
         mock_data_enabled=True,
         device_id=MOCK_DEVICE_ID,
         cloudbrain_address=RABBITMQ_ADDRESS,
-        buffer_size=10,
-        device_port='/dev/tty.OpenBCI-DN0094CZ',
+        buffer_size=10, step_size=10,
+        device_port=None,
         pipe_name=None,
         publisher_type="pika",
         device_mac=None):
 
-    if device_name == 'muse':
+    if device_name == "muse" and not mock_data_enabled:
         from cloudbrain.connectors.MuseConnector import MuseConnector as Connector
-    elif device_name == 'openbci':
+        if not device_port:
+            device_port = 9090
+    elif device_name == "openbci" and not mock_data_enabled:
         from cloudbrain.connectors.OpenBCIConnector import OpenBCIConnector as Connector
+    elif mock_data_enabled:
+        from cloudbrain.connectors.MockConnector import MockConnector as Connector
     else:
         raise ValueError("Device type '%s' not supported. "
                          "Supported devices are:%s" % (device_name, _SUPPORTED_DEVICES))
 
-    if mock_data_enabled:
-        from cloudbrain.connectors.MockConnector import MockConnector as Connector
 
     metrics = get_metrics_names(device_name)
 
-    if publisher_type == 'pika':
+    if publisher_type == "pika":
         publishers = {metric: PikaPublisher(device_name,
                                             device_id,
                                             cloudbrain_address,
                                             metric) for metric in metrics}
-    elif publisher_type == 'pipe':
+    elif publisher_type == "pipe":
         publishers = {metric: PipePublisher(device_name,
                                             device_id,
                                             metric,
@@ -131,10 +143,7 @@ def run(device_name='muse',
 
     for publisher in publishers.values():
         publisher.connect()
-    if device_name == 'openbci':
-        connector = Connector(publishers, buffer_size, device_name, device_port, device_mac)
-    else:
-        connector = Connector(publishers, buffer_size, device_name, 9090, device_mac)
+    connector = Connector(publishers, buffer_size, step_size, device_name, device_port, device_mac)
     connector.connect_device()
 
     if mock_data_enabled and (publisher_type != 'pipe'):
@@ -150,8 +159,14 @@ def run(device_name='muse',
 
 
 if __name__ == "__main__":
-    main()
-    # run(device_name='openbci',
+    #run(device_name='openbci',
     #     mock_data_enabled=False,
     #     device_id='Will',
-    #     device_port='/dev/tty.usbserial-DN0094CZ')
+    #     device_port='/dev/tty.usbserial-DN0095VT')
+
+
+    run(device_name='openbci',
+         mock_data_enabled=True,
+         device_id='marion')
+
+    #main()

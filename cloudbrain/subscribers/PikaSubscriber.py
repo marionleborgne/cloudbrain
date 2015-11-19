@@ -6,15 +6,15 @@ from cloudbrain.settings import RABBITMQ_ADDRESS
 
 
 class PikaSubscriber(Subscriber):
-  
+
   def __init__(self, device_name, device_id, rabbitmq_address, metric_name):
     super(PikaSubscriber, self).__init__(device_name, device_id, rabbitmq_address)
     self.connection = None
     self.channel = None
     self.queue_name = None
     self.metric_name = metric_name
-    
-    
+
+
   def connect(self):
     credentials = pika.PlainCredentials('cloudbrain', 'cloudbrain')
     self.connection = pika.BlockingConnection(pika.ConnectionParameters(
@@ -26,16 +26,16 @@ class PikaSubscriber(Subscriber):
                                   type='direct')
 
     self.queue_name = self.channel.queue_declare(exclusive=True).method.queue
-    
-    
+
+
     self.channel.queue_bind(exchange=key,
                    queue=self.queue_name,
                    routing_key=key)
 
   def disconnect(self):
     self.connection.close_file()
-    
-    
+
+
   def consume_messages(self, callback):
     self.channel.basic_consume(callback,
                       queue=self.queue_name,
@@ -43,16 +43,17 @@ class PikaSubscriber(Subscriber):
                       no_ack=True)
 
     self.channel.start_consuming()
-    
+
 
   def get_one_message(self):
     for method, properties, body in self.channel.consume(self.queue_name, exclusive=True, no_ack=True):
       return body
 
+
 def _print_message(ch, method, properties, body):
   print body
 
-    
+
 if __name__ == "__main__":
 
   device_id = "test"
@@ -71,7 +72,3 @@ if __name__ == "__main__":
       buffer = json.loads(subscriber.get_one_message())
       for record in buffer:
         print record
-
-
-
-
