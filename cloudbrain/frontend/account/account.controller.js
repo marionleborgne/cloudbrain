@@ -5,7 +5,8 @@
 		$scope.data = {username:null, password:null};
 		var DEMO_LOGINS = ['will', 'marion', 'amsterdam', 'paris', 'dublin',
 											 'montreal', 'nyc', 'sf', 'toronto', 'neurotechx',
-										 	 'htmchallenge', 'brainsquared'];
+										 	 'htmchallenge', 'brainsquared', 'demo1', 'demo2', 'demo3',
+											 'demo4', 'demo5', 'demo6', 'demo7', 'demo8', 'demo9', 'demo10'];
 
 		$scope.login = function(){
 			$log.log('Login called', $scope.data);
