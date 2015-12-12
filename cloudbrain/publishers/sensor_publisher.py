@@ -165,8 +165,8 @@ if __name__ == "__main__":
     #     device_port='/dev/tty.usbserial-DN0095VT')
 
 
-    run(device_name='openbci',
-         mock_data_enabled=True,
-         device_id='marion')
+    #run(device_name='openbci',
+    #     mock_data_enabled=True,
+    #     device_id='marion')
 
-    #main()
+    main()
