@@ -25,7 +25,7 @@ RtDataStream = function (connUrl, deviceName, deviceId) {
     this.conn = null;
     this.channelSubs = {
         'eeg': [],
-        'power_bands': [],
+        'alpha_absolute': [],
     };
 
     // Property definition

@@ -22,10 +22,10 @@
       function onConnect() {
           connected = true;
           rtDataStream.subscribe('eeg', generateLogFn(1));
-          rtDataStream.subscribe('power_bands', generateLogFn(2));
+          rtDataStream.subscribe('alpha_absolute', generateLogFn(2));
           // After 3 seconds you subscribe also to the second metric
           setTimeout(function () {
-              rtDataStream.unsubscribe('power_bands');
+              rtDataStream.unsubscribe('alpha_absolute', generateLogFn(2));
           }, 5000);
           update_ui();
       }
