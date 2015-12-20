@@ -5,6 +5,7 @@ from cloudbrain.settings import RABBITMQ_ADDRESS
 import pika
 import json
 import logging
+import argparse
 
 from sockjs.tornado.conn import SockJSConnection
 from sockjs.tornado import SockJSRouter
@@ -16,7 +17,19 @@ from cloudbrain.subscribers.SubscriberInterface import Subscriber
 SERVER_PORT = 31415
 logging.getLogger().setLevel(logging.INFO)
 
+def get_args_parser():
+    parser = argparse.ArgumentParser()
 
+    parser.add_argument('-c', '--cloudbrain', default=RABBITMQ_ADDRESS,
+                        help="The address of the RabbitMQ instance you are sending data to.\n"
+                             "Use %s to send data to our hosted service. \n Otherwise use "
+                             "'localhost' if running CloudBrain locally" % RABBITMQ_ADDRESS)
+    return parser
+
+def get_opts():
+    parser = get_args_parser()
+    opts = parser.parse_args()
+    return opts
 
 class RtStreamConnection(SockJSConnection):
     """RtStreamConnection connection implementation"""
@@ -205,6 +218,10 @@ class TornadoSubscriber(object):
 
 if __name__ == "__main__":
 
+    # 0. Toggle localhost if you want
+    opts = get_opts()
+    RABBITMQ_ADDRESS = opts.cloudbrain
+    
     # 1. Create chat router
     RtStreamRouter = SockJSRouter(RtStreamConnection, '/rt-stream')
 
