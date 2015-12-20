@@ -12,24 +12,27 @@ from sockjs.tornado import SockJSRouter
 from tornado.ioloop import PeriodicCallback, IOLoop
 from tornado.web import RequestHandler, Application
 
-from cloudbrain.subscribers.SubscriberInterface import Subscriber
-
 SERVER_PORT = 31415
 logging.getLogger().setLevel(logging.INFO)
+
 
 def get_args_parser():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-c', '--cloudbrain', default=RABBITMQ_ADDRESS,
-                        help="The address of the RabbitMQ instance you are sending data to.\n"
-                             "Use %s to send data to our hosted service. \n Otherwise use "
-                             "'localhost' if running CloudBrain locally" % RABBITMQ_ADDRESS)
+                        help="The address of the RabbitMQ instance you are "
+                             "sending data to.\n"
+                             "Use %s to send data to our hosted service. \n "
+                             "Otherwise use 'localhost' if running CloudBrain "
+                             "locally" % RABBITMQ_ADDRESS)
     return parser
+
 
 def get_opts():
     parser = get_args_parser()
     opts = parser.parse_args()
     return opts
+
 
 class RtStreamConnection(SockJSConnection):
     """RtStreamConnection connection implementation"""
@@ -84,31 +87,33 @@ class RtStreamConnection(SockJSConnection):
         metric = stream_configuration['metric']
 
         if metric not in self.subscribers:
-            self.subscribers[metric] = TornadoSubscriber(callback=self.send_probe_factory(metric),
-                                       device_name=device_name,
-                                       device_id=device_id,
-                                       rabbitmq_address=RABBITMQ_ADDRESS,
-                                       metric_name=metric)
+            self.subscribers[metric] = TornadoSubscriber(
+                callback=self.send_probe_factory(metric),
+                device_name=device_name,
+                device_id=device_id,
+                rabbitmq_address=RABBITMQ_ADDRESS,
+                metric_name=metric)
 
             self.subscribers[metric].connect()
 
     def handle_channel_unsubscription(self, unsubscription_msg):
-        logging.info('Unsubscription received for ' + unsubscription_msg['metric'])
+        logging.info("Unsubscription received for %s"
+                     % unsubscription_msg['metric'])
         if unsubscription_msg['metric'] in self.subscribers:
             self.subscribers[unsubscription_msg['metric']].disconnect()
 
     def on_close(self):
-        logging.info('Disconnecting client...')
+        logging.info("Disconnecting client...")
         for metric in self.subscribers.keys():
             subscriber = self.subscribers[metric]
             if subscriber is not None:
-                logging.info('Disconnecting subscriber for metric: ' + metric)
+                logging.info("Disconnecting subscriber for metric: %s" % metric)
                 subscriber.disconnect()
 
         self.subscribers = {}
         #self.timeout.stop()
         self.clients.remove(self)
-        logging.info('Client disconnection complete!')
+        logging.info("Client disconnection complete!")
 
     def send_heartbeat(self):
         self.broadcast(self.clients, 'message')
@@ -119,6 +124,7 @@ class MockHandler(RequestHandler):
     def get(self):
         self.render('mock.html')
 
+
 class RtDataStreamHandler(RequestHandler):
     """
     Just a custom handler for the rt-data-stream.js file :)
@@ -126,10 +132,12 @@ class RtDataStreamHandler(RequestHandler):
     def get(self):
         self.render('rt-data-stream.js')
 
-# Based on: https://pika.readthedocs.org/en/0.9.14/examples/tornado_consumer.html
+
+# See: https://pika.readthedocs.org/en/0.9.14/examples/tornado_consumer.html
 class TornadoSubscriber(object):
 
-    def __init__(self, callback, device_name, device_id, rabbitmq_address, metric_name):
+    def __init__(self, callback, device_name, device_id,
+                 rabbitmq_address, metric_name):
         self.callback = callback
         self.device_name = device_name
         self.device_id = device_id
@@ -144,11 +152,12 @@ class TornadoSubscriber(object):
 
     def connect(self):
         credentials = pika.PlainCredentials('cloudbrain', 'cloudbrain')
-        self.connection = pika.adapters.tornado_connection.TornadoConnection(pika.ConnectionParameters(
-                                        host=self.host, credentials=credentials),
-                                        self.on_connected,
-                                        stop_ioloop_on_close=False,
-                                        custom_ioloop=IOLoop.instance())
+        self.connection = pika.adapters.tornado_connection.TornadoConnection(
+            pika.ConnectionParameters(
+                host=self.host, credentials=credentials),
+            self.on_connected,
+            stop_ioloop_on_close=False,
+            custom_ioloop=IOLoop.instance())
 
     def disconnect(self):
         if self.connection is not None:
@@ -165,7 +174,7 @@ class TornadoSubscriber(object):
         self.channel = None
 
     def on_backpressure_callback(self, connection):
-        logging.info('******** Backpressure detected for ' + self.get_key())
+        logging.info("******** Backpressure detected for %s" % self.get_key())
 
     def open_channel(self):
         self.connection.channel(self.on_channel_open)
@@ -175,13 +184,11 @@ class TornadoSubscriber(object):
         self.channel.add_on_close_callback(self.on_channel_closed)
         # self.setup_exchange(self.EXCHANGE)
         # self.channel.confirm_delivery(self.on_delivery_confirmation)
-        logging.info("Declaring exchange: " + self.get_key())
+        logging.info("Declaring exchange: %s" % self.get_key())
         self.channel.exchange_declare(self.on_exchange_declareok,
                                       exchange=self.get_key(),
                                       type='direct',
                                       passive=True)
-                                      #type='direct')
-        # self.queue_name = self.channel.queue_declare(exclusive=True).method.queue
 
     def on_channel_closed(self, channel, reply_code, reply_text):
         self.connection.close()
@@ -199,7 +206,8 @@ class TornadoSubscriber(object):
 
     def on_bindok(self, unused_frame):
         self.channel.add_on_cancel_callback(self.on_consumer_cancelled)
-        self.consumer_tag = self.channel.basic_consume(self.on_message, self.get_key())
+        self.consumer_tag = self.channel.basic_consume(self.on_message,
+                                                       self.get_key())
 
     def on_consumer_cancelled(self, method_frame):
         if self.channel:
@@ -221,19 +229,19 @@ if __name__ == "__main__":
     # 0. Toggle localhost if you want
     opts = get_opts()
     RABBITMQ_ADDRESS = opts.cloudbrain
-    
+
     # 1. Create chat router
     RtStreamRouter = SockJSRouter(RtStreamConnection, '/rt-stream')
 
     # 2. Create Tornado application
     app = Application(
-            [(r"/", MockHandler), (r"/rt-data-stream.js", RtDataStreamHandler)] + RtStreamRouter.urls
-    )
+        [(r"/", MockHandler),
+         (r"/rt-data-stream.js", RtDataStreamHandler)] + RtStreamRouter.urls)
 
     # 3. Make Tornado app listen on Pi
     app.listen(SERVER_PORT)
 
-    print "Real-time data server running at http://localhost:%s" %SERVER_PORT
+    print "Real-time data server running at http://localhost:%s" % SERVER_PORT
 
     # 4. Start IOLoop
     IOLoop.instance().start()
