@@ -24,6 +24,7 @@
         this.channelSubs = {
             'eeg': [],
             'power_bands': [],
+            'classification': []
         };
 
         // Property definition

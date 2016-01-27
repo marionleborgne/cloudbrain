@@ -1,0 +1,12 @@
+.brainsquared { background-color: white; }
+.instructions { width: 60%; font-size: 14px; margin: 4px 0 0 10px; line-height: 24px;}
+.game-controls { background-color: #fafafa!important; }
+.game-info {
+  position: absolute;
+  margin-top: 10px;
+  font-size: 22px;
+}
+.score { right: 30px; }
+.missed { right: 30px; }
+.target { left: 30px; }
+.accuracy { left: 210px; }

@@ -18,6 +18,14 @@
       url:'/rt-chart/:device',
       template:'<rt-chart></rt-chart>'
     })
+    .state('calibration', {
+      url:'/calibration',
+      template:'<calibration></calibration>'
+    })
+    .state('brainsquared', {
+      url:'/brainsquared',
+      template:'<brainsquared></brainsquared>'
+    })
     .state('signup', {
       url:'/signup',
       templateUrl:'account/account-signup.html',
@@ -31,7 +39,7 @@
     .state('dashboard', {
       url:'/dash',
       templateUrl:'home/home-index.html'
-    })
+    });
     //Protected state
     // .state('app', {
     //   url:'/apps/:name',
@@ -41,6 +49,6 @@
     // })
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/');
-})
+});
 
 })();

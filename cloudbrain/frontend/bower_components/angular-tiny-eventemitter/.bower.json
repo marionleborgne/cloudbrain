@@ -1,0 +1,30 @@
+{
+  "name": "angular-tiny-eventemitter",
+  "version": "1.1.0",
+  "main": "dist/angular-tiny-eventemitter.js",
+  "ignore": [
+    "**/.*",
+    "src",
+    "node_modules",
+    "bower_components",
+    "test",
+    "Gruntfile.coffee"
+  ],
+  "dependencies": {
+    "angular": "*"
+  },
+  "devDependencies": {
+    "angular-mocks": "*"
+  },
+  "homepage": "https://github.com/rubenv/angular-tiny-eventemitter",
+  "_release": "1.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.1.0",
+    "commit": "34a37aca8768a474676f4ad5350a5bf1866fc4ef"
+  },
+  "_source": "git://github.com/rubenv/angular-tiny-eventemitter.git",
+  "_target": "~1.1.0",
+  "_originalSource": "angular-tiny-eventemitter",
+  "_direct": true
+}

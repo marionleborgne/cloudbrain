@@ -9,7 +9,7 @@
 
       var stream = {};
 
-      var data = [[],[],[],[]];
+      var data = [[],[],[],[],[],[],[],[]];
 
       function chartConfig() {
         var defaultConfig = {
@@ -17,10 +17,10 @@
           animationSteps: 60,
           animationEasing: "easeOutQuart",
           showScale: true,
-          scaleOverride: false,
-          scaleSteps: null,
-          scaleStepWidth: null,
-          scaleStartValue: null,
+          scaleOverride: true,
+          scaleSteps: 40,
+          scaleStepWidth: 50,
+          scaleStartValue: 0,
           scaleLineColor: "rgba(0,0,0,.1)",
           scaleLineWidth: 1,
           scaleShowLabels: true,
@@ -74,7 +74,7 @@
       }
 
       function getSeries() {
-        var staticSeries = ['channel_0', 'channel_1', 'channel_2', 'channel_3'];
+        var staticSeries = ['channel_0', 'channel_1', 'channel_2', 'channel_3', 'channel_4', 'channel_5', 'channel_6', 'channel_7'];
         return staticSeries;
       }
 
@@ -105,7 +105,7 @@
                 delete msg.timestamp;
                 for(var channel in msg){
                   data[channel.split('_')[1]].push(msg[channel]);
-                  if(data[channel.split('_')[1]].length > 100){
+                  if(data[channel.split('_')[1]].length > 300){
                     data[channel.split('_')[1]].shift();
                   }
                 }

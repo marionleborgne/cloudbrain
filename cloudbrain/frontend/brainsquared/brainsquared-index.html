@@ -1,0 +1,24 @@
+<div class="brainsquared">
+    <md-whiteframe class="md-whiteframe-z2 game-controls" layout layout-align="left center" layout-padding>
+      <div layout="row">
+        <md-button type="submit" ng-click="togglePlay()" class="md-raised md-primary">{{connected ? 'Stop' : 'Play'}}</md-button>
+      </div>
+      <span class="instructions">
+        Connect the OpenBCI to Cloudbrain and imagine moving your right or left hand to move the minion with your mind.
+        If you do not have an OpenBCI, don't worry: you can also manually control the minion with A and L keys.
+      </span>
+      <div class="game-info score">
+        Score: {{score}}
+      </div>
+      <!-- <div class="game-info missed">
+        Missed: {{missed}}
+      </div> -->
+      <!-- <div class="game-info target">
+        Target: {{minionBananaCollision.target()}}
+      </div> -->
+      <!-- <div class="game-info accuracy">
+        Accuracy: {{accuracy.accuracyScore}} ({{accuracy.accurateSteps}}/{{accuracy.totalSteps}})
+      </div> -->
+    </md-whiteframe>
+
+</div>
