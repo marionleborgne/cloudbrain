@@ -4,5 +4,5 @@ pyserial
 wheel
 sockjs-tornado
 flask
+cython
 flask-cors
-#cassandra-driver
