@@ -194,7 +194,9 @@ class TornadoSubscriber(object):
         self.connection.close()
 
     def on_exchange_declareok(self, unused_frame):
-        self.channel.queue_declare(self.on_queue_declareok, self.get_key())
+        self.channel.queue_declare(self.on_queue_declareok,
+                                   self.get_key(),
+                                   exclusive=True,)
 
     def on_queue_declareok(self, unused_frame):
         logging.info("Binding queue: " + self.get_key())
@@ -207,7 +209,9 @@ class TornadoSubscriber(object):
     def on_bindok(self, unused_frame):
         self.channel.add_on_cancel_callback(self.on_consumer_cancelled)
         self.consumer_tag = self.channel.basic_consume(self.on_message,
-                                                       self.get_key())
+                                                       self.get_key(),
+                                                       exclusive=True,
+                                                       no_ack=True)
 
     def on_consumer_cancelled(self, method_frame):
         if self.channel:
