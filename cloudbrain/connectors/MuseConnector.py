@@ -23,10 +23,14 @@ def connect_muse(port=9090):
     print "\nRunning command: %s" %" ".join(cmd)
 
     try:
-      muse_process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+      muse_process = subprocess.call(cmd, shell=False)
+      proc.communicate()
     except OSError:
       raise UnableToStartMuseIO("No able to start muse-io." + \
             "Muse-io is not installed. Go to http://choosemuse.com for more info.")
+    except KeyboardInterrupt:
+      print "Interrupted !"
+      exit(0)
 
     while True: # look for museIO running keywords
       line = muse_process.stdout.readline()
