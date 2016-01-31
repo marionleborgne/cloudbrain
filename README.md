@@ -28,3 +28,6 @@ Check out the [wiki](https://github.com/marionleborgne/cloudbrain/wiki) for:
 
 ### Follow our progress
 [![Stories in Ready](https://badge.waffle.io/marionleborgne/cloudbrain.png?label=ready&title=Ready)](https://waffle.io/marionleborgne/cloudbrain) 
+
+### License
+[![License: AGPL-3](https://img.shields.io/badge/license-AGPL--3-blue.svg)](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/LICENSE.txt)
