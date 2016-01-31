@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/marionleborgne/cloudbrain.png?label=ready&title=Ready)](https://waffle.io/marionleborgne/cloudbrain)
 ![x](https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/docs/images/cb-logo-low-res.png)
 
 #Overview
