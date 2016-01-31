@@ -17,4 +17,4 @@ Check out the [wiki](https://github.com/marionleborgne/cloudbrain/wiki) for:
 * Setup instructions
 * API documentation
 * Tutorials
-* About Cloudbrain
+* More about Cloudbrain
