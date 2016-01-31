@@ -1,0 +1,24 @@
+#####################
+# Chain modules in the order you want them
+#
+# Each module should specify input and output features.
+# The term "feature" here is interchangeable with "metric" in cloudbrain.
+# "feature" refers specifically to a tag which identifies the appropriate queue in rabbitmq to subscribe to.
+# First module will always take metric "eeg" as input
+#
+#
+
+ModuleWindows:
+  input_feature: "eeg"
+  output_feature: "window"
+  parameters:
+    debug: False
+    samples_per_window: 500
+    window_overlap: 125
+
+
+ModuleTest:
+  input_feature: "window"
+#  output_feature: "test"
+  parameters:
+    debug: False
