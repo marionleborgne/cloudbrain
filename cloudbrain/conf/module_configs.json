@@ -4,7 +4,7 @@
       "name": "OpenBCISource",
       "package": "cloudbrain.modules.sources.openbci",
       "options": {
-        "port": "/dev/tty.OpenBCI-DN0095VT",
+        "port": "/dev/tty.usbserial-DN0095VT",
         "baud": 115200,
         "filter_data": true
       },
@@ -13,33 +13,11 @@
           "name": "PikaPublisher",
           "package": "cloudbrain.publishers.rabbitmq",
           "options": {
-            "rabbitmq_address": "rabbitmq.cloudbrain.rocks",
-            "rabbitmq_user": "cloudbrain",
-            "rabbitmq_pwd": "cloudbrain"
-          },
-          "base_routing_key": "amsterdam:openbci",
-          "metrics": [
-            {
-              "metric_name": "eeg",
-              "num_channels": 8,
-              "buffer_size": 2
-            },
-            {
-              "metric_name": "alpha",
-              "num_channels": 8,
-              "buffer_size": 2
-            }
-          ]
-        },
-        {
-          "name": "PikaPublisher",
-          "package": "cloudbrain.publishers.rabbitmq",
-          "options": {
             "rabbitmq_address": "localhost",
             "rabbitmq_user": "guest",
             "rabbitmq_pwd": "guest"
           },
-          "base_routing_key": "amsterdam:openbci",
+          "base_routing_key": "unique_id",
           "metrics": [
             {
               "metric_name": "eeg",
@@ -54,20 +32,20 @@
           ]
         },
         {
-          "name": "StdoutPublisher",
-          "package": "cloudbrain.publishers.stdout",
+          "name": "PipePublisher",
+          "package": "cloudbrain.publishers.pipe",
           "options": {},
-          "base_routing_key": "amsterdam:openbci",
+          "base_routing_key": "unique_id",
           "metrics": [
             {
               "metric_name": "eeg",
               "num_channels": 8,
-              "buffer_size": 2
+              "buffer_size": 100
             },
             {
               "metric_name": "alpha",
               "num_channels": 8,
-              "buffer_size": 2
+              "buffer_size": 100
             }
           ]
         }
