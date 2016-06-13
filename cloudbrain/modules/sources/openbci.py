@@ -5,13 +5,10 @@ from cloudbrain.modules.sources.interface import SourceInterface
 from cloudbrain.connectors.openbci import OpenBCIConnector
 
 _LOGGER = logging.getLogger(__name__)
-_LOGGER.setLevel(logging.DEBUG)
-
-
 
 class OpenBCISource(SourceInterface):
   def __init__(self, subscribers, publishers,
-               port='/dev/tty.OpenBCI-DN0094CZ',
+               port='/dev/tty.usbserial-DN0095VT',
                baud=115200,
                filter_data=True):
 
@@ -60,7 +57,6 @@ class OpenBCISource(SourceInterface):
 
       for publisher in self.publishers:
         logging.debug("Publishing on metric %s: %s" % (metric_name, message))
-        print "Publishing on metric %s: %s" % (metric_name, message)
         publisher.publish(metric_name, message)
 
 

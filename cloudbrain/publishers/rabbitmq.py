@@ -6,13 +6,11 @@ from cloudbrain.publishers.interface import PublisherInterface
 from cloudbrain.core.model import MetricBuffer
 
 _LOGGER = logging.getLogger(__name__)
-_LOGGER.setLevel(logging.DEBUG)
-
 
 
 class PikaPublisher(PublisherInterface):
   """
-  RabbitMQ publisher
+  Publish data to RabbitMQ exchanges. The name of the exchange is the routing key.
   """
 
 
@@ -48,7 +46,7 @@ class PikaPublisher(PublisherInterface):
 
     routing_key = "%s:%s" % (self.base_routing_key, metric_name)
     if routing_key in self.routing_keys:
-      logging.error("Routing key %s already registered. Routing keys: %s" % (
+      logging.warning("Routing key %s already registered. Routing keys: %s" % (
         routing_key, self.routing_keys))
     else:  
       self.routing_keys.append(routing_key)
