@@ -1,0 +1,17 @@
+- Cloudbrain data structure when publishing and subscribing:
+[
+  {timestmap, channel_0, ..., channel_N},
+    ...
+  {timestmap, channel_0, ..., channel_N}
+]
+
+
+- Cloudbrain style guide
+  - 4 space indents
+  - 120 characters per line max
+  - package names should all be lower case
+  - limit number of classes per package
+  
+  
+TODO
+- fix PipePublisher and make it use any arbitrary named pipe. Right now it's just a stdout publisher
