@@ -22,12 +22,7 @@
             {
               "metric_name": "eeg",
               "num_channels": 8,
-              "buffer_size": 2
-            },
-            {
-              "metric_name": "alpha",
-              "num_channels": 8,
-              "buffer_size": 2
+              "buffer_size": 10
             }
           ]
         },
