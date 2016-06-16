@@ -1,12 +1,12 @@
 import logging
 import time
 
-from cloudbrain.modules.sources.interface import SourceInterface
 from cloudbrain.connectors.openbci import OpenBCIConnector
+from cloudbrain.modules.interface import ModuleInterface
 
 _LOGGER = logging.getLogger(__name__)
 
-class OpenBCISource(SourceInterface):
+class OpenBCISource(ModuleInterface):
   def __init__(self, subscribers, publishers,
                port='/dev/tty.usbserial-DN0095VT',
                baud=115200,
