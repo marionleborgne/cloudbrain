@@ -1,0 +1,65 @@
+{
+  "modules": [
+    {
+      "name": "FrequencyBandTransformer",
+      "package": "cloudbrain.modules.transformers.fft",
+      "options": {
+        "window_size": 250,
+        "sampling_frequency": 250.0,
+        "frequency_bands": {
+          "alpha": [
+            5.0,
+            15.0
+          ],
+          "beta": [
+            20.0,
+            30.0
+          ]
+        }
+      },
+      "publishers": [
+        {
+          "name": "PikaPublisher",
+          "package": "cloudbrain.publishers.rabbitmq",
+          "options": {
+            "rabbitmq_address": "localhost",
+            "rabbitmq_user": "guest",
+            "rabbitmq_pwd": "guest"
+          },
+          "base_routing_key": "amsterdam:openbci",
+          "metrics": [
+            {
+              "metric_name": "alpha",
+              "num_channels": 8,
+              "buffer_size": 1
+            },
+            {
+              "metric_name": "beta",
+              "num_channels": 8,
+              "buffer_size": 1
+            }
+          ]
+        }
+      ],
+      "subscribers": [
+        {
+          "name": "PikaSubscriber",
+          "package": "cloudbrain.subscribers.rabbitmq",
+          "options": {
+            "rabbitmq_address": "localhost",
+            "rabbitmq_user": "guest",
+            "rabbitmq_pwd": "guest"
+          },
+          "base_routing_key": "amsterdam:openbci",
+          "metrics": [
+            {
+              "metric_name": "eeg",
+              "num_channels": 8,
+              "buffer_size": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

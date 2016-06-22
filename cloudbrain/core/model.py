@@ -7,7 +7,7 @@ class MetricBuffer(object):
   def __init__(self, name, num_channels, buffer_size):
     self.name = name
     self.num_channels = num_channels
-    self.metric_names = ["metric_%s" % i for i in range(self.num_channels)]
+    self.metric_names = ["channel_%s" % i for i in range(self.num_channels)]
     self.metric_names.append("timestamp")
 
     self.buffer_size = buffer_size
