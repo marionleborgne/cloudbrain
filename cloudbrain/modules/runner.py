@@ -1,4 +1,3 @@
-import json
 import threading
 
 
@@ -35,7 +34,15 @@ class ModuleRunner(object):
 
             subscribers = []
             for sub_config in mod_config["subscribers"]:
-                pass  # TODO: same logic as publishers
+                Subscriber = _get_class(sub_config["package"], sub_config["name"])
+                subscriber = Subscriber(sub_config["base_routing_key"],
+                                      **sub_config["options"])
+                subscriber.connect()
+
+                for metric_options in sub_config["metrics"]:
+                    subscriber.register(**metric_options)
+
+                subscribers.append(subscriber)
 
             module = Module(subscribers, publishers, **mod_config["options"])
             t = threading.Thread(target=module.start)
