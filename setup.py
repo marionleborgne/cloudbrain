@@ -21,4 +21,5 @@ setup(name="cloudbrain",
       install_requires=findRequirements(),
       license=open('LICENSE.txt').read(),
       long_description=open('README.md').read()
+      tests_require=["mock==2.0.0"]
       )
