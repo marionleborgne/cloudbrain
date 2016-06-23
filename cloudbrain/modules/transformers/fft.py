@@ -51,7 +51,6 @@ class FrequencyBandTransformer(ModuleInterface):
                 for (band_name, values) in  bands.items():
                     for publisher in publishers:
                         publisher.publish(band_name, values)
-                        print "%s: %s" % (band_name, values)
 
         return process_metric
 
