@@ -1,4 +1,3 @@
 pika==0.10
-mock==2.0.0
 numpy
 scipy
