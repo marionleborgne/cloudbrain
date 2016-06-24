@@ -1,0 +1,59 @@
+{
+  "modules": [
+    {
+      "name": "MockSource",
+      "package": "cloudbrain.modules.sources.mock",
+      "options": {
+        "sampling_frequency": 250.0,
+        "alpha_amplitude": 10.0,
+        "alpha_freq": 10.0,
+        "beta_amplitude": 5.0,
+        "beta_freq": 25.0,
+        "number_points": 249
+      },
+      "publishers": [
+        {
+          "name": "PikaPublisher",
+          "package": "cloudbrain.publishers.rabbitmq",
+          "options": {
+            "rabbitmq_address": "localhost",
+            "rabbitmq_user": "guest",
+            "rabbitmq_pwd": "guest"
+          },
+          "base_routing_key": "some_unique_id:mock_device",
+          "metrics": [
+            {
+              "metric_name": "eeg",
+              "num_channels": 8,
+              "buffer_size": 10
+            },
+            {
+              "metric_name": "some_metric",
+              "num_channels": 8,
+              "buffer_size": 10
+            }
+          ]
+        },
+        {
+          "name": "PipePublisher",
+          "package": "cloudbrain.publishers.pipe",
+          "options": {},
+          "base_routing_key": "some_unique_id:mock_device",
+          "metrics": [
+            {
+              "metric_name": "eeg",
+              "num_channels": 8,
+              "buffer_size": 100
+            },
+            {
+              "metric_name": "some_metric",
+              "num_channels": 8,
+              "buffer_size": 100
+            }
+          ]
+        }
+      ],
+      "subscribers": []
+    }
+  ]
+}
