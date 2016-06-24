@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/cloudbrain/cloudbrain/master/docs/images/cb-logo-low-res.png" alt="Banner" style="width: 200px;"/>
+<img src="https://raw.githubusercontent.com/cloudbrain/cloudbrain/master/docs/images/cb-logo-low-res.png" alt="Banner" style="width: 100px;"/>
 
 CloudBrain is a platform for real-time sensor data analysis and visualization. 
 
