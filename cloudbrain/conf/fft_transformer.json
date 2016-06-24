@@ -26,7 +26,7 @@
             "rabbitmq_user": "guest",
             "rabbitmq_pwd": "guest"
           },
-          "base_routing_key": "amsterdam:openbci",
+          "base_routing_key": "some_unique_id:openbci",
           "metrics": [
             {
               "metric_name": "alpha",
@@ -47,10 +47,10 @@
           "package": "cloudbrain.subscribers.rabbitmq",
           "options": {
             "rabbitmq_address": "localhost",
-            "rabbitmq_user": "guest",
-            "rabbitmq_pwd": "guest"
+            "rabbitmq_user": "cloudbrain",
+            "rabbitmq_pwd": "cloudbrain"
           },
-          "base_routing_key": "amsterdam:openbci",
+          "base_routing_key": "some_unique_id:openbci",
           "metrics": [
             {
               "metric_name": "eeg",

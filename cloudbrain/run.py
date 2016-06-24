@@ -1,12 +1,13 @@
 import json
 import logging
 import time
-import validictory
-import pkg_resources
+# import validictory
+# import pkg_resources
 
 from argparse import ArgumentParser
 
 from cloudbrain.modules.runner import ModuleRunner
+
 
 
 class _CommandLineArgError(Exception):
@@ -46,9 +47,8 @@ def _parseArgs():
         "--conf",
         type=str,
         dest="module_configs",
-        required=False,
-        default='conf/module_configs.json',
-        help=("OPTIONAL: path to JSON file with modules configuration."))
+        required=True,
+        help="REQUIRED: path to JSON file with modules configuration.")
 
     parser.add_argument(
         "--log",
@@ -56,7 +56,7 @@ def _parseArgs():
         dest="log_level",
         required=False,
         default='info',
-        help=("OPTIONAL: logger verbosity. Can be 'info' or 'debug'."))
+        help="OPTIONAL: logger verbosity. Can be 'info' or 'debug'.")
 
     options = parser.parse_args()
 
@@ -76,7 +76,6 @@ def _parseArgs():
 
 
 def run(module_configs_file, log_level):
-
     logging.basicConfig(level=log_level)
 
     with open(module_configs_file, 'rb') as f:
@@ -90,12 +89,15 @@ def run(module_configs_file, log_level):
             runner.stop()
 
 
+
 def main():
     try:
         options = _parseArgs()
         run(options.module_configs, options.log_level)
     except Exception as ex:
         logging.exception("Modules runner failed")
+
+
 
 if __name__ == '__main__':
     main()

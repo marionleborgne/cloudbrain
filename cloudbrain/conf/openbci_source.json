@@ -17,12 +17,25 @@
             "rabbitmq_user": "guest",
             "rabbitmq_pwd": "guest"
           },
-          "base_routing_key": "amsterdam:openbci",
+          "base_routing_key": "some_unique_id:openbci",
           "metrics": [
             {
               "metric_name": "eeg",
               "num_channels": 8,
               "buffer_size": 10
+            }
+          ]
+        },
+        {
+          "name": "PipePublisher",
+          "package": "cloudbrain.publishers.pipe",
+          "options": {},
+          "base_routing_key": "some_unique_id:openbci",
+          "metrics": [
+            {
+              "metric_name": "eeg",
+              "num_channels": 8,
+              "buffer_size": 100
             }
           ]
         }

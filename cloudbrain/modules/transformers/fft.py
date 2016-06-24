@@ -12,7 +12,6 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class FrequencyBandTransformer(ModuleInterface):
-
     def __init__(self, subscribers, publishers, window_size, sampling_frequency,
                  frequency_bands):
 
@@ -25,10 +24,10 @@ class FrequencyBandTransformer(ModuleInterface):
         self.sampling_frequency = sampling_frequency
         self.frequency_bands = frequency_bands
 
-        # IMPORTANT: window_size must be a multiple of sampling_frequency
+        # TODO: should window_size be a multiple of sampling_frequency? Should it be higher?
         # and window_size > sampling_frequency
-        #assert self.window_size % self.sampling_frequency == 0
-        #assert self.window_size >= self.sampling_frequency
+        # assert self.window_size % self.sampling_frequency == 0
+        # assert self.window_size >= self.sampling_frequency
 
 
     def start(self):
@@ -43,16 +42,19 @@ class FrequencyBandTransformer(ModuleInterface):
 
         publishers = self.publishers
 
+
         def process_metric(ch, method, properties, body):
 
             bands = self._compute_fft(json.loads(body), num_channels)
 
             if bands:
-                for (band_name, values) in  bands.items():
+                for (band_name, values) in bands.items():
                     for publisher in publishers:
                         publisher.publish(band_name, values)
 
+
         return process_metric
+
 
     def _compute_fft(self, cb_buffer, num_channels):
 
@@ -73,7 +75,7 @@ class FrequencyBandTransformer(ModuleInterface):
                 for i in range(num_channels):
                     channel_name = 'channel_%s' % i
                     data_to_analyze = np.array(self.data_to_analyze[channel_name])
-                    channel_bands =  self.compute_frequency_bands(data_to_analyze)
+                    channel_bands = self.compute_frequency_bands(data_to_analyze)
                     for (band_name, band_value) in channel_bands.items():
                         if band_name not in bands:
                             bands[band_name] = {'timestamp': timestamp}

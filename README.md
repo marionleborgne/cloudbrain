@@ -1,7 +1,6 @@
+<img src="https://raw.githubusercontent.com/cloudbrain/cloudbrain/master/docs/images/cb-logo-low-res.png" alt="Banner" style="width: 200px;"/>
 
-![banner](https://raw.githubusercontent.com/cloudbrain/cloudbrain/master/docs/images/cb-logo-low-res.png)
-
-Cloudbrain is a platform for real-time sensor data analysis and visualization. 
+CloudBrain is a platform for real-time sensor data analysis and visualization. 
 
 # Features
 - **Stream sensor data** in a unified format.
@@ -11,11 +10,8 @@ Cloudbrain is a platform for real-time sensor data analysis and visualization.
 
 ![features](https://raw.githubusercontent.com/cloudbrain/cloudbrain/master/docs/images/features.png)
 
-# Using Cloudbrain
+# Using CloudBrain
 Check out the [wiki](https://github.com/cloudbrain/cloudbrain/wiki)
-
-# Architecture
-![x](https://raw.githubusercontent.com/cloudbrain/cloudbrain/master/docs/images/architecture.png)
 
 ### License
 [![License: AGPL-3](https://img.shields.io/badge/license-AGPL--3-blue.svg)](https://raw.githubusercontent.com/cloudbrain/cloudbrain/master/LICENSE.txt)
