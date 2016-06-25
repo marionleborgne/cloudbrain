@@ -1,7 +1,7 @@
 import numpy as np
 import unittest
 
-from cloudbrain.modules.transformers.fft import FrequencyBandTransformer
+from cloudbrain.modules.transforms.fft import FrequencyBandTransformer
 
 
 
