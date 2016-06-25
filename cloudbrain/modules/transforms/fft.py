@@ -43,7 +43,7 @@ class FrequencyBandTransformer(ModuleInterface):
         publishers = self.publishers
 
 
-        def process_metric(ch, method, properties, body):
+        def process_metric(unused_ch, unused_method, unused_properties, body):
 
             bands = self._compute_fft(json.loads(body), num_channels)
 

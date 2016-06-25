@@ -9,6 +9,8 @@
         "alpha_freq": 10.0,
         "beta_amplitude": 5.0,
         "beta_freq": 25.0,
+        "notch_amplitude": 0.0,
+        "notch_freq": 60.0,
         "number_points": 249
       },
       "publishers": [
@@ -20,7 +22,7 @@
             "rabbitmq_user": "guest",
             "rabbitmq_pwd": "guest"
           },
-          "base_routing_key": "some_unique_id:mock_device",
+          "base_routing_key": "some_unique_id:device_name",
           "metrics": [
             {
               "metric_name": "eeg",
@@ -38,7 +40,7 @@
           "name": "PipePublisher",
           "package": "cloudbrain.publishers.pipe",
           "options": {},
-          "base_routing_key": "some_unique_id:mock_device",
+          "base_routing_key": "some_unique_id:device_name",
           "metrics": [
             {
               "metric_name": "eeg",

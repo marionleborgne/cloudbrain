@@ -4,14 +4,15 @@ import time
 
 
 def sine_wave(number_points, sampling_frequency, alpha_amplitude, alpha_freq,
-              beta_amplitude, beta_freq):
+              beta_amplitude, beta_freq, notch_amplitude, notch_freq):
     sample_spacing = 1.0 / sampling_frequency
     x = np.linspace(start=0.0, stop=number_points * sample_spacing, num=number_points)
 
     alpha = alpha_amplitude * np.sin(alpha_freq * 2.0 * np.pi * x)
     beta = beta_amplitude * np.sin(beta_freq * 2.0 * np.pi * x)
+    notch = notch_amplitude * np.sin(notch_freq * 2.0 * np.pi * x)
 
-    y = alpha + beta
+    y = alpha + beta + notch
 
     return y
 
