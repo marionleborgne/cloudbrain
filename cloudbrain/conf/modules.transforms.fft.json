@@ -2,14 +2,14 @@
   "modules": [
     {
       "name": "FrequencyBandTransformer",
-      "package": "cloudbrain.modules.transformers.fft",
+      "package": "cloudbrain.modules.transforms.fft",
       "options": {
         "window_size": 250,
         "sampling_frequency": 250.0,
         "frequency_bands": {
           "alpha": [
-            5.0,
-            15.0
+            7.0,
+            13.0
           ],
           "beta": [
             20.0,
@@ -26,7 +26,7 @@
             "rabbitmq_user": "guest",
             "rabbitmq_pwd": "guest"
           },
-          "base_routing_key": "amsterdam:openbci",
+          "base_routing_key": "some_unique_id:openbci",
           "metrics": [
             {
               "metric_name": "alpha",
@@ -50,10 +50,10 @@
             "rabbitmq_user": "guest",
             "rabbitmq_pwd": "guest"
           },
-          "base_routing_key": "amsterdam:openbci",
+          "base_routing_key": "some_unique_id:openbci",
           "metrics": [
             {
-              "metric_name": "eeg",
+              "metric_name": "eeg_no_notch",
               "num_channels": 8,
               "buffer_size": 1
             }

@@ -1,12 +1,17 @@
 {
   "modules": [
     {
-      "name": "OpenBCISource",
-      "package": "cloudbrain.modules.sources.openbci",
+      "name": "MockSource",
+      "package": "cloudbrain.modules.sources.mock",
       "options": {
-        "port": "/dev/tty.usbserial-DN0095VT",
-        "baud": 115200,
-        "filter_data": true
+        "sampling_frequency": 250.0,
+        "alpha_amplitude": 10.0,
+        "alpha_freq": 10.0,
+        "beta_amplitude": 5.0,
+        "beta_freq": 25.0,
+        "notch_amplitude": 0.0,
+        "notch_freq": 60.0,
+        "number_points": 249
       },
       "publishers": [
         {
@@ -17,10 +22,15 @@
             "rabbitmq_user": "guest",
             "rabbitmq_pwd": "guest"
           },
-          "base_routing_key": "unique_id",
+          "base_routing_key": "some_unique_id:device_name",
           "metrics": [
             {
               "metric_name": "eeg",
+              "num_channels": 8,
+              "buffer_size": 10
+            },
+            {
+              "metric_name": "some_metric",
               "num_channels": 8,
               "buffer_size": 10
             }
@@ -30,7 +40,7 @@
           "name": "PipePublisher",
           "package": "cloudbrain.publishers.pipe",
           "options": {},
-          "base_routing_key": "unique_id",
+          "base_routing_key": "some_unique_id:device_name",
           "metrics": [
             {
               "metric_name": "eeg",
@@ -38,7 +48,7 @@
               "buffer_size": 100
             },
             {
-              "metric_name": "alpha",
+              "metric_name": "some_metric",
               "num_channels": 8,
               "buffer_size": 100
             }

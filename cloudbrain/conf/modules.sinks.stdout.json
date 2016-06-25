@@ -1,0 +1,30 @@
+{
+  "modules": [
+    {
+      "name": "StdoutSink",
+      "package": "cloudbrain.modules.sinks.stdout",
+      "options": {
+        "channels_to_plot": [0]
+      },
+      "subscribers": [
+        {
+          "name": "PikaSubscriber",
+          "package": "cloudbrain.subscribers.rabbitmq",
+          "options": {
+            "rabbitmq_address": "localhost",
+            "rabbitmq_user": "guest",
+            "rabbitmq_pwd": "guest"
+          },
+          "base_routing_key": "some_unique_id:device_name",
+          "metrics": [
+            {
+              "metric_name": "eeg",
+              "num_channels": 8
+            }
+          ]
+        }
+      ],
+      "publishers": []
+    }
+  ]
+}

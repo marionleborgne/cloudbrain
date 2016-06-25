@@ -1,4 +1,5 @@
 import json
+import time
 import unittest
 from mock import patch
 
@@ -48,7 +49,8 @@ def mock_start(self, callback_functions):
     packet_id = 0
     channel_data = [i for i in range(8)]
     aux_data = []
-    sample = OpenBCISample(packet_id, channel_data, aux_data)
+    timestamp = int(time.time() * 1000000) # in microseconds
+    sample = OpenBCISample(packet_id, channel_data, aux_data, timestamp)
     for (metric, callback_function) in callback_functions.items():
         callback_function(sample)
 
