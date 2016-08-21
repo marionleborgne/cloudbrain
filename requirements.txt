@@ -1,4 +1,4 @@
 pika==0.10
-numpy
-scipy
-validictory
+numpy==1.11.1
+scipy==0.18.0
+#validictory==1.0.2
