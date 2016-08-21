@@ -90,3 +90,5 @@ ENV/
 
 # CloudBrain project configuration files
 cloudbrain/conf
+scripts/OSX/popy
+popy.tar.gz
