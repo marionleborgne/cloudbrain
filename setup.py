@@ -18,5 +18,6 @@ setup(name="cloudbrain",
       install_requires=reqs,
       license=open('LICENSE.txt').read(),
       long_description=open('README.md').read(),
-      tests_require=["mock==2.0.0"]
+      test_suite='nose.collector',
+      tests_require=['mock==1.0.1', 'nose']
       )
