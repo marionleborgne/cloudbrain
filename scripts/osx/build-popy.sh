@@ -14,7 +14,7 @@ echo "==> System version: $OSX_VERSION"
 PYTHON_SH="Miniconda-latest-${PLATFORM}-x86_64.sh"
 WORKING_DIR=${PWD}
 SCRIPT_PATH=$(cd "$(dirname "${BASH_SOURCE[0]}")"; pwd)
-CLOUDBRAIN_DIR=${SCRIPT_PATH}/../
+CLOUDBRAIN_DIR=${SCRIPT_PATH}/../../
 PREFIX=${WORKING_DIR}/popy
 
 echo "==> Current working directory: $WORKING_DIR"
