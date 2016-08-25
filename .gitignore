@@ -92,3 +92,4 @@ ENV/
 cloudbrain/conf
 scripts/OSX/popy
 popy.tar.gz
+vagrant/osx/.vagrant
