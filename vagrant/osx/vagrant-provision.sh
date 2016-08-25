@@ -13,3 +13,8 @@ sudo -u vagrant -i brew update
 # Initialize .bashrc with PATH                                                                                                                                                    
 sudo -u vagrant /usr/libexec/path_helper -s >> /Users/vagrant/.bashrc
 sudo -u vagrant ln -s .bashrc .bash_profile
+
+# get pip
+curl -O  https://bootstrap.pypa.io/get-pip.py
+python get-pip.py --user
+
