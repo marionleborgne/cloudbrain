@@ -46,7 +46,8 @@ rm $PYTHON_SH
 echo "--> Removed: $PYTHON_SH"
 
 # Check that it worked
-$PREFIX/bin/python -c "import cloudbrain"
+pushd $CLOUDBRAIN_DIR
+$PREFIX/bin/python setup.py test
 
 # Create the artifact
 echo "--> Creating artifact: ${WORKING_DIR}/popy.tar.gz"

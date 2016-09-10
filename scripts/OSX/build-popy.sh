@@ -14,7 +14,7 @@ echo "==> System version: $OSX_VERSION"
 PYTHON_SH="Miniconda-latest-${PLATFORM}-x86_64.sh"
 WORKING_DIR=${PWD}
 SCRIPT_PATH=$(cd "$(dirname "${BASH_SOURCE[0]}")"; pwd)
-CLOUDBRAIN_DIR=${SCRIPT_PATH}/../
+CLOUDBRAIN_DIR=${SCRIPT_PATH}/../../
 PREFIX=${WORKING_DIR}/popy
 
 echo "==> Current working directory: $WORKING_DIR"
@@ -46,7 +46,8 @@ rm $PYTHON_SH
 echo "--> Removed: $PYTHON_SH"
 
 # Check that it worked
-$PREFIX/bin/python -c "import cloudbrain"
+pushd $CLOUDBRAIN_DIR
+$PREFIX/bin/python setup.py test
 
 # Create the artifact
 echo "--> Creating artifact: ${WORKING_DIR}/popy.tar.gz"
