@@ -42,6 +42,7 @@ def stft_with_chunking(data, window_size, step_size, num_channels, frequency_ban
 
     """
     freqs = np.fft.fftfreq(window_size, d=1./sampling_frequency)
+    freqs = np.where(freqs >= 0)[0] # keep only the positive frequencies
 
     chunks = chunk_data(data, window_size, step_size)
     np_chunks = convert_to_numpy(chunks, window_size, num_channels)
@@ -61,7 +62,6 @@ def stft_with_chunking(data, window_size, step_size, num_channels, frequency_ban
             for i in range(num_channels):
                 # take absolute value to discard the phase info
                 channel_bands_amplitudes = np.abs(np.fft.rfft(np_chunk[:, i]))
-
                 power_band_amplitudes[band_name]['channel_%s' % i] = np.sum(
                     channel_bands_amplitudes[frequency_band_indices])
 

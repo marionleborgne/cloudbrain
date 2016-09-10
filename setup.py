@@ -1,15 +1,11 @@
-from setuptools import find_packages, setup
+from setuptools import setup, find_packages
+from pip.download import PipSession
+from pip.req import parse_requirements
 
 
+install_reqs = parse_requirements('requirements.txt', session=PipSession())
 
-def findRequirements():
-  """
-  Read the requirements.txt file and parse into requirements for setup's
-  install_requirements option.
-  """
-  return [line.strip()
-          for line in open("requirements.txt").readlines()
-          if not line.startswith("#")]
+reqs = [str(ir.req) for ir in install_reqs]
 
 
 setup(name="cloudbrain",
@@ -17,9 +13,11 @@ setup(name="cloudbrain",
       description="CloudBrain",
       author="Marion Le Borgne",
       url="https://github.com/cloudbrain/cloudbrain",
-      packages=find_packages(),
-      install_requires=findRequirements(),
+      package_dir={'': 'src'},
+      packages=find_packages('src'),
+      install_requires=reqs,
       license=open('LICENSE.txt').read(),
       long_description=open('README.md').read(),
-      tests_require=["mock==2.0.0"]
+      test_suite='nose.collector',
+      tests_require=['mock==1.0.1', 'nose']
       )
