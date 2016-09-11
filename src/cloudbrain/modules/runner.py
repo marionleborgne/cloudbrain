@@ -44,7 +44,7 @@ class ModuleRunner(object):
 
                 subscribers.append(subscriber)
 
-            module = Module(subscribers, publishers, **mod_config["options"])
+            module = Module(subscribers, publishers, **mod_config['options'])
             t = threading.Thread(target=module.start)
             t.daemon = True
             self.threads.append(t)
