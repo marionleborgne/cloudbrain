@@ -30,11 +30,9 @@ def signal_generator(num_channels, sampling_frequency, signal):
     number_points = len(signal)
     sample_spacing = 1.0 / sampling_frequency
 
-    t0 = 0
     num_points_generated = 0
     while True:
-        timestamp_in_s = t0 + num_points_generated * sample_spacing
-        timestamp = int(timestamp_in_s * 1000000)
+        timestamp = num_points_generated * sample_spacing * 1000000
         datapoint = {'timestamp': timestamp}
 
         channel_data = signal[num_points_generated % number_points]
