@@ -1,8 +1,6 @@
 import json
 import logging
 import time
-# import validictory
-# import pkg_resources
 
 from argparse import ArgumentParser
 
@@ -23,7 +21,8 @@ class _Options(object):
     def __init__(self, module_configs, log_level):
         """
         :param str module_configs: path to JSON file with module configs.
-        :param str log_level: logger verbosity 'info' for logging.INFO or 'debug' for logging.DEBUG.
+        :param str log_level: logger verbosity 'info' for logging.INFO or
+            'debug' for logging.DEBUG.
         """
         self.module_configs = module_configs
 
@@ -41,7 +40,7 @@ def _parseArgs():
     :raises _CommandLineArgError: on command-line arg error
     """
 
-    parser = ArgumentParser(description=("Start CloudBrain modules runner."))
+    parser = ArgumentParser(description="Start CloudBrain modules runner.")
 
     parser.add_argument(
         "--conf",
@@ -60,18 +59,8 @@ def _parseArgs():
 
     options = parser.parse_args()
 
-    # TODO: validate module configurations schema
-    # with pkg_resources.resource_stream(__name__,
-    #                                    "module_configs_schema.json") as modulesSchema:
-    #
-    #     try:
-    #         validictory.validate(json.load(options.module_configs), json.load(modulesSchema))
-    #     except validictory.ValidationError as exc:
-    #         logging.exception("JSON schema validation of --conf file failed")
-    #         parser.error("JSON schema validation of --conf file failed: {}"
-    #                      .format(exc))
-
-    return _Options(module_configs=options.module_configs, log_level=options.log_level)
+    return _Options(module_configs=options.module_configs,
+                    log_level=options.log_level)
 
 
 
