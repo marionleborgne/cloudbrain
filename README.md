@@ -3,7 +3,6 @@
 CloudBrain is a platform for real-time sensor data analysis and visualization. 
 
 # Status
-## Build
 [![Build Status](https://travis-ci.org/cloudbrain/cloudbrain.svg?branch=master)](https://travis-ci.org/cloudbrain/cloudbrain)
 
 # Features
