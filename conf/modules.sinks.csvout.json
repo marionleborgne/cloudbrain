@@ -1,9 +1,10 @@
 {
   "modules": [
     {
-      "name": "StdoutSink",
-      "package": "cloudbrain.modules.sinks.stdout",
+      "name": "CSVOutSink",
+      "package": "cloudbrain.modules.sinks.csvout",
       "options": {
+        "out_dir": "/tmp/cloudbrain"
       },
       "subscribers": [
         {
