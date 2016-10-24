@@ -2,7 +2,7 @@ import logging
 import pika
 
 from cloudbrain.subscribers.interface import SubscriberInterface
-from cloudbrain.lib.auth import CloudbrainAuth
+from cloudbrain.core.auth import CloudbrainAuth
 
 _LOGGER = logging.getLogger(__name__)
 AUTH_SERVER = 'https://auth.getcloudbrain.com'
