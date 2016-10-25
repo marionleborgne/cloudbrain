@@ -14,16 +14,15 @@ CloudBrain is a platform for real-time sensor data analysis and visualization.
 ![features](https://raw.githubusercontent.com/cloudbrain/cloudbrain/master/docs/images/features.png)
 
 # Using CloudBrain
-## Setup
-For your changes to take effect immediately, if you want to *edit* the code:
-```
-python setup.py develop --user
-```
 
-Otherwise, if you just want to *use* CloudBrain:
-```
-python setup.py install --user
-```
+## Setup
+* Run: `pip install . --user`
+* If you plan to *edit* the code, make sure to use the `-e` switch: `pip 
+install -e . --user`
+
+## Optional
+Optional CloudBrain modules can be installed:
+* Muse source module: `pip install .[muse] --user`
 
 ## Run the tests
 ```

@@ -1,0 +1,33 @@
+{
+  "modules": [
+    {
+      "name": "MuseSource",
+      "package": "cloudbrain.modules.sources.muse_py3",
+      "options": {
+        "ip": "127.0.0.1",
+        "port": 9090,
+        "start_muse_io": false
+      },
+      "publishers": [
+	  {
+          "name": "PikaPublisher",
+          "package": "cloudbrain.publishers.rabbitmq",
+          "options": {
+            "rabbitmq_address": "localhost",
+            "rabbitmq_user": "guest",
+            "rabbitmq_pwd": "guest"
+          },
+          "base_routing_key": "some_unique_id:device_name",
+          "metrics": [
+            {
+              "metric_name": "eeg",
+              "num_channels": 8,
+              "buffer_size": 10
+            }
+          ]
+        }
+      ],
+      "subscribers": []
+    }
+  ]
+}
