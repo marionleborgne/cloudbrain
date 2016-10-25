@@ -17,7 +17,7 @@
             "rabbitmq_user": "guest",
             "rabbitmq_pwd": "guest"
           },
-          "base_routing_key": "some_unique_id:openbci",
+          "base_routing_key": "some_unique_id:device_name",
           "metrics": [
             {
               "metric_name": "eeg",
@@ -30,7 +30,7 @@
           "name": "PipePublisher",
           "package": "cloudbrain.publishers.pipe",
           "options": {},
-          "base_routing_key": "some_unique_id:openbci",
+          "base_routing_key": "some_unique_id:device_name",
           "metrics": [
             {
               "metric_name": "eeg",
