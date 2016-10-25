@@ -21,7 +21,7 @@ class MetricBuffer(object):
        {"timestamp": <float>, "metric_0": <float>, ..., "metric_7": <float>}
     :type datum: dict
     """
-    if datum.keys().sort() != self.metric_names.sort():
+    if sorted(datum.keys()) != sorted(self.metric_names):
         raise ValueError("MetricBuffer keys should be %s but are %s" % (
           self.metric_names, datum.keys()))
 

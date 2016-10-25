@@ -13,8 +13,7 @@ env:
   - NUMPY=$(bash .travis/get-py-pkg-version.sh numpy) SCIPY=$(bash .travis/get-py-pkg-version.sh scipy)
  matrix:
   - PYTHON_VERSION=2.7
-  # Python 3.5 isn't supported for now. TODO: Adapt unit tests.
-  # - PYTHON_VERSION=3.5
+  - PYTHON_VERSION=3.5
 
 before_install:
  - chmod +x .travis/download-miniconda.sh
