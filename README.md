@@ -1,11 +1,10 @@
 <img src="https://raw.githubusercontent.com/cloudbrain/cloudbrain/master/docs/images/cb-logo-low-res.png" alt="Banner" style="width: 40px;"/>
 
-CloudBrain is a platform for real-time sensor data analysis and visualization. 
-
 # Status
 [![Build Status](https://travis-ci.org/cloudbrain/cloudbrain.svg?branch=master)](https://travis-ci.org/cloudbrain/cloudbrain)
 
 # Features
+CloudBrain is a platform for real-time sensor data analysis and visualization.
 - **Stream sensor data** in a unified format.
 - **Store sensor data** in a central database.
 - **Analyze sensor data** to find patterns.
