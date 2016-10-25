@@ -2,7 +2,6 @@ import requests
 
 
 class CloudbrainAuth(object):
-
     def __init__(self, base_url=None, token=None):
         self.base_url = base_url or 'http://dockerhost:3000'
         self.token = token or ''
@@ -12,7 +11,7 @@ class CloudbrainAuth(object):
         token = token or self.token
 
         headers = {
-          'Authorization': 'Bearer %s' % token
+            'Authorization': 'Bearer %s' % token
         }
 
         response = requests.get(token_url, headers=headers, verify=False)
@@ -23,7 +22,7 @@ class CloudbrainAuth(object):
         token = token or self.token
 
         headers = {
-          'Authorization': 'Bearer %s' % token
+            'Authorization': 'Bearer %s' % token
         }
 
         response = requests.get(info_url, headers=headers, verify=False)
@@ -37,7 +36,8 @@ class CloudbrainAuth(object):
             "username": username
         }
 
-        response = requests.post(info_url, data=body, headers=headers, verify=False)
+        response = requests.post(info_url, data=body, headers=headers,
+                                 verify=False)
         return response.json()
 
     def get_vhost_by_token(self, token):

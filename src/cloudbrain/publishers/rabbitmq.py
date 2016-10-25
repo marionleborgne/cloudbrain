@@ -3,10 +3,10 @@ import logging
 import pika
 
 from cloudbrain.publishers.interface import PublisherInterface
+from cloudbrain.core.config import get_config
 from cloudbrain.core.auth import CloudbrainAuth
 
 _LOGGER = logging.getLogger(__name__)
-AUTH_SERVER = 'https://auth.getcloudbrain.com'
 
 
 class PikaPublisher(PublisherInterface):
@@ -34,7 +34,8 @@ class PikaPublisher(PublisherInterface):
         if rabbitmq_vhost:
             self.rabbitmq_vhost = rabbitmq_vhost
         else:
-            auth = CloudbrainAuth(AUTH_SERVER)
+            config = get_config()
+            auth = CloudbrainAuth(config['authUrl'])
             self.rabbitmq_vhost = auth.get_vhost_by_username(rabbitmq_user)
         self.connection = None
         self.channels = {}
