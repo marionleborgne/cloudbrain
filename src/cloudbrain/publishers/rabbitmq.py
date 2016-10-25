@@ -10,11 +10,16 @@ _LOGGER = logging.getLogger(__name__)
 
 class PikaPublisher(PublisherInterface):
     """
-    Publish data to RabbitMQ exchanges. The name of the exchange is the routing key.
+    Publish data to RabbitMQ exchanges. The name of the exchange is the
+    routing key.
     """
 
 
-    def __init__(self, base_routing_key, rabbitmq_address, rabbitmq_user, rabbitmq_pwd):
+    def __init__(self,
+                 base_routing_key,
+                 rabbitmq_address,
+                 rabbitmq_user,
+                 rabbitmq_pwd):
 
         super(PikaPublisher, self).__init__(base_routing_key)
         _LOGGER.debug("Base routing key: %s" % self.base_routing_key)
@@ -29,7 +34,8 @@ class PikaPublisher(PublisherInterface):
 
 
     def connect(self):
-        credentials = pika.PlainCredentials(self.rabbitmq_user, self.rabbitmq_pwd)
+        credentials = pika.PlainCredentials(self.rabbitmq_user,
+                                            self.rabbitmq_pwd)
 
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(
             host=self.rabbitmq_address, credentials=credentials))
@@ -45,7 +51,10 @@ class PikaPublisher(PublisherInterface):
     def register(self, metric_name, num_channels, buffer_size=1):
 
         routing_key = "%s:%s" % (self.base_routing_key, metric_name)
-        self.register_metric(routing_key, metric_name, num_channels, buffer_size)
+        self.register_metric(routing_key,
+                             metric_name,
+                             num_channels,
+                             buffer_size)
         self._rabbitmq_register(routing_key)
 
 
@@ -69,10 +78,9 @@ class PikaPublisher(PublisherInterface):
 
     def _rabbitmq_publish(self, routing_key, data):
 
-        self.channels[routing_key].basic_publish(exchange=routing_key,
-                                                 routing_key=routing_key,
-                                                 body=json.dumps(data),
-                                                 properties=pika.BasicProperties(
-                                                     delivery_mode=2,
-                                                     # make the message persistent
-                                                 ))
+        # delivery_mode=2 make the message persistent
+        self.channels[routing_key].basic_publish(
+            exchange=routing_key,
+            routing_key=routing_key,
+            body=json.dumps(data),
+            properties=pika.BasicProperties(delivery_mode=2))

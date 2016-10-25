@@ -18,11 +18,11 @@
           "name": "PikaPublisher",
           "package": "cloudbrain.publishers.rabbitmq",
           "options": {
-            "rabbitmq_address": "dockerhost",
-            "rabbitmq_user": "cloudbrain",
-            "rabbitmq_pwd": "cloudbrain"
+            "rabbitmq_address": "localhost",
+            "rabbitmq_user": "guest",
+            "rabbitmq_pwd": "guest"
           },
-          "base_routing_key": "octopicorn:openbci",
+          "base_routing_key": "some_unique_id:device_name",
           "metrics": [
             {
               "metric_name": "heart_raw",
@@ -36,7 +36,7 @@
           "package": "cloudbrain.publishers.pipe",
           "options": {
           },
-          "base_routing_key": "octopicorn:openbci",
+          "base_routing_key": "some_unique_id:device_name",
           "metrics": [
             {
               "metric_name": "heart_raw",
@@ -62,11 +62,11 @@
           "name": "PikaSubscriber",
           "package": "cloudbrain.subscribers.rabbitmq",
           "options": {
-            "rabbitmq_address": "dockerhost",
-            "rabbitmq_user": "cloudbrain",
-            "rabbitmq_pwd": "cloudbrain"
+            "rabbitmq_address": "localhost",
+            "rabbitmq_user": "guest",
+            "rabbitmq_pwd": "guest"
           },
-          "base_routing_key": "octopicorn:openbci",
+          "base_routing_key": "some_unique_id:device_name",
           "metrics": [
             {
               "metric_name": "heart_raw",
@@ -81,11 +81,11 @@
           "name": "PikaPublisher",
           "package": "cloudbrain.publishers.rabbitmq",
           "options": {
-            "rabbitmq_address": "dockerhost",
-            "rabbitmq_user": "cloudbrain",
-            "rabbitmq_pwd": "cloudbrain"
+            "rabbitmq_address": "localhost",
+            "rabbitmq_user": "guest",
+            "rabbitmq_pwd": "guest"
           },
-          "base_routing_key": "octopicorn:openbci",
+          "base_routing_key": "some_unique_id:device_name",
           "metrics": [
             {
               "metric_name": "heart_filtered",
@@ -108,11 +108,11 @@
           "name": "PikaSubscriber",
           "package": "cloudbrain.subscribers.rabbitmq",
           "options": {
-            "rabbitmq_address": "dockerhost",
-            "rabbitmq_user": "cloudbrain",
-            "rabbitmq_pwd": "cloudbrain"
+            "rabbitmq_address": "localhost",
+            "rabbitmq_user": "guest",
+            "rabbitmq_pwd": "guest"
           },
-          "base_routing_key": "octopicorn:openbci",
+          "base_routing_key": "some_unique_id:device_name",
           "metrics": [
             {
               "metric_name": "heart_filtered",
@@ -126,11 +126,11 @@
           "name": "PikaPublisher",
           "package": "cloudbrain.publishers.rabbitmq",
           "options": {
-            "rabbitmq_address": "dockerhost",
-            "rabbitmq_user": "cloudbrain",
-            "rabbitmq_pwd": "cloudbrain"
+            "rabbitmq_address": "localhost",
+            "rabbitmq_user": "guest",
+            "rabbitmq_pwd": "guest"
           },
-          "base_routing_key": "octopicorn:openbci",
+          "base_routing_key": "some_unique_id:device_name",
           "metrics": [
             {
               "metric_name": "bpm",
@@ -162,11 +162,11 @@
           "name": "PikaSubscriber",
           "package": "cloudbrain.subscribers.rabbitmq",
           "options": {
-            "rabbitmq_address": "dockerhost",
-            "rabbitmq_user": "cloudbrain",
-            "rabbitmq_pwd": "cloudbrain"
+            "rabbitmq_address": "localhost",
+            "rabbitmq_user": "guest",
+            "rabbitmq_pwd": "guest"
           },
-          "base_routing_key": "octopicorn:openbci",
+          "base_routing_key": "some_unique_id:device_name",
           "metrics": [
             {
               "metric_name": "bpm",
@@ -180,11 +180,11 @@
           "name": "PikaPublisher",
           "package": "cloudbrain.publishers.rabbitmq",
           "options": {
-            "rabbitmq_address": "dockerhost",
-            "rabbitmq_user": "cloudbrain",
-            "rabbitmq_pwd": "cloudbrain"
+            "rabbitmq_address": "localhost",
+            "rabbitmq_user": "guest",
+            "rabbitmq_pwd": "guest"
           },
-          "base_routing_key": "octopicorn:openbci",
+          "base_routing_key": "some_unique_id:device_name",
           "metrics": [
             {
               "metric_name": "nervous",
@@ -205,11 +205,11 @@
           "name": "PikaSubscriber",
           "package": "cloudbrain.subscribers.rabbitmq",
           "options": {
-            "rabbitmq_address": "dockerhost",
-            "rabbitmq_user": "cloudbrain",
-            "rabbitmq_pwd": "cloudbrain"
+            "rabbitmq_address": "localhost",
+            "rabbitmq_user": "guest",
+            "rabbitmq_pwd": "guest"
           },
-          "base_routing_key": "octopicorn:openbci",
+          "base_routing_key": "some_unique_id:device_name",
           "metrics": [
             {
               "metric_name": "bpm",
@@ -224,11 +224,11 @@
           "name": "PikaPublisher",
           "package": "cloudbrain.publishers.rabbitmq",
           "options": {
-            "rabbitmq_address": "dockerhost",
-            "rabbitmq_user": "cloudbrain",
-            "rabbitmq_pwd": "cloudbrain"
+            "rabbitmq_address": "localhost",
+            "rabbitmq_user": "guest",
+            "rabbitmq_pwd": "guest"
           },
-          "base_routing_key": "octopicorn:openbci",
+          "base_routing_key": "some_unique_id:device_name",
           "metrics": [
             {
               "metric_name": "beat",

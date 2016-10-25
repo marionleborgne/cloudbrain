@@ -8,8 +8,12 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class PikaSubscriber(SubscriberInterface):
-    def __init__(self, base_routing_key, rabbitmq_address, rabbitmq_user,
+    def __init__(self,
+                 base_routing_key,
+                 rabbitmq_address,
+                 rabbitmq_user,
                  rabbitmq_pwd):
+
         super(PikaSubscriber, self).__init__(base_routing_key)
 
         _LOGGER.debug("Base routing key: %s" % self.base_routing_key)
@@ -24,7 +28,8 @@ class PikaSubscriber(SubscriberInterface):
 
 
     def connect(self):
-        credentials = pika.PlainCredentials(self.rabbitmq_user, self.rabbitmq_pwd)
+        credentials = pika.PlainCredentials(self.rabbitmq_user,
+                                            self.rabbitmq_pwd)
 
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(
             host=self.rabbitmq_address, credentials=credentials))
@@ -33,7 +38,10 @@ class PikaSubscriber(SubscriberInterface):
     def register(self, metric_name, num_channels, buffer_size=1):
 
         routing_key = "%s:%s" % (self.base_routing_key, metric_name)
-        self.register_metric(routing_key, metric_name, num_channels, buffer_size)
+        self.register_metric(routing_key,
+                             metric_name,
+                             num_channels,
+                             buffer_size)
         self._rabbitmq_register(routing_key)
 
 
@@ -46,7 +54,8 @@ class PikaSubscriber(SubscriberInterface):
                            queue=queue_name,
                            routing_key=routing_key)
 
-        self.channels[routing_key] = {'channel': channel, 'queue_name': queue_name}
+        self.channels[routing_key] = {'channel': channel,
+                                      'queue_name': queue_name}
 
 
     def disconnect(self):

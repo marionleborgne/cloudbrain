@@ -69,8 +69,8 @@ class MockChannel(object):
     def basic_publish(self, exchange, routing_key, body, properties):
         self.published_count += 1
         self.message_published = body
-        print "Message count: %s" % self.published_count
-        print "Message body: %s" % body
+        print("Message count: %s" % self.published_count)
+        print("Message body: %s" % body)
 
 
 
@@ -122,7 +122,7 @@ class OpenBCITest(unittest.TestCase):
 
     def validate_start_method(self, sample):
         self.assertEqual(sample.channel_data, [i for i in range(self.num_channels)])
-        print "OpenBCI started: %s" % sample.channel_data
+        print("OpenBCI started: %s" % sample.channel_data)
 
 
     @patch('serial.Serial', MockSerial)
@@ -143,7 +143,8 @@ class OpenBCITest(unittest.TestCase):
 
         publisher = PikaPublisher(self.base_routing_key, **options)
         publisher.connect()
-        publisher.register(self.metric_name, self.num_channels, self.buffer_size)
+        publisher.register(self.metric_name, self.num_channels,
+                           self.buffer_size)
 
         for metric_name in publisher.metrics_to_num_channels().keys():
             routing_key = "%s:%s" % (self.base_routing_key, metric_name)
@@ -157,7 +158,7 @@ class OpenBCITest(unittest.TestCase):
             publisher.publish(metric_name, self.message)
             self.assertEqual(publisher.channels[routing_key].published_count, 1)
 
-            expectedMessage = json.dumps([{
+            expected_message = [{
                 "channel_5": 5, "channel_4": 4, "channel_7": 7,
                 "channel_6": 6, "channel_1": 1, "channel_0": 0,
                 "channel_3": 3, "channel_2": 2, "timestamp": 100
@@ -165,9 +166,11 @@ class OpenBCITest(unittest.TestCase):
                 "channel_5": 5, "channel_4": 4, "channel_7": 7,
                 "channel_6": 6, "channel_1": 1, "channel_0": 0,
                 "channel_3": 3, "channel_2": 2, "timestamp": 100
-            }])
-            self.assertEqual(publisher.channels[routing_key].message_published,
-                             expectedMessage)
+            }]
+
+            published_message = json.loads(
+                publisher.channels[routing_key].message_published)
+            self.assertEqual(published_message, expected_message)
 
 
     @patch('serial.Serial', MockSerial)
@@ -181,7 +184,8 @@ class OpenBCITest(unittest.TestCase):
 
         publisher = PikaPublisher(self.base_routing_key, **options)
         publisher.connect()
-        publisher.register(self.metric_name, self.num_channels, self.buffer_size)
+        publisher.register(self.metric_name, self.num_channels,
+                           self.buffer_size)
 
         publishers = [publisher]
         subscribers = []

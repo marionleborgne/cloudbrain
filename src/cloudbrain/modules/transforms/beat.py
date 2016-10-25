@@ -1,21 +1,22 @@
 import time
 
-import json
 import logging
 
 from cloudbrain.modules.interface import ModuleInterface
 
 _LOGGER = logging.getLogger(__name__)
 
-
+"""
+TODO: This module is not implemented.
+"""
 
 class BeatTransformer(ModuleInterface):
 
     """
     The BPM transformer analyzes only one channel per device and per metric.
     Note that this must be the same channel number across all subscribers.
-    This means that you need to subscribe to the same device/metric so that the channel number is
-    consistent.
+    This means that you need to subscribe to the same device/metric so that
+    the channel number is consistent.
     """
     def __init__(self, subscribers, publishers):
 
@@ -58,7 +59,8 @@ class BeatTransformer(ModuleInterface):
     #                 bpm = data['channel_%s' %i]
     #                 time.sleep(bpm / 60)
     #                 for publisher in publishers:
-    #                     for pub_metric_buffer in publisher.metric_buffers.values():
+    #                     metric_buffers = publisher.metric_buffers.values()
+    #                     for pub_metric_buffer in metric_buffers:
     #                         pub_metric_name = pub_metric_buffer.name
     #                         publisher.publish(pub_metric_name, data_to_send)
     #

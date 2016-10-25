@@ -1,12 +1,12 @@
 {
   "modules": [
     {
-      "name": "OpenBCISource",
-      "package": "cloudbrain.modules.sources.openbci",
+      "name": "MuseSource",
+      "package": "cloudbrain.modules.sources.muse_py3",
       "options": {
-        "port": "/dev/tty.usbserial-DN0095VT",
-        "baud": 115200,
-        "filter_data": true
+        "ip": "127.0.0.1",
+        "port": 9090,
+        "start_muse_io": false
       },
       "publishers": [
 	  {
@@ -23,19 +23,6 @@
               "metric_name": "eeg",
               "num_channels": 8,
               "buffer_size": 10
-            }
-          ]
-        },
-        {
-          "name": "PipePublisher",
-          "package": "cloudbrain.publishers.pipe",
-          "options": {},
-          "base_routing_key": "some_unique_id:device_name",
-          "metrics": [
-            {
-              "metric_name": "eeg",
-              "num_channels": 8,
-              "buffer_size": 100
             }
           ]
         }

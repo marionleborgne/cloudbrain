@@ -8,7 +8,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def _print_callback(unsed_ch, unsed_method, unsed_properties, body):
-    print "==> %s\n" % body
+    print("==> %s\n" % body)
 
 
 
