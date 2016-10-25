@@ -19,13 +19,14 @@ class FrequencyBandTransformer(ModuleInterface):
         _LOGGER.debug("Subscribers: %s" % self.subscribers)
         _LOGGER.debug("Publishers: %s" % self.publishers)
 
-        self.data_to_analyze = {'channel_%s' % i: [] for i in range(window_size)}
+        self.data_to_analyze = {'channel_%s' % i: []
+                                for i in range(window_size)}
         self.window_size = window_size
         self.sampling_frequency = sampling_frequency
         self.frequency_bands = frequency_bands
 
-        # TODO: should window_size be a multiple of sampling_frequency? Should it be higher?
-        # and window_size > sampling_frequency
+        # TODO: should window_size be a multiple of sampling_frequency?
+        # Should it be higher? and window_size > sampling_frequency
         # assert self.window_size % self.sampling_frequency == 0
         # assert self.window_size >= self.sampling_frequency
 
@@ -74,23 +75,27 @@ class FrequencyBandTransformer(ModuleInterface):
                 bands = {}
                 for i in range(num_channels):
                     channel_name = 'channel_%s' % i
-                    data_to_analyze = np.array(self.data_to_analyze[channel_name])
-                    channel_bands = self.compute_frequency_bands(data_to_analyze)
+                    channel_data = self.data_to_analyze[channel_name]
+                    data_to_analyze = np.array(channel_data)
+                    channel_bands = self.compute_freq_bands(data_to_analyze)
                     for (band_name, band_value) in channel_bands.items():
                         if band_name not in bands:
                             bands[band_name] = {'timestamp': timestamp}
                         bands[band_name][channel_name] = band_value
 
-                self.data_to_analyze = {'channel_%s' % i: [] for i in range(self.window_size)}
+                self.data_to_analyze = {'channel_%s' % i: []
+                                        for i in range(self.window_size)}
 
         return bands
 
 
-    def compute_frequency_bands(self, y):
+    def compute_freq_bands(self, y):
         """
-        Compute FFT using a kaiser window over a series of data points of length window_size.
+        Compute FFT using a kaiser window over a series of data points of
+        length window_size.
 
-        The Kaiser window can approximate many other windows by varying the beta parameter.
+        The Kaiser window can approximate many other windows by varying
+        the beta parameter.
 
         beta  |  Window shape
         ------------------------------
@@ -100,13 +105,17 @@ class FrequencyBandTransformer(ModuleInterface):
         8.6	  |  Similar to a Blackman
 
         A beta value of 14 is probably a good starting point.
-        Note that as beta gets large, the window narrows, and so the number of samples needs
+        Note that as beta gets large, the window narrows, and so the number
+        of samples needs
         to be large enough to sample the increasingly narrow spike,
         otherwise NaNs will get returned.
 
-        More at http://docs.scipy.org/doc/scipy-0.17.0/reference/generated/scipy.signal.kaiser.html
+        More here:
+        http://docs.scipy.org/doc/scipy-0.17.0/reference/generated/
+        scipy.signal.kaiser.html
 
-        :param y: (numpy.Array) array of floats. Frequency bands will be extracted from this data.
+        :param y: (numpy.Array) array of floats. Frequency bands will be
+            extracted from this data.
         """
 
         # make sure the number of data points to analyze is equal to window size
@@ -119,6 +128,7 @@ class FrequencyBandTransformer(ModuleInterface):
 
         bands = {}
         for (name, freq_range) in self.frequency_bands.items():
-            bands[name] = np.sum(np.abs(ywf[(freqs >= freq_range[0]) & (freqs < freq_range[1])]))
+            bands[name] = np.sum(np.abs(ywf[(freqs >= freq_range[0])
+                                            & (freqs < freq_range[1])]))
 
         return bands

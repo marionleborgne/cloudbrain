@@ -51,17 +51,24 @@ class PublisherInterface(object):
     def metrics_to_num_channels(self):
         metrics_to_num_channels = {}
         for metric_buffer in self.metric_buffers.values():
-            metrics_to_num_channels[metric_buffer.name] = metric_buffer.num_channels
+            num_channels = metric_buffer.num_channels
+            metrics_to_num_channels[metric_buffer.name] = num_channels
 
         return metrics_to_num_channels
 
 
-    def register_metric(self, routing_key, metric_name, num_channels, buffer_size):
+    def register_metric(self,
+                        routing_key,
+                        metric_name,
+                        num_channels,
+                        buffer_size):
+
         if routing_key in self.routing_keys:
             _LOGGER.error("Routing key %s already registered. "
                           "Routing keys: %s" % (routing_key, self.routing_keys))
         else:
             self.routing_keys.append(routing_key)
             self.metric_buffers[routing_key] = MetricBuffer(metric_name,
-                                                            num_channels, buffer_size)
+                                                            num_channels,
+                                                            buffer_size)
             _LOGGER.info("New routing key registered: %s" % routing_key)

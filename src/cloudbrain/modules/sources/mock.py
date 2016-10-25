@@ -16,8 +16,17 @@ def _publish_data(publisher, metric_name, datapoints):
 
 
 class MockSource(ModuleInterface):
-    def __init__(self, subscribers, publishers, sampling_frequency, alpha_amplitude, alpha_freq,
-                 beta_amplitude, beta_freq, notch_amplitude, notch_freq, number_points):
+    def __init__(self,
+                 subscribers,
+                 publishers,
+                 sampling_frequency,
+                 alpha_amplitude,
+                 alpha_freq,
+                 beta_amplitude,
+                 beta_freq,
+                 notch_amplitude,
+                 notch_freq,
+                 number_points):
 
         super(MockSource, self).__init__(subscribers, publishers)
         _LOGGER.debug("Subscribers: %s" % self.subscribers)
@@ -50,12 +59,14 @@ class MockSource(ModuleInterface):
         for publisher in self.publishers:
             metrics_to_num_channels = publisher.metrics_to_num_channels()
 
+            # start a thread per metric to not block the main thread
             for (metric_name, num_channels) in metrics_to_num_channels.items():
                 data = signal_generator(num_channels,
                                         self.sampling_frequency,
                                         signal)
 
-                t = threading.Thread(target=_publish_data, args=(publisher, metric_name, data))
+                t = threading.Thread(target=_publish_data,
+                                     args=(publisher, metric_name, data))
                 t.daemon = True
                 self.threads.append(t)
                 t.start()
