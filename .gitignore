@@ -93,3 +93,7 @@ cloudbrain/conf
 scripts/OSX/popy
 popy.tar.gz
 vagrant/osx/.vagrant
+conf.local/
+
+# JetBrains
+.idea

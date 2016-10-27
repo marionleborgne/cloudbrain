@@ -2,9 +2,10 @@ import logging
 import pika
 
 from cloudbrain.subscribers.interface import SubscriberInterface
+from cloudbrain.core.config import get_config
+from cloudbrain.core.auth import CloudbrainAuth
 
 _LOGGER = logging.getLogger(__name__)
-
 
 
 class PikaSubscriber(SubscriberInterface):
@@ -12,7 +13,8 @@ class PikaSubscriber(SubscriberInterface):
                  base_routing_key,
                  rabbitmq_address,
                  rabbitmq_user,
-                 rabbitmq_pwd):
+                 rabbitmq_pwd,
+                 rabbitmq_vhost):
 
         super(PikaSubscriber, self).__init__(base_routing_key)
 
@@ -20,9 +22,13 @@ class PikaSubscriber(SubscriberInterface):
         _LOGGER.debug("Routing keys: %s" % self.routing_keys)
         _LOGGER.debug("Metric buffers: %s" % self.metric_buffers)
 
+        self.config = get_config()
         self.rabbitmq_address = rabbitmq_address
         self.rabbitmq_user = rabbitmq_user
         self.rabbitmq_pwd = rabbitmq_pwd
+        self.rabbitmq_vhost = rabbitmq_vhost
+        if self.rabbitmq_address == self.config['rabbitHost']:
+            self._override_vhost()
         self.connection = None
         self.channels = {}
 
@@ -32,7 +38,9 @@ class PikaSubscriber(SubscriberInterface):
                                             self.rabbitmq_pwd)
 
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(
-            host=self.rabbitmq_address, credentials=credentials))
+            host=self.rabbitmq_address,
+            virtual_host=self.rabbitmq_vhost,
+            credentials=credentials))
 
 
     def register(self, metric_name, num_channels, buffer_size=1):
@@ -95,3 +103,11 @@ class PikaSubscriber(SubscriberInterface):
         meth_frame, header_frame, body = channel.basic_get(queue_name)
 
         return body
+
+    def _override_vhost(self):
+        old_vhost = self.rabbitmq_vhost
+        auth = CloudbrainAuth(self.config['authUrl'])
+        self.rabbitmq_vhost = auth.get_vhost_by_username(self.rabbitmq_user)
+        if old_vhost not in ["/", ""]:
+            _LOGGER.warn("Configured RabbitMQ Vhost is being overridden.")
+            _LOGGER.warn("New Vhost: %s" % self.rabbitmq_vhost)
