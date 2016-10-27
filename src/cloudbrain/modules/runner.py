@@ -22,7 +22,8 @@ class ModuleRunner(object):
 
             publishers = []
             for pub_config in mod_config["publishers"]:
-                Publisher = _get_class(pub_config["package"], pub_config["name"])
+                Publisher = _get_class(pub_config["package"],
+                                       pub_config["name"])
                 publisher = Publisher(pub_config["base_routing_key"],
                                       **pub_config["options"])
                 publisher.connect()
@@ -34,9 +35,10 @@ class ModuleRunner(object):
 
             subscribers = []
             for sub_config in mod_config["subscribers"]:
-                Subscriber = _get_class(sub_config["package"], sub_config["name"])
+                Subscriber = _get_class(sub_config["package"],
+                                        sub_config["name"])
                 subscriber = Subscriber(sub_config["base_routing_key"],
-                                      **sub_config["options"])
+                                        **sub_config["options"])
                 subscriber.connect()
 
                 for metric_options in sub_config["metrics"]:

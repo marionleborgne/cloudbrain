@@ -26,7 +26,8 @@ class OpenBCISource(ModuleInterface):
 
         for publisher in self.publishers:
             metrics_to_num_channels = publisher.metrics_to_num_channels()
-            logging.debug("Metrics to channels mapping: %s" % metrics_to_num_channels)
+            _LOGGER.debug("Metrics to channels mapping: %s"
+                          % metrics_to_num_channels)
             for (metric_name, num_channels) in metrics_to_num_channels.items():
                 if metric_name not in callback_functions:
                     callback_functions[metric_name] = self.callback_factory(
@@ -55,7 +56,8 @@ class OpenBCISource(ModuleInterface):
                 message['timestamp'] = sample.timestamp
 
             for publisher in self.publishers:
-                logging.debug("Publishing on metric %s: %s" % (metric_name, message))
+                _LOGGER.debug("Publishing on metric %s: %s" % (metric_name,
+                                                               message))
                 publisher.publish(metric_name, message)
 
 
