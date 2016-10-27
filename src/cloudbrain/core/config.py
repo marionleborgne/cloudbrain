@@ -1,21 +1,23 @@
-import simplejson as json
 import os
+import simplejson as json
+
+from pkg_resources import resource_filename
+
+from cloudbrain import core
+
 
 
 def get_config():
-    core_path = os.path.join(os.getcwd(), 'src/cloudbrain/core')
-
-    if os.environ.get("DEV", None):
-        config_file = 'config.dev.json'
+    if os.environ.get("DEV"):
+        config_file = resource_filename(core.__name__, 'config.dev.json')
     else:
-        config_file = 'config.json'
+        config_file = resource_filename(core.__name__, 'config.json')
 
-    with open(os.path.join(core_path, config_file), 'rb') as f:
+    with open(os.path.join(config_file), 'rb') as f:
         json_config = json.load(f)
 
-    auth_url = os.environ.get("AUTH_URL", None) or json_config['authUrl']
-    rabbit_host = os.environ.get("RABBIT_HOST", None) \
-        or json_config['rabbitHost']
+    auth_url = os.environ.get("AUTH_URL") or json_config['authUrl']
+    rabbit_host = os.environ.get("RABBIT_HOST") or json_config['rabbitHost']
 
     config = {
         "authUrl": auth_url,
