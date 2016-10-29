@@ -59,8 +59,7 @@ class BandFilter(ModuleInterface):
                 for publisher in self.publishers:
                     for pub_metric_buffer in publisher.metric_buffers.values():
                         pub_metric_name = pub_metric_buffer.name
-                        callback = self._callback_factory(sub_metric_name,
-                                                          sub_num_channels,
+                        callback = self._callback_factory(sub_num_channels,
                                                           pub_metric_name,
                                                           self.a,
                                                           self.b,
@@ -70,7 +69,6 @@ class BandFilter(ModuleInterface):
 
 
     def _callback_factory(self,
-                          sub_metric_name,
                           sub_num_channels,
                           pub_metric_name,
                           a,
@@ -80,7 +78,7 @@ class BandFilter(ModuleInterface):
         publishers = self.publishers
 
 
-        def process_cb_buffer(unused_ch,
+        def callback(unused_ch,
                               unused_method,
                               unused_properties,
                               stringified_cb_buffer):
@@ -96,7 +94,7 @@ class BandFilter(ModuleInterface):
                     publisher.publish(pub_metric_name, filtered_data)
 
 
-        return process_cb_buffer
+        return callback
 
 
     def _filter(self, cb_buffer, num_channels, a, b, metrics_sliding_window):
