@@ -20,7 +20,8 @@
           "options": {
             "rabbitmq_address": "localhost",
             "rabbitmq_user": "guest",
-            "rabbitmq_pwd": "guest"
+            "rabbitmq_pwd": "guest",
+            "rabbitmq_vhost": "/"
           },
           "base_routing_key": "some_unique_id:device_name",
           "metrics": [
