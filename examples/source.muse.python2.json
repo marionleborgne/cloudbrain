@@ -9,13 +9,14 @@
         "start_muse_io": false
       },
       "publishers": [
-	  {
+        {
           "name": "PikaPublisher",
           "package": "cloudbrain.publishers.rabbitmq",
           "options": {
             "rabbitmq_address": "localhost",
             "rabbitmq_user": "guest",
-            "rabbitmq_pwd": "guest"
+            "rabbitmq_pwd": "guest",
+            "rabbitmq_vhost": "/"
           },
           "base_routing_key": "some_unique_id:device_name",
           "metrics": [
