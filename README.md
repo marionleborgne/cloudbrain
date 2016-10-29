@@ -26,7 +26,12 @@ Optional CloudBrain modules can be installed:
 ## Run the tests
 ```
 python setup.py test
+
 ```
+
+## Examples
+See `README.md` in `cloudbrain/examples` for more information about how to use
+ and chain CloudBrain modules.
 
 ## More docs
 For more details on to setup and use CloudBrain, refer to the [wiki](https://github.com/cloudbrain/cloudbrain/wiki).

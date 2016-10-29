@@ -18,6 +18,11 @@ setup(name='cloudbrain',
       long_description=open('README.md').read(),
       test_suite='nose.collector',
       tests_require=['mock==1.0.1', 'nose'],
+      include_package_data=True,
+      package_data={
+          "cloudbrain.core": ["*.json"],
+          "cloudbrain.schema": ["*.json"]
+      },
       extras_require={
           'muse:python_version>="3"': ['python-osc==1.6'],
           'muse:python_version<"3"': ['cython==0.24.1', 'pyliblo==0.10.0'],

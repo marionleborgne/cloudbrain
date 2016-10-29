@@ -175,50 +175,6 @@
           ]
         }
       ]
-    },
-    {
-      "name": "BeatTransformer",
-      "package": "cloudbrain.modules.transforms.beat",
-      "options": {
-      },
-      "subscribers": [
-        {
-          "name": "PikaSubscriber",
-          "package": "cloudbrain.subscribers.rabbitmq",
-          "options": {
-            "rabbitmq_address": "localhost",
-            "rabbitmq_user": "guest",
-            "rabbitmq_pwd": "guest"
-          },
-          "base_routing_key": "some_unique_id:device_name",
-          "metrics": [
-            {
-              "metric_name": "bpm",
-              "num_channels": 1,
-              "buffer_size": 1
-            }
-          ]
-        }
-      ],
-      "publishers": [
-        {
-          "name": "PikaPublisher",
-          "package": "cloudbrain.publishers.rabbitmq",
-          "options": {
-            "rabbitmq_address": "localhost",
-            "rabbitmq_user": "guest",
-            "rabbitmq_pwd": "guest"
-          },
-          "base_routing_key": "some_unique_id:device_name",
-          "metrics": [
-            {
-              "metric_name": "beat",
-              "num_channels": 8,
-              "buffer_size": 1
-            }
-          ]
-        }
-      ]
     }
   ]
 }
