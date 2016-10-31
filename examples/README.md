@@ -6,4 +6,4 @@ you can run a module after installing cloudbrain: `python cloudbrain.run
 <br>
 <br>
 For example, to run the mock source module, you can run: `python cloudbrain
-.run --file base_modules/source.mock.json`.
+.run --file source.mock.json`.
