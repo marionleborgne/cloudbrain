@@ -1,4 +1,4 @@
 {
   "authUrl": "https://auth.getcloudbrain.com",
-  "rabbitHost": "broker.gecloudbrain.com"
+  "rabbitHost": "broker.getcloudbrain.com"
 }
