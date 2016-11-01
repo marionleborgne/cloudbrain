@@ -20,12 +20,14 @@ class BPMTransformer(ModuleInterface):
     """
 
 
-    def __init__(self, subscribers, publishers, window_size, channel_number):
+    def __init__(self, subscribers, publishers, sampling_frequency,
+                 window_size, channel_number):
 
         super(BPMTransformer, self).__init__(subscribers, publishers)
         _LOGGER.debug("Subscribers: %s" % self.subscribers)
         _LOGGER.debug("Publishers: %s" % self.publishers)
 
+        self.sampling_frequency = sampling_frequency
         self.window_size = window_size
         self.channel_number = channel_number
         self.channel_name = 'channel_%s' % channel_number
@@ -92,7 +94,8 @@ class BPMTransformer(ModuleInterface):
 
     def compute_bpm(self, y):
         raw = RawArray(np.array([y]),
-                       create_info(['channel_0'], 250.0, ch_types=['grad']))
+                       create_info(['channel_0'], self.sampling_frequency,
+                                   ch_types=['grad']))
         ecg_epochs = mne.preprocessing.find_ecg_events(raw)
         bpm = ecg_epochs[2]
         return bpm

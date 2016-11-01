@@ -1,17 +1,11 @@
 {
   "modules": [
     {
-      "name": "MockSource",
-      "package": "cloudbrain.modules.sources.mock",
+      "name": "BeatSource",
+      "package": "cloudbrain.modules.sources.beat",
       "options": {
-        "sampling_frequency": 250.0,
-        "alpha_amplitude": 1.0,
-        "alpha_freq": 20.0,
-        "beta_amplitude": 0.0,
-        "beta_freq": 25.0,
-        "notch_amplitude": 0.0,
-        "notch_freq": 60.0,
-        "number_points": 249
+        "beat_amplitude": 1.0,
+        "bpm": 70
       },
       "publishers": [
         {
@@ -26,23 +20,9 @@
           "base_routing_key": "some_unique_key",
           "metrics": [
             {
-              "metric_name": "heart_raw",
+              "metric_name": "beat",
               "num_channels": 8,
-              "buffer_size": 10
-            }
-          ]
-        },
-        {
-          "name": "PipePublisher",
-          "package": "cloudbrain.publishers.pipe",
-          "options": {
-          },
-          "base_routing_key": "some_unique_key",
-          "metrics": [
-            {
-              "metric_name": "heart_raw",
-              "num_channels": 8,
-              "buffer_size": 1000
+              "buffer_size": 1
             }
           ]
         }
@@ -56,7 +36,7 @@
         "filter_type": "bandpass",
         "start_frequency": 0.5,
         "stop_frequency": 4.0,
-        "sampling_frequency": 250.0
+        "sampling_frequency": 500.0
       },
       "subscribers": [
         {
@@ -71,9 +51,9 @@
           "base_routing_key": "some_unique_key",
           "metrics": [
             {
-              "metric_name": "heart_raw",
+              "metric_name": "eeg",
               "num_channels": 8,
-              "buffer_size": 10
+              "buffer_size": 1
             }
           ]
         }
@@ -93,7 +73,7 @@
             {
               "metric_name": "heart_filtered",
               "num_channels": 8,
-              "buffer_size": 10
+              "buffer_size": 1
             }
           ]
         }
@@ -103,6 +83,7 @@
       "name": "BPMTransformer",
       "package": "cloudbrain.modules.transforms.bpm",
       "options": {
+        "sampling_frequency": 500.0,
         "window_size": 2000,
         "channel_number": 0
       },
@@ -120,7 +101,7 @@
           "metrics": [
             {
               "metric_name": "heart_filtered",
-              "num_channels": 8
+              "num_channels": 1
             }
           ]
         }
@@ -151,7 +132,7 @@
       "package": "cloudbrain.modules.filters.threshold",
       "options": {
         "threshold_values": [
-          90.0,
+          100.0,
           0,
           0,
           0,
