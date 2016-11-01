@@ -9,6 +9,7 @@ _LOGGER.level = logging.DEBUG
 _LOGGER.addHandler(logging.StreamHandler())
 
 
+
 class MuseConnector(ServerThread):
     """
     Get OSC messages from the Muse
@@ -32,6 +33,17 @@ class MuseConnector(ServerThread):
     @make_method("/muse/elements/horseshoe", 'f' * 8)
     def horseshoe_callback(self, path, args):
         self.callback_functions['horseshoe'](json.dumps([path, args]))
+
+    # receive concentration data
+    @make_method('/muse/elements/experimental/concentration', 'f')
+    def concentration_callback(self, path, args):
+        self.callback_functions['concentration'](json.dumps([path, args]))
+
+
+    # receive meditation data
+    @make_method('/muse/elements/experimental/mellow', 'f')
+    def mellow_callback(self, path, args):
+        self.callback_functions['mellow'](json.dumps([path, args]))
 
 
     # handle unexpected messages

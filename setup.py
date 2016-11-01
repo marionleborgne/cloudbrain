@@ -7,7 +7,7 @@ install_reqs = parse_requirements('requirements.txt', session=PipSession())
 reqs = [str(ir.req) for ir in install_reqs]
 
 setup(name='cloudbrain',
-      version='0.0.3',
+      version='0.0.4',
       description='CloudBrain',
       author='Marion Le Borgne',
       url='https://github.com/cloudbrain/cloudbrain',
