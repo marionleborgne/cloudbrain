@@ -39,11 +39,20 @@ class MuseConnector(ServerThread):
     def concentration_callback(self, path, args):
         self.callback_functions['concentration'](json.dumps([path, args]))
 
-
     # receive meditation data
     @make_method('/muse/elements/experimental/mellow', 'f')
     def mellow_callback(self, path, args):
         self.callback_functions['mellow'](json.dumps([path, args]))
+
+    # receive alpha data
+    @make_method('/muse/elements/alpha_relative', 'f' * 4)
+    def mellow_callback(self, path, args):
+        self.callback_functions['alpha_relative'](json.dumps([path, args]))
+
+    # receive beta data
+    @make_method('/muse/elements/beta_relative', 'f' * 4)
+    def mellow_callback(self, path, args):
+        self.callback_functions['beta_relative'](json.dumps([path, args]))
 
 
     # handle unexpected messages
