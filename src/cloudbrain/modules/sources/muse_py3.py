@@ -29,11 +29,12 @@ class MuseSource(ModuleInterface):
         callback_functions = {}
 
         for publisher in self.publishers:
-            metrics_to_num_channels = publisher.metrics_to_num_channels()
-            for (metric_name, num_channels) in metrics_to_num_channels.items():
-                if metric_name not in callback_functions:
-                    callback_functions[metric_name] = self.callback_factory(
-                        metric_name, num_channels)
+            for routing_key, metric_buffer in publisher.metric_buffers.items():
+                # Note: routing_key is "user_key:metric_name" here.
+                if routing_key not in callback_functions:
+                    callback_functions[routing_key] = self.callback_factory(
+                        metric_buffer.name, metric_buffer.num_channels,
+                        publisher)
 
         connector = MuseConnector(ip=self.ip,
                                   port=self.port,
@@ -44,22 +45,22 @@ class MuseSource(ModuleInterface):
         connector.start()
 
 
-    def callback_factory(self, metric_name, num_channels):
+    def callback_factory(self, metric_name, num_channels, publisher):
         """
         Callback function generator
         :return: callback function
         """
 
 
-        def callback(osc_path, *data):
+        def callback(*data):
             """
             Handle muse samples for this metric
             """
-            message = {"channel_%s" % i: data[i] for i in range(num_channels)}
-            message['timestamp'] = int(time.time() * 1000000)  # micro seconds
-
-            for publisher in self.publishers:
-                publisher.publish(metric_name, message)
+            data = data[1:] # the first element is the OSC path
+            message = {'timestamp': int(time.time() * 1000000)}  # microseconds
+            for i in range(num_channels):
+                message["channel_%s" % i] = data[i]
+            publisher.publish(metric_name, message)
 
 
         return callback

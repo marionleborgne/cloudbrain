@@ -25,11 +25,12 @@ class MuseConnector(object):
 
     def start(self):
         muse_dispatcher = dispatcher.Dispatcher()
-        for metric_name in self.callback_functions:
-            callback = self.callback_functions[metric_name]
+        for routing_key, callback in self.callback_functions.items():
+            # routing_key is "user_key:metric_name" here
+            print(self.callback_functions)
+            metric_name = routing_key.split(":")[-1]
             _LOGGER.info('Mapping %s' % metric_name)
-            muse_dispatcher.map("/muse/%s" % metric_name, callback,
-                                metric_name)
+            muse_dispatcher.map(metric_name, callback)
 
         _LOGGER.debug('Dispatcher: %s' % muse_dispatcher)
         server = osc_server.ThreadingOSCUDPServer(
