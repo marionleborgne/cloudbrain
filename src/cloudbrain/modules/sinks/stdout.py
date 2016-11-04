@@ -21,9 +21,7 @@ class StdoutSink(ModuleInterface):
 
 
     def start(self):
-
-        for i in range(len(self.subscribers)):
-            for subscriber in self.subscribers:
-                for metric_buffer in subscriber.metric_buffers.values():
-                    _LOGGER.info('Subscribing to %s' % metric_buffer.name)
-                    subscriber.subscribe(metric_buffer.name, _print_callback)
+        for subscriber in self.subscribers:
+            for metric_buffer in subscriber.metric_buffers.values():
+                _LOGGER.info('Subscribing to %s' % metric_buffer.name)
+                subscriber.subscribe(metric_buffer.name, _print_callback)

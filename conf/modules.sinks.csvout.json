@@ -1,9 +1,10 @@
 {
   "modules": [
     {
-      "name": "StdoutSink",
-      "package": "cloudbrain.modules.sinks.stdout",
+      "name": "CSVOutSink",
+      "package": "cloudbrain.modules.sinks.csvout",
       "options": {
+        "out_dir": "/tmp/cloudbrain"
       },
       "subscribers": [
         {
@@ -13,9 +14,9 @@
             "rabbitmq_address": "localhost",
             "rabbitmq_user": "guest",
             "rabbitmq_pwd": "guest",
-            "rabbitmq_vhost": "/"
+	    "rabbitmq_vhost": "/"
           },
-          "base_routing_key": "some_unique_key",
+          "base_routing_key": "some_unique_id:device_name",
           "metrics": [
             {
               "metric_name": "eeg",
