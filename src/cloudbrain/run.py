@@ -1,4 +1,4 @@
-import json
+import simplejson as json
 import logging
 import time
 
@@ -18,14 +18,15 @@ class _Options(object):
     """Options returned by _parseArgs"""
 
 
-    def __init__(self, module_configs, log_level):
+    def __init__(self, file_conf, json_conf, log_level):
         """
-        :param str module_configs: path to JSON file with module configs.
+        :param str file_conf: path to JSON file with module configs.
+        :param str file_conf: JSON string with module configs.
         :param str log_level: logger verbosity 'info' for logging.INFO or
             'debug' for logging.DEBUG.
         """
-        self.module_configs = module_configs
-
+        self.file_conf = file_conf
+        self.json_conf = json_conf
         if log_level == 'info':
             self.log_level = logging.INFO
         elif log_level == 'debug':
@@ -43,11 +44,18 @@ def _parseArgs():
     parser = ArgumentParser(description="Start CloudBrain modules runner.")
 
     parser.add_argument(
-        "--conf",
+        "--file",
         type=str,
-        dest="module_configs",
-        required=True,
-        help="REQUIRED: path to JSON file with modules configuration.")
+        dest="file_conf",
+        default=None,
+        help="Path to JSON file with modules configuration.")
+
+    parser.add_argument(
+        "--json",
+        type=str,
+        dest="json_conf",
+        default=None,
+        help="JSON string with modules configuration.")
 
     parser.add_argument(
         "--log",
@@ -59,30 +67,42 @@ def _parseArgs():
 
     options = parser.parse_args()
 
-    return _Options(module_configs=options.module_configs,
+    if options.file_conf is None and options.json_conf is None:
+        raise ValueError("Module configuration must be provided with the "
+                         "--file or --json flags.")
+    elif options.file_conf and options.json_conf:
+        raise ValueError("Only one module configuration can be provided, "
+                         "either with the flag --file or --json.")
+
+    return _Options(file_conf=options.file_conf,
+                    json_conf=options.json_conf,
                     log_level=options.log_level)
 
 
 
-def run(module_configs_file, log_level):
+def run(file_conf, json_conf, log_level):
     logging.basicConfig(level=log_level)
 
-    with open(module_configs_file, 'rb') as f:
-        module_configs = json.load(f)
-        runner = ModuleRunner(module_configs)
-        try:
-            runner.start()
-            while 1:
-                time.sleep(0.1)
-        except KeyboardInterrupt:
-            runner.stop()
+    if file_conf:
+        with open(file_conf, 'rb') as f:
+            module_configs = json.load(f)
+    elif json_conf:
+        module_configs = json.loads(json_conf)
+
+    runner = ModuleRunner(module_configs)
+    try:
+        runner.start()
+        while 1:
+            time.sleep(0.1)
+    except KeyboardInterrupt:
+        runner.stop()
 
 
 
 def main():
     try:
         options = _parseArgs()
-        run(options.module_configs, options.log_level)
+        run(options.file_conf, options.json_conf, options.log_level)
     except Exception as ex:
         logging.exception("Modules runner failed")
 

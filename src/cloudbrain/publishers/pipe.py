@@ -27,10 +27,13 @@ class PipePublisher(PublisherInterface):
     def register(self, metric_name, num_channels, buffer_size=1):
         routing_key = "%s:%s" % (self.base_routing_key, metric_name)
 
-        # TODO: create a named pipe for each routing_key. For now let's just use stdout
+        # TODO: create a named pipe for each routing_key.
+        # For now let's just use stdout
         self.named_pipes[routing_key] = sys.stdout
 
-        self.metric_buffers[routing_key] = MetricBuffer(metric_name, num_channels, buffer_size)
+        self.metric_buffers[routing_key] = MetricBuffer(metric_name,
+                                                        num_channels,
+                                                        buffer_size)
 
 
     def disconnect(self):

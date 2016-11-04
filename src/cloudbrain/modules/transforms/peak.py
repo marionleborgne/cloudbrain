@@ -16,8 +16,8 @@ class PeakTransformer(ModuleInterface):
     """
     The peak transformer analyzes only one channel per device and per metric.
     Note that this must be the same channel number across all subscribers.
-    This means that you need to subscribe to the same device/metric so that the channel number is
-    consistent.
+    This means that you need to subscribe to the same device/metric so that the
+    channel number is consistent.
     """
     def __init__(self, subscribers, publishers, window_size, channel_number):
 
@@ -36,7 +36,8 @@ class PeakTransformer(ModuleInterface):
             for metric_buffer in subscriber.metric_buffers.values():
                 metric_name = metric_buffer.name
 
-                self.windows[metric_name] = {'timestamps': [], 'data_to_analyze': []}
+                self.windows[metric_name] = {'timestamps': [],
+                                             'data_to_analyze': []}
 
                 callback = self._callback_factory(metric_name)
                 subscriber.subscribe(metric_buffer.name, callback)
@@ -57,7 +58,8 @@ class PeakTransformer(ModuleInterface):
                     for channel_name, window_data in peaks.items():
                         data[channel_name] = window_data[i]
                     for publisher in publishers:
-                        for pub_metric_buffer in publisher.metric_buffers.values():
+                        metric_buffers = publisher.metric_buffers
+                        for pub_metric_buffer in metric_buffers.values:
                             pub_metric_name = pub_metric_buffer.name
                             publisher.publish(pub_metric_name, data)
 
@@ -83,7 +85,8 @@ class PeakTransformer(ModuleInterface):
         peaks = None
         for data in cb_buffer:
 
-            self.windows[metric_name]['data_to_analyze'].append(data[self.channel_name])
+            value = data[self.channel_name]
+            self.windows[metric_name]['data_to_analyze'].append(value)
             self.windows[metric_name]['timestamps'].append(data['timestamp'])
             if len(self.windows[metric_name]['timestamps']) == self.window_size:
                 compute_peaks = True
@@ -98,7 +101,8 @@ class PeakTransformer(ModuleInterface):
                 peaks['timestamp'].extend(list(timestamps[peakind]))
                 peaks['channel_0'].extend(list(values[peakind]))
 
-                self.windows[metric_name] = {'timestamps': [], 'data_to_analyze': []}
+                self.windows[metric_name] = {'timestamps': [],
+                                             'data_to_analyze': []}
 
         return peaks
 

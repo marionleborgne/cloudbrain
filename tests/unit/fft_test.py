@@ -1,35 +1,55 @@
+import logging
 import numpy as np
 import unittest
+import random
 
 from cloudbrain.modules.transforms.fft import FrequencyBandTransformer
 
+_LOGGER = logging.getLogger(__name__)
+_LOGGER.level = logging.DEBUG
+_LOGGER.addHandler(logging.StreamHandler())
 
 
-def generate_sine_wave(number_points, sampling_frequency, alpha_amplitude, alpha_freq,
-                       beta_amplitude, beta_freq):
+def generate_sine_wave(number_points,
+                       sampling_frequency,
+                       alpha_amplitude,
+                       alpha_freq,
+                       beta_amplitude,
+                       beta_freq):
     sample_spacing = 1.0 / sampling_frequency
-    x = np.linspace(start=0.0, stop=number_points * sample_spacing, num=number_points)
+    x = np.linspace(start=0.0,
+                    stop=number_points * sample_spacing,
+                    num=number_points)
 
     alpha = alpha_amplitude * np.sin(alpha_freq * 2.0 * np.pi * x)
     beta = beta_amplitude * np.sin(beta_freq * 2.0 * np.pi * x)
 
-    import random
-
-    y = alpha + beta + min(alpha_amplitude, beta_amplitude) / 2.0 * random.random()
+    y = alpha + beta + min(alpha_amplitude,
+                           beta_amplitude) / 2.0 * random.random()
 
     return y
 
 
 
-def generate_mock_data(num_channels, number_points, sampling_frequency, buffer_size,
-                       alpha_amplitude, alpha_freq, beta_amplitude, beta_freq):
-    sine_wave = generate_sine_wave(number_points, sampling_frequency, alpha_amplitude, alpha_freq,
-                                   beta_amplitude, beta_freq)
+def generate_mock_data(num_channels,
+                       number_points,
+                       sampling_frequency,
+                       buffer_size,
+                       alpha_amplitude,
+                       alpha_freq,
+                       beta_amplitude,
+                       beta_freq):
+    sine_wave = generate_sine_wave(number_points,
+                                   sampling_frequency,
+                                   alpha_amplitude,
+                                   alpha_freq,
+                                   beta_amplitude,
+                                   beta_freq)
 
     buffers = []
 
     # if number_points = 250 and buffer_size = 40, then num_buffers = 6 + 1
-    num_buffers = number_points / buffer_size
+    num_buffers = int(number_points / buffer_size)
     if number_points % buffer_size != 0:
         num_buffers += 1  # you need to account for the almost full buffer
 
@@ -88,8 +108,10 @@ def generate_frequency_bands(alpha_freq, beta_freq, frequency_band_size):
     If it's too low, the band might not be large enough to detect the frequency.
     """
 
-    alpha_range = [alpha_freq - frequency_band_size / 2.0, alpha_freq + frequency_band_size / 2.0]
-    beta_range = [beta_freq - frequency_band_size / 2.0, beta_freq + frequency_band_size / 2.0]
+    alpha_range = [alpha_freq - frequency_band_size / 2.0,
+                   alpha_freq + frequency_band_size / 2.0]
+    beta_range = [beta_freq - frequency_band_size / 2.0,
+                  beta_freq + frequency_band_size / 2.0]
 
     frequency_bands = {'alpha': alpha_range, 'beta': beta_range}
 
@@ -103,7 +125,7 @@ class FrequencyBandTranformerTest(unittest.TestCase):
         self.plot_input_data = False
 
         self.window_size = 250  # Also OK => 2 * 2.50. Or 3 * 250
-        self.sampling_frequency = 250.0
+        self.sampling_freq = 250.0
 
         self.buffer_size = 10
 
@@ -115,15 +137,18 @@ class FrequencyBandTranformerTest(unittest.TestCase):
 
         self.num_channels = 8
 
-        self.frequency_band_size = 10.0
+        self.freq_band_size = 10.0
 
         self.number_points = 250
 
-        self.cb_buffers = generate_mock_data(self.num_channels, self.number_points,
-                                             self.sampling_frequency,
-                                             self.buffer_size, self.alpha_amplitude,
+        self.cb_buffers = generate_mock_data(self.num_channels,
+                                             self.number_points,
+                                             self.sampling_freq,
+                                             self.buffer_size,
+                                             self.alpha_amplitude,
                                              self.alpha_freq,
-                                             self.beta_amplitude, self.beta_freq)
+                                             self.beta_amplitude,
+                                             self.beta_freq)
 
 
     def test_cb_buffers(self):
@@ -143,15 +168,17 @@ class FrequencyBandTranformerTest(unittest.TestCase):
 
     def test_module(self):
 
-        self.frequency_bands = generate_frequency_bands(self.alpha_freq, self.beta_freq,
-                                                        self.frequency_band_size)
+        self.frequency_bands = generate_frequency_bands(self.alpha_freq,
+                                                        self.beta_freq,
+                                                        self.freq_band_size)
 
         self.subscribers = []
         self.publishers = []
 
-        module = FrequencyBandTransformer(subscribers=self.subscribers, publishers=self.publishers,
+        module = FrequencyBandTransformer(subscribers=self.subscribers,
+                                          publishers=self.publishers,
                                           window_size=self.window_size,
-                                          sampling_frequency=self.sampling_frequency,
+                                          sampling_frequency=self.sampling_freq,
                                           frequency_bands=self.frequency_bands)
 
         for cb_buffer in self.cb_buffers:
@@ -162,15 +189,15 @@ class FrequencyBandTranformerTest(unittest.TestCase):
             if bands:
                 for i in range(self.num_channels):
                     channel_name = 'channel_%s' % i
-                    alpha_estimated_amplitude = bands['alpha'][channel_name]
-                    beta_estimated_amplitude = bands['beta'][channel_name]
+                    alpha_estimated_ampl = bands['alpha'][channel_name]
+                    beta_estimated_ampl = bands['beta'][channel_name]
 
                     ratio = self.beta_amplitude / self.alpha_amplitude
-                    estimated_ratio = beta_estimated_amplitude / alpha_estimated_amplitude
+                    estimated_ratio = beta_estimated_ampl / alpha_estimated_ampl
 
-                    print "Alpha: estimated=%s | actual=%s" % (alpha_estimated_amplitude,
-                                                               self.alpha_amplitude)
+                    _LOGGER.debug("Alpha: estimated=%s | actual=%s" %
+                                  (alpha_estimated_ampl, self.alpha_amplitude))
 
-                    print "Beta: estimated=%s | actual=%s" % (beta_estimated_amplitude,
-                                                              self.beta_amplitude)
+                    _LOGGER.debug("Beta: estimated=%s | actual=%s" %
+                                  (beta_estimated_ampl, self.beta_amplitude))
                     assert np.abs((estimated_ratio - ratio) / ratio) < 0.01
