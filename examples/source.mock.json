@@ -23,7 +23,7 @@
             "rabbitmq_pwd": "guest",
             "rabbitmq_vhost": "/"
           },
-          "base_routing_key": "some_unique_id:device_name",
+          "base_routing_key": "some_unique_key",
           "metrics": [
             {
               "metric_name": "eeg",
@@ -41,7 +41,7 @@
           "name": "PipePublisher",
           "package": "cloudbrain.publishers.pipe",
           "options": {},
-          "base_routing_key": "some_unique_id:device_name",
+          "base_routing_key": "some_unique_key",
           "metrics": [
             {
               "metric_name": "eeg",

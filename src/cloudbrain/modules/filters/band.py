@@ -59,8 +59,8 @@ class BandFilter(ModuleInterface):
                 for publisher in self.publishers:
                     for pub_metric_buffer in publisher.metric_buffers.values():
                         pub_metric_name = pub_metric_buffer.name
-                        callback = self._callback_factory(sub_metric_name,
-                                                          sub_num_channels,
+                        callback = self._callback_factory(sub_num_channels,
+                                                          publisher,
                                                           pub_metric_name,
                                                           self.a,
                                                           self.b,
@@ -70,33 +70,29 @@ class BandFilter(ModuleInterface):
 
 
     def _callback_factory(self,
-                          sub_metric_name,
                           sub_num_channels,
+                          publisher,
                           pub_metric_name,
                           a,
                           b,
                           metrics_sliding_window):
 
-        publishers = self.publishers
+        def callback(unused_ch,
+                     unused_method,
+                     unused_properties,
+                     data):
 
-
-        def process_cb_buffer(unused_ch,
-                              unused_method,
-                              unused_properties,
-                              stringified_cb_buffer):
-
-            cb_buffer = json.loads(stringified_cb_buffer)
+            cb_buffer = json.loads(data)
             filtered_buffer = self._filter(cb_buffer,
                                            sub_num_channels,
                                            a,
                                            b,
                                            metrics_sliding_window)
             for filtered_data in filtered_buffer:
-                for publisher in publishers:
-                    publisher.publish(pub_metric_name, filtered_data)
+                publisher.publish(pub_metric_name, filtered_data)
 
 
-        return process_cb_buffer
+        return callback
 
 
     def _filter(self, cb_buffer, num_channels, a, b, metrics_sliding_window):

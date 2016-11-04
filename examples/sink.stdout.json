@@ -1,13 +1,9 @@
 {
   "modules": [
     {
-      "name": "PyPlotSink",
-      "package": "cloudbrain.modules.sinks.pyplot",
+      "name": "StdoutSink",
+      "package": "cloudbrain.modules.sinks.stdout",
       "options": {
-        "channels_to_plot": [0],
-        "austoscale": true,
-        "y_min": -15,
-        "y_max": 15
       },
       "subscribers": [
         {
@@ -19,7 +15,7 @@
             "rabbitmq_pwd": "guest",
             "rabbitmq_vhost": "/"
           },
-          "base_routing_key": "some_unique_id:device_name",
+          "base_routing_key": "some_unique_key",
           "metrics": [
             {
               "metric_name": "eeg",

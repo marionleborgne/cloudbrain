@@ -31,7 +31,7 @@ class ThresholdFilter(ModuleInterface):
         publishers = self.publishers
 
 
-        def process_metric(unused_ch, unused_method, unused_properties, body):
+        def callback(unused_ch, unused_method, unused_properties, body):
 
             for data in json.loads(body):
                 data_to_send = {'timestamp': data['timestamp']}
@@ -48,4 +48,4 @@ class ThresholdFilter(ModuleInterface):
                         publisher.publish(pub_metric_name, data_to_send)
 
 
-        return process_metric
+        return callback

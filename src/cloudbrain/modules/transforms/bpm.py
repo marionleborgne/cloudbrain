@@ -1,11 +1,9 @@
+import json
+import logging
 import mne
 from mne.io import RawArray
 from mne import create_info
-
 import numpy as np
-
-import json
-import logging
 
 from cloudbrain.modules.interface import ModuleInterface
 
@@ -22,12 +20,14 @@ class BPMTransformer(ModuleInterface):
     """
 
 
-    def __init__(self, subscribers, publishers, window_size, channel_number):
+    def __init__(self, subscribers, publishers, sampling_frequency,
+                 window_size, channel_number):
 
         super(BPMTransformer, self).__init__(subscribers, publishers)
         _LOGGER.debug("Subscribers: %s" % self.subscribers)
         _LOGGER.debug("Publishers: %s" % self.publishers)
 
+        self.sampling_frequency = sampling_frequency
         self.window_size = window_size
         self.channel_number = channel_number
         self.channel_name = 'channel_%s' % channel_number
@@ -67,13 +67,6 @@ class BPMTransformer(ModuleInterface):
 
 
     def _find_bpm(self, cb_buffer, metric_name):
-        """
-
-        :param cb_buffer:
-        :param metric_name:
-        :param num_channels:
-        :return bpm: (float)
-        """
 
         bpm = None
         for data in cb_buffer:
@@ -81,18 +74,16 @@ class BPMTransformer(ModuleInterface):
             value = data[self.channel_name] * 1000
             self.windows[metric_name]['data_to_analyze'].append(value)
             self.windows[metric_name]['timestamps'].append(data['timestamp'])
-            if len(self.windows[metric_name]['timestamps']) == self.window_size:
+            if len(
+                self.windows[metric_name]['timestamps']) == self.window_size:
                 compute_peaks = True
             else:
                 compute_peaks = False
 
             if compute_peaks:
                 timestamps = np.array(self.windows[metric_name]['timestamps'])
-                timestamps_in_s = timestamps / 1000000.0  # microsec to sec
                 values = self.windows[metric_name]['data_to_analyze']
                 avg_bpm = self.compute_bpm(values)
-                # avg_time_delta = np.mean(np.diff(timestamps_in_s[peakind]))
-                # avg_bpm = 60 / avg_time_delta
                 bpm = {'timestamp': timestamps[0], 'channel_0': int(avg_bpm)}
 
                 self.windows[metric_name] = {'timestamps': [],
@@ -103,7 +94,8 @@ class BPMTransformer(ModuleInterface):
 
     def compute_bpm(self, y):
         raw = RawArray(np.array([y]),
-                       create_info(['channel_0'], 250.0, ch_types=['grad']))
+                       create_info(['channel_0'], self.sampling_frequency,
+                                   ch_types=['grad']))
         ecg_epochs = mne.preprocessing.find_ecg_events(raw)
         bpm = ecg_epochs[2]
         return bpm

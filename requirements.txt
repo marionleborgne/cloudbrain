@@ -3,4 +3,5 @@ pika==0.10
 numpy==1.11.2
 scipy==0.18.1
 pyserial==2.7
-requests==2.11.1
+mne==0.10.0
+requests[security]==2.11.1

@@ -4,10 +4,10 @@
       "name": "BandFilter",
       "package": "cloudbrain.modules.filters.band",
       "options": {
-        "filter_type": "bandpass",
-        "start_frequency": 0.5,
-        "stop_frequency": 10.0,
-        "sampling_frequency": 500.0
+        "filter_type": "bandstop",
+        "start_frequency": 59.0,
+        "stop_frequency": 61.0,
+        "sampling_frequency": 250.0
       },
       "subscribers": [
         {
@@ -16,9 +16,10 @@
           "options": {
             "rabbitmq_address": "localhost",
             "rabbitmq_user": "guest",
-            "rabbitmq_pwd": "guest"
+            "rabbitmq_pwd": "guest",
+            "rabbitmq_vhost": "/"
           },
-          "base_routing_key": "some_unique_id:device_name",
+          "base_routing_key": "some_unique_key",
           "metrics": [
             {
               "metric_name": "eeg",
@@ -34,14 +35,15 @@
           "options": {
             "rabbitmq_address": "localhost",
             "rabbitmq_user": "guest",
-            "rabbitmq_pwd": "guest"
+            "rabbitmq_pwd": "guest",
+            "rabbitmq_vhost": "/"
           },
-          "base_routing_key": "some_unique_id:device_name",
+          "base_routing_key": "some_unique_key",
           "metrics": [
-	         {
-              "metric_name": "heart_rate",
+            {
+              "metric_name": "eeg_no_notch",
               "num_channels": 8,
-	            "buffer_size": 10
+              "buffer_size": 10
             }
           ]
         }
