@@ -25,7 +25,6 @@ setup(name='cloudbrain',
       },
       extras_require={
           'muse:python_version>="3"': ['python-osc==1.6'],
-          'muse:python_version<"3"': ['cython==0.24.1', 'pyliblo==0.10.0'],
       },
       entry_points = {
         'console_scripts':
