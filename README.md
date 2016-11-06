@@ -21,12 +21,10 @@ install -e . --user`
 
 ## Optional
 Optional CloudBrain modules can be installed:
-* Muse source module: `pip install .[muse] --user`
-
+* Muse source module: `pip install .[muse] --user` _(Python `3.*` only)_
 ## Run the tests
 ```
 python setup.py test
-
 ```
 
 ## Examples
