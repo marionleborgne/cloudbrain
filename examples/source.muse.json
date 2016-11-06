@@ -2,7 +2,7 @@
   "modules": [
     {
       "name": "MuseSource",
-      "package": "cloudbrain.modules.sources.muse_py2",
+      "package": "cloudbrain.modules.sources.muse",
       "options": {
         "ip": "127.0.0.1",
         "port": 9090,
