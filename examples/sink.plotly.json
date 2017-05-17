@@ -1,13 +1,12 @@
 {
   "modules": [
     {
-      "name": "PyPlotSink",
-      "package": "cloudbrain.modules.sinks.pyplot",
+      "name": "PlotlyStreamSink",
+      "package": "cloudbrain.modules.sinks.plotly_stream",
       "options": {
-        "channels_to_plot": [0],
-        "autoscale": true,
-        "y_min": -15,
-        "y_max": 15
+        "max_points": 100,
+        "ignore_time": true
+
       },
       "subscribers": [
         {
@@ -23,7 +22,7 @@
           "metrics": [
             {
               "metric_name": "eeg",
-              "num_channels": 8
+              "num_channels": 2
             }
           ]
         }
