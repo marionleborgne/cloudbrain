@@ -56,7 +56,6 @@ class MockSource(ModuleInterface):
                            self.beta_amplitude,
                            self.beta_freq,
                            self.notch_amplitude,
-                           self.noise_amplitude,
                            self.notch_freq)
 
         for publisher in self.publishers:
@@ -66,7 +65,7 @@ class MockSource(ModuleInterface):
             for (metric_name, num_channels) in metrics_to_num_channels.items():
                 data = signal_generator(num_channels,
                                         self.sampling_frequency,
-                                        signal)
+                                        signal, self.noise_amplitude)
 
                 t = threading.Thread(target=_publish_data,
                                      args=(publisher, metric_name, data))
