@@ -10,16 +10,19 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class PlotlyStreamSink(ModuleInterface):
-    def __init__(self, subscribers, publishers, maxpoints=100):
+    def __init__(self, subscribers, publishers, max_points=100,
+                 ignore_time=False):
 
         super(PlotlyStreamSink, self).__init__(subscribers, publishers)
         _LOGGER.debug("Subscribers: %s" % self.subscribers)
         _LOGGER.debug("Publishers: %s" % self.publishers)
 
-        self.maxpoints = maxpoints
+        self.max_points = max_points
+        self.ignore_time = ignore_time
         self.stream_ids = []
         self.py_streams = []
         self.go_streams = []
+        self.points_streamed = 0
 
     def start(self):
         for subscriber in self.subscribers:
@@ -58,11 +61,12 @@ class PlotlyStreamSink(ModuleInterface):
         for i in range(num_channels):
             stream_id = local_stream_ids[i]
             self.stream_ids.append(stream_id)
-            s = py.Stream(stream_id)
-            s.open()
-            self.py_streams.append(s)
-            self.go_streams.append(go.Stream(token=stream_id,
-                                             maxpoints=self.maxpoints))
+            py_stream = py.Stream(stream_id)
+            py_stream.open()
+            self.py_streams.append(py_stream)
+
+            go_stream = go.Stream(token=stream_id, maxpoints=self.max_points)
+            self.go_streams.append(go_stream)
 
         traces = []
         for i in range(num_channels):
@@ -72,7 +76,7 @@ class PlotlyStreamSink(ModuleInterface):
             trace = go.Scatter(
                 x=[],
                 y=[],
-                mode='lines+markers',
+                mode='splines',
                 stream=go_stream,
                 name=channel_name
             )
@@ -88,7 +92,12 @@ class PlotlyStreamSink(ModuleInterface):
         s = self.py_streams[channel_idx]
         # Write numbers to stream to append current data on plot,
         # write lists to overwrite existing data on plot
-        s.write(dict(x=x, y=y))
+        if self.ignore_time:
+            s.write(dict(x=self.points_streamed, y=y))
+        else:
+            s.write(dict(x=x, y=y))
+
+        self.points_streamed += 1
 
     def stop(self):
         # Close the streams when done plotting

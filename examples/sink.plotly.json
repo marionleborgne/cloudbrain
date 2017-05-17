@@ -4,7 +4,9 @@
       "name": "PlotlyStreamSink",
       "package": "cloudbrain.modules.sinks.plotly_stream",
       "options": {
-        "maxpoints": 100
+        "max_points": 100,
+        "ignore_time": true
+
       },
       "subscribers": [
         {
