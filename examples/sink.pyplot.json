@@ -5,7 +5,7 @@
       "package": "cloudbrain.modules.sinks.pyplot",
       "options": {
         "channels_to_plot": [0],
-        "austoscale": true,
+        "autoscale": true,
         "y_min": -15,
         "y_max": 15
       },

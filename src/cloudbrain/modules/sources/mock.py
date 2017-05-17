@@ -26,6 +26,7 @@ class MockSource(ModuleInterface):
                  beta_freq,
                  notch_amplitude,
                  notch_freq,
+                 noise_amplitude,
                  number_points):
 
         super(MockSource, self).__init__(subscribers, publishers)
@@ -39,6 +40,7 @@ class MockSource(ModuleInterface):
         self.beta_freq = beta_freq
         self.notch_amplitude = notch_amplitude
         self.notch_freq = notch_freq
+        self.noise_amplitude = noise_amplitude
         self.number_points = number_points
 
         self.threads = []
@@ -54,6 +56,7 @@ class MockSource(ModuleInterface):
                            self.beta_amplitude,
                            self.beta_freq,
                            self.notch_amplitude,
+                           self.noise_amplitude,
                            self.notch_freq)
 
         for publisher in self.publishers:
