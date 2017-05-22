@@ -27,6 +27,30 @@ Optional CloudBrain modules can be installed:
 python setup.py test
 ```
 
+## Docker (experimental)
+Docker can be used to start modules that don't require connecting to the
+host machine. It's useful for running the mock source (signal generator) and other processing modules.
+```
+docker build -t cloudbrain .
+docker run -it -v /path/to/config:/config cloudbrain --file /config/name.of.config.file.json
+```
+When running other services on a docker network:
+```
+docker network create cloudbrain_network
+docker run -it -v /path/to/config:/config cloudbrain --network cloudbrain_network --file /config/name.of.config.file.json
+``` 
+
+## Docker Compose (experimental)
+The docker compose setup expects a cloudbrain_network to already be set up with a rabbitmq server named mock-rabbit running.
+The compose file will load the configuration at ./examples/source.mock.docker.json which can be modified as desired.
+This will not currently run modules that require connecting to the host machine. It's useful for running the mock source (signal generator) and other processing modules.
+
+```
+docker network create cloudbrain_network
+docker run -d --hostname mock-rabbit --name mock-rabbit --network cloudbrain_network -p 8080:15672 -p 5672:5672 rabbitmq:3-management
+docker-compose up
+``` 
+
 ## Examples
 See `README.md` in `cloudbrain/examples` for more information about how to use
  and chain CloudBrain modules.
