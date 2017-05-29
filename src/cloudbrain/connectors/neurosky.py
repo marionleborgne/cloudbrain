@@ -28,7 +28,7 @@ VALID_METRICS = ['eeg', 'poorSignalLevel', 'attention', 'meditation', 'delta',
 
 
 def displayCSVHeader():
-    print "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % (
+    print "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % (
         'timestamp',
         'eeg',
         'poorSignalLevel',
@@ -41,8 +41,7 @@ def displayCSVHeader():
         'lowBeta',
         'highBeta',
         'lowGamma',
-        'highGamma',
-        'label',
+        'highGamma'
     )
 
 
