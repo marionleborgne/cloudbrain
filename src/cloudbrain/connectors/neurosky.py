@@ -94,7 +94,11 @@ class NeuroskyConnector(threading.Thread):
 
         # Final setup
         self.configureEEG()
-        displayCSVHeader()
+        self.displayCSVHeader = True
+
+        print "Attempting to connect to NeuroSky headset ..."
+        print ("WARNING: Make sure the headset is on, paired, and "
+               "has enough battery.")
 
     def setPacketCount(self, value):
 
@@ -141,6 +145,10 @@ class NeuroskyConnector(threading.Thread):
         self.protocol.start()
 
     def processPacketThinkGear(self, packet):
+
+        if self.displayCSVHeader:
+            displayCSVHeader()
+            self.displayCSVHeader = False
 
         if self.verbosity >= 2:
             print packet
