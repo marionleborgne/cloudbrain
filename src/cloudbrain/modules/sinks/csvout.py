@@ -61,7 +61,6 @@ class CSVOutSink(ModuleInterface):
             # For each metric buffer in the router open a file handle
             # and save the corresponding CSV writer object
             for metric_buffer in subscriber.metric_buffers.values():
-                num_channels = metric_buffer.num_channels
                 d = {'base_routing_key': _clean_key(base_routing_key),
                      'metric_name': _clean_string(metric_buffer.name)}
                 file_name = self.file_name_pattern.format(**d)
