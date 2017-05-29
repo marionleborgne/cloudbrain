@@ -1,6 +1,7 @@
+import csv
+import errno
 import json
 import logging
-import csv
 import re
 import time
 import os
@@ -8,6 +9,21 @@ import os
 from cloudbrain.modules.interface import ModuleInterface
 
 _LOGGER = logging.getLogger(__name__)
+
+
+def mkdir_p(path):
+    """
+    Emulate the "mkdir -p" funcitonality of bash. See:
+    https://stackoverflow.com/questions/600268/
+    mkdir-p-functionality-in-python/600612#600612
+    """
+    try:
+        os.makedirs(path)
+    except OSError as exc:  # Python >2.5
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else:
+            raise
 
 
 def _clean_key(key):
@@ -49,7 +65,7 @@ class CSVOutSink(ModuleInterface):
 
         if not os.path.exists(out_dir):
             _LOGGER.info("Creating missing directory {}".format(out_dir))
-            os.mkdir(out_dir)
+            mkdir_p(out_dir)
 
         self.thread_event = thread_event
         self.headers = {}
