@@ -230,8 +230,8 @@ def callback_factory(metric_name):
     return print_callback
 
 
-def example():
-    """Example usage for the NeuroskyConnector."""
+def run(device_address=THINKGEAR_DEVICE_SERIAL_PORT):
+    """Run the NeuroskyConnector."""
 
     # Perform correct KeyboardInterrupt handling
     signal.signal(signal.SIGINT, signal.SIG_DFL)
@@ -240,10 +240,10 @@ def example():
 
     connector = NeuroskyConnector(
         callback_functions=callbacks,
-        device_address=THINKGEAR_DEVICE_SERIAL_PORT)
+        device_address=device_address)
 
     connector.start()
 
 
 if __name__ == "__main__":
-    example()
+    run()
