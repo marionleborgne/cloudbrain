@@ -15,6 +15,7 @@ Author: Steve Castellotti <sc@puzzlebox.io>
 
 __changelog__ = """Last Update: 2017.05.28"""
 import threading
+import signal
 import sys
 
 from cloudbrain.connectors.thinkgear import SerialDevice
@@ -224,6 +225,10 @@ def callback_factory(metric_name):
 
 def example():
     """Example usage for the NeuroskyConnector."""
+
+    # Perform correct KeyboardInterrupt handling
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
+
     callbacks = {metric: callback_factory(metric) for metric in VALID_METRICS}
 
     connector = NeuroskyConnector(
