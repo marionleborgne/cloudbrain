@@ -1,6 +1,7 @@
 import json
 import logging
 import csv
+import re
 import time
 import os
 
@@ -19,6 +20,19 @@ def _clean_key(key):
     return: The key with colons replaced with underscores
     """
     return '_'.join(key.split(':')) if ':' in key else key
+
+
+def _clean_string(s):
+    """
+    Return the given string converted to a string that can be used for a clean
+    filename. Remove leading and trailing spaces; convert other spaces to
+    underscores; and remove anything that is not an alphanumeric, dash,
+    underscore, or dot.
+    >>> _clean_string("john's portrait in 2004.jpg")
+    'johns_portrait_in_2004.jpg'
+    """
+    s = str(s).strip().replace(' ', '_')
+    return re.sub(r'(?u)[^-\w.]', '_', s)
 
 
 class CSVOutSink(ModuleInterface):
@@ -49,7 +63,7 @@ class CSVOutSink(ModuleInterface):
             for metric_buffer in subscriber.metric_buffers.values():
                 num_channels = metric_buffer.num_channels
                 d = {'base_routing_key': _clean_key(base_routing_key),
-                     'metric_name': metric_buffer.name}
+                     'metric_name': _clean_string(metric_buffer.name)}
                 file_name = self.file_name_pattern.format(**d)
                 _LOGGER.info("Opening file: {}".format(file_name))
                 f = open(os.path.join(out_dir, file_name), 'w+')
