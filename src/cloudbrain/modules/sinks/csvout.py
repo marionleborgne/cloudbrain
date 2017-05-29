@@ -58,7 +58,7 @@ class CSVOutSink(ModuleInterface):
         TODO: Delete, back up, or warn of existing files to prevent
         new headers from corrupting existing data.
         """
-        thread_event=False
+        thread_event = False
         super(CSVOutSink, self).__init__(subscribers, publishers)
         _LOGGER.debug("Subscribers: %s" % self.subscribers)
         _LOGGER.debug("Publishers: %s" % self.publishers)
@@ -89,7 +89,8 @@ class CSVOutSink(ModuleInterface):
                 self.out_files[file_name] = writer
 
     def _csv_callback_factory(self, file_name):
-        def _csv_callback(unsed_ch, unsed_method, unsed_properties, json_string):
+        def _csv_callback(unsed_ch, unsed_method, unsed_properties,
+                          json_string):
             """
             Parse a JSON data message and write its contents to the appropriate
             CSV
@@ -111,7 +112,7 @@ class CSVOutSink(ModuleInterface):
             for metric_buffer in subscriber.metric_buffers.values():
                 num_channels = metric_buffer.num_channels
                 d = {'base_routing_key': _clean_key(base_routing_key),
-                     'metric_name': metric_buffer.name}
+                     'metric_name': _clean_string(metric_buffer.name)}
                 file_name = self.file_name_pattern.format(**d)
                 csv_callback = self._csv_callback_factory(file_name)
                 routing_key = subscriber.base_routing_key
@@ -119,5 +120,3 @@ class CSVOutSink(ModuleInterface):
                 subscriber.subscribe(metric_buffer.name, csv_callback)
         while self.thread_event:
             time.sleep(1)
-
-
