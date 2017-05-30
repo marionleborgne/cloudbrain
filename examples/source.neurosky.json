@@ -1,0 +1,78 @@
+{
+  "modules": [
+    {
+      "name": "NeuroskySource",
+      "package": "cloudbrain.modules.sources.neurosky",
+      "options": {
+        "device_address": "/dev/tty.MindWaveMobile-DevA",
+        "verbosity": 1
+      },
+      "publishers": [
+        {
+          "name": "PikaPublisher",
+          "package": "cloudbrain.publishers.rabbitmq",
+          "options": {
+            "rabbitmq_address": "localhost",
+            "rabbitmq_user": "guest",
+            "rabbitmq_pwd": "guest",
+            "rabbitmq_vhost": "/"
+          },
+          "base_routing_key": "some_unique_key",
+          "metrics": [
+            {
+              "metric_name": "eeg",
+              "num_channels": 1,
+              "buffer_size": 10
+            },
+            {
+              "metric_name": "poorSignalLevel",
+              "num_channels": 1,
+              "buffer_size": 10
+            },{
+              "metric_name": "attention",
+              "num_channels": 1,
+              "buffer_size": 10
+            },{
+              "metric_name": "meditation",
+              "num_channels": 1,
+              "buffer_size": 10
+            },{
+              "metric_name": "delta",
+              "num_channels": 1,
+              "buffer_size": 10
+            },{
+              "metric_name": "theta",
+              "num_channels": 1,
+              "buffer_size": 10
+            },{
+              "metric_name": "lowAlpha",
+              "num_channels": 1,
+              "buffer_size": 10
+            },{
+              "metric_name": "highAlpha",
+              "num_channels": 1,
+              "buffer_size": 10
+            },{
+              "metric_name": "lowBeta",
+              "num_channels": 1,
+              "buffer_size": 10
+            },{
+              "metric_name": "highBeta",
+              "num_channels": 1,
+              "buffer_size": 10
+            },{
+              "metric_name": "lowGamma",
+              "num_channels": 1,
+              "buffer_size": 10
+            },{
+              "metric_name": "highGamma",
+              "num_channels": 1,
+              "buffer_size": 10
+            }
+          ]
+        }
+      ],
+      "subscribers": []
+    }
+  ]
+}

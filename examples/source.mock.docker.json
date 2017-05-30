@@ -11,6 +11,7 @@
         "beta_freq": 25.0,
         "notch_amplitude": 0.0,
         "notch_freq": 60.0,
+        "noise_amplitude": 10.0,
         "number_points": 249
       },
       "publishers": [
