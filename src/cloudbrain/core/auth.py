@@ -3,7 +3,7 @@ import requests
 
 class CloudbrainAuth(object):
     def __init__(self, base_url=None, token=None):
-        self.base_url = base_url or 'http://dockerhost:3000'
+        self.base_url = base_url or 'http://localhost:4000'
         self.token = token or ''
 
     def token_info(self, token=None):
