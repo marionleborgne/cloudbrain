@@ -14,7 +14,21 @@ class CloudbrainAuth(object):
             'Authorization': 'Bearer %s' % token
         }
 
-        response = requests.get(token_url, headers=headers, verify=False)
+        response = requests.get(token_url, headers=headers, verify=True)
+        return response.json()
+
+    def token_by_credentials(self, username, password):
+        token_url = self.base_url + '/oauth/token'
+
+        headers = {'content-type': 'application/x-www-form-urlencoded'}
+        body = {
+            'username': username,
+            'password': password,
+            'grant_type': "password"
+        }
+
+        response = requests.post(token_url, headers=headers,
+                                 data=body, verify=True)
         return response.json()
 
     def vhost_by_token(self, token=None):
@@ -25,7 +39,7 @@ class CloudbrainAuth(object):
             'Authorization': 'Bearer %s' % token
         }
 
-        response = requests.get(info_url, headers=headers, verify=False)
+        response = requests.get(info_url, headers=headers, verify=True)
         return response.json()
 
     def vhost_by_username(self, username=None):
@@ -37,7 +51,7 @@ class CloudbrainAuth(object):
         }
 
         response = requests.post(info_url, data=body, headers=headers,
-                                 verify=False)
+                                 verify=True)
         return response.json()
 
     def get_vhost_by_token(self, token):

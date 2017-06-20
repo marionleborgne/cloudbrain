@@ -4,4 +4,4 @@ numpy==1.11.2
 scipy==0.18.1
 pyserial==2.7
 mne==0.10.0
-requests[security]==2.11.1
+requests[security]==2.18.1
