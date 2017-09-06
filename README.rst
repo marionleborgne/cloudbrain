@@ -15,8 +15,7 @@ visualization.
 - **Visualize sensor data** and patterns in real-time.
 
 .. figure:: https://raw.githubusercontent.com/cloudbrain/cloudbrain/master/docs/images/features.png
-   :alt: features  
-   :width: 100 %
+   :alt: features
 
 Using CloudBrain
 ================
