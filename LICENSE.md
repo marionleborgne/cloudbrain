@@ -1,11 +1,11 @@
-                    GNU AFFERO GENERAL PUBLIC LICENSE
-                       Version 3, 19 November 2007
+# GNU AFFERO GENERAL PUBLIC LICENSE
+> Version 3, 19 November 2007
 
  Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
  Everyone is permitted to copy and distribute verbatim copies
  of this license document, but changing it is not allowed.
 
-                            Preamble
+## Preamble
 
   The GNU Affero General Public License is a free, copyleft license for
 software and other kinds of works, specifically designed to ensure
@@ -56,7 +56,7 @@ this license.
   The precise terms and conditions for copying, distribution and
 modification follow.
 
-                       TERMS AND CONDITIONS
+## TERMS AND CONDITIONS
 
   0. Definitions.
 
@@ -618,7 +618,7 @@ copy of the Program in return for a fee.
 
                      END OF TERMS AND CONDITIONS
 
-            How to Apply These Terms to Your New Programs
+## How to Apply These Terms to Your New Programs
 
   If you develop a new program, and you want it to be of the greatest
 possible use to the public, the best way to achieve this is to make it
@@ -629,6 +629,7 @@ to attach them to the start of each source file to most effectively
 state the exclusion of warranty; and each file should have at least
 the "copyright" line and a pointer to where the full notice is found.
 
+```
     <one line to give the program's name and a brief idea of what it does.>
     Copyright (C) <year>  <name of author>
 
@@ -644,6 +645,7 @@ the "copyright" line and a pointer to where the full notice is found.
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+```
 
 Also add information on how to contact you by electronic and paper mail.
 
