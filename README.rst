@@ -16,7 +16,7 @@ visualization.
 
 .. figure:: https://raw.githubusercontent.com/cloudbrain/cloudbrain/master/docs/images/features.png
    :alt: features  
-   :width: 600 px
+   :width: 100 %
 
 Using CloudBrain
 ================
