@@ -7,11 +7,11 @@ Features
 ========
 
 CloudBrain is a platform for real-time sensor data analysis and
-visualization. 
+visualization.
 
-- **Stream sensor data** in a unified format. 
-- **Store sensor data** in a central database. 
-- **Analyze sensor data** to find patterns. 
+- **Stream sensor data** in a unified format.
+- **Store sensor data** in a central database.
+- **Analyze sensor data** to find patterns.
 - **Visualize sensor data** and patterns in real-time.
 
 .. figure:: https://raw.githubusercontent.com/cloudbrain/cloudbrain/master/docs/images/features.png
@@ -30,9 +30,9 @@ Setup
 Optional
 --------
 
-Optional CloudBrain modules can be installed: 
-
-- Muse source module: ``pip install .[muse] --user`` *(Python ``3.*`` only)* 
+Optional CloudBrain modules can be installed:
+- Analytics modules: ``pip install .[analytics] --user``
+- Muse source module: ``pip install .[muse] --user`` *(Python ``3.*`` only)*
 
 Run the tests
 -------------
