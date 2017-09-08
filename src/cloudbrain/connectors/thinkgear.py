@@ -364,9 +364,8 @@ class puzzlebox_synapse_protocol_thinkgear(threading.Thread):
             if code == '02':
                 poor_signal_quality = int(data_values, 16)
                 if self.DEBUG > 1:
-                    print  # Empty line at the beginning of most packets
-                    print "poorSignalLevel:",
-                    print poor_signal_quality
+                    print() # Empty line at the beginning of most packets
+                    print("poorSignalLevel: %s" % poor_signal_quality)
 
                 self.current_signal = copy.copy(poor_signal_quality)
 
@@ -374,12 +373,10 @@ class puzzlebox_synapse_protocol_thinkgear(threading.Thread):
 
                 self.current_signal = poor_signal_quality
 
-
             elif code == '04':
                 attention = int(data_values, 16)
                 if self.DEBUG > 1:
-                    print "attention:",
-                    print attention
+                    print("attention: %s" % attention)
 
                 self.current_attention = copy.copy(attention)
 
@@ -391,92 +388,80 @@ class puzzlebox_synapse_protocol_thinkgear(threading.Thread):
                 packet_update['eSense'] = {}
                 packet_update['eSense']['attention'] = attention
 
-
             elif code == '05':
                 meditation = int(data_values, 16)
                 if self.DEBUG > 1:
-                    print "meditation:",
-                    print meditation
+                    print("meditation: %s" % meditation)
 
                 self.current_meditation = copy.copy(meditation)
 
                 packet_update['eSense'] = {}
                 packet_update['eSense']['meditation'] = meditation
 
-
             elif code == '16':
                 blink_strength = int(data_values, 16)
                 if self.DEBUG > 1:
-                    print "blinkStrength:",
-                    print blink_strength
+                    print("blinkStrength: %s" % blink_strength)
 
                 packet_update['blinkStrength'] = blink_strength
-
 
             elif code == '80':
                 raw_wave_value = data_values
                 if self.DEBUG > 3:
-                    print "Raw EEG:",
-                    print raw_wave_value
+                    print("Raw EEG: %s" % raw_wave_value)
                 raw_eeg_value = self.processRawEEGValue(data_values)
                 if self.DEBUG > 2:
-                    print "Raw EEG Value:",
-                    print raw_eeg_value
+                    print("Raw EEG Value: %s" % raw_eeg_value)
 
                 packet_update['rawEeg'] = raw_eeg_value
 
             elif code == '83':
                 asic_eeg_power = data_values
                 if self.DEBUG > 2:
-                    print "ASIC_EEG_POWER:",
-                    print asic_eeg_power
+                    print("ASIC_EEG_POWER: %s" % asic_eeg_power)
                 eegPower = self.processAsicEegPower(data_values)
                 if self.DEBUG > 1:
                     for key in EEG_POWER_BAND_ORDER:
-                        print "%s: %i" % (key, eegPower[key])
+                        print("%s: %i" % (key, eegPower[key]))
 
                 packet_update['eegPower'] = {}
                 for key in eegPower.keys():
                     packet_update['eegPower'][key] = eegPower[key]
 
-
             elif code == 'd0':
                 if self.DEBUG:
-                    print "INFO: ThinkGear Headset Connect Success"
+                    print("INFO: ThinkGear Headset Connect Success")
                 self.parent.resetSessionStartTime()
                 self.parent.setPacketCount(0)
                 self.parent.setBadPackets(0)
-
 
             elif code == 'd1':
                 current_time = int(time.time() * 1000000)
                 if (current_time - self.auto_connect_timestamp >
                         THINKGEAR_DEVICE_AUTOCONNECT_INTERVAL):
                     if self.DEBUG:
-                        print ("INFO: ThinkGear device not found. "
-                               "Writing auto-connect packet.")
+                        print("INFO: ThinkGear device not found. "
+                              "Writing auto-connect packet.")
                     self.auto_connect_timestamp = current_time
                     self.device.device.write('\xc2')
-
 
             elif code == 'd2':
                 current_time = int(time.time() * 1000000)
                 if (current_time - self.auto_connect_timestamp >
                         THINKGEAR_DEVICE_AUTOCONNECT_INTERVAL):
                     if self.DEBUG:
-                        print ("INFO: ThinkGear device disconnected. "
-                               "Writing auto-connect packet.")
+                        print("INFO: ThinkGear device disconnected. ""
+                              "Writing auto-connect packet.")
                     self.auto_connect_timestamp = current_time
                     self.device.device.write('\xc2')
-
 
             elif code == 'd3':
                 current_time = int(time.time() * 1000000)
                 if (current_time - self.auto_connect_timestamp >
                         THINKGEAR_DEVICE_AUTOCONNECT_INTERVAL):
                     if self.DEBUG:
-                        print ("INFO: ThinkGear device request denied. "
-                               "Writing auto-connect packet.")
+                        print("INFO: ThinkGear device request denied. "
+                              "Writing auto-connect packet.")
                     self.auto_connect_timestamp = current_time
                     self.device.device.write('\xc2')
 
@@ -486,17 +471,15 @@ class puzzlebox_synapse_protocol_thinkgear(threading.Thread):
                 if (current_time - self.auto_connect_timestamp >
                         THINKGEAR_DEVICE_AUTOCONNECT_INTERVAL):
                     if self.DEBUG:
-                        print ("INFO: ThinkGear device in standby/scan mode. "
-                               "Writing auto-connect packet.")
+                        print("INFO: ThinkGear device in standby/scan mode. "
+                              "Writing auto-connect packet.")
                     self.auto_connect_timestamp = current_time
                     self.device.device.write('\xc2')
-
 
             else:
                 self.parent.incrementBadPackets()
                 if self.DEBUG:
-                    print "ERROR: data payload row code not matched:",
-                    print code
+                    print("ERROR: data payload row code not matched: %s" % code)
 
         return (packet_update)
 
@@ -508,10 +491,10 @@ class puzzlebox_synapse_protocol_thinkgear(threading.Thread):
         ^^^^(Value Type)^^^^ ^^(length)^^ ^^(value)^^"""
 
         if self.DEBUG > 3:
-            print "data payload:",
+            print("data payload:")
             for byte in data_payload:
-                print byte.encode("hex"),
-            print
+                print(byte.encode("hex"))
+            print()
 
         byte_index = 0
 
@@ -542,12 +525,9 @@ class puzzlebox_synapse_protocol_thinkgear(threading.Thread):
                 length = 1
 
             if self.DEBUG > 3:
-                print "EXCODE level:",
-                print extended_code_level,
-                print " CODE:",
-                print code,
-                print " length:",
-                print length
+                print("EXCODE level: %s" % extended_code_level)
+                print(" CODE: %s" % code)
+                print(" length: %s" % length)
 
             data_values = ''
             value_index = 0
@@ -561,16 +541,14 @@ class puzzlebox_synapse_protocol_thinkgear(threading.Thread):
                     value = data_payload[(byte_index + value_index)]  # & 0xFF
                 except:
                     if self.DEBUG:
-                        print ("ERROR: failed to parse and handle the "
+                        print("ERROR: failed to parse and handle the "
                                "[VALUE...] bytes of the current DataRow")
                     break
                 data_values += value.encode("hex")
                 value_index += 1
 
             if self.DEBUG > 3:
-                print "Data Values:",
-                print data_values
-                print
+                print("Data Values: %s\n" % data_values)
 
             packet_update = self.processDataRow(extended_code_level,
                                                 code,
@@ -628,7 +606,7 @@ class puzzlebox_synapse_protocol_thinkgear(threading.Thread):
             if (packet_length > 170):
                 self.parent.incrementBadPackets()
                 if self.DEBUG:
-                    print "ERROR: packet length bad"
+                    print("ERROR: packet length bad")
                     continue
 
             # Collect [PAYLOAD...] bytes
@@ -664,11 +642,9 @@ class puzzlebox_synapse_protocol_thinkgear(threading.Thread):
                 self.parent.incrementBadPackets()
 
                 if self.DEBUG > 1:
-                    print "ERROR: packet checksum does not match"
-                    print "       packet_checksum:",
-                    print packet_checksum
-                    print "       payload_checksum:",
-                    print payload_checksum
+                    print("ERROR: packet checksum does not match")
+                    print("       packet_checksum: %s" %  packet_checksum)
+                    print("       payload_checksum: %s" % payload_checksum)
 
                 continue
 
@@ -676,7 +652,7 @@ class puzzlebox_synapse_protocol_thinkgear(threading.Thread):
             else:
                 # Since [CKSUM] is OK, parse the Data Payload
                 if self.DEBUG > 3:
-                    print "packet checksum correct"
+                    print("packet checksum correct")
 
                 self.processDataPayload(data_payload, self.payload_timestamp)
 
@@ -695,7 +671,7 @@ class puzzlebox_synapse_protocol_thinkgear(threading.Thread):
         process_packet['timestamp'] = packet_update['timestamp']
 
         if self.DEBUG > 3:
-            print self.data_packet
+            print(self.data_packet)
 
         if self.parent is not None:
             # NOTE: is it possible this call is blocking the Protocol
@@ -708,14 +684,13 @@ class puzzlebox_synapse_protocol_thinkgear(threading.Thread):
         if self.device is not None and self.device.device is not None:
             if self.device_model == 'NeuroSky MindWave':
                 if self.DEBUG:
-                    print ("INFO: ThinkGear device model MindWave selected. "
+                    print("INFO: ThinkGear device model MindWave selected. "
                            "Writing disconnect packet.")
                 try:
                     self.device.device.write('\xc1')
                 except Exception, e:
                     if self.DEBUG:
-                        print "ERROR: failed to write disconnect packet: ",
-                        print e
+                        print("ERROR: failed to write disconnect packet: %s" %e)
 
     def resetSessionStartTime(self):
 
@@ -734,22 +709,21 @@ class puzzlebox_synapse_protocol_thinkgear(threading.Thread):
             self.resetSession()
         except Exception, e:
             if self.DEBUG:
-                print "ERROR: self.resetSession():",
-                print e
+                print("ERROR: self.resetSession(): %s" % e)
 
         if self.device is not None and self.device.device is not None:
             if self.device_model == 'NeuroSky MindWave':
                 if self.DEBUG:
-                    print ("INFO: ThinkGear device model MindWave selected. "
+                    print("INFO: ThinkGear device model MindWave selected. "
                            "Writing disconnect packet.")
                 self.device.device.write('\xc1')
                 if self.DEBUG:
-                    print ("INFO: ThinkGear device model MindWave selected. "
+                    print("INFO: ThinkGear device model MindWave selected. "
                            "Writing auto-connect packet.")
                 self.device.device.write('\xc2')
             else:
                 if self.device_model != None and self.DEBUG:
-                    print "INFO: %s device model selected" % self.device_model
+                    print("INFO: %s device model selected" % self.device_model)
 
             self.parseStream()
 
@@ -764,7 +738,7 @@ class puzzlebox_synapse_protocol_thinkgear(threading.Thread):
 
         if callThreadQuit:
             if self.DEBUG:
-                print "self.join()"
+                print("self.join()")
             self.join()
 
 
@@ -787,14 +761,14 @@ class SerialDevice(threading.Thread):
         if self.device_address.count(':') == 5:
             # Device address is a Bluetooth MAC address
             if self.DEBUG:
-                print "INFO: Initializing Bluetooth Device",
-                print self.device_address
+                print("INFO: Initializing Bluetooth Device: %s"
+                      % self.device_address)
             self.device = self.initializeBluetoothDevice()
         else:
             # Device address is a serial port address
             if self.DEBUG:
-                print "INFO: Initializing Serial Device",
-                print self.device_address
+                print("INFO: Initializing Serial Device: %s"
+                      % self.device_address)
             self.device = self.initializeSerialDevice()
 
         self.keep_running = True
@@ -809,8 +783,7 @@ class SerialDevice(threading.Thread):
 
         except Exception, e:
             if self.DEBUG:
-                print "ERROR:",
-                print e
+                print("ERROR: %s" % e)
                 sys.exit()
 
         return socket
@@ -883,30 +856,28 @@ class SerialDevice(threading.Thread):
 
         except Exception, e:
             if self.DEBUG:
-                print "ERROR:",
-                print e,
-                print self.device_address
+                print("ERROR: %s" % e)
+                print(self.device_address)
                 return (None)
         return (device)
 
     def checkBuffer(self):
 
         if self.DEBUG > 1:
-            print "INFO: Buffer size check:",
-            print len(self.buffer),
-            print "(maximum before reset is %i)" % DEVICE_BUFFER_MAX_SIZE
+            print("INFO: Buffer size check: %s" % len(self.buffer),)
+            print("(maximum before reset is %i)" % DEVICE_BUFFER_MAX_SIZE)
 
         if DEVICE_BUFFER_MAX_SIZE <= len(self.buffer):
 
             if self.DEBUG:
-                print "ERROR: Buffer size has grown too large, resetting"
+                print("ERROR: Buffer size has grown too large, resetting")
 
             self.reset()
 
     def checkReadBuffer(self):
 
         if self.DEBUG > 1:
-            print "INFO: Read buffer timer check"
+            print("INFO: Read buffer timer check")
 
         current_time = int(time.time() * 1000000)
 
@@ -916,7 +887,7 @@ class SerialDevice(threading.Thread):
                     DEVICE_BUFFER_CHECK_TIMER):
 
                 if self.DEBUG:
-                    print ("ERROR: Read buffer timer has expired, "
+                    print("ERROR: Read buffer timer has expired, "
                            "resetting connection")
 
             self.parent.resetDevice()
@@ -949,17 +920,15 @@ class SerialDevice(threading.Thread):
             self.buffer_check_timer.stop()
         except Exception, e:
             if self.DEBUG:
-                print ("ERROR: Protocol failed to call "
-                       "self.buffer_check_timer.stop() in stop():")
-                print e
+                print("ERROR: Protocol failed to call "
+                       "self.buffer_check_timer.stop() in stop() %s" % e)
 
         try:
             self.read_buffer_check_timer.stop()
         except Exception, e:
             if self.DEBUG:
-                print ("ERROR: Protocol failed to call "
-                       "self.read_buffer_check_timer.stop() in stop():")
-                print e
+                print("ERROR: Protocol failed to call "
+                       "self.read_buffer_check_timer.stop() in stop(): %s" % e)
 
         self.buffer = ''
 
@@ -971,13 +940,12 @@ class SerialDevice(threading.Thread):
         if call_thread_quit:
             try:
                 if self.DEBUG:
-                    print "self.join()"
+                    print("self.join()")
                 self.join()
             except Exception, e:
                 if self.DEBUG:
-                    print ("ERROR: Protocol failed to call "
-                           "self.join() in exitThread():")
-                    print e
+                    print("ERROR: Protocol failed to call "
+                           "self.join() in exitThread(): %s" % e)
 
     def close(self):
 
@@ -1002,15 +970,13 @@ class SerialDevice(threading.Thread):
 
                 if len(byte) != 0:
                     if self.DEBUG > 2:
-                        print "Device read:",
-                        print byte
+                        print("Device read: %s" % byte)
 
                     self.buffer += byte
 
             except Exception, e:
                 if self.DEBUG:
-                    print "ERROR: failed to read from serial device:",
-                    print e
+                    print("ERROR: failed to read from serial device: %s" % e)
                 break
 
         self.exitThread()
