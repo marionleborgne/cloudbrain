@@ -31,7 +31,7 @@ install:
  - chmod +x .travis/get-py-pkg-version.sh
  - conda install --yes numpy=$NUMPY scipy=$SCIPY pip
  - pip install setuptools
- - python setup.py install
+ - pip install .[analytics]
 
 script:
   python setup.py test
