@@ -7,16 +7,13 @@ from argparse import ArgumentParser
 from cloudbrain.modules.runner import ModuleRunner
 
 
-
 class _CommandLineArgError(Exception):
     """ Error parsing command-line options """
     pass
 
 
-
 class _Options(object):
     """Options returned by _parseArgs"""
-
 
     def __init__(self, file_conf, json_conf, log_level):
         """
@@ -31,7 +28,6 @@ class _Options(object):
             self.log_level = logging.INFO
         elif log_level == 'debug':
             self.log_level = logging.DEBUG
-
 
 
 def _parseArgs():
@@ -79,7 +75,6 @@ def _parseArgs():
                     log_level=options.log_level)
 
 
-
 def run(file_conf, json_conf, log_level):
     logging.basicConfig(level=log_level)
 
@@ -98,14 +93,12 @@ def run(file_conf, json_conf, log_level):
         runner.stop()
 
 
-
 def main():
     try:
         options = _parseArgs()
         run(options.file_conf, options.json_conf, options.log_level)
-    except Exception as ex:
-        logging.exception("Modules runner failed")
-
+    except Exception as e:
+        logging.exception("Modules runner failed: %s" % e)
 
 
 if __name__ == '__main__':

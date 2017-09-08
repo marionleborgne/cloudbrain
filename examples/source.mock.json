@@ -20,19 +20,13 @@
           "package": "cloudbrain.publishers.rabbitmq",
           "options": {
             "rabbitmq_address": "localhost",
-            "rabbitmq_user": "guest",
-            "rabbitmq_pwd": "guest",
-            "rabbitmq_vhost": "/"
+            "rabbitmq_user": "YOUR_EMAIL",
+            "rabbitmq_pwd": "YOUR_PASSWORD"
           },
           "base_routing_key": "some_unique_key",
           "metrics": [
             {
               "metric_name": "eeg",
-              "num_channels": 8,
-              "buffer_size": 10
-            },
-            {
-              "metric_name": "some_metric",
               "num_channels": 8,
               "buffer_size": 10
             }
@@ -46,11 +40,6 @@
           "metrics": [
             {
               "metric_name": "eeg",
-              "num_channels": 8,
-              "buffer_size": 100
-            },
-            {
-              "metric_name": "some_metric",
               "num_channels": 8,
               "buffer_size": 100
             }
