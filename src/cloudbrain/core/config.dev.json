@@ -1,4 +1,4 @@
 {
-  "authUrl": "http://dockerhost:3000",
-  "rabbitHost": "dockerhost"
+  "authUrl": "http://localhost:3000",
+  "rabbitHost": "localhost"
 }

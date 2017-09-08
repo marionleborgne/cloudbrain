@@ -3,31 +3,32 @@ import json
 
 
 class CloudbrainAuth(object):
-    def __init__(self, base_url, broker_auth_url, audience,
-                 client_id=None, client_secret=None, token=''):
+    def __init__(self, rabbit_auth_url, auth0_base_url=None,
+                 auth0_client_id=None, auth0_client_secret=None, token=None):
         """
-        :param base_url: (str)
-            Auth0 URL. E.g.: 'https://yourdomain.auth0.com',
-        :param broker_auth_url: (str)
-            Broker URL. E.g.: 'http://localhost:5000',
-        :param audience: (str)
-            Auth0 audience URL. E.g.: 'https://yourdomain.auth0.com/api/v2/'
-        :param client_id: (str)
+        :param rabbit_auth_url: (str)
+            RabbitMQ authentication server URL. E.g.: 'http://localhost:5000'
+        :param auth0_base_url: (str)
+            Auth0 URL. E.g.: 'https://yourdomain.auth0.com'
+        :param auth0_client_id: (str)
             Auth0 client ID. Default is None.
-        :param client_secret: (str)
+        :param auth0_client_secret: (str)
             Auth0 client secret. Default is None.
         :param token: (str)
-            Authentication token. Default is ''.
+            Authentication token.
         """
-        self.base_url = base_url
-        self.broker_auth_url = broker_auth_url
-        self.audience = audience
-        self.client_id = client_id
-        self.client_secret = client_secret
+        self.rabbit_auth_url = rabbit_auth_url
+        self.auth0_base_url = auth0_base_url
+        self.client_id = auth0_client_id
+        self.client_secret = auth0_client_secret
         self.token = token
+        if auth0_base_url:
+            self.audience = '%s/api/v2/' % auth0_base_url
+        else:
+            self.audience = None
 
     def authorize_client(self):
-        authorize_url = self.base_url + '/oauth/token'
+        authorize_url = self.auth0_base_url + '/oauth/token'
 
         body = {
             "grant_type": "client_credentials",
@@ -39,7 +40,7 @@ class CloudbrainAuth(object):
         return requests.post(authorize_url, data=body, verify=False)
 
     def authorize(self, username, password):
-        authorize_url = self.base_url + '/oauth/token'
+        authorize_url = self.auth0_base_url + '/oauth/token'
 
         body = {
             "grant_type": "password",
@@ -88,7 +89,7 @@ class CloudbrainAuth(object):
                               verify=False)
 
     def token_info(self, token=None):
-        token_url = self.base_url + '/tokeninfo'
+        token_url = self.auth0_base_url + '/tokeninfo'
         token = token or self.token
 
         body = {
@@ -103,20 +104,28 @@ class CloudbrainAuth(object):
         return response.json()
 
     def vhost_by_token(self, token=None):
-        token = token or self.token
-        info = self.token_info(token)
-        return info.json()["user_metadata"]["vhost"]
+        vhost_info_url = '%s/vhost/info?id_token=%s' % (self.rabbit_auth_url,
+                                                        token)
+
+        return requests.get(vhost_info_url, verify=False)
 
     def vhost_by_username(self, username=None):
-        vhost_info_url = '%s/vhost/info?email=%s' % (self.broker_auth_url,
-                                                     str(username))
+        vhost_info_url = '%s/vhost/info?email=%s' % (self.rabbit_auth_url,
+                                                     username)
 
         return requests.get(vhost_info_url, verify=False)
 
     def get_vhost_by_token(self, token):
-        vhost = self.vhost_by_token(token=token)
-        return json.dumps({"vhost": vhost})
+        response = self.vhost_by_token(token=token)
+        return response.json()['vhost']
 
     def get_vhost_by_username(self, username):
         response = self.vhost_by_username(username=username)
         return response.json()['vhost']
+
+    def get_vhost(self, rabbitmq_user, rabbitmq_pwd):
+        if rabbitmq_pwd:
+            rabbitmq_vhost = self.get_vhost_by_username(rabbitmq_user)
+        else:
+            rabbitmq_vhost = self.get_vhost_by_token(rabbitmq_user)
+        return rabbitmq_vhost
