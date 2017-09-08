@@ -11,6 +11,6 @@ while read line; do
 	IFS='=' read -ra PKG <<<"$line"
 	VERSION="${PKG[2]}"
     fi
-done <REQUIREMENTS_FILE
+done <$REQUIREMENTS_FILE
 
 echo $VERSION
