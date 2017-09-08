@@ -10,7 +10,7 @@ os:
 
 env:
  global:
-  - NUMPY=$(bash .travis/get-py-pkg-version.sh numpy) SCIPY=$(bash .travis/get-py-pkg-version.sh scipy)
+  - NUMPY=$(bash .travis/get-py-pkg-version.sh numpy requirements/analytics.txt) SCIPY=$(bash .travis/get-py-pkg-version.sh scipy requirements/analytics.txt)
  matrix:
   - PYTHON_VERSION=2.7
   - PYTHON_VERSION=3.5
@@ -31,7 +31,7 @@ install:
  - chmod +x .travis/get-py-pkg-version.sh
  - conda install --yes numpy=$NUMPY scipy=$SCIPY pip
  - pip install setuptools
- - python setup.py install
+ - pip install .[analytics]
 
-script: 
+script:
   python setup.py test

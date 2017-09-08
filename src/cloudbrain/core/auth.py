@@ -71,7 +71,7 @@ class CloudbrainAuth(object):
         if len(response) > 0:
             return response[0]['user_id']
         else:
-            print 'Invalid response: %s' % r
+            print('Invalid response: %s' % r)
             return None
 
     def patch_user(self, client_token, user_id, data):

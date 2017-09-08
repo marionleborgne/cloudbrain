@@ -28,7 +28,7 @@ VALID_METRICS = ['eeg', 'poorSignalLevel', 'attention', 'meditation', 'delta',
 
 
 def displayCSVHeader():
-    print "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % (
+    print("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % (
         'timestamp',
         'eeg',
         'poorSignalLevel',
@@ -41,12 +41,11 @@ def displayCSVHeader():
         'lowBeta',
         'highBeta',
         'lowGamma',
-        'highGamma'
-    )
+        'highGamma'))
 
 
 def displayCSV(packet):
-    print "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % (
+    print("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % (
         packet['timestamp'],
         packet['eeg'],
         packet['poorSignalLevel'],
@@ -59,8 +58,7 @@ def displayCSV(packet):
         packet['lowBeta'],
         packet['highBeta'],
         packet['lowGamma'],
-        packet['highGamma'],
-    )
+        packet['highGamma']))
 
 
 class NeuroskyConnector(threading.Thread):
@@ -96,9 +94,9 @@ class NeuroskyConnector(threading.Thread):
         self.configureEEG()
         self.displayCSVHeader = True
 
-        print "Attempting to connect to NeuroSky headset ..."
-        print ("WARNING: Make sure the headset is on, paired, and "
-               "has enough battery.")
+        print("Attempting to connect to NeuroSky headset ...")
+        print("WARNING: Make sure the headset is on, paired, and "
+              "has enough battery.")
 
     def setPacketCount(self, value):
 
@@ -151,7 +149,7 @@ class NeuroskyConnector(threading.Thread):
             self.displayCSVHeader = False
 
         if self.verbosity >= 2:
-            print packet
+            print(packet)
 
         if 'rawEeg' in packet.keys():
 
@@ -224,8 +222,8 @@ class NeuroskyConnector(threading.Thread):
 
 def callback_factory(metric_name):
     def print_callback(timestamp, sample):
-        print 'metric_name=%s, timestamp=%s, sample=%s' % (metric_name,
-                                                           timestamp, sample)
+        print('metric_name=%s, timestamp=%s, sample=%s' % (metric_name,
+                                                           timestamp, sample))
 
     return print_callback
 
