@@ -96,7 +96,7 @@ class CloudbrainAuth(object):
         }
 
         response = requests.post(token_url, data=body, verify=False)
-        return response.json()
+        return response
 
     def token_by_credentials(self, username, password):
         response = self.authorize(username, password)
@@ -105,7 +105,7 @@ class CloudbrainAuth(object):
     def vhost_by_token(self, token=None):
         token = token or self.token
         info = self.token_info(token)
-        return info["user_metadata"]["vhost"]
+        return info.json()["user_metadata"]["vhost"]
 
     def vhost_by_username(self, username=None):
         vhost_info_url = '%s/vhost/info?email=%s' % (self.broker_auth_url,
