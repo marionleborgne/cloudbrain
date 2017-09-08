@@ -95,7 +95,7 @@ class NeuroskyConnector(threading.Thread):
         self.displayCSVHeader = True
 
         print("Attempting to connect to NeuroSky headset ...")
-        print("WARNING: Make sure the headset is on, paired, and ""
+        print("WARNING: Make sure the headset is on, paired, and "
               "has enough battery.")
 
     def setPacketCount(self, value):

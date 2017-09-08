@@ -450,7 +450,7 @@ class puzzlebox_synapse_protocol_thinkgear(threading.Thread):
                 if (current_time - self.auto_connect_timestamp >
                         THINKGEAR_DEVICE_AUTOCONNECT_INTERVAL):
                     if self.DEBUG:
-                        print("INFO: ThinkGear device disconnected. ""
+                        print("INFO: ThinkGear device disconnected. "
                               "Writing auto-connect packet.")
                     self.auto_connect_timestamp = current_time
                     self.device.device.write('\xc2')
