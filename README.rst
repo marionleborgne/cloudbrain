@@ -31,6 +31,7 @@ Optional
 --------
 
 Optional CloudBrain modules can be installed:
+
 - Analytics modules: ``pip install .[analytics] --user``
 - Muse source module: ``pip install .[muse] --user`` (Python ``3.*`` only)
 
