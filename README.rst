@@ -20,23 +20,34 @@ visualization.
 Using CloudBrain
 ================
 
-Setup
------
+Installing
+----------
+Cloudbrain is available for download via `PyPI <https://pypi.python.org/pypi/cloudbrain>`_ and may be installed using ``pip``:
 
--  Run: ``pip install . --user``
--  If you plan to *edit* the code, make sure to use the ``-e`` switch:
-   ``pip  install -e . --user``
+::
 
-Optional
---------
+    pip install cloudbrain
+
+
+Installing additional modules
+-----------------------------
 
 Optional CloudBrain modules can be installed:
 
-- Analytics modules: ``pip install .[analytics] --user``
-- Muse source module: ``pip install .[muse] --user`` (Python ``3.*`` only)
+- Analytics modules: ``pip install cloudbrain[analytics]``
+- `Muse <http://www.choosemuse.com>`_ source module: ``pip3 install cloudbrain[muse]`` (Python ``3.*`` only)
 
-Run the tests
--------------
+
+Installing from source
+----------------------
+
+-  Clone this repository and run ``pip install .`` from the root of the repo.
+-  If you plan to *edit* the code, make sure to use the ``-e`` switch:
+   ``pip  install -e .``
+
+
+Running the tests
+-----------------
 
 ::
 
