@@ -19,10 +19,10 @@
           "name": "PikaPublisher",
           "package": "cloudbrain.publishers.rabbitmq",
           "options": {
-            "rabbitmq_user": "YOUR_EMAIL",
-            "rabbitmq_pwd": "YOUR_PASSWORD"
+            "rabbitmq_user": "leborgne.mar@gmail.com",
+            "rabbitmq_pwd": "test"
           },
-          "base_routing_key": "some_unique_key",
+          "base_routing_key": "mock",
           "metrics": [
             {
               "metric_name": "eeg",

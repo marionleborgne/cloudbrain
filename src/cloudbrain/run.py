@@ -81,7 +81,7 @@ def run(file_conf, json_conf, log_level):
     if file_conf:
         with open(file_conf, 'rb') as f:
             module_configs = json.load(f)
-    elif json_conf:
+    else:
         module_configs = json.loads(json_conf)
 
     runner = ModuleRunner(module_configs)

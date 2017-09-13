@@ -1,10 +1,8 @@
 import os
 import simplejson as json
-
 from pkg_resources import resource_filename
 
 from cloudbrain import core
-
 
 
 def get_config():

@@ -11,7 +11,6 @@
           "name": "PikaSubscriber",
           "package": "cloudbrain.subscribers.rabbitmq",
           "options": {
-            "rabbitmq_address": "localhost",
             "rabbitmq_user": "YOUR_EMAIL",
             "rabbitmq_pwd": "YOUR_PASSWORD"
           },
