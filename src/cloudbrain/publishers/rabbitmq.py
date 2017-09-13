@@ -38,11 +38,11 @@ class PikaPublisher(PublisherInterface):
     def connect(self):
         credentials = pika.PlainCredentials(self.rabbitmq_user,
                                             self.rabbitmq_pwd)
-        params = pika.ConnectionParameters(
+
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(
             host=self.rabbitmq_address,
             virtual_host=self.rabbitmq_vhost,
-            credentials=credentials)
-        self.connection = pika.BlockingConnection(parameters=params)
+            credentials=credentials))
 
     def disconnect(self):
         for channel in self.channels.values():
