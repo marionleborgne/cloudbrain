@@ -109,10 +109,8 @@ class OpenBCITest(unittest.TestCase):
         self.buffer_size = 2
 
         # rmq info
-        self.rabbitmq_address = 'mock_rabbitmq'
         self.rabbitmq_user = 'mock_user'
         self.rabbitmq_pwd = 'mock_pwd'
-        self.rabbitmq_vhost = '/'
 
         self.base_routing_key = '%s:%s' % (self.user, self.device)
 
@@ -138,10 +136,8 @@ class OpenBCITest(unittest.TestCase):
     @patch('pika.BlockingConnection', MockBlockingConnection)
     def test_PikaPublisher(self):
 
-        options = {"rabbitmq_address": self.rabbitmq_address,
-                   "rabbitmq_user": self.rabbitmq_user,
-                   "rabbitmq_pwd": self.rabbitmq_pwd,
-                   "rabbitmq_vhost": self.rabbitmq_vhost}
+        options = {"rabbitmq_user": self.rabbitmq_user,
+                   "rabbitmq_pwd": self.rabbitmq_pwd}
 
         publisher = PikaPublisher(self.base_routing_key, **options)
         publisher.connect()
@@ -180,10 +176,8 @@ class OpenBCITest(unittest.TestCase):
     @patch('cloudbrain.connectors.openbci.OpenBCIConnector.start',
            mock_start)
     def test_OpenBCISource(self):
-        options = {"rabbitmq_address": self.rabbitmq_address,
-                   "rabbitmq_user": self.rabbitmq_user,
-                   "rabbitmq_pwd": self.rabbitmq_pwd,
-                   "rabbitmq_vhost": self.rabbitmq_vhost}
+        options = {"rabbitmq_user": self.rabbitmq_user,
+                   "rabbitmq_pwd": self.rabbitmq_pwd}
 
         publisher = PikaPublisher(self.base_routing_key, **options)
         publisher.connect()

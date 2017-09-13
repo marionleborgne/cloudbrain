@@ -4,4 +4,4 @@
 # 3) we can import it into your module module
 #
 # Source: https://stackoverflow.com/a/16084844
-__version__ = '0.0.17'
+__version__ = '0.0.18'

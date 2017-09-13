@@ -17,35 +17,23 @@ class PikaPublisher(PublisherInterface):
 
     def __init__(self,
                  base_routing_key,
-                 rabbitmq_address,
                  rabbitmq_user,
-                 rabbitmq_pwd,
-                 rabbitmq_vhost=None):
+                 rabbitmq_pwd):
 
         super(PikaPublisher, self).__init__(base_routing_key)
         _LOGGER.debug("Base routing key: %s" % self.base_routing_key)
         _LOGGER.debug("Routing keys: %s" % self.routing_keys)
         _LOGGER.debug("Metric buffers: %s" % self.metric_buffers)
 
-        self.config = get_config()
-        self.rabbitmq_address = rabbitmq_address
         self.rabbitmq_user = rabbitmq_user
         self.rabbitmq_pwd = rabbitmq_pwd
 
         self.connection = None
         self.channels = {}
-
-        # Keep rabbitmq_vhost as an input param for backwards compatibility but
-        # log warning saying that it's going to be overridden.
-        if rabbitmq_vhost is not None:
-            _LOGGER.warn('The parameter "rabbitmq_vhost" is no longer '
-                         'supported and will be overridden. Please remove it '
-                         'from the module JSON config file. (rabbitmq_vhost=%s)'
-                         % rabbitmq_vhost)
-
-        # Resolve vhost
-        auth = CloudbrainAuth(self.config['authUrl'])
-        self.rabbitmq_vhost = auth.get_vhost(rabbitmq_user, rabbitmq_pwd)
+        self.config = get_config()
+        self.rabbitmq_address = self.config['rabbitHost']
+        self.auth = CloudbrainAuth(self.config['authUrl'])
+        self.rabbitmq_vhost = self.auth.get_vhost(rabbitmq_user, rabbitmq_pwd)
 
     def connect(self):
         credentials = pika.PlainCredentials(self.rabbitmq_user,

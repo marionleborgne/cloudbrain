@@ -3,129 +3,93 @@ import json
 
 
 class CloudbrainAuth(object):
-    def __init__(self, rabbit_auth_url, auth0_base_url=None,
-                 auth0_client_id=None, auth0_client_secret=None, token=None):
+    def __init__(self, auth_url):
         """
-        :param rabbit_auth_url: (str)
-            RabbitMQ authentication server URL. E.g.: 'http://localhost:5000'
-        :param auth0_base_url: (str)
-            Auth0 URL. E.g.: 'https://yourdomain.auth0.com'
-        :param auth0_client_id: (str)
-            Auth0 client ID. Default is None.
-        :param auth0_client_secret: (str)
-            Auth0 client secret. Default is None.
-        :param token: (str)
-            Authentication token.
+        :param auth_url: (str)
+            Cloudbrain authentication server URL.
+            It's recommended to use ``cloudbrain.core.config.get_config()`` to
+            pass the correct URL value.
         """
-        self.rabbit_auth_url = rabbit_auth_url
-        self.auth0_base_url = auth0_base_url
-        self.client_id = auth0_client_id
-        self.client_secret = auth0_client_secret
-        self.token = token
-        if auth0_base_url:
-            self.audience = '%s/api/v2/' % auth0_base_url
-        else:
-            self.audience = None
+        self.auth_url = auth_url
 
-    def authorize_client(self):
-        authorize_url = self.auth0_base_url + '/oauth/token'
+    def get_user_token_by_credentials(self, username, password):
+        """
+        This is the OAuth 2.0 grant used to request an id_token.
 
+        :param username: (str)
+            User name or email.
+        :param password: (str)
+            User password.
+        :return: (request.Response)
+            Response contains access_token, id_token, scopes, and token_type.
+        """
+        url = self.auth_url + '/user/token'
         body = {
-            "grant_type": "client_credentials",
-            "client_id": self.client_id,
-            "client_secret": self.client_secret,
-            "audience": self.audience
-        }
-
-        return requests.post(authorize_url, data=body, verify=False)
-
-    def authorize(self, username, password):
-        authorize_url = self.auth0_base_url + '/oauth/token'
-
-        body = {
-            "grant_type": "password",
-            "client_id": self.client_id,
-            "client_secret": self.client_secret,
-            "audience": self.audience,
             "username": username,
-            "password": password,
-            "scope": "openid"
+            "password": password
         }
+        return requests.post(url, data=json.dumps(body), verify=False)
 
-        return requests.post(authorize_url, data=body, verify=False)
+    def get_user_info_by_token(self, id_token):
+        """
+        Return a user profile based on the user's token_id.
 
-    def get_user_by_email(self, client_token, email):
-        get_user_url = '%susers?q=email:"%s"' % (self.audience,
-                                                 email)
-        headers = {
-            "Authorization": "Bearer %s" % client_token,
-            "Content-Type": "application/json"
-        }
-
-        return requests.get(get_user_url,
-                            headers=headers,
-                            verify=False)
-
-    def get_user_id_by_email(self, client_token, email):
-        r = self.get_user_by_email(client_token, email)
-        response = r.json()
-        if len(response) > 0:
-            return response[0]['user_id']
-        else:
-            print('Invalid response: %s' % r)
-            return None
-
-    def patch_user(self, client_token, user_id, data):
-        patch_user_url = self.audience + 'users/%s' % user_id
-
-        headers = {
-            "Authorization": "Bearer %s" % client_token,
-            "Content-Type": "application/json"
-        }
-
-        return requests.patch(patch_user_url,
-                              headers=headers,
-                              data=json.dumps(data),
-                              verify=False)
-
-    def token_info(self, token=None):
-        token_url = self.auth0_base_url + '/tokeninfo'
-        token = token or self.token
-
+        :param id_token: (str)
+            User's ID token.
+        """
+        url = self.auth_url + '/user/info'
         body = {
-            "id_token": token
+            "id_token": id_token
         }
+        return requests.post(url, data=json.dumps(body), verify=False)
 
-        response = requests.post(token_url, data=body, verify=False)
-        return response
+    def get_vhost(self, username_or_token, password):
+        """
+        Returns a vhost based on the username and password. Note that the
+        token can passed in place of the username - in this case, the password
+        is set to an empty string.
 
-    def token_by_credentials(self, username, password):
-        response = self.authorize(username, password)
-        return response.json()
+        :param username_or_token: (str)
+            User name or user token.
+        :param password: (str)
+            User password or empty string if the token is passed.
+        :return vhost: (str)
+            RabbitMQ virtual host.
+        """
+        if password:
+            vhost = self.get_vhost_by_username(username_or_token)
+        else:
+            vhost = self.get_vhost_by_token(username_or_token)
+        return vhost
 
-    def vhost_by_token(self, token=None):
-        vhost_info_url = '%s/vhost/info?id_token=%s' % (self.rabbit_auth_url,
-                                                        token)
+    def get_vhost_by_token(self, id_token):
+        """
+        Get the vhost based on the user token.
+        """
+        vhost_info_url = '%s/vhost/info?id_token=%s' % (self.auth_url,
+                                                        id_token)
 
-        return requests.get(vhost_info_url, verify=False)
-
-    def vhost_by_username(self, username=None):
-        vhost_info_url = '%s/vhost/info?email=%s' % (self.rabbit_auth_url,
-                                                     username)
-
-        return requests.get(vhost_info_url, verify=False)
-
-    def get_vhost_by_token(self, token):
-        response = self.vhost_by_token(token=token)
-        return response.json()['vhost']
+        response = requests.get(vhost_info_url, verify=False)
+        return self._parse_vhost_response(response)
 
     def get_vhost_by_username(self, username):
-        response = self.vhost_by_username(username=username)
-        return response.json()['vhost']
+        """
+        Get the vhost based on the username.
+        """
+        vhost_info_url = '%s/vhost/info?email=%s' % (self.auth_url,
+                                                     username)
 
-    def get_vhost(self, rabbitmq_user, rabbitmq_pwd):
-        if rabbitmq_pwd:
-            rabbitmq_vhost = self.get_vhost_by_username(rabbitmq_user)
+        response = requests.get(vhost_info_url, verify=False)
+        return self._parse_vhost_response(response)
+
+    @staticmethod
+    def _parse_vhost_response(response):
+        if response.status_code == 200:
+            json_response = response.json()
+            if 'vhost' in json_response:
+                return json_response['vhost']
+            else:
+                raise RuntimeError('No "vhost" was found in the response.')
         else:
-            rabbitmq_vhost = self.get_vhost_by_token(rabbitmq_user)
-        return rabbitmq_vhost
+            raise RuntimeError('Unable to get "vhost". Server responded '
+                               'with status code: %s' % response.status_code)
