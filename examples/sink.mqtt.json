@@ -1,0 +1,29 @@
+{
+  "modules": [
+    {
+      "name": "MQTTSink",
+      "package": "cloudbrain.modules.sinks.mqtt",
+      "options": {
+        "mqtt_routing_key": "YOUR_MQTT_ROUTING_KEY"
+      },
+      "subscribers": [
+        {
+          "name": "PikaSubscriber",
+          "package": "cloudbrain.subscribers.rabbitmq",
+          "options": {
+            "rabbitmq_user": "YOUR_EMAIL",
+            "rabbitmq_pwd": "YOUR_PASSWORD"
+          },
+          "base_routing_key": "some_unique_key",
+          "metrics": [
+            {
+              "metric_name": "eeg",
+              "num_channels": 8
+            }
+          ]
+        }
+      ],
+      "publishers": []
+    }
+  ]
+}
