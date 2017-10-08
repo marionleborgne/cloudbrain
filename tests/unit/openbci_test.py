@@ -62,7 +62,7 @@ class MockChannel(object):
         self.message_published = None
 
 
-    def exchange_declare(self, exchange, type):
+    def exchange_declare(self, exchange, exchange_type):
         pass
 
 
