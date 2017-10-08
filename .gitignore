@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# modules config
+examples/*.marion.json
+
 # C extensions
 *.so
 
