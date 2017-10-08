@@ -1,0 +1,32 @@
+{
+  "modules": [
+    {
+      "name": "MQTTConverterSource",
+      "package": "cloudbrain.modules.sources.mqtt",
+      "options": {
+        "mqtt_routing_key": "YOUR_ROUTING_KEY",
+        "username": "YOUR_EMAIL",
+        "password": "YOUR_PASSWORD"
+      },
+      "publishers": [
+        {
+          "name": "PikaPublisher",
+          "package": "cloudbrain.publishers.rabbitmq",
+          "options": {
+            "rabbitmq_user": "YOUR_EMAIL",
+            "rabbitmq_pwd": "YOUR_PASSWORD"
+          },
+          "base_routing_key": "some_unique_key",
+          "metrics": [
+            {
+              "metric_name": "eeg",
+              "num_channels": 8,
+              "buffer_size": 10
+            }
+          ]
+        }
+      ],
+      "subscribers": []
+    }
+  ]
+}
