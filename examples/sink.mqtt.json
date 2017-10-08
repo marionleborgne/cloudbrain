@@ -1,7 +1,7 @@
 {
   "modules": [
     {
-      "name": "MQTTSink",
+      "name": "MQTTConverterSink",
       "package": "cloudbrain.modules.sinks.mqtt",
       "options": {
         "mqtt_routing_key": "YOUR_MQTT_ROUTING_KEY"
