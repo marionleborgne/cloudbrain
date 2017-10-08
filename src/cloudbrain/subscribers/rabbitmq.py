@@ -49,7 +49,7 @@ class PikaSubscriber(SubscriberInterface):
 
     def _rabbitmq_register(self, routing_key):
         channel = self.connection.channel()
-        channel.exchange_declare(exchange=routing_key, type='direct')
+        channel.exchange_declare(exchange=routing_key, exchange_type='direct')
 
         queue_name = channel.queue_declare(exclusive=True).method.queue
         channel.queue_bind(exchange=routing_key,

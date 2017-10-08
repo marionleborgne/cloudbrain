@@ -61,7 +61,7 @@ class PikaPublisher(PublisherInterface):
 
     def _rabbitmq_register(self, routing_key):
         channel = self.connection.channel()
-        channel.exchange_declare(exchange=routing_key, type='direct')
+        channel.exchange_declare(exchange=routing_key, exchange_type='direct')
         self.channels[routing_key] = channel
 
     def publish(self, metric_name, data):
