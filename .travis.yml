@@ -10,7 +10,7 @@ os:
 
 env:
  global:
-  - NUMPY=$(bash .travis/get-py-pkg-version.sh numpy requirements/analytics.txt) SCIPY=$(bash .travis/get-py-pkg-version.sh scipy requirements/analytics.txt)
+  - NUMPY=$(bash .travis/get-py-pkg-version.sh numpy requirements/core.txt) SCIPY=$(bash .travis/get-py-pkg-version.sh scipy requirements/analytics.txt)
  matrix:
   - PYTHON_VERSION=2.7
   - PYTHON_VERSION=3.5
