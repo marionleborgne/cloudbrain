@@ -1,0 +1,37 @@
+# Not relying on Travis python distribution but using miniconda instead.
+# See: https://github.com/travis-ci/travis-ci/issues/2312
+# And: http://stackoverflow.com/questions/30588634/install-numpy-1-8-in-travis-ci
+language:
+ - generic
+
+os:
+ - linux
+ - osx
+
+env:
+ global:
+  - NUMPY=$(bash .travis/get-py-pkg-version.sh numpy requirements/core.txt) SCIPY=$(bash .travis/get-py-pkg-version.sh scipy requirements/analytics.txt)
+ matrix:
+  - PYTHON_VERSION=2.7
+  - PYTHON_VERSION=3.5
+
+before_install:
+ - chmod +x .travis/download-miniconda.sh
+ - travis_retry bash .travis/download-miniconda.sh
+ - chmod +x miniconda.sh
+ - bash miniconda.sh -b -p $HOME/miniconda
+ - export PATH=$HOME/miniconda/bin:$PATH
+ - conda update --yes conda
+
+install:
+ # Create an environment with a specific version of python
+ # See: http://conda.pydata.org/docs/using/envs.html#create-an-environment
+ - conda create --yes -n test python=$PYTHON_VERSION
+ - source activate test
+ - chmod +x .travis/get-py-pkg-version.sh
+ - conda install --yes numpy=$NUMPY scipy=$SCIPY pip
+ - pip install setuptools
+ - pip install .[analytics]
+
+script:
+  python setup.py test

@@ -1,0 +1,45 @@
+{
+  "modules": [
+    {
+      "name": "OpenBCISource",
+      "package": "cloudbrain.modules.sources.openbci",
+      "options": {
+        "port": "/dev/tty.usbserial-DN0095VT",
+        "baud": 115200,
+        "filter_data": true
+      },
+      "publishers": [
+	  {
+          "name": "PikaPublisher",
+          "package": "cloudbrain.publishers.rabbitmq",
+          "options": {
+            "rabbitmq_user": "YOUR_EMAIL",
+            "rabbitmq_pwd": "YOUR_PASSWORD"
+          },
+          "base_routing_key": "some_unique_key",
+          "metrics": [
+            {
+              "metric_name": "eeg",
+              "num_channels": 8,
+              "buffer_size": 10
+            }
+          ]
+        },
+        {
+          "name": "PipePublisher",
+          "package": "cloudbrain.publishers.pipe",
+          "options": {},
+          "base_routing_key": "some_unique_key",
+          "metrics": [
+            {
+              "metric_name": "eeg",
+              "num_channels": 8,
+              "buffer_size": 100
+            }
+          ]
+        }
+      ],
+      "subscribers": []
+    }
+  ]
+}

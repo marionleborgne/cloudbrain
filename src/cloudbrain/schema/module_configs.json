@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "id": "/conf/module_configs_schema",
+  "description": "module configurations for the runner.",
+  "type": "object",
+  "additionalProperties": false,
+
+  "properties": {
+    "modules": {
+      "description": "Modules configurations",
+      "type": "list",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "authUrl": "http://localhost:3000",
+  "rabbitHost": "localhost"
+}

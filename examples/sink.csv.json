@@ -1,0 +1,29 @@
+{
+  "modules": [
+    {
+      "name": "CSVOutSink",
+      "package": "cloudbrain.modules.sinks.csvout",
+      "options": {
+        "out_dir": "/tmp"
+      },
+      "subscribers": [
+        {
+          "name": "PikaSubscriber",
+          "package": "cloudbrain.subscribers.rabbitmq",
+          "options": {
+            "rabbitmq_user": "YOUR_EMAIL",
+            "rabbitmq_pwd": "YOUR_PASSWORD"
+          },
+          "base_routing_key": "some_unique_key",
+          "metrics": [
+            {
+              "metric_name": "eeg",
+              "num_channels": 8
+            }
+          ]
+        }
+      ],
+      "publishers": []
+    }
+  ]
+}
