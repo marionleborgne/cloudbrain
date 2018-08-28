@@ -14,7 +14,7 @@ visualization.
 - **Analyze sensor data** to find patterns.
 - **Visualize sensor data** and patterns in real-time.
 
-.. figure:: https://raw.githubusercontent.com/cloudbrain/cloudbrain/master/docs/images/features.png
+.. figure:: https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/docs/images/features.png
    :alt: features
 
 Using CloudBrain
@@ -63,15 +63,15 @@ how to use CloudBrain analytics modules.
 More docs
 ---------
 
-For more details on to setup and use CloudBrain, refer to the
-`wiki <https://github.com/cloudbrain/cloudbrain/wiki>`__.
+For more details on CloudBrain, refer to the
+`wiki <https://github.com/marionleborgne/cloudbrain/wiki>`__.
 
 License
 ~~~~~~~
 
 |License: AGPL-3|
 
-.. |Build Status| image:: https://travis-ci.org/cloudbrain/cloudbrain.svg?branch=master
-   :target: https://travis-ci.org/cloudbrain/cloudbrain
+.. |Build Status| image:: https://travis-ci.org/marionleborgne/cloudbrain.svg?branch=master
+   :target: https://travis-ci.org/marionleborgne/cloudbrain
 .. |License: AGPL-3| image:: https://img.shields.io/badge/license-AGPL--3-blue.svg
-   :target: https://raw.githubusercontent.com/cloudbrain/cloudbrain/master/LICENSE.md
+   :target: https://raw.githubusercontent.com/marionleborgne/cloudbrain/master/LICENSE.md
