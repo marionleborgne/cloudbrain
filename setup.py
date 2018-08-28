@@ -1,6 +1,12 @@
 from setuptools import setup, find_packages
-from pip.download import PipSession
-from pip.req import parse_requirements
+try:
+    from pip.req import parse_requirements
+except ImportError:
+    from pip._internal.req import parse_requirements
+try:
+    from pip.download import PipSession
+except ImportError:
+    from pip._internal.download import PipSession
 import os
 
 # Get __version__ and set other constants.
