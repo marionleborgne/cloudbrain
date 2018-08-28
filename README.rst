@@ -48,7 +48,7 @@ Installing from source
 
 Running the tests
 -----------------
-
+Analytics modules need to be installed prior to running the tests. See instalation section.
 ::
 
     python setup.py test

@@ -35,6 +35,17 @@ class MockSerial(object):
         return False
 
 
+class MockHTTPResponse(object):
+
+    status_code = 200
+
+    def json(self):
+        return {'vhost': 'mock_vhost'}
+
+
+def mock_requests_get(vhost_info_url, verify):
+    return MockHTTPResponse()
+
 
 def mock_start(self, callback_functions):
     """
@@ -133,6 +144,7 @@ class OpenBCITest(unittest.TestCase):
         board.start(callbacks)
 
 
+    @patch('requests.get', mock_requests_get)
     @patch('pika.BlockingConnection', MockBlockingConnection)
     def test_PikaPublisher(self):
 
@@ -171,6 +183,7 @@ class OpenBCITest(unittest.TestCase):
             self.assertEqual(published_message, expected_message)
 
 
+    @patch('requests.get', mock_requests_get)
     @patch('serial.Serial', MockSerial)
     @patch('pika.BlockingConnection', MockBlockingConnection)
     @patch('cloudbrain.connectors.openbci.OpenBCIConnector.start',
