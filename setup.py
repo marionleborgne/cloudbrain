@@ -42,7 +42,6 @@ setup(name='cloudbrain',
       install_requires=reqs['core'],
       long_description=DESCRIPTION,
       test_suite='nose.collector',
-      tests_require=['mock==1.0.1', 'nose'],
       include_package_data=True,
       package_data={
           "cloudbrain.core": ["*.json"],
